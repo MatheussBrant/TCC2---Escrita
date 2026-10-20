@@ -1,0 +1,169 @@
+{
+  "schema": 1,
+  "coletado_em_utc": "2026-10-19T23:46:41.151706+00:00",
+  "configuracao": {
+    "pdf_tcc1": "../TCC1___Caio_Lamego_e_Matheus_Brant-11.pdf",
+    "repositorios": {
+      "experimento": "../tcc2-llm-sast-juiceshop",
+      "poc": "../repoc/PoC-TCC-Matheus-e-Caio",
+      "escrita": "."
+    },
+    "documentos": [
+      "README.md",
+      "docs/**/*.md",
+      "features/**/*.md",
+      "knowledge_base/**/*.md"
+    ],
+    "artefatos": [
+      "config/**/*.yaml",
+      "config/**/*.json",
+      "config/**/*.md",
+      "src/**/*.py",
+      "scripts/reports/*.py",
+      "scripts/calculate_metrics.py",
+      "scripts/prompt_builder.py",
+      "compose.yaml",
+      "Dockerfile",
+      "docker/referencia.json",
+      "outputs/**/metricas*.csv",
+      "outputs/**/metricas*.json",
+      "outputs/**/tentativas.csv",
+      "outputs/**/casos.csv",
+      "outputs/**/execucoes.json",
+      "outputs/**/execucoes.jsonl",
+      "outputs/**/contrato_execucao.json",
+      "outputs/**/manifesto.json",
+      "outputs/**/preflight.json",
+      "outputs/**/catalogo_meta.json",
+      "outputs/**/catalogo_issues.json",
+      "outputs/**/baseline_testes.json",
+      "outputs/**/validacao.json",
+      "outputs/**/RESUMO.md"
+    ]
+  },
+  "configuracao_sha256": "7f7e8d123fe7b504c79976257d6daf701f093ff747d767dbbffc0b3ab5e8b8a3",
+  "escopo_git": "git rev-list --all; sem fetch; sem objetos inalcançáveis/reflog; sem histórico upstream do Juice Shop",
+  "limite": "Inventário de arquivos pelos padrões configurados; não é cópia integral dos artefatos nem auditoria de todos os diffs.",
+  "pdf": {
+    "arquivo": "../TCC1___Caio_Lamego_e_Matheus_Brant-11.pdf",
+    "sha256": "a4ec016f2a564f80c2a1d2b96005f0476439c37f7fc087fdd28dc1e6b68a0689",
+    "paginas": 72,
+    "extrator": "pdftotext version 24.02.0"
+  },
+  "repositorios": {
+    "experimento": {
+      "head": "94c74d778e60e80dccbf2cf0f09ad716d6f46d9f",
+      "shallow": false,
+      "refs": [
+        "refs/heads/backup/feature04-before-secret-fix-20261013 34e0b3dfb1b0ee6ec5201755ac7fb7a8042b6e9c",
+        "refs/heads/backup/semgrep-findings-before-secret-fix-20261013 133523731daa278e63adceb6f6e7fea2d3a4d89c",
+        "refs/heads/feat/docker 517385e3f4784fda06ff7e946d2add0c44f7cf5d",
+        "refs/heads/feat/execucao-teste 94c74d778e60e80dccbf2cf0f09ad716d6f46d9f",
+        "refs/heads/main da10b26864b614055b0f74df79162a395eef709c",
+        "refs/heads/semgrep-findings 85ee214ab672303340c6f348eb1e7ec2bf5a9134",
+        "refs/remotes/origin/HEAD d645466efbff498f725c464fa7c15f982606e108",
+        "refs/remotes/origin/feat/docker 517385e3f4784fda06ff7e946d2add0c44f7cf5d",
+        "refs/remotes/origin/feat/execucao-teste 94c74d778e60e80dccbf2cf0f09ad716d6f46d9f",
+        "refs/remotes/origin/feat/p3-p4 fa7b644957a71c68264f3f15474c59337e7c64e2",
+        "refs/remotes/origin/main d645466efbff498f725c464fa7c15f982606e108",
+        "refs/remotes/origin/semgrep-findings 85ee214ab672303340c6f348eb1e7ec2bf5a9134",
+        "refs/tags/v0.1-baseline-sast 969356cb062640ce008d0b579b5369cc414fbd56"
+      ],
+      "status_porcelain": [
+        " M outputs/campanha_docker/AMP_PAINEL_20261019T183425Z_282e13b4/resultados_consolidados/AMP_PAINEL_20261019T183425Z_282e13b4_sessoes.json",
+        " M outputs/campanha_docker/AMP_PAINEL_20261019T183425Z_282e13b4/resultados_consolidados/execucoes.jsonl",
+        "?? outputs/campanha_docker/AMP_PAINEL_20261019T183425Z_282e13b4/codigos_corrigidos/AMP41302bd0fb784039_SEMOWASP_OUTRO_P4_AMP_PAINEL_20261019T183425Z_282e13b4/lib/insecurity.ts",
+        "?? outputs/campanha_docker/AMP_PAINEL_20261019T183425Z_282e13b4/comparacoes/AMP41302bd0fb784039_SEMOWASP_OUTRO_P4_AMP_PAINEL_20261019T183425Z_282e13b4.json",
+        "?? outputs/campanha_docker/AMP_PAINEL_20261019T183425Z_282e13b4/patches/AMP41302bd0fb784039_SEMOWASP_OUTRO_P4_AMP_PAINEL_20261019T183425Z_282e13b4.diff",
+        "?? outputs/campanha_docker/AMP_PAINEL_20261019T183425Z_282e13b4/respostas_llm/AMP41302bd0fb784039_SEMOWASP_OUTRO_P4_AMP_PAINEL_20261019T183425Z_282e13b4.json",
+        "?? outputs/campanha_docker/AMP_PAINEL_20261019T183425Z_282e13b4/sast_depois/AMP41302bd0fb784039_SEMOWASP_OUTRO_P4_AMP_PAINEL_20261019T183425Z_282e13b4_raw.json",
+        "?? outputs/campanha_docker/AMP_PAINEL_20261019T183425Z_282e13b4/sast_depois/AMP41302bd0fb784039_SEMOWASP_OUTRO_P4_AMP_PAINEL_20261019T183425Z_282e13b4_raw.stderr.log",
+        "?? outputs/campanha_docker/AMP_PAINEL_20261019T183425Z_282e13b4/sast_depois/AMP41302bd0fb784039_SEMOWASP_OUTRO_P4_AMP_PAINEL_20261019T183425Z_282e13b4_raw_evidencia_funcional.json",
+        "?? outputs/campanha_docker/AMP_PAINEL_20261019T183425Z_282e13b4/testes/AMP41302bd0fb784039_SEMOWASP_OUTRO_P4_AMP_PAINEL_20261019T183425Z_282e13b4.json",
+        "?? outputs/campanha_docker/AMP_PAINEL_20261019T183425Z_282e13b4_METRICAS/casos.csv",
+        "?? outputs/campanha_docker/AMP_PAINEL_20261019T183425Z_282e13b4_METRICAS/manifesto.json",
+        "?? outputs/campanha_docker/AMP_PAINEL_20261019T183425Z_282e13b4_METRICAS/metricas.json",
+        "?? outputs/campanha_docker/AMP_PAINEL_20261019T183425Z_282e13b4_METRICAS/metricas_gerais.csv",
+        "?? outputs/campanha_docker/AMP_PAINEL_20261019T183425Z_282e13b4_METRICAS/metricas_por_auditoria.csv",
+        "?? outputs/campanha_docker/AMP_PAINEL_20261019T183425Z_282e13b4_METRICAS/metricas_por_caso.csv",
+        "?? outputs/campanha_docker/AMP_PAINEL_20261019T183425Z_282e13b4_METRICAS/metricas_por_cobertura_funcional.csv",
+        "?? outputs/campanha_docker/AMP_PAINEL_20261019T183425Z_282e13b4_METRICAS/metricas_por_cwe.csv",
+        "?? outputs/campanha_docker/AMP_PAINEL_20261019T183425Z_282e13b4_METRICAS/metricas_por_estrategia.csv",
+        "?? outputs/campanha_docker/AMP_PAINEL_20261019T183425Z_282e13b4_METRICAS/metricas_por_inferencia.csv",
+        "?? outputs/campanha_docker/AMP_PAINEL_20261019T183425Z_282e13b4_METRICAS/metricas_por_owasp.csv",
+        "?? outputs/campanha_docker/AMP_PAINEL_20261019T183425Z_282e13b4_METRICAS/metricas_por_rag.csv",
+        "?? outputs/campanha_docker/AMP_PAINEL_20261019T183425Z_282e13b4_METRICAS/metricas_por_regra.csv",
+        "?? outputs/campanha_docker/AMP_PAINEL_20261019T183425Z_282e13b4_METRICAS/metricas_por_severidade.csv",
+        "?? outputs/campanha_docker/AMP_PAINEL_20261019T183425Z_282e13b4_METRICAS/tentativas.csv"
+      ],
+      "caminho_configurado": "../tcc2-llm-sast-juiceshop",
+      "commits": 57
+    },
+    "poc": {
+      "head": "d399ea608c7900c3331b82767d59bde8224f775c",
+      "shallow": false,
+      "refs": [
+        "refs/heads/main d399ea608c7900c3331b82767d59bde8224f775c",
+        "refs/remotes/origin/HEAD d399ea608c7900c3331b82767d59bde8224f775c",
+        "refs/remotes/origin/main d399ea608c7900c3331b82767d59bde8224f775c"
+      ],
+      "status_porcelain": [
+        "?? PROVA_DE_CONCEITO.md",
+        "?? estrategias_prompt_atualizadas.md"
+      ],
+      "caminho_configurado": "../repoc/PoC-TCC-Matheus-e-Caio",
+      "commits": 16
+    },
+    "escrita": {
+      "head": "a65fb1e0770658db4a035c43819b3364c4aeb016",
+      "shallow": false,
+      "refs": [
+        "refs/heads/main a65fb1e0770658db4a035c43819b3364c4aeb016",
+        "refs/remotes/origin/HEAD a65fb1e0770658db4a035c43819b3364c4aeb016",
+        "refs/remotes/origin/main a65fb1e0770658db4a035c43819b3364c4aeb016"
+      ],
+      "status_porcelain": [
+        " M README.md",
+        "?? .agents/skills/tcc2-bibliografia/SKILL.md",
+        "?? .agents/skills/tcc2-coordenar/SKILL.md",
+        "?? .agents/skills/tcc2-historico/SKILL.md",
+        "?? .agents/skills/tcc2-planejar/SKILL.md",
+        "?? .agents/skills/tcc2-redigir/SKILL.md",
+        "?? .agents/skills/tcc2-resultados/SKILL.md",
+        "?? .agents/skills/tcc2-revisar/SKILL.md",
+        "?? .claude/skills/tcc2-bibliografia/SKILL.md",
+        "?? .claude/skills/tcc2-coordenar/SKILL.md",
+        "?? .claude/skills/tcc2-historico/SKILL.md",
+        "?? .claude/skills/tcc2-planejar/SKILL.md",
+        "?? .claude/skills/tcc2-redigir/SKILL.md",
+        "?? .claude/skills/tcc2-resultados/SKILL.md",
+        "?? .claude/skills/tcc2-revisar/SKILL.md",
+        "?? .gitignore",
+        "?? AGENTS.md",
+        "?? CLAUDE.md",
+        "?? docs/compromissos-tcc1.md",
+        "?? docs/contexto.md",
+        "?? docs/evolucao.md",
+        "?? docs/plano-redacao.md",
+        "?? fontes.json",
+        "?? scripts/coletar_fontes.py",
+        "?? scripts/sincronizar_skills.py",
+        "?? tests/test_coletar_fontes.py"
+      ],
+      "caminho_configurado": ".",
+      "commits": 1
+    }
+  },
+  "arquivos_inventariados": 715,
+  "gerados_sha256": {
+    "arquivos.jsonl": "3bef09fff69ed7012de4415a91e8fd166f3a5d3ff247cbb4502f3cae859509b5",
+    "git-escrita.jsonl": "2227a04457a2f5a56add067e816bdf77563356aff99c4703c0f441f22ec07dd2",
+    "git-escrita.md": "40a844e1ab702f9869319008c32ba0d9a1203385ebfbaff38d7d1218b0e05b16",
+    "git-experimento.jsonl": "8775369bea30c436241e3b4e0d14d63074424d052212d13cb19ce83854d7dcc5",
+    "git-experimento.md": "d43bb769ca36ac10a6c8fb029ce7d19d075d7519ca44e8695a5e93fb907420c2",
+    "git-poc.jsonl": "e3934bc72f6f7ef6f1fd6f4a8664b4a147d657fa63eba1a4cf65d6bd26276edc",
+    "git-poc.md": "055d45f1640ff0b81990ab518fc31c4406889bd9f8635078bd63402ecb5814a9",
+    "tcc1.paginas.jsonl": "cc8c779a933ef245abee3b5f017ac75c7916d6ff399936ea1a78ca48db9fa928",
+    "tcc1.txt": "4d10a035d0e78c9d9a384a89c115c3cb24600fecb202867e363f7a54620c91f4"
+  }
+}

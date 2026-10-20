@@ -1,0 +1,12 @@
+__pycache__/
+*.pyc
+.venv/
+.DS_Store
+fontes.local.json
+.claude/settings.local.json
+.coleta-*/
+
+# Fontes locais adicionadas após clonar o repositório de escrita.
+/tcc2-llm-sast-juiceshop/
+/PoC-TCC-Matheus-e-Caio/
+

@@ -1,0 +1,23 @@
+{
+  "pdf_tcc1": "TCC1___Caio_Lamego_e_Matheus_Brant-11.pdf",
+  "repositorios": {
+    "experimento": "tcc2-llm-sast-juiceshop",
+    "escrita": "."
+  },
+  "repositorios_opcionais": {
+    "poc": "PoC-TCC-Matheus-e-Caio"
+  },
+  "documentos": ["README.md", "docs/**/*.md", "features/**/*.md", "knowledge_base/**/*.md"],
+  "artefatos": [
+    "config/**/*.yaml", "config/**/*.json", "config/**/*.md",
+    "src/**/*.py", "scripts/reports/*.py", "scripts/calculate_metrics.py",
+    "scripts/prompt_builder.py", "compose.yaml", "Dockerfile", "docker/referencia.json",
+    "outputs/**/metricas*.csv", "outputs/**/metricas*.json",
+    "outputs/**/tentativas.csv", "outputs/**/casos.csv",
+    "outputs/**/execucoes.json", "outputs/**/execucoes.jsonl", "outputs/**/*_sessoes.json",
+    "outputs/**/contrato_execucao.json", "outputs/**/manifesto.json",
+    "outputs/**/preflight.json", "outputs/**/catalogo_meta.json",
+    "outputs/**/catalogo_issues.json", "outputs/**/baseline_testes.json",
+    "outputs/**/validacao.json", "outputs/**/RESUMO.md"
+  ]
+}
