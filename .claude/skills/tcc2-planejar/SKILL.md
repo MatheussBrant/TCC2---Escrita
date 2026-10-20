@@ -17,6 +17,14 @@ Ao planejar ou revisar especificações, preserve a correspondência entre capí
 IDs, pastas exclusivas e critérios verificáveis. Não redija capítulos em resposta
 a um pedido restrito à definição de tarefas.
 
+Quando o pedido for planejar a execução de uma feature existente, leia a
+especificação e apresente argumento, fontes, etapas, saídas, dependências e
+verificação dos critérios. Entregue o plano na conversa ou no mecanismo de
+planejamento do cliente. Se for solicitado persistir no repositório, grave
+`plano.md` somente na pasta `saida` da feature, respeitando o modo do cliente.
+Não atualize a matriz compartilhada automaticamente nesse escopo. A redação
+do texto ocorre no pedido de execução; preserve a separação quando solicitada.
+
 Para permitir trabalho simultâneo, cada feature precisa de fontes originais
 acessíveis sem depender da entrega de outro redator. Separe dependência para
 começar de conferência necessária para fechar; F01–F10 iniciam com a base comum,

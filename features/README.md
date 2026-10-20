@@ -10,6 +10,9 @@ Cada README de feature é uma tarefa para uma LLM: define o que escrever, fontes
 limites, entregáveis, dependências de fechamento e critérios de aceitação.
 Leia-o junto do [contrato de trabalho](CONTRATO.md) e da [base comum](BASE_COMUM.md).
 Os caminhos de saída são relativos à raiz de escrita, independentemente do cliente.
+Os textos Markdown vão para [manuscrito/](../manuscrito/README.md), em pastas
+separadas por feature. O [README principal](../README.md#planejar-e-depois-escrever)
+traz o fluxo de planejar uma tarefa, executar sua redação e revisar os critérios.
 
 ## Features e destino no texto
 

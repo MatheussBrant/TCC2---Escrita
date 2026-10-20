@@ -41,6 +41,15 @@ instruções, e skills em `.claude/skills/`. Se a sessão já estava aberta ante
 configuração, abra uma nova sessão e confira a lista de skills. Abrir apenas a
 pasta pai `TCC` pode não descobrir as skills deste repositório filho.
 
+As extensões Codex e Claude Code reconhecem as skills de projeto nesses
+diretórios. Elas ficam disponíveis para seleção e são carregadas conforme a
+tarefa; abrir a pasta não inicia a redação. No Codex, consulte `/skills` ou
+digite `$tcc2-`; no Claude Code, digite `/tcc2-` no campo da conversa. Confira
+as oito skills antes de distribuir tarefas. Se não aparecerem, abra uma nova
+conversa na raiz correta e confira se os diretórios vieram no clone. Consulte
+a [documentação do Codex](https://learn.chatgpt.com/docs/build-skills) e a
+[documentação do Claude Code no VS Code](https://code.claude.com/docs/en/vs-code).
+
 | Trabalho | Codex | Claude Code |
 |---|---|---|
 | Planejar capítulos e verificar compromissos | `$tcc2-planejar` | `/tcc2-planejar` |
@@ -72,6 +81,37 @@ As skills também têm descrições para seleção automática. Elas orientam os
 disponíveis no cliente; não iniciam serviços, instalam agentes ou chamam APIs por
 conta própria. A configuração destina-se a **Claude Code/Codex com acesso aos
 arquivos**, não implica instalação automática no chat comum do Claude.
+
+## Planejar e depois escrever
+
+Os textos Markdown ficam em [manuscrito/](manuscrito/README.md). Cada feature
+tem sua própria pasta; F11 reúne as contribuições em
+`manuscrito/11-integracao/tcc2.md`. `features/` guarda as especificações das tarefas,
+e `revisoes/` recebe os pareceres. A pasta de cada texto é criada com seu conteúdo.
+
+Para planejar uma feature antes de executá-la:
+
+```text
+$tcc2-planejar Planeje a execução de features/04-metodologia/README.md.
+Apresente fontes, etapas, arquivos, pendências e como verificar os critérios.
+Aguarde meu próximo pedido para começar a redação.
+```
+
+Depois, para executar o plano:
+
+```text
+$tcc2-redigir Execute features/04-metodologia/README.md conforme o plano adotado.
+Registre o plano em manuscrito/04-metodologia/plano.md e produza o texto,
+as evidências e a entrega com autoavaliação dos critérios.
+```
+
+Para revisar: `$tcc2-revisar Revise a entrega F04 e seus critérios; grave o
+parecer em revisoes/F04/parecer.md.` No Claude Code, troque `$` por `/`.
+
+É possível planejar F01–F10 e depois solicitar sua redação simultânea com
+`tcc2-coordenar`, respeitando as vagas disponíveis. Cada agente recebe uma pasta
+exclusiva e a mesma base da rodada. O início é paralelo; o fechamento exige
+conferir as dependências. F11 começa após as entregas selecionadas revisadas.
 
 ## Montar o workspace depois de clonar a escrita
 
