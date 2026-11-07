@@ -5,6 +5,11 @@ Eles constituem o ponto de partida para a adaptação ao TCC2. Nesta separação
 o texto e a numeração do TCC1 foram preservados; apenas os caminhos relativos
 das figuras e do link para o PDF foram ajustados.
 
+Após a separação, a introdução recebeu Q5 e um objetivo específico de comparação
+entre modelos, conforme a decisão dos autores registrada nas
+[diretrizes de escrita](../docs/diretrizes-escrita.md). Q1–Q4 foram mantidas.
+Os demais capítulos ainda conservam o texto de partida do TCC1.
+
 | Arquivo | Conteúdo original |
 |---|---|
 | [00-elementos-pre-textuais.md](00-elementos-pre-textuais.md) | Capa, folha de rosto, ficha catalográfica, aprovação, resumos, listas e sumário |
@@ -20,7 +25,8 @@ das figuras e do link para o PDF foram ajustados.
 O Markdown completo na raiz permanece como referência do TCC1. Os arquivos desta
 pasta podem ser adaptados ao TCC2 conforme as decisões dos autores; as alterações
 ficam localizadas por capítulo e podem ser acompanhadas pelo diff do Git.
-Ainda não foi realizada a adaptação de conteúdo nem a reorganização dos capítulos.
+A adaptação de conteúdo começou pela inclusão da comparação de modelos na
+introdução; a reorganização dos capítulos ainda não foi realizada.
 
 A proposta de estrutura do TCC2 está em
 [docs/diretrizes-escrita.md](../docs/diretrizes-escrita.md). Na proposta, o capítulo

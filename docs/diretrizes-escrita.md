@@ -16,10 +16,59 @@ resultados experimentais.
 - O capítulo 5 deverá apresentar e interpretar os resultados e responder às
   perguntas de pesquisa definidas no TCC1.
 
+## Linguagem definida para todos os planos
+
+O autor definiu que a escrita deve ser acadêmica, objetiva e explicativa,
+próxima à linguagem do TCC1. As explicações devem desenvolver as ideias com
+clareza, apresentando os termos necessários sem aprofundamento técnico excessivo.
+
+Essa orientação também delimita o capítulo 4: o maior detalhe da implementação
+consiste em explicar como as partes funcionam e se conectam. Classes, funções,
+comandos e formatos completos de dados só entram quando ajudam a compreender
+uma decisão; detalhes extensos podem ser consultados em apêndices.
+
+Os [critérios de escrita](criterios-escrita.md) orientam os três planos:
+
+- [Capítulo 3 — Metodologia](plano-paragrafos-capitulo-3.md).
+- [Capítulo 4 — Implementação](plano-paragrafos-capitulo-4.md).
+- [Capítulo 5 — Resultados e discussão](plano-paragrafos-capitulo-5.md).
+
+As orientações de todos os parágrafos foram simplificadas, mantendo seus IDs e
+os assuntos previstos. A quantidade é uma referência de organização, não uma
+exigência de extensão: parágrafos podem ser unidos ou divididos para melhorar
+a leitura. As evidências permanecem como apoio de trabalho para sustentar a
+redação, sem exigir sua descrição integral no corpo da monografia.
+
 Essa orientação substitui a proposta anterior de agrupar metodologia e
 desenvolvimento em um único capítulo e resultados e discussão no capítulo 4.
 Os arquivos de organização anteriores estão ausentes na árvore de trabalho
 consultada; não foram restaurados.
+
+## Ampliação aceita: comparação entre modelos
+
+O autor aceitou acrescentar a comparação entre modelos como eixo do TCC2,
+preservando Q1–Q4 e incluindo a seguinte pergunta:
+
+> **Q5:** Como diferentes modelos de linguagem se comparam na geração de
+> correções válidas pelo pipeline, considerando eficácia, custo e tempo de execução?
+
+Objetivo específico correspondente: comparar diferentes modelos de linguagem na
+geração de correções válidas pelo pipeline, considerando eficácia, custo e tempo
+de execução nas condições avaliadas.
+
+Modelos das campanhas finais consultadas: GPT-4.1 mini, GPT-5.6 Luna e GPT-6 Luna.
+O capítulo 3 terá uma seção própria de modelos e parâmetros de geração e explicará
+o procedimento de comparação. O capítulo 5 terá uma seção de comparação dos
+modelos e responderá explicitamente a Q5, além de Q1–Q4.
+
+Comparar taxas por tentativa e aceites por caso, preservação funcional, novos
+alertas, custos conhecidos e tempos. Declarar as condições compartilhadas e as
+diferenças de parâmetros, distinguir latência de geração de tempo total e
+considerar a seleção sequencial das estratégias. Não tratar a comparação como
+avaliação de superioridade geral dos modelos.
+
+A decisão foi aceita pelo autor na conversa. O alinhamento com a orientadora
+permanece a realizar; não há registro de aprovação acadêmica nesta decisão.
 
 ## Proposta de sumário para desenvolver com os autores
 
@@ -30,7 +79,8 @@ o refinamento do sumário.
 ### 1. Introdução
 
 Partir da introdução do TCC1. Preservar problema, objetivo geral, objetivos
-específicos e perguntas de pesquisa, conferindo a coerência com o estudo realizado.
+específicos e perguntas Q1–Q4, acrescentando Q5 e o objetivo de comparar modelos,
+conforme a ampliação aceita. Conferir a coerência com o estudo realizado.
 Atualizar a apresentação da contribuição e a organização do documento.
 
 ### 2. Referencial teórico e trabalhos relacionados
@@ -94,7 +144,7 @@ Possíveis seções:
 5. Resultados por tipo de vulnerabilidade, regra e categoria OWASP.
 6. Exemplos de correções aceitas e falhas, com análise do código.
 7. RRIS e limitações da aplicação conjunta dos patches.
-8. Respostas explícitas a Q1–Q4, ameaças à validade e discussão com a literatura.
+8. Respostas explícitas a Q1–Q5, ameaças à validade e discussão com a literatura.
 
 Cuidados para a análise:
 

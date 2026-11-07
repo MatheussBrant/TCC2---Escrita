@@ -36,6 +36,10 @@ Com base nisso, esta pesquisa busca responder às seguintes questões:
 
 - Q4: Quais limitações práticas surgem ao aplicar um _pipeline_ automatizado de correção de vulnerabilidades em uma base de código real, com dependências, arquitetura própria e suíte de testes existente?
 
+<!-- Decisão de escrita: inclusão de Q5 aceita pelo autor nesta conversa; ampliação em relação ao TCC1. Não implica aprovação da orientadora. -->
+
+- Q5: Como diferentes modelos de linguagem se comparam na geração de correções válidas pelo pipeline, considerando eficácia, custo e tempo de execução?
+
 ### 1.3 Objetivos
 
 #### 1.3.1 Objetivo Geral
@@ -51,6 +55,8 @@ Investigar a eficácia de um fluxo iterativo que integra Modelos de Linguagem de
 - Avaliar as correções geradas a partir da reanálise SAST, da execução dos testes automatizados e da verificação de que novas _issues_ de segurança não foram introduzidas.
 
 - Analisar os resultados obtidos no projeto, considerando a taxa de remediação validada, os tipos de _issues_ detectadas, as falhas de correção e as limitações práticas do _pipeline_.
+
+- Comparar diferentes modelos de linguagem na geração de correções válidas pelo _pipeline_, considerando a eficácia, o custo e o tempo de execução nas condições avaliadas.
 
 ### 1.4 Metodologia
 
