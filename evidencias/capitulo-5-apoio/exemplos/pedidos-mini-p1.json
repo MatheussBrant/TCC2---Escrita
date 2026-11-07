@@ -1,0 +1,55 @@
+{
+  "nome": "pedidos-mini-p1",
+  "execucao": "AMP_REAL_20261106T151004Z_f49ac0d2",
+  "caso_id": "AMP20721d202c8b96d6",
+  "tentativa_id": "AMP20721d202c8b96d6_SEMOWASP_OUTRO_P1_AMP_REAL_20261106T151004Z_f49ac0d2",
+  "modelo": "gpt-4.1-mini-2025-04-14",
+  "estrategia": "P1_simples",
+  "arquivo": "routes/trackOrder.ts",
+  "classificacao_arquivada": "confirmado",
+  "justificativa_arquivada": "ID de rota sem sanitizacao quando o desafio esta habilitado e interpolado em string JavaScript de $where; o teste Cypress injeta uma expressao sempre verdadeira.",
+  "R": 1,
+  "F_criterio": 1,
+  "F_sem_separacao": 0,
+  "M": 1,
+  "classificacao_final": "aceita",
+  "testes_falhos_d_criterio": [
+    "test/api/track-result.test.ts :: /rest/track-order/:id > GET all orders by injecting into orderId"
+  ],
+  "testes_falhos_f_criterio": [],
+  "selecao_testes": {
+    "arquivos": [
+      "routes/trackOrder.ts"
+    ],
+    "grupos": [
+      "track"
+    ],
+    "dominios": [
+      "api"
+    ],
+    "motivos": [],
+    "suficiente": true
+  },
+  "etapas": [
+    {
+      "tier": "T0",
+      "status": "executada",
+      "duracao_s": 9.94
+    },
+    {
+      "tier": "T2_API",
+      "grupo": "track",
+      "status": "executada",
+      "duracao_s": 17.29
+    }
+  ],
+  "sha256": {
+    "outputs/campanha_docker/AMP_REAL_20261106T151004Z_f49ac0d2/prompts/AMP20721d202c8b96d6_SEMOWASP_OUTRO_P1_AMP_REAL_20261106T151004Z_f49ac0d2.json": "77dece2b7db73152d51851ce096194e83dcabd544c826e783b33ffc91613b1ce",
+    "outputs/campanha_docker/AMP_REAL_20261106T151004Z_f49ac0d2/respostas_llm/AMP20721d202c8b96d6_SEMOWASP_OUTRO_P1_AMP_REAL_20261106T151004Z_f49ac0d2.json": "3fda83bf5d9278275ccaf939ab2c296ce493ea4c6f8d0ea1dd005f477d5a63c9",
+    "outputs/campanha_docker/AMP_REAL_20261106T151004Z_f49ac0d2/patches/AMP20721d202c8b96d6_SEMOWASP_OUTRO_P1_AMP_REAL_20261106T151004Z_f49ac0d2.diff": "ce9d415053cd9d7dd5c457f72de04ddac4b979e3f1979a7c3718c97ea02a7641",
+    "outputs/campanha_docker/AMP_REAL_20261106T151004Z_f49ac0d2/sast_depois/AMP20721d202c8b96d6_SEMOWASP_OUTRO_P1_AMP_REAL_20261106T151004Z_f49ac0d2_raw_evidencia_funcional.json": "f909bfed32fe4b378afed960554f9f9c53ea1946b9652cdde8c706758dae6dfd",
+    "outputs/campanha_docker/AMP_REAL_20261106T151004Z_f49ac0d2/comparacoes/AMP20721d202c8b96d6_SEMOWASP_OUTRO_P1_AMP_REAL_20261106T151004Z_f49ac0d2.json": "655e181a78c18809ce89ad5253f53b9824959e87abd41bf71ee118c930c0aa73",
+    "outputs/campanha_docker/AMP_REAL_20261106T151004Z_f49ac0d2/sast_depois/AMP20721d202c8b96d6_SEMOWASP_OUTRO_P1_AMP_REAL_20261106T151004Z_f49ac0d2_raw.json": "f83cfb2e3feee5f799113598b9dd5f88942d3afc84d13517a838f9db3fb1d5df",
+    "outputs/campanha_docker/AMP_REAL_20261106T151004Z_f49ac0d2/testes/AMP20721d202c8b96d6_SEMOWASP_OUTRO_P1_AMP_REAL_20261106T151004Z_f49ac0d2.json": "3af98e822ce488f3d60ec178297046d55019a5adcfbc5ad55555e948356a9704"
+  }
+}

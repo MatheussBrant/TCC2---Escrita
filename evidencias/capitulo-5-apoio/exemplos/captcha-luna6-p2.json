@@ -1,0 +1,60 @@
+{
+  "nome": "captcha-luna6-p2",
+  "execucao": "AMP_REAL_20261106T105533Z_aa697342",
+  "caso_id": "AMP869de4721b99fc7c",
+  "tentativa_id": "AMP869de4721b99fc7c_A05_CODEINJ_P2_AMP_REAL_20261106T105533Z_aa697342",
+  "modelo": "gpt-6-luna",
+  "estrategia": "P2_raciocinio_guiado",
+  "arquivo": "routes/captcha.ts",
+  "classificacao_arquivada": "falso_positivo",
+  "justificativa_arquivada": "Expressao e formada por numeros aleatorios e operadores fixos, sem entrada controlada pelo usuario.",
+  "R": 1,
+  "F_criterio": 1,
+  "F_sem_separacao": 1,
+  "M": 1,
+  "classificacao_final": "aceita",
+  "testes_falhos_d_criterio": [],
+  "testes_falhos_f_criterio": [],
+  "selecao_testes": {
+    "arquivos": [
+      "routes/captcha.ts"
+    ],
+    "grupos": [
+      "captcha_arithmetic",
+      "feedback"
+    ],
+    "dominios": [
+      "api"
+    ],
+    "motivos": [],
+    "suficiente": true
+  },
+  "etapas": [
+    {
+      "tier": "T0",
+      "status": "executada",
+      "duracao_s": 5.87
+    },
+    {
+      "tier": "T2_API",
+      "grupo": "captcha_arithmetic",
+      "status": "executada",
+      "duracao_s": 5.57
+    },
+    {
+      "tier": "T2_API",
+      "grupo": "feedback",
+      "status": "executada",
+      "duracao_s": 4.95
+    }
+  ],
+  "sha256": {
+    "outputs/campanha_docker/AMP_REAL_20261106T105533Z_aa697342/prompts/AMP869de4721b99fc7c_A05_CODEINJ_P2_AMP_REAL_20261106T105533Z_aa697342.json": "2992156db1c754e68d9464f55f526fa54ea2e26a64a9f6c5ecfd8b3cbb1f1883",
+    "outputs/campanha_docker/AMP_REAL_20261106T105533Z_aa697342/respostas_llm/AMP869de4721b99fc7c_A05_CODEINJ_P2_AMP_REAL_20261106T105533Z_aa697342.json": "a12da1c6974b59bad3029c462633c3447fe7f9751545de3dd82189449501a77d",
+    "outputs/campanha_docker/AMP_REAL_20261106T105533Z_aa697342/patches/AMP869de4721b99fc7c_A05_CODEINJ_P2_AMP_REAL_20261106T105533Z_aa697342.diff": "ee37981ba2ab1100f9708c8ff55b7bd9294a41013cb4fa1aeb2e8f780ef729e8",
+    "outputs/campanha_docker/AMP_REAL_20261106T105533Z_aa697342/sast_depois/AMP869de4721b99fc7c_A05_CODEINJ_P2_AMP_REAL_20261106T105533Z_aa697342_raw_evidencia_funcional.json": "777eebcb1aa0781d5999ac5b213bd59a21962cf073abbf47145fd46e7332d2be",
+    "outputs/campanha_docker/AMP_REAL_20261106T105533Z_aa697342/comparacoes/AMP869de4721b99fc7c_A05_CODEINJ_P2_AMP_REAL_20261106T105533Z_aa697342.json": "8e152d84edcab2157f8d5293e7025499aa878b691b447ea63a482b53de7a159c",
+    "outputs/campanha_docker/AMP_REAL_20261106T105533Z_aa697342/sast_depois/AMP869de4721b99fc7c_A05_CODEINJ_P2_AMP_REAL_20261106T105533Z_aa697342_raw.json": "9ef2dc6774ab26a509e59087135432a8da738190746f9bb6c659d4403ed73e83",
+    "outputs/campanha_docker/AMP_REAL_20261106T105533Z_aa697342/testes/AMP869de4721b99fc7c_A05_CODEINJ_P2_AMP_REAL_20261106T105533Z_aa697342.json": "4f8348b9a9f41939ab9cfcd669b502f2c1a8747c9b19b9d26cdab0e6bba9d779"
+  }
+}

@@ -1,0 +1,13 @@
+modelo,estrategia,numerador,denominador,percentual,populacao,definicao_f
+GPT-4.1 mini,P1,16,78,20.512820512820515,real_desenho,criterio
+GPT-4.1 mini,P2,4,62,6.451612903225806,real_desenho,criterio
+GPT-4.1 mini,P3,15,58,25.862068965517242,real_desenho,criterio
+GPT-4.1 mini,P4,3,43,6.976744186046512,real_desenho,criterio
+GPT-5.6 Luna,P1,18,78,23.076923076923077,real_desenho,criterio
+GPT-5.6 Luna,P2,5,60,8.333333333333334,real_desenho,criterio
+GPT-5.6 Luna,P3,25,55,45.45454545454545,real_desenho,criterio
+GPT-5.6 Luna,P4,3,30,10.0,real_desenho,criterio
+GPT-6 Luna,P1,21,78,26.923076923076923,real_desenho,criterio
+GPT-6 Luna,P2,5,57,8.771929824561404,real_desenho,criterio
+GPT-6 Luna,P3,18,52,34.61538461538461,real_desenho,criterio
+GPT-6 Luna,P4,5,34,14.705882352941176,real_desenho,criterio

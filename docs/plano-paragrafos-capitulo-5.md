@@ -8,6 +8,12 @@ com comparação explícita dos três modelos. Quantidade de parágrafos e títu
 podem ser ajustados na revisão. Este documento não é o capítulo redigido nem
 uma aprovação acadêmica ou revisão integral dos resultados.
 
+O [primeiro rascunho completo](../manuscrito/05-resultados-discussao.md) foi
+elaborado em 07/11/2026. As [notas de evidência](../evidencias/capitulo-5-notas.md)
+registram a reconsolidação offline, os cálculos derivados, os exemplos e as
+pendências de revisão. Os três consolidados reproduzidos coincidiram integralmente
+com os originais; isso não equivale a revisão humana do experimento.
+
 ## Diretrizes de conteúdo
 
 - Capítulo 3 define o método; capítulo 4 explica a implementação; capítulo 5
@@ -32,8 +38,9 @@ chamadas LLM, campanhas, testes do alvo, análise estatística ou inspeção int
  dos patches nesta tarefa.
 
 O arquivo [05-consideracoes-finais.md](../manuscrito/05-consideracoes-finais.md)
-ainda contém as considerações finais do TCC1 e permanece preservado. A redação
-deste novo capítulo e a reorganização da conclusão serão tarefas posteriores.
+contém as considerações finais do TCC1 e permanece preservado. O novo capítulo
+foi criado em 05-resultados-discussao.md. A reorganização da conclusão continua
+como tarefa posterior.
 
 Planos relacionados: [capítulo 3](plano-paragrafos-capitulo-3.md),
 [capítulo 4](plano-paragrafos-capitulo-4.md) e
@@ -139,7 +146,7 @@ ou aprofundar métodos estatísticos que não façam parte da análise realizada
 
 **Apresentação sugerida:** Dois ou três exemplos com diff reduzido e tabela de evidências; usar o exemplo do capítulo 4 somente se acrescentar análise dos resultados.
 
-**Fontes/condição para redação:** Prompts, respostas_llm, patches, sast_depois, comparacoes e testes dos IDs de tentativa escolhidos; seleção e inspeção ainda pendentes.
+**Fontes/condição para redação:** Prompts, respostas_llm, patches, sast_depois, comparacoes e testes das tentativas escolhidas. O primeiro rascunho inclui leitura documental com apoio automatizado de quatro tentativas em dois casos, com fontes nas notas; não foi afirmada auditoria humana independente.
 
 ### 5.7 Redução conjunta de alertas e RRIS
 
@@ -210,16 +217,16 @@ com aceite por caso ou preservação funcional dos patches integrados.
 - GPT-5.6 Luna: `outputs/campanha_docker/AMP_REAL_20261106T125801Z_0eb68fe4/contrato_execucao.json` e `outputs/rris/AMP_REAL_20261106T125801Z_0eb68fe4_METRICAS/`.
 - GPT-6 Luna: `outputs/campanha_docker/AMP_REAL_20261106T105533Z_aa697342/contrato_execucao.json` e `outputs/rris/AMP_REAL_20261106T105533Z_aa697342_METRICAS/`.
 
-## Análises e materiais ainda a preparar
+## Estado das análises e materiais após o primeiro rascunho
 
-1. Conferir proveniência e integridade dos artefatos usados no capítulo e reconciliar população principal, registros totais e pós-aceites.
-2. Produzir tabelas e gráficos a partir dos arquivos citados, conservando fontes, definições e denominadores; figuras não são resultados novos de geração.
-3. Derivar a sobreposição dos casos aceitos entre modelos e, se desejado, comparações pareadas, documentando a população. A existência de comparar_modelos.py não prova execução ou validade de um teste estatístico.
-4. Selecionar e inspecionar exemplos qualitativos com registro de autoria, método e limites; não afirmar inspeção humana que ainda não tenha ocorrido.
-5. Examinar o conjunto de patches e falhas funcionais da RRIS antes de explicar suas causas.
-6. Verificar a literatura realmente usada na discussão, sem comparar taxas de desenhos ou denominadores incompatíveis.
-7. Alinhar eventuais análises adicionais com o método do capítulo 3. Não introduzir testes estatísticos nem novas condições experimentais como se fossem decisões prévias.
-8. Conferir na introdução a formulação final de Q1–Q5 e o objetivo de comparar modelos.
+1. Concluída a reconciliação da população e a reconsolidação offline das três campanhas. Seus 45 artefatos reproduzidos coincidiram com os originais; as fontes e os cálculos estão nas notas de evidência.
+2. Elaboradas 12 tabelas e um gráfico, com dados de apoio e versões PNG/PDF/SVG. A numeração e a apresentação no template final permanecem pendentes.
+3. Derivada a sobreposição dos casos aceitos: 32 nos três modelos, 58 em pelo menos um e 20 em nenhum. Não foram realizados testes estatísticos ou novas campanhas.
+4. Selecionados dois casos e quatro tentativas, com 28 hashes de artefatos conferidos. A revisão dos autores e eventual auditoria humana independente permanecem distintas dessa leitura automatizada.
+5. Conferidos conflitos e falhas funcionais da RRIS. Não foi estabelecida atribuição causal completa das falhas aos patches; uma investigação desse tipo exigiria tarefa específica.
+6. Conferidos metadados e resumos de Khan, Liu e Gao e de Sriram et al. em fontes primárias. A discussão se limita ao escopo verificado e não compara taxas incompatíveis; a revisão bibliográfica integral continua pendente.
+7. Mantidas as definições do capítulo 3. Após revisão dos autores, alinhar sua pendência de inspeção qualitativa ao procedimento documental usado nesta redação, sem convertê-lo em revisão humana anterior.
+8. Conferida a formulação de Q1–Q5 na introdução; o rascunho contém uma resposta delimitada por pergunta. O tratamento final dos rótulos da triagem e a classificação do conjunto D continuam como pontos de revisão dos autores.
 
 ## Orientação de redação
 

@@ -1,0 +1,63 @@
+{
+  "nome": "captcha-luna6-p1",
+  "execucao": "AMP_REAL_20261106T105533Z_aa697342",
+  "caso_id": "AMP869de4721b99fc7c",
+  "tentativa_id": "AMP869de4721b99fc7c_A05_CODEINJ_P1_AMP_REAL_20261106T105533Z_aa697342",
+  "modelo": "gpt-6-luna",
+  "estrategia": "P1_simples",
+  "arquivo": "routes/captcha.ts",
+  "classificacao_arquivada": "falso_positivo",
+  "justificativa_arquivada": "Expressao e formada por numeros aleatorios e operadores fixos, sem entrada controlada pelo usuario.",
+  "R": 1,
+  "F_criterio": 0,
+  "F_sem_separacao": 0,
+  "M": 1,
+  "classificacao_final": "rejeitada:R1F0M1",
+  "testes_falhos_d_criterio": [],
+  "testes_falhos_f_criterio": [
+    "tests/functional/juice_shop/captcha_arithmetic.test.ts :: TCC CAPTCHA arithmetic contracts > calculates and persists 2*3*4 = 24",
+    "tests/functional/juice_shop/captcha_arithmetic.test.ts :: TCC CAPTCHA arithmetic contracts > calculates and persists 2*3+4 = 10",
+    "tests/functional/juice_shop/captcha_arithmetic.test.ts :: TCC CAPTCHA arithmetic contracts > calculates and persists 2*3-4 = 2",
+    "tests/functional/juice_shop/captcha_arithmetic.test.ts :: TCC CAPTCHA arithmetic contracts > calculates and persists 2+3*4 = 14",
+    "tests/functional/juice_shop/captcha_arithmetic.test.ts :: TCC CAPTCHA arithmetic contracts > calculates and persists 2+3-4 = 1",
+    "tests/functional/juice_shop/captcha_arithmetic.test.ts :: TCC CAPTCHA arithmetic contracts > calculates and persists 2-3*4 = -10",
+    "tests/functional/juice_shop/captcha_arithmetic.test.ts :: TCC CAPTCHA arithmetic contracts > calculates and persists 2-3+4 = 3",
+    "tests/functional/juice_shop/captcha_arithmetic.test.ts :: TCC CAPTCHA arithmetic contracts > calculates and persists 2-3-4 = -5"
+  ],
+  "selecao_testes": {
+    "arquivos": [
+      "routes/captcha.ts"
+    ],
+    "grupos": [
+      "captcha_arithmetic",
+      "feedback"
+    ],
+    "dominios": [
+      "api"
+    ],
+    "motivos": [],
+    "suficiente": true
+  },
+  "etapas": [
+    {
+      "tier": "T0",
+      "status": "executada",
+      "duracao_s": 7.8
+    },
+    {
+      "tier": "T2_API",
+      "grupo": "captcha_arithmetic",
+      "status": "executada",
+      "duracao_s": 17.59
+    }
+  ],
+  "sha256": {
+    "outputs/campanha_docker/AMP_REAL_20261106T105533Z_aa697342/prompts/AMP869de4721b99fc7c_A05_CODEINJ_P1_AMP_REAL_20261106T105533Z_aa697342.json": "ae6ee4203de05137e00f8f11411d40acd54a18875409c82397d4f5969e6a8868",
+    "outputs/campanha_docker/AMP_REAL_20261106T105533Z_aa697342/respostas_llm/AMP869de4721b99fc7c_A05_CODEINJ_P1_AMP_REAL_20261106T105533Z_aa697342.json": "8281271e47a635da0999a1d71488c99b8a25de83609c6eb61aa5c91c322a9ce4",
+    "outputs/campanha_docker/AMP_REAL_20261106T105533Z_aa697342/patches/AMP869de4721b99fc7c_A05_CODEINJ_P1_AMP_REAL_20261106T105533Z_aa697342.diff": "2d2bc39f88bf53bb1fd3b8eeb1bd6540480aef89680623fd1d0815b915a6b224",
+    "outputs/campanha_docker/AMP_REAL_20261106T105533Z_aa697342/sast_depois/AMP869de4721b99fc7c_A05_CODEINJ_P1_AMP_REAL_20261106T105533Z_aa697342_raw_evidencia_funcional.json": "bc4b77325c194dd4502ae0015bdb897bc04dcfff7807430dddb5e2432212af77",
+    "outputs/campanha_docker/AMP_REAL_20261106T105533Z_aa697342/comparacoes/AMP869de4721b99fc7c_A05_CODEINJ_P1_AMP_REAL_20261106T105533Z_aa697342.json": "9cb8c50abb5b4ede929c26e32cdc6fb8fc7a2df07f2ef72f167083432dc03e1f",
+    "outputs/campanha_docker/AMP_REAL_20261106T105533Z_aa697342/sast_depois/AMP869de4721b99fc7c_A05_CODEINJ_P1_AMP_REAL_20261106T105533Z_aa697342_raw.json": "889fc8fb5fc24d95c981c51ec632badd70d22cacaf25121c6c90a5123f683ae5",
+    "outputs/campanha_docker/AMP_REAL_20261106T105533Z_aa697342/testes/AMP869de4721b99fc7c_A05_CODEINJ_P1_AMP_REAL_20261106T105533Z_aa697342.json": "46d7255d44ab1ada6baa44644b9d9c30a55eff77c3a12c4b70b2f30509c0c8b2"
+  }
+}

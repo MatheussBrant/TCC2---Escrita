@@ -1,0 +1,202 @@
+[
+  {
+    "id": "C5-P01",
+    "secao": "Abertura",
+    "inicio": "Este capítulo apresenta e discute os resultados das campanhas finais do pipeline no OWASP Juice Shop. A análise considera a geração de propo"
+  },
+  {
+    "id": "C5-P02",
+    "secao": "Abertura",
+    "inicio": "Inicialmente, são caracterizados os casos e as campanhas. Em seguida, são apresentados os resultados gerais, as diferenças entre estratégias"
+  },
+  {
+    "id": "C5-P03",
+    "secao": "5.1 Caracterização das campanhas e dos casos",
+    "inicio": "Foram consideradas três campanhas reais concluídas em 6 de novembro de 2026, uma por modelo: GPT-4.1 mini, GPT-5.6 Luna e GPT-6 Luna. Elas c"
+  },
+  {
+    "id": "C5-P04",
+    "secao": "5.1 Caracterização das campanhas e dos casos",
+    "inicio": "O catálogo reuniu 78 ocorrências elegíveis, obtidas a partir de 124 alertas, com 46 exclusões na preparação. Os casos foram distribuídos em "
+  },
+  {
+    "id": "C5-P05",
+    "secao": "5.1 Caracterização das campanhas e dos casos",
+    "inicio": "A classificação arquivada da triagem identificou 55 casos como confirmados, 21 como falsos positivos e dois como inconclusivos. Esses rótulo"
+  },
+  {
+    "id": "C5-P06",
+    "secao": "5.1 Caracterização das campanhas e dos casos",
+    "inicio": "Todos os casos receberam tentativas nas três campanhas. A Tabela 1 distingue os registros produzidos da população principal, delimitada pelo"
+  },
+  {
+    "id": "C5-P07",
+    "secao": "5.2 Resultados gerais do pipeline",
+    "inicio": "O pipeline produziu pelo menos uma tentativa aceita para parte dos casos em todos os modelos, conforme a Tabela 2. O GPT-5.6 Luna apresentou"
+  },
+  {
+    "id": "C5-P08",
+    "secao": "5.2 Resultados gerais do pipeline",
+    "inicio": "A avaliação dos critérios isolados mostrou que remover o alerta e preservar o funcionamento foram obstáculos diferentes. A TRI permaneceu pr"
+  },
+  {
+    "id": "C5-P09",
+    "secao": "5.2 Resultados gerais do pipeline",
+    "inicio": "Parte das propostas não chegou à avaliação completa. No GPT-4.1 mini, 17 tentativas não foram aplicadas; no GPT-5.6 Luna, foram sete; e, no "
+  },
+  {
+    "id": "C5-P10",
+    "secao": "5.2 Resultados gerais do pipeline",
+    "inicio": "Os resultados foram sensíveis ao tratamento dos testes associados à manutenção das vulnerabilidades. A Tabela 4 mostra que a definição por c"
+  },
+  {
+    "id": "C5-P11",
+    "secao": "5.3 Comparação das estratégias de prompt",
+    "inicio": "As estratégias foram comparadas dentro de cada modelo, preservando o número de casos que alcançou cada etapa. Como mostra a Tabela 5, P1 rec"
+  },
+  {
+    "id": "C5-P12",
+    "secao": "5.3 Comparação das estratégias de prompt",
+    "inicio": "As estratégias posteriores contribuíram com casos que não haviam recebido aceite nas etapas anteriores. Além dos aceites de P1, P2–P4 acresc"
+  },
+  {
+    "id": "C5-P13",
+    "secao": "5.3 Comparação das estratégias de prompt",
+    "inicio": "A interpretação do conteúdo dos prompts exige considerar o que mudou entre as condições. P2 acrescentou o roteiro de resposta, enquanto P3 a"
+  },
+  {
+    "id": "C5-P14",
+    "secao": "5.3 Comparação das estratégias de prompt",
+    "inicio": "A sequência introduziu uma seleção que limita conclusões sobre a melhor estratégia. Os casos resolvidos inicialmente deixaram de participar "
+  },
+  {
+    "id": "C5-P15",
+    "secao": "5.4 Comparação entre modelos de linguagem",
+    "inicio": "A comparação entre modelos indicou diferenças no desempenho observado sob as condições compartilhadas. O GPT-5.6 Luna alcançou 51 casos acei"
+  },
+  {
+    "id": "C5-P16",
+    "secao": "5.4 Comparação entre modelos de linguagem",
+    "inicio": "Os aceites apresentaram sobreposição, mas não foram idênticos. Conforme a Tabela 6, 32 casos foram aceitos pelos três modelos e 58 por pelo "
+  },
+  {
+    "id": "C5-P17",
+    "secao": "5.4 Comparação entre modelos de linguagem",
+    "inicio": "Os critérios intermediários ajudam a compreender essas diferenças. O GPT-5.6 Luna apresentou a maior proporção de propostas aplicadas, com 2"
+  },
+  {
+    "id": "C5-P18",
+    "secao": "5.4 Comparação entre modelos de linguagem",
+    "inicio": "O menor custo registrado foi o do GPT-6 Luna, que também apresentou o menor quociente entre custo da campanha e casos aceitos, conforme a Ta"
+  },
+  {
+    "id": "C5-P19",
+    "secao": "5.4 Comparação entre modelos de linguagem",
+    "inicio": "Os tempos mostraram outra dimensão da comparação. O GPT-4.1 mini apresentou a menor latência média de geração, enquanto a sessão do GPT-6 Lu"
+  },
+  {
+    "id": "C5-P20",
+    "secao": "5.5 Resultados por tipo de vulnerabilidade e categoria",
+    "inicio": "A distribuição dos aceites variou entre os tipos de alerta catalogados, como mostra a Tabela 9. Os três modelos tiveram oito aceites entre o"
+  },
+  {
+    "id": "C5-P21",
+    "secao": "5.5 Resultados por tipo de vulnerabilidade e categoria",
+    "inicio": "O agrupamento por regra refinou essa descrição. Na regra relacionada ao uso de HTML tratado como confiável no Angular, os três modelos obtiv"
+  },
+  {
+    "id": "C5-P22",
+    "secao": "5.5 Resultados por tipo de vulnerabilidade e categoria",
+    "inicio": "A comparação por OWASP foi limitada pela disponibilidade do mapeamento. A Tabela 10 conserva os códigos registrados no catálogo e mantém os "
+  },
+  {
+    "id": "C5-P23",
+    "secao": "5.6 Análise de correções e falhas representativas",
+    "inicio": "Foram selecionados dois casos para examinar quatro tentativas com resultados contrastantes. A seleção considerou a disponibilidade dos artef"
+  },
+  {
+    "id": "C5-P24",
+    "secao": "5.6 Análise de correções e falhas representativas",
+    "inicio": "O primeiro caso foi a consulta de acompanhamento de pedidos apresentada no Capítulo 4. Na tentativa P1 do GPT-4.1 mini, o patch substituiu a"
+  },
+  {
+    "id": "C5-P25",
+    "secao": "5.6 Análise de correções e falhas representativas",
+    "inicio": "No segundo caso, o alerta incidiu sobre eval no cálculo do CAPTCHA. A tentativa P1 do GPT-4.1 mini substituiu a avaliação dinâmica por opera"
+  },
+  {
+    "id": "C5-P26",
+    "secao": "5.6 Análise de correções e falhas representativas",
+    "inicio": "Para o mesmo alerta do CAPTCHA, a tentativa P1 do GPT-6 Luna também foi rejeitada pelos testes, mas P2 produziu uma proposta que tratou a pr"
+  },
+  {
+    "id": "C5-P27",
+    "secao": "5.7 Redução conjunta de alertas e RRIS",
+    "inicio": "A avaliação conjunta partiu dos primeiros aceites por caso e tentou integrar os patches em uma cópia limpa do projeto. Parte deles não pôde "
+  },
+  {
+    "id": "C5-P28",
+    "secao": "5.7 Redução conjunta de alertas e RRIS",
+    "inicio": "Os scans globais registraram 78 alertas antes da aplicação conjunta. Após a integração possível, os totais foram 40, 23 e 31, respectivament"
+  },
+  {
+    "id": "C5-P29",
+    "secao": "5.7 Redução conjunta de alertas e RRIS",
+    "inicio": "Nenhum dos três conjuntos integrados recebeu aprovação funcional, inclusive na definição por critérios. Entre as falhas documentadas, os trê"
+  },
+  {
+    "id": "C5-P30",
+    "secao": "5.8 Respostas às perguntas de pesquisa",
+    "inicio": "Em relação à Q1, foi possível produzir tentativas aceitas pelo pipeline segundo a definição operacional adotada: houve pelo menos um aceite "
+  },
+  {
+    "id": "C5-P31",
+    "secao": "5.8 Respostas às perguntas de pesquisa",
+    "inicio": "Para a Q2, as estratégias contribuíram de forma diferente ao longo da sequência: P1 produziu aceites iniciais e P2–P4 acrescentaram outros c"
+  },
+  {
+    "id": "C5-P32",
+    "secao": "5.8 Respostas às perguntas de pesquisa",
+    "inicio": "Quanto à Q3, o desempenho variou descritivamente conforme os tipos e as regras, como nos contrastes entre XSS, IDOR e travessia de diretório"
+  },
+  {
+    "id": "C5-P33",
+    "secao": "5.8 Respostas às perguntas de pesquisa",
+    "inicio": "Para a Q4, foram identificadas limitações práticas na aplicação das edições, na avaliação funcional e na integração das propostas. Referênci"
+  },
+  {
+    "id": "C5-P34",
+    "secao": "5.8 Respostas às perguntas de pesquisa",
+    "inicio": "Em resposta à Q5, o GPT-5.6 Luna apresentou o maior número de casos aceitos e a maior TRV, enquanto o GPT-6 Luna teve o menor custo registra"
+  },
+  {
+    "id": "C5-P35",
+    "secao": "5.9 Discussão com a literatura e implicações",
+    "inicio": "Os achados dialogam com a discussão do referencial sobre contexto e validação externa. Khan, Liu e Gao (2025) investigaram reparo de estouro"
+  },
+  {
+    "id": "C5-P36",
+    "secao": "5.9 Discussão com a literatura e implicações",
+    "inicio": "Neste experimento, a combinação de SAST e testes permitiu distinguir situações que uma única verificação não separaria. O exemplo do CAPTCHA"
+  },
+  {
+    "id": "C5-P37",
+    "secao": "5.9 Discussão com a literatura e implicações",
+    "inicio": "Como implicação prática, os modelos puderam apoiar a elaboração de propostas, mas os resultados não sustentaram sua adoção automática como v"
+  },
+  {
+    "id": "C5-P38",
+    "secao": "5.10 Ameaças à validade e síntese do capítulo",
+    "inicio": "A validade das medidas depende do alcance das regras e dos testes e da qualidade das classificações utilizadas. A remoção do alerta não prov"
+  },
+  {
+    "id": "C5-P39",
+    "secao": "5.10 Ameaças à validade e síntese do capítulo",
+    "inicio": "A generalização foi limitada a uma aplicação deliberadamente vulnerável, uma revisão do alvo e uma campanha final por modelo. O Juice Shop p"
+  },
+  {
+    "id": "C5-P40",
+    "secao": "5.10 Ameaças à validade e síntese do capítulo",
+    "inicio": "Os resultados indicaram que o pipeline produziu aceites individuais e reduções estáticas conjuntas, com diferenças entre modelos, estratégia"
+  }
+]

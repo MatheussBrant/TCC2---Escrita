@@ -172,7 +172,11 @@ revisar esse texto e esclarecer as pendências, antes de fechar a metodologia.
 O [capítulo 4](../manuscrito/04-implementacao.md) também recebeu um primeiro
 rascunho completo, com [notas de evidência](../evidencias/capitulo-4-notas.md).
 Sua revisão inclui a inserção de capturas reais do painel e a integração das
-figuras ao documento final. Os resultados permanecem com seu plano de redação.
+figuras ao documento final. O [capítulo 5](../manuscrito/05-resultados-discussao.md)
+também recebeu um primeiro rascunho completo, com
+[notas de evidência e cálculos](../evidencias/capitulo-5-notas.md).
+A próxima etapa é revisar os três capítulos e suas pendências; a conclusão
+ainda não foi adaptada ao TCC2.
 
 Ainda precisam ser definidos: destino da PoC, título final dos capítulos,
 template, prazo, eventual limite de páginas e recorte experimental final.

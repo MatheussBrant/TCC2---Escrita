@@ -15,6 +15,9 @@ O capítulo 4 também recebeu um primeiro rascunho completo conforme o
 [plano de implementação](../docs/plano-paragrafos-capitulo-4.md), com
 [notas de evidência e pendências](../evidencias/capitulo-4-notas.md).
 A prova de conceito original permanece em arquivo separado como referência do TCC1.
+O capítulo 5 recebeu um primeiro rascunho completo conforme o
+[plano de resultados](../docs/plano-paragrafos-capitulo-5.md), com
+[notas de evidência, cálculos e pendências](../evidencias/capitulo-5-notas.md).
 
 | Arquivo | Conteúdo e estado atual |
 |---|---|
@@ -24,6 +27,7 @@ A prova de conceito original permanece em arquivo separado como referência do T
 | [03-metodologia.md](03-metodologia.md) | Capítulo 3 — Metodologia; primeiro rascunho adaptado ao TCC2 |
 | [04-implementacao.md](04-implementacao.md) | Capítulo 4 — Desenvolvimento e implementação do pipeline; primeiro rascunho do TCC2 |
 | [04-prova-de-conceito.md](04-prova-de-conceito.md) | Referência preservada: capítulo 4 — Prova de conceito, do TCC1 |
+| [05-resultados-discussao.md](05-resultados-discussao.md) | Capítulo 5 — Resultados e discussão; primeiro rascunho do TCC2 |
 | [05-consideracoes-finais.md](05-consideracoes-finais.md) | Referência do TCC1: capítulo 5 — Considerações finais; ainda não adaptado |
 | [referencias.md](referencias.md) | Referências bibliográficas |
 
@@ -33,8 +37,8 @@ O Markdown completo na raiz permanece como referência do TCC1. Os arquivos dest
 pasta podem ser adaptados ao TCC2 conforme as decisões dos autores; as alterações
 ficam localizadas por capítulo e podem ser acompanhadas pelo diff do Git.
 A adaptação de conteúdo inclui Q5 e o objetivo correspondente na introdução e
-os primeiros rascunhos completos da metodologia e da implementação.
-Os capítulos de resultados e conclusão ainda não foram redigidos para o TCC2.
+os primeiros rascunhos completos da metodologia, da implementação e dos resultados.
+O capítulo de conclusão ainda não foi redigido para o TCC2.
 
 A proposta de estrutura do TCC2 está em
 [docs/diretrizes-escrita.md](../docs/diretrizes-escrita.md). Na proposta, o capítulo
@@ -43,5 +47,8 @@ conclusão recebe um capítulo próprio. O arquivo de considerações finais do 
 será reorganizado quando essa etapa for executada. A posição final da prova de
 conceito no TCC2 ainda precisa ser definida.
 
-As figuras continuam na pasta de assets ao lado do Markdown completo. Os arquivos
-separados dependem dessa pasta para exibir as imagens.
+As figuras herdadas continuam na pasta de assets ao lado do Markdown completo.
+Os arquivos separados dependem dessa pasta para exibir as imagens originais.
+O gráfico novo do capítulo 5 está em [assets/capitulo-5/](assets/capitulo-5/),
+com versões PNG, PDF e SVG. Seus dados e scripts ficam em
+[evidencias/capitulo-5-apoio/](../evidencias/capitulo-5-apoio/).
