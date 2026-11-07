@@ -24,8 +24,9 @@ renumerados para acomodar os novos conteúdos.
    comparação antes/depois, denominadores e avaliação conjunta da RRIS.
 10. Atualizar a descrição do RAG e explicitar a diferença entre parada operacional
     e classificação adotada na análise.
-11. Manter a ligação com as seções originais para controlar o que será adaptado,
-    corrigido ou acrescentado. O manuscrito do capítulo 3 ainda não foi reescrito.
+11. Manter a ligação com as seções originais para controlar o que foi adaptado,
+    corrigido ou acrescentado. O primeiro rascunho completo está no manuscrito;
+    as fontes e pendências estão nas [notas de evidência](../evidencias/capitulo-3-notas.md).
 
 > **Q5:** Como diferentes modelos de linguagem se comparam na geração de
 > correções válidas pelo pipeline, considerando eficácia, custo e tempo de execução?
@@ -39,7 +40,8 @@ As alterações de Q5 e do objetivo já estão na
 
 ## Fontes e limites do planejamento
 
-- [Capítulo 3 de partida](../manuscrito/03-metodologia.md).
+- [Capítulo 3 em redação](../manuscrito/03-metodologia.md) e texto de partida no
+  [Markdown completo do TCC1](../TCC1___Caio_Lamego_e_Matheus_Brant-11.md).
 - [Comparação seção a seção com o TCC1](comparacao-capitulo-3-tcc1-tcc2.md).
 - [Diretrizes de escrita](diretrizes-escrita.md).
 - Experimento irmão: `../../tcc2-llm-sast-juiceshop`, revisão
@@ -263,5 +265,6 @@ a validação humana. Proposta, implementação e execução observada devem per
 distintas. Equações, tabelas e diagramas podem ser inseridos entre parágrafos.
 
 Comparar a redação com o [Markdown completo do TCC1](../TCC1___Caio_Lamego_e_Matheus_Brant-11.md)
-para acompanhar a evolução. Alterar o capítulo somente na etapa de redação; o
-presente pedido consolida o plano.
+para acompanhar a evolução. O primeiro rascunho já foi redigido conforme este
+plano e aguarda revisão dos autores, especialmente nos pontos marcados como
+pendentes. A existência do rascunho não encerra essas decisões.

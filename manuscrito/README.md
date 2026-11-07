@@ -8,6 +8,9 @@ das figuras e do link para o PDF foram ajustados.
 Após a separação, a introdução recebeu Q5 e um objetivo específico de comparação
 entre modelos, conforme a decisão dos autores registrada nas
 [diretrizes de escrita](../docs/diretrizes-escrita.md). Q1–Q4 foram mantidas.
+O capítulo 3 recebeu um primeiro rascunho completo conforme o
+[plano de metodologia](../docs/plano-paragrafos-capitulo-3.md), com
+[notas de evidência e pendências](../evidencias/capitulo-3-notas.md).
 Os demais capítulos ainda conservam o texto de partida do TCC1.
 
 | Arquivo | Conteúdo original |
@@ -15,7 +18,7 @@ Os demais capítulos ainda conservam o texto de partida do TCC1.
 | [00-elementos-pre-textuais.md](00-elementos-pre-textuais.md) | Capa, folha de rosto, ficha catalográfica, aprovação, resumos, listas e sumário |
 | [01-introducao.md](01-introducao.md) | Capítulo 1 — Introdução |
 | [02-referencial-teorico.md](02-referencial-teorico.md) | Capítulo 2 — Referencial teórico e trabalhos relacionados |
-| [03-metodologia.md](03-metodologia.md) | Capítulo 3 — Metodologia |
+| [03-metodologia.md](03-metodologia.md) | Capítulo 3 — Metodologia; primeiro rascunho adaptado ao TCC2 |
 | [04-prova-de-conceito.md](04-prova-de-conceito.md) | Capítulo 4 — Prova de conceito |
 | [05-consideracoes-finais.md](05-consideracoes-finais.md) | Capítulo 5 — Considerações finais |
 | [referencias.md](referencias.md) | Referências bibliográficas |
@@ -25,8 +28,9 @@ Os demais capítulos ainda conservam o texto de partida do TCC1.
 O Markdown completo na raiz permanece como referência do TCC1. Os arquivos desta
 pasta podem ser adaptados ao TCC2 conforme as decisões dos autores; as alterações
 ficam localizadas por capítulo e podem ser acompanhadas pelo diff do Git.
-A adaptação de conteúdo começou pela inclusão da comparação de modelos na
-introdução; a reorganização dos capítulos ainda não foi realizada.
+A adaptação de conteúdo inclui Q5 e o objetivo correspondente na introdução e
+o primeiro rascunho completo da metodologia. A reorganização dos capítulos de
+implementação, resultados e conclusão ainda não foi realizada.
 
 A proposta de estrutura do TCC2 está em
 [docs/diretrizes-escrita.md](../docs/diretrizes-escrita.md). Na proposta, o capítulo

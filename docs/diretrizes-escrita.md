@@ -164,10 +164,12 @@ e limitações e propor trabalhos futuros. A discussão detalhada fica no capít
 
 ## Próximo passo
 
-Refinar este sumário com as próximas ideias dos autores e orientações da
-orientadora. Depois, mapear as seções do capítulo 3 do TCC1 para o que será
-mantido, atualizado ou acrescentado, com fontes no experimento. A primeira
-redação sugerida é a metodologia, seguida da implementação e dos resultados.
+O primeiro rascunho completo do [capítulo 3](../manuscrito/03-metodologia.md)
+foi elaborado seguindo o plano por parágrafos e os critérios de linguagem.
+As [notas de evidência](../evidencias/capitulo-3-notas.md) registram fontes,
+mudanças em relação ao TCC1 e pendências para os autores. O próximo passo é
+revisar esse texto e esclarecer as pendências, antes de fechar a metodologia.
+A implementação e os resultados permanecem com seus planos de redação.
 
 Ainda precisam ser definidos: destino da PoC, título final dos capítulos,
 template, prazo, eventual limite de páginas e recorte experimental final.
