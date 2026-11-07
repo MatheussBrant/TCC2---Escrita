@@ -1,43 +1,32 @@
-# Textos do TCC2
+# Manuscrito por capítulos
 
-Esta pasta recebe os arquivos Markdown produzidos durante a redação. As tarefas
-e critérios estão em [features/](../features/README.md); a organização dos cinco
-capítulos está no [plano de redação](../docs/plano-redacao.md).
+Os arquivos abaixo foram separados do [Markdown completo do TCC1](../TCC1___Caio_Lamego_e_Matheus_Brant-11.md).
+Eles constituem o ponto de partida para a adaptação ao TCC2. Nesta separação,
+o texto e a numeração do TCC1 foram preservados; apenas os caminhos relativos
+das figuras e do link para o PDF foram ajustados.
 
-## Organização das entregas
+| Arquivo | Conteúdo original |
+|---|---|
+| [00-elementos-pre-textuais.md](00-elementos-pre-textuais.md) | Capa, folha de rosto, ficha catalográfica, aprovação, resumos, listas e sumário |
+| [01-introducao.md](01-introducao.md) | Capítulo 1 — Introdução |
+| [02-referencial-teorico.md](02-referencial-teorico.md) | Capítulo 2 — Referencial teórico e trabalhos relacionados |
+| [03-metodologia.md](03-metodologia.md) | Capítulo 3 — Metodologia |
+| [04-prova-de-conceito.md](04-prova-de-conceito.md) | Capítulo 4 — Prova de conceito |
+| [05-consideracoes-finais.md](05-consideracoes-finais.md) | Capítulo 5 — Considerações finais |
+| [referencias.md](referencias.md) | Referências bibliográficas |
 
-| Pasta criada ao executar a feature | Conteúdo principal | Destino final |
-|---|---|---|
-| `01-introducao/` | `capitulo.md` | Capítulo 1 |
-| `02-fundamentacao/` | `texto.md` | Capítulo 2 — conceitos |
-| `03-trabalhos-relacionados/` | `texto.md` | Capítulo 2 — relacionados |
-| `04-metodologia/` | `texto.md` | Capítulo 3 — método |
-| `05-implementacao/` | `texto.md` e diagrama | Capítulo 3 — desenvolvimento |
-| `06-resultados/` | `texto.md` e tabelas | Capítulo 4 — resultados |
-| `07-discussao/` | `texto.md` e matriz de ameaças | Capítulo 4 — discussão |
-| `08-conclusao/` | `capitulo.md` | Capítulo 5 |
-| `09-reproducao/` | Apêndices e declaração de IA | Complementos |
-| `10-resumos/` | Resumo, abstract e palavras-chave | Elementos iniciais |
-| `11-integracao/` | `tcc2.md` e referências integradas | Monografia reunida |
-| `evolucoes/E001-assunto/` em diante | `texto.md` e `impacto.md` | Atualizações dos destinos definidos |
+## Como acompanhar as modificações
 
-Cada pasta também recebe `evidencias.md` e `entrega.md`, além dos arquivos exigidos
-pela sua especificação. Um plano de execução persistido fica em `plano.md` na
-mesma pasta. As subpastas e textos são criados quando houver conteúdo; a tabela
-descreve o destino esperado, não capítulos já escritos.
+O Markdown completo na raiz permanece como referência do TCC1. Os arquivos desta
+pasta podem ser adaptados ao TCC2 conforme as decisões dos autores; as alterações
+ficam localizadas por capítulo e podem ser acompanhadas pelo diff do Git.
+Ainda não foi realizada a adaptação de conteúdo nem a reorganização dos capítulos.
 
-## Planejar, redigir e revisar
+A proposta de estrutura do TCC2 está em
+[docs/diretrizes-escrita.md](../docs/diretrizes-escrita.md). Na proposta, o capítulo
+4 passa a tratar da implementação, o capítulo 5 dos resultados e discussão, e a
+conclusão recebe um capítulo próprio. Por isso, os nomes e a numeração desta
+pasta deverão ser revistos quando essa reorganização for executada.
 
-1. Pedir a `tcc2-planejar` um plano para a feature: fontes, argumento, etapas,
-   arquivos e critérios a verificar. O pedido de planejamento pode se limitar
-   à resposta no chat ou ao plano nativo da extensão. Quando solicitado salvar
-   no repositório, usar `plano.md` da pasta exclusiva.
-2. Pedir a `tcc2-redigir` para executar a especificação e o plano adotado,
-   produzindo texto completo, evidências e autoavaliação dos critérios.
-3. Pedir a `tcc2-revisar` um parecer em `revisoes/<ID>/parecer.md`; as correções
-   retornam ao responsável pelo texto. F11 integra as versões reconciliadas.
-
-F01–F10 podem produzir rascunhos em paralelo, cada responsável em sua pasta,
-conforme as vagas reais do cliente. Discussão, conclusão e resumos precisam ser
-conferidos com método e resultados antes do fechamento. Dois agentes não devem
-editar a mesma pasta ao mesmo tempo, inclusive usando clientes diferentes.
+As figuras continuam na pasta de assets ao lado do Markdown completo. Os arquivos
+separados dependem dessa pasta para exibir as imagens.
