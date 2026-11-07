@@ -169,7 +169,10 @@ foi elaborado seguindo o plano por parágrafos e os critérios de linguagem.
 As [notas de evidência](../evidencias/capitulo-3-notas.md) registram fontes,
 mudanças em relação ao TCC1 e pendências para os autores. O próximo passo é
 revisar esse texto e esclarecer as pendências, antes de fechar a metodologia.
-A implementação e os resultados permanecem com seus planos de redação.
+O [capítulo 4](../manuscrito/04-implementacao.md) também recebeu um primeiro
+rascunho completo, com [notas de evidência](../evidencias/capitulo-4-notas.md).
+Sua revisão inclui a inserção de capturas reais do painel e a integração das
+figuras ao documento final. Os resultados permanecem com seu plano de redação.
 
 Ainda precisam ser definidos: destino da PoC, título final dos capítulos,
 template, prazo, eventual limite de páginas e recorte experimental final.

@@ -8,6 +8,10 @@ A organização inclui nove seções principais e o detalhamento das worktrees e
 resultado experimental ou aprovação da orientadora. Títulos e extensão podem
 ser ajustados durante a revisão.
 
+O [primeiro rascunho completo](../manuscrito/04-implementacao.md) foi elaborado
+em 07/11/2026. As [notas de evidência](../evidencias/capitulo-4-notas.md)
+registram as fontes conferidas, o caso ilustrativo e as pendências da revisão.
+
 ## Decisões de organização
 
 - Explicar a implementação pelo funcionamento do pipeline, com diretórios e
@@ -20,7 +24,8 @@ ser ajustados durante a revisão.
 - Dar destaque a aplicação das correções, validação e orquestração.
 - Apresentar dificuldades técnicas junto das soluções correspondentes: problema,
   implementação e limite, sem transformar a exposição em histórico de commits.
-- Acompanhar um caso ilustrativo com artefatos reais, cuja seleção está pendente.
+- Acompanhar o caso ilustrativo de acompanhamento de pedidos, com artefatos reais
+  identificados nas notas de evidência.
 - Separar justificativa dos modelos, tratada no capítulo 3, da integração técnica
   dos três modelos e da comparação dos resultados, tratada no capítulo 5.
 - Tratar a possibilidade de replicação brevemente: um parágrafo sobre exportar
@@ -85,7 +90,7 @@ e estruturas completas de dados podem ficar em apêndice.
 - `src/pipeline/README.md`
 - `src/pipeline/orquestracao/campanha.py`
 
-**Apoio visual e limite:** Diagrama simples das principais etapas e suas conexões. O caso ilustrativo ainda será selecionado.
+**Apoio visual e limite:** Diagrama simples das principais etapas e suas conexões. O rascunho acompanha o caso real de routes/trackOrder.ts, registrado nas notas de evidência.
 
 ### 4.2 Tecnologias e organização do projeto
 
@@ -270,13 +275,13 @@ As três subseções seguintes descrevem worktrees, gerenciamento e aplicação 
 
 ## Pendências antes da redação final
 
-1. Escolher o caso ilustrativo com código, resposta, patch, scans e testes completos; registrar a campanha e a revisão de origem.
-2. Escolher uma regra local, uma edição e um teste adicional representativos, verificando suas evidências.
+1. Revisar a adequação do caso ilustrativo selecionado: acompanhamento de pedidos em routes/trackOrder.ts, com campanha, revisão e artefatos registrados nas notas de evidência.
+2. Revisar os exemplos selecionados: regra de $where dinâmico, edição de uma linha e teste adicional de CAPTCHA aritmético; suas fontes foram conferidas no primeiro rascunho.
 3. Conferir bibliografia para conceitos técnicos que precisem de fundamentação, incluindo Git worktrees e dutos e filtros.
-4. Produzir os diagramas a partir do fluxo real e as capturas a partir da interface existente; não usar telas simuladas como evidência.
-5. Conferir a configuração e o comportamento de cada etapa nos contratos das campanhas descritas.
-6. Selecionar somente dificuldades técnicas documentadas e identificar o que foi implementado, testado e observado.
-7. Definir a posição final da PoC do TCC1 e renomear o manuscrito do capítulo 4 quando começar sua adaptação.
+4. Integrar os dois diagramas já elaborados ao formato final e inserir capturas reais da interface; não usar telas simuladas como evidência.
+5. Revisar a descrição das configurações e dos componentes com apoio das fontes conferidas no rascunho; não pressupor revisão integral do código.
+6. Revisar a clareza das dificuldades e soluções apresentadas, mantendo a distinção entre implementação, execução e interpretação.
+7. Definir a posição final da PoC do TCC1, preservada em 04-prova-de-conceito.md. O novo capítulo foi criado em 04-implementacao.md, sem renomear ou substituir a referência original.
 
 ## Orientação para redigir e revisar
 
