@@ -1,0 +1,60 @@
+{
+  "data": "2026-11-09",
+  "sha_experimento": "062a203516fd7f55ce86d9c19dc0f23f6e92ed61",
+  "antes": {
+    "manuscrito/05-resultados-discussao.md": "cc8157059fd03847ad1e04f1558c3e097ed440ff4df02c298e1da66038f21f40",
+    "TCC1___Caio_Lamego_e_Matheus_Brant-11.md": "a8ba7bfad7512ff78d1692f8b7b8c65412c36deba1358d1505f73b18250e1078",
+    "manuscrito/referencias.md": "5219f4de25e8048c7965ac1701162e0b426a6cf0596dc7c2d913ea9c77ee0ab8",
+    "manuscrito/05-consideracoes-finais.md": "111811c5fc9c2ac67a13beaa2d95eeb24e2c7bef39bcc3d3498281d284652a9e",
+    "manuscrito/04-implementacao.md": "ba63d3922589df9acb9c367424101bcf4243493455cc00fc0336c8029f2bc70f",
+    "manuscrito/00-elementos-pre-textuais.md": "f404eb30859edeee1954c16ac282ab6f0342d7f1e0c26a3460d5a62335fa35af",
+    "manuscrito/03-metodologia.md": "879ace966216f4eb109f76732a1192f782e63251e1a8f437eeabe70bd6de46f9",
+    "manuscrito/04-prova-de-conceito.md": "9605651e22a395f253a96e67b6592d343222a6771a9c4485c21779abf62b6df9",
+    "manuscrito/02-referencial-teorico.md": "66dc6d12253935524c058d2356a63025518a12327df143033f8cfb91a454ca28",
+    "manuscrito/01-introducao.md": "bf1d918aaa95eb10314a74f65b2434fb01b1f4a4e31424ba478341b0ffe0f02d"
+  },
+  "depois": {
+    "manuscrito/05-resultados-discussao.md": "cc8157059fd03847ad1e04f1558c3e097ed440ff4df02c298e1da66038f21f40",
+    "TCC1___Caio_Lamego_e_Matheus_Brant-11.md": "a8ba7bfad7512ff78d1692f8b7b8c65412c36deba1358d1505f73b18250e1078",
+    "manuscrito/referencias.md": "5219f4de25e8048c7965ac1701162e0b426a6cf0596dc7c2d913ea9c77ee0ab8",
+    "manuscrito/05-consideracoes-finais.md": "111811c5fc9c2ac67a13beaa2d95eeb24e2c7bef39bcc3d3498281d284652a9e",
+    "manuscrito/04-implementacao.md": "ba63d3922589df9acb9c367424101bcf4243493455cc00fc0336c8029f2bc70f",
+    "manuscrito/00-elementos-pre-textuais.md": "efeb8cbc7b2f49b936651be0f6e373772b9ae349031b0117e450d14751c44dc7",
+    "manuscrito/03-metodologia.md": "d1a9206880e29018144fcc368a1aa1bb372ed6d1563c22a4da2da23ee54606dd",
+    "manuscrito/04-prova-de-conceito.md": "9605651e22a395f253a96e67b6592d343222a6771a9c4485c21779abf62b6df9",
+    "manuscrito/02-referencial-teorico.md": "89ec77e59a97ff89234a4ca9cf057c3a290ed570254d850a9352024483923f8a",
+    "manuscrito/01-introducao.md": "237edadea91cad78ca507a9b0276f105b37972d358240a3f94e743db3d345e58"
+  },
+  "substituicoes_paragrafos": [
+    {
+      "arquivo": "manuscrito/01-introducao.md",
+      "antes": "O restante deste trabalho está organizado da seguinte forma: o Capítulo 2 apresenta o referencial teórico e os trabalhos relacionados; o Capítulo 3 descreve a metodologia e os critérios de avaliação; o Capítulo 4 apresenta o desenvolvimento e a implementação do pipeline; o Capítulo 5 expõe os resultados, sua discussão e as respostas às perguntas de pesquisa; e o Capítulo 6 reúne a conclusão e os trabalhos futuros.",
+      "depois": "O restante deste trabalho está organizado da seguinte forma: o Capítulo 2 apresenta o referencial teórico e os trabalhos relacionados; o Capítulo 3 descreve a metodologia e os critérios de avaliação; o Capítulo 4 apresenta o desenvolvimento e a implementação do pipeline; o Capítulo 5 expõe os resultados, sua discussão e as respostas às perguntas de pesquisa; e o Capítulo 6 reúne a conclusão e os trabalhos futuros."
+    },
+    {
+      "arquivo": "manuscrito/03-metodologia.md",
+      "antes": "O OWASP Juice Shop foi selecionado por ser uma aplicação web de código aberto, deliberadamente vulnerável, com múltiplos módulos, dependências e testes automatizados. Essas características permitiram avaliar a abordagem considerando relações entre partes do projeto e comportamentos já definidos pela aplicação. Sua finalidade didática também ofereceu referências sobre parte das falhas intencionais, sem tornar os desafios conhecidos o único critério de seleção dos casos.",
+      "depois": "O OWASP Juice Shop foi selecionado por ser uma aplicação web de código aberto, deliberadamente vulnerável, com múltiplos módulos, dependências e testes automatizados. Essas características permitiram avaliar a abordagem considerando relações entre partes do projeto e comportamentos já definidos pela aplicação. Sua finalidade didática também ofereceu referências sobre parte das falhas intencionais, sem tornar os desafios conhecidos o único critério de seleção dos casos."
+    },
+    {
+      "arquivo": "manuscrito/02-referencial-teorico.md",
+      "antes": "Contudo, a Cadeia de Pensamento não deve ser interpretada como uma representação necessariamente fiel do processo interno utilizado pelo modelo. A sequência textual pode constituir uma justificativa plausível produzida após a escolha da resposta, sem refletir exatamente os fatores que determinaram a geração. Portanto, o CoT deve ser utilizado como uma estratégia para estruturar a tarefa e produzir etapas verificáveis, e não como uma garantia de transparência ou correção do raciocínio (LESTER; AL-RFOU; CONSTANT, 2021). Neste estudo, o roteiro foi tratado como uma instrução de organização da resposta, enquanto a avaliação recaiu sobre as alterações propostas, por meio da reanálise estática e dos testes definidos na metodologia.",
+      "depois": "Contudo, a Cadeia de Pensamento não deve ser interpretada como uma representação necessariamente fiel do processo interno utilizado pelo modelo. A sequência textual pode constituir uma justificativa plausível produzida após a escolha da resposta, sem refletir exatamente os fatores que determinaram a geração. Portanto, o CoT deve ser utilizado como uma estratégia para estruturar a tarefa e produzir etapas verificáveis, e não como uma garantia de transparência ou correção do raciocínio (LESTER; AL-RFOU; CONSTANT, 2021). Neste estudo, o roteiro foi tratado como uma instrução de organização da resposta, enquanto a avaliação recaiu sobre as alterações propostas, por meio da reanálise estática e dos testes definidos na metodologia."
+    },
+    {
+      "arquivo": "manuscrito/02-referencial-teorico.md",
+      "antes": "Assim, o enriquecimento do prompt, o RAG e a decomposição orientada não substituem a validação externa. Essas técnicas buscam ampliar as informações disponíveis durante a geração, enquanto a análise estática e os testes fornecem evidências sobre as propostas produzidas. A interpretação dessas evidências depende do alcance das ferramentas e das condições de avaliação adotadas.",
+      "depois": "Assim, o enriquecimento do prompt, o RAG e a decomposição orientada não substituem a validação externa. Essas técnicas buscam ampliar as informações disponíveis durante a geração, enquanto a análise estática e os testes fornecem evidências sobre as propostas produzidas. A interpretação dessas evidências depende do alcance das ferramentas e das condições de avaliação adotadas."
+    },
+    {
+      "arquivo": "manuscrito/02-referencial-teorico.md",
+      "antes": "No pipeline proposto, uma primeira execução da SAST será utilizada para estabelecer o estado inicial do código. Para cada issue relacionado à segurança, poderão ser coletados dados como o identificador e a descrição da regra, o arquivo e a linha afetados, a mensagem apresentada, a severidade, as classificações CWE e OWASP, as localizações secundárias e os fluxos entre fontes e destinos. Esses dados formarão o contexto técnico fornecido à LLM.",
+      "depois": "No pipeline desenvolvido, a primeira análise SAST estabeleceu o estado inicial dos alertas no código. Foram registrados dados como identificador da regra, arquivo, localização, mensagem, severidade e associações a CWE e OWASP quando disponíveis. Esses registros constituíram os casos analisados e apoiaram a composição dos prompts nas estratégias que forneceram o diagnóstico ao modelo."
+    },
+    {
+      "arquivo": "manuscrito/02-referencial-teorico.md",
+      "antes": "Após a geração do reparo, o projeto será analisado novamente pela SAST. Essa nova execução permitirá verificar se o issue original deixou de ser identificado e se a alteração introduziu novos alertas. Entretanto, o desaparecimento do alerta não será considerado, isoladamente, prova suficiente de que o reparo foi bem-sucedido. A ferramenta pode deixar de detectar uma vulnerabilidade mesmo que ela permaneça no código, e a LLM pode eliminar o alerta comprometendo a funcionalidade da aplicação. Dessa forma, a validação deverá combinar a reanálise estática com compilação, testes funcionais e comparação do comportamento esperado.",
+      "depois": "Após a aplicação das propostas, o projeto foi analisado novamente pela ferramenta SAST para verificar a permanência do alerta original e a introdução de novos alertas. O desaparecimento do padrão detectado não foi considerado prova suficiente de sucesso. A avaliação também utilizou compilação e testes relacionados às alterações, conforme a metodologia, para examinar a preservação funcional no escopo disponível."
+    }
+  ]
+}

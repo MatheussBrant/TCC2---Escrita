@@ -8,13 +8,13 @@ O experimento foi conduzido no OWASP Juice Shop, a partir dos alertas identifica
 
 Esta pesquisa é um estudo empírico de natureza aplicada, com abordagem predominantemente quantitativa. Seu caráter exploratório e avaliativo decorre da investigação do desempenho de uma solução automatizada em uma aplicação de referência. Foram utilizadas medidas de remoção de alertas e preservação funcional para examinar as tentativas de correção, complementadas pela discussão das dificuldades encontradas e dos limites da avaliação.
 
-O desenho do estudo manteve as perguntas de pesquisa do TCC1 sobre a viabilidade do pipeline, as estratégias de prompt, os tipos de vulnerabilidade e as limitações práticas de execução. No TCC2, foi acrescentada a Q5, voltada à comparação entre modelos de linguagem em termos de eficácia, custo e tempo. Dessa forma, o estudo passou a examinar o comportamento do pipeline em diferentes condições de geração, mantendo um conjunto comum de casos para os modelos comparados.
+O desenho do estudo foi orientado pelas cinco perguntas de pesquisa apresentadas na introdução. Elas abordam a viabilidade do pipeline, as estratégias de prompt, os tipos de vulnerabilidade, as limitações práticas e a comparação entre modelos de linguagem em termos de eficácia, custo e tempo. Para examinar essas questões, foram avaliadas diferentes condições de geração sobre um conjunto comum de casos.
 
 Foram adotadas três unidades de organização dos dados. Um caso corresponde a uma ocorrência de alerta identificada no código do projeto. Uma tentativa corresponde à geração e à avaliação de uma proposta para determinado caso, com um modelo e uma estratégia de prompt. Uma campanha reúne as tentativas executadas sob uma configuração registrada. Essas unidades não equivalem ao número de vulnerabilidades comprovadas: um alerta pode indicar uma falha real, um falso positivo ou uma situação ainda sem conclusão.
 
 ### 3.2 Objeto de estudo e ambiente experimental
 
-O OWASP Juice Shop foi selecionado por ser uma aplicação web de código aberto, deliberadamente vulnerável, com múltiplos módulos, dependências e testes automatizados. Essas características permitiram avaliar a abordagem em uma base mais completa que os exemplos isolados da prova de conceito. Sua finalidade didática também ofereceu referências sobre parte das falhas intencionais, sem tornar os desafios conhecidos o único critério de seleção dos casos.
+O OWASP Juice Shop foi selecionado por ser uma aplicação web de código aberto, deliberadamente vulnerável, com múltiplos módulos, dependências e testes automatizados. Essas características permitiram avaliar a abordagem considerando relações entre partes do projeto e comportamentos já definidos pela aplicação. Sua finalidade didática também ofereceu referências sobre parte das falhas intencionais, sem tornar os desafios conhecidos o único critério de seleção dos casos.
 
 Foi utilizada a versão 20.1.1 do projeto, implementada principalmente em JavaScript e TypeScript, com Node.js, Express e Angular. O código foi fixado em uma revisão específica para que todas as tentativas partissem da mesma base. O conjunto estudado foi determinado pelos alertas produzidos pelo detector no escopo definido, e não pela contagem de desafios pedagógicos da aplicação. As condições de referência estão resumidas na Tabela 1.
 
@@ -32,7 +32,7 @@ Foi utilizada a versão 20.1.1 do projeto, implementada principalmente em JavaSc
 
 Fonte: configurações, baseline funcional e contratos das campanhas do experimento.
 
-A prova de conceito do TCC1 utilizou casos reduzidos em Python e análise estática com Bandit para verificar a integração inicial entre geração, aplicação e avaliação das correções. No TCC2, esse fluxo foi adaptado ao Juice Shop e ao Semgrep. Execuções exploratórias e pilotos contribuíram para preparar o ambiente e ajustar a validação antes das campanhas finais. Seus registros foram preservados, mas não foram agregados à população principal para calcular o desempenho dos modelos.
+Execuções exploratórias e pilotos contribuíram para preparar o ambiente e ajustar a validação antes das campanhas finais no Juice Shop. Seus registros foram preservados separadamente, mas não foram agregados à população principal para calcular o desempenho dos modelos. Essa delimitação manteve a análise vinculada às condições estabelecidas para as campanhas selecionadas.
 
 As campanhas finais foram executadas em um ambiente Docker padronizado, com o projeto-alvo e suas dependências previamente preparados. A configuração também manteve habilitados os desafios do Juice Shop que poderiam ser desativados automaticamente em contêineres, evitando uma mudança no comportamento analisado. A imagem e a referência dos testes foram identificadas em conjunto, pois utilizar a mesma versão do código não assegura equivalência quando as dependências ou as condições de execução são diferentes.
 
@@ -58,11 +58,11 @@ Fonte: metadados do catálogo ampliado e classificação arquivada dos alertas.
 
 A preparação do catálogo e a preparação da avaliação funcional ocorreram em etapas distintas. Uma campanha anterior foi executada sobre 52 casos que já possuíam condições de validação definidas. Posteriormente, o mapeamento e os testes foram ampliados para permitir a execução dos 78 casos. Essa evolução foi considerada na delimitação dos dados: os resultados da campanha anterior não foram somados aos das campanhas finais, pois utilizaram condições de avaliação diferentes.
 
-Para cada caso, foram registrados identificador, regra, arquivo e localização, mensagem, severidade, trecho de código e associações a CWE e OWASP quando disponíveis. O catálogo também preservou a triagem arquivada de 55 casos classificados como confirmados, 21 como falsos positivos e dois como inconclusivos. Esses rótulos não foram usados para retirar casos do conjunto de 78. Sua existência modifica a previsão do TCC1 de não identificar previamente falsos positivos, embora eles tenham permanecido na avaliação. [PENDENTE: confirmar com os autores quem realizou a triagem, o procedimento de revisão e o nível de validação humana dessas classificações.]
+Para cada caso, foram registrados identificador, regra, arquivo e localização, mensagem, severidade, trecho de código e associações a CWE e OWASP quando disponíveis. O catálogo também preservou a triagem arquivada de 55 casos classificados como confirmados, 21 como falsos positivos e dois como inconclusivos. Esses rótulos não foram usados para retirar casos do conjunto de 78. [PENDENTE: confirmar com os autores quem realizou a triagem, o procedimento de revisão e o nível de validação humana dessas classificações.]
 
 ### 3.4 Modelos de linguagem e condições de geração
 
-O experimento incluiu os modelos GPT-4.1 mini, GPT-5.6 Luna e GPT-6 Luna. O GPT-4.1 mini já havia sido previsto no TCC1, considerando a viabilidade de realizar múltiplas chamadas e o custo da geração. A inclusão dos outros dois modelos ampliou a avaliação para examinar diferenças de eficácia, custo e tempo no mesmo pipeline. [PENDENTE: registrar a justificativa dos autores para a escolha específica de GPT-5.6 Luna e GPT-6 Luna, distinguindo-a da finalidade geral de comparar modelos.]
+O experimento incluiu os modelos GPT-4.1 mini, GPT-5.6 Luna e GPT-6 Luna. A comparação examinou diferenças de eficácia, custo e tempo dos três modelos no mesmo pipeline. [PENDENTE: registrar a justificativa dos autores para a escolha dos três modelos, distinguindo-a da finalidade geral de comparar modelos.]
 
 As condições de geração foram registradas para cada modelo. Foram mantidos temperatura zero e limite de 4.096 tokens de completamento, mas os parâmetros adicionais não foram idênticos. O GPT-4.1 mini recebeu uma semente fixa, enquanto os modelos Luna utilizaram a configuração de esforço de raciocínio desativado. Essas condições estão apresentadas na Tabela 3. A semente e a temperatura foram usadas como configurações de controle, sem pressupor que produzissem respostas integralmente determinísticas.
 
@@ -82,7 +82,7 @@ As chamadas foram submetidas a limites configuráveis de quantidade e consumo, c
 
 ### 3.5 Estratégias de prompt
 
-Foram utilizadas quatro estratégias de prompt, mantendo os elementos previstos no TCC1. Todas receberam uma definição de papel, a tarefa de identificar e corrigir o problema, o código selecionado, as restrições de alteração e o formato esperado de resposta. Para arquivos de até 250 linhas, foi fornecido o conteúdo completo; nos demais, foi selecionada uma janela com até 60 linhas de contexto de cada lado do intervalo do alerta. A mesma política de seleção foi aplicada às quatro estratégias.
+Foram utilizadas quatro estratégias de prompt. Todas receberam uma definição de papel, a tarefa de identificar e corrigir o problema, o código selecionado, as restrições de alteração e o formato esperado de resposta. Para arquivos de até 250 linhas, foi fornecido o conteúdo completo; nos demais, foi selecionada uma janela com até 60 linhas de contexto de cada lado do intervalo do alerta. A mesma política de seleção foi aplicada às quatro estratégias.
 
 A estratégia P1 correspondeu ao prompt simples. O modelo recebeu o código e uma instrução direta para identificar e corrigir a vulnerabilidade, sem o bloco explícito de diagnóstico do Semgrep e sem um documento de apoio. Essa condição representou a abordagem com menor quantidade de orientação adicional entre as estratégias avaliadas.
 
@@ -174,7 +174,7 @@ Fonte: critérios do conjunto D e política de validação do experimento.
 
 ### 3.9 Métricas de avaliação
 
-A métrica principal foi a Taxa de Remediação Validada (TRV), mantendo o conceito apresentado no TCC1. Para cada tentativa, R assume valor 1 quando o alerta original foi removido, F assume valor 1 quando a avaliação funcional foi aprovada na interpretação considerada e M assume valor 1 quando não foram identificados novos alertas. O aceite exige os três valores simultaneamente. O denominador da TRV inclui todas as tentativas da população analisada, inclusive as não aplicadas e as indeterminadas; estas não entram no numerador, sem que isso as transforme em medições negativas dos critérios ausentes.
+A métrica principal foi a Taxa de Remediação Validada (TRV). Para cada tentativa, R assume valor 1 quando o alerta original foi removido, F assume valor 1 quando a avaliação funcional foi aprovada na interpretação considerada e M assume valor 1 quando não foram identificados novos alertas. O aceite exige os três valores simultaneamente. O denominador da TRV inclui todas as tentativas da população analisada, inclusive as não aplicadas e as indeterminadas; estas não entram no numerador, sem que isso as transforme em medições negativas dos critérios ausentes.
 
 $$
 \mathrm{TRV}=\frac{\text{tentativas aplicadas com }R=F=M=1}{m}
@@ -182,7 +182,7 @@ $$
 
 Em que $m$ corresponde ao total de tentativas da população analisada.
 
-As métricas complementares foram a Taxa de Remoção de Issues (TRI), a Taxa de Preservação Funcional (TPF), a Taxa de Não Introdução de Novas Issues (TNINI) e a Taxa de Falha Funcional (TFF). No catálogo ampliado, seus cálculos consideraram as tentativas com a medição correspondente disponível. Essa definição atualiza os denominadores simplificados do TCC1 e evita confundir ausência de resultado com falha observada. A TFF utilizou o mesmo conjunto da TPF. As expressões estão apresentadas na Tabela 6.
+As métricas complementares foram a Taxa de Remoção de Issues (TRI), a Taxa de Preservação Funcional (TPF), a Taxa de Não Introdução de Novas Issues (TNINI) e a Taxa de Falha Funcional (TFF). No catálogo ampliado, seus cálculos consideraram as tentativas com a medição correspondente disponível. Essa definição evita confundir ausência de resultado com falha observada. A TFF utilizou o mesmo conjunto da TPF. As expressões estão apresentadas na Tabela 6.
 
 **Tabela 6 — Definição das métricas complementares**
 

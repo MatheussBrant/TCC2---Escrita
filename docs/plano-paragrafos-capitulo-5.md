@@ -1,5 +1,10 @@
 # Capítulo 5 — plano por parágrafo
 
+**Unidade da redação — 09/11/2026:** apresentar os resultados e as respostas
+a Q1–Q5 como parte de uma única pesquisa completa, sem referências a TCC1/TCC2
+no texto acadêmico. O histórico de versões fica nos arquivos de controle.
+Seguir a seção “Unidade do trabalho” dos [critérios de escrita](criterios-escrita.md).
+
 **Título proposto:** Resultados e discussão.
 
 **Estado:** proposta de organização e roteiro para desenvolver com os autores.

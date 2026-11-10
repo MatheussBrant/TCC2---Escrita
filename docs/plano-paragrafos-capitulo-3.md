@@ -1,5 +1,10 @@
 # Capítulo 3 — plano consolidado por parágrafo
 
+**Unidade da redação — 09/11/2026:** apresentar o método como parte de uma única
+pesquisa completa, sem referências a TCC1/TCC2 no texto acadêmico. As indicações
+de origem abaixo servem apenas ao controle editorial. Seguir a seção “Unidade
+do trabalho” dos [critérios de escrita](criterios-escrita.md).
+
 **Estado:** conteúdo e diretrizes consolidados a partir das decisões do autor
 nesta conversa. Os títulos, o agrupamento e a quantidade de parágrafos podem ser
 refinados durante a revisão. Este é um plano, não o capítulo redigido nem uma
@@ -11,7 +16,7 @@ renumerados para acomodar os novos conteúdos.
 
 ## Decisões registradas até agora
 
-1. Construir o TCC2 a partir do TCC1 e explicar as mudanças efetivas do experimento.
+1. Apresentar diretamente o estudo realizado, com Q1–Q5 e método completos; manter o histórico de adaptação somente nos arquivos de controle.
 2. Descrever ações realizadas no passado; manter definições no presente quando adequado.
 3. Usar o capítulo 3 para desenho, escolhas, execução, validação, métricas e procedimento de análise.
 4. Destinar arquitetura, módulos, diretórios e realização técnica ao capítulo 4.
@@ -95,7 +100,7 @@ Preservar as distinções necessárias para interpretar as métricas.
 |---|---|---|
 | P06 | Adaptar | Apresentar o Juice Shop e justificar sua escolha como aplicação de estudo, reconhecendo sua finalidade didática. |
 | P07 | Precisar | Identificar a versão do projeto e suas tecnologias principais. Registrar a revisão exata em tabela ou nota de apoio. |
-| P08 | Adaptar | Explicar a evolução da PoC para a aplicação completa e o papel dos pilotos na preparação do experimento. |
+| P08 | Adaptar | Explicar o papel das execuções exploratórias e dos pilotos na preparação do experimento, mantendo seus registros separados das campanhas finais. |
 | P09 | Acrescentar | Explicar como o Docker ajudou a manter o mesmo ambiente e a mesma referência de testes nas campanhas. |
 
 **Apoio e limite da seção:** Tabela do ambiente, identificando a referência das campanhas finais. Comandos, Dockerfile e construção da imagem ficam no capítulo 4 ou apêndice.
@@ -121,7 +126,7 @@ Preservar as distinções necessárias para interpretar as métricas.
 
 | Parágrafo | Tratamento | Conteúdo a desenvolver |
 |---|---|---|
-| P16 | Acrescentar | Apresentar os três modelos e a justificativa de sua escolha, indicando a ampliação em relação ao TCC1. |
+| P16 | Acrescentar | Apresentar os três modelos e a justificativa de sua escolha como parte do mesmo desenho de pesquisa, sem narrar uma ampliação entre entregas acadêmicas. |
 | P17 | Acrescentar | Explicar as condições de geração de cada modelo. Reunir os parâmetros e suas diferenças em uma tabela breve. |
 | P18 | Acrescentar | Explicar como os modelos foram avaliados sobre os mesmos casos e estratégias, indicando as condições comuns e as diferenças relevantes. |
 | P19 | Acrescentar | Descrever brevemente o controle de chamadas, falhas e consumo. Esclarecer que as campanhas finais não reutilizaram respostas armazenadas. |

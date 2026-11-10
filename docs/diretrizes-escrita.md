@@ -6,7 +6,10 @@ resultados experimentais.
 
 ## Diretrizes informadas pelo autor
 
-- O TCC2 será construído a partir do TCC1, preservando a continuidade do trabalho.
+- A monografia apresenta uma pesquisa completa e autônoma. O material anterior
+  serve de fonte de trabalho e referência de linguagem, sem menções a TCC1/TCC2
+  no texto acadêmico nem narrativa de continuidade entre entregas. Diretriz
+  explicitada pelo autor em 09/11/2026.
 - O capítulo 3 deverá descrever o que foi efetivamente realizado, usando o passado
   para os procedimentos executados e explicando as escolhas e suas justificativas.
 - A descrição deverá abranger a construção do pipeline, as tecnologias utilizadas
@@ -14,7 +17,7 @@ resultados experimentais.
 - Um capítulo 4 deverá apresentar a implementação com maior detalhe técnico,
   incluindo a organização dos diretórios e a função dos componentes.
 - O capítulo 5 deverá apresentar e interpretar os resultados e responder às
-  perguntas de pesquisa definidas no TCC1.
+  cinco perguntas de pesquisa apresentadas na introdução.
 
 ## Linguagem definida para todos os planos
 
@@ -107,8 +110,9 @@ Possíveis seções:
 8. Limitações metodológicas e declaração do uso de IA.
 
 A troca de tempo verbal exige conferência factual: propostas não executadas
-devem ser identificadas; mudanças em relação ao TCC1 devem ser explicadas.
-Definições e propriedades atuais podem permanecer no presente.
+devem ser identificadas; o manuscrito deve descrever diretamente as decisões
+e os procedimentos do estudo. Comparações entre versões ficam nas notas de
+trabalho. Definições e propriedades atuais podem permanecer no presente.
 
 ### 4. Desenvolvimento e implementação do pipeline
 

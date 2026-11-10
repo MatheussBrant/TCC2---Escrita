@@ -60,6 +60,11 @@ sem checkout/reset no clone experimental compartilhado.
 
 ## Regras de evidência
 
+- Diretriz editorial do autor (09/11/2026): o texto acadêmico apresenta uma única
+  pesquisa completa e autônoma. Não mencionar TCC1/TCC2 como trabalhos separados
+  ou etapas de entrega. A origem dos trechos e a comparação entre versões ficam
+  nos planos e nas notas, conforme `docs/criterios-escrita.md`.
+
 - Vincule afirmações empíricas a repositório, SHA, caminho e execução; números
   precisam de população, definição de F, numerador, denominador e política.
 - Diferencie proposta do TCC1, implementação, execução observada e interpretação.

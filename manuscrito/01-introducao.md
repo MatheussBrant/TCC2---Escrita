@@ -36,8 +36,6 @@ Com base nisso, esta pesquisa busca responder às seguintes questões:
 
 - Q4: Quais limitações práticas surgem ao aplicar um _pipeline_ automatizado de correção de vulnerabilidades em uma base de código real, com dependências, arquitetura própria e suíte de testes existente?
 
-<!-- Decisão de escrita: inclusão de Q5 aceita pelo autor nesta conversa; ampliação em relação ao TCC1. Não implica aprovação da orientadora. -->
-
 - Q5: Como diferentes modelos de linguagem se comparam na geração de correções válidas pelo pipeline, considerando eficácia, custo e tempo de execução?
 
 ### 1.3 Objetivos
@@ -60,19 +58,19 @@ Investigar a eficácia de um fluxo iterativo que integra Modelos de Linguagem de
 
 ### 1.4 Metodologia
 
-Este trabalho propõe uma investigação empírica e experimental sobre a eficácia de um fluxo iterativo que integra Modelos de Linguagem de Grande Escala (LLMs) e ferramentas de Análise Estática de Segurança (SAST) na correção automatizada de vulnerabilidades. A pesquisa parte da ideia de que, embora LLMs possam auxiliar na identificação e no reparo de falhas, seu desempenho tende a melhorar quando elas recebem contexto adicional e operam em conjunto com ferramentas externas de apoio.
+Este trabalho realizou uma investigação empírica sobre a eficácia de um pipeline que integra Modelos de Linguagem de Grande Escala (LLMs), Análise Estática de Segurança (SAST) e testes automatizados para apoiar a correção de alertas de segurança em código-fonte. A avaliação examinou diferentes estratégias de prompt e modelos de linguagem, considerando a remoção dos alertas, a preservação funcional e a ausência de novos alertas nas condições definidas para o estudo.
 
-No TCC 1, essa proposta é inicialmente validada por meio de uma prova de conceito em ambiente controlado, composta por casos vulneráveis representativos, testes automatizados e execução integrada do _pipeline_. Essa etapa tem como finalidade verificar a viabilidade técnica do fluxo proposto antes de sua aplicação em uma base de código real. No TCC 2, pretende-se evoluir essa abordagem para um projeto público, considerando as vulnerabilidades efetivamente identificadas pela ferramenta SAST selecionada.
+O experimento foi conduzido no OWASP Juice Shop, uma aplicação web de código aberto e deliberadamente vulnerável. A análise estática com Semgrep forneceu os alertas utilizados para constituir o catálogo de casos. O projeto foi executado em ambiente preparado com Docker, mantendo uma revisão fixada do código e as condições de avaliação registradas nas campanhas.
 
-Inicialmente, será selecionado um projeto público que possa ser instalado e executado em ambiente local, possua estrutura modular e apresente _issues_ de segurança detectáveis por uma ferramenta SAST compatível com a linguagem. As vulnerabilidades analisadas serão determinadas a partir dos alertas emitidos pela ferramenta SAST sobre o código-fonte do projeto, respeitando critérios de elegibilidade relacionados à possibilidade de reprodução, correção e validação automatizada.
+Foram avaliados os modelos GPT-4.1 mini, GPT-5.6 Luna e GPT-6 Luna sobre os mesmos 78 casos solicitados. Para cada caso, as estratégias seguiram uma sequência composta por instrução direta, raciocínio guiado, diagnóstico SAST com documentação recuperada por RAG simplificado e combinação desses elementos. Como as etapas posteriores receberam os casos remanescentes, as diferenças entre estratégias foram interpretadas considerando essa seleção.
 
-Em seguida, os alertas gerados pela análise estática serão utilizados como entrada para o _pipeline_. Para cada _issue_, serão aplicadas diferentes estratégias de _prompt_, incluindo instrução simples, raciocínio guiado, RAG simplificado e a combinação entre RAG simplificado e raciocínio guiado. O objetivo é verificar se o aumento de contexto e estruturação da tarefa melhora a qualidade das correções propostas pela LLM.
+As propostas foram aplicadas em cópias de trabalho isoladas e avaliadas por reanálise estática e testes relacionados aos arquivos modificados. O aceite exigiu a remoção do alerta original, a aprovação funcional na definição adotada e a ausência de novos alertas, conforme os critérios detalhados no Capítulo 3. A aplicação conjunta das correções selecionadas também foi examinada, distinguindo o resultado individual de sua integração no projeto.
 
-Após a geração das correções, as modificações serão aplicadas em cópias isoladas do projeto e avaliadas por meio de nova execução da ferramenta SAST e da suíte de testes automatizados disponível. Uma correção será considerada válida apenas quando a _issue_ original deixar de ser detectada, os testes continuarem passando e nenhuma nova _issue_ de segurança for introduzida. Os resultados serão consolidados em arquivos estruturados para permitir a comparação entre estratégias de _prompt_, tipos de _issues_ detectadas e limitações observadas durante a aplicação em um projeto.
+Prompts, respostas, patches, análises e testes foram registrados em arquivos estruturados. Esses dados sustentaram a comparação entre estratégias, modelos e tipos de alerta, incluindo custos calculados e tempos observados. As medições ausentes e os limites das ferramentas foram preservados na análise, sem tratar a remoção de um alerta como prova de segurança completa.
 
-Dessa forma, a metodologia pretende medir quantitativamente o desempenho da arquitetura proposta, como também compreender em quais condições a combinação entre análise estática, contexto adicional e raciocínio orientado por LLMs se mostra mais eficaz para apoiar tarefas de segurança de software.
+A metodologia permitiu examinar quantitativamente os resultados e discutir as dificuldades de aplicação e validação das propostas. A descrição dos procedimentos é apresentada no Capítulo 3; seu funcionamento no pipeline e os resultados observados são desenvolvidos nos capítulos seguintes.
 
 ### 1.5 Organização do Trabalho
 
-O restante deste trabalho está organizado da seguinte forma: o Capítulo 2 apresenta o referencial teórico que fundamenta a pesquisa; o Capítulo 3 descreve a metodologia proposta para a continuidade do estudo, incluindo o planejamento da coleta e análise dos dados no TCC 2; o Capítulo 4 apresenta a prova de conceito desenvolvida no TCC 1, destacando sua estrutura, execução, métricas e resultados obtidos; por fim, o Capítulo 5 apresenta as considerações finais desta etapa do trabalho.
+O restante deste trabalho está organizado da seguinte forma: o Capítulo 2 apresenta o referencial teórico e os trabalhos relacionados; o Capítulo 3 descreve a metodologia e os critérios de avaliação; o Capítulo 4 apresenta o desenvolvimento e a implementação do pipeline; o Capítulo 5 expõe os resultados, sua discussão e as respostas às perguntas de pesquisa; e o Capítulo 6 reúne a conclusão e os trabalhos futuros.
 

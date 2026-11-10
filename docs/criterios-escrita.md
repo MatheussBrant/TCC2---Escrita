@@ -11,6 +11,24 @@ decisão ou o funcionamento e conectar a explicação ao objetivo do trabalho.
 Preservar o vocabulário já estabelecido quando adequado. Corrigir repetições,
 imprecisões e problemas de redação do original durante a adaptação.
 
+## Unidade do trabalho
+
+Diretriz do autor registrada em 09/11/2026: a monografia deve apresentar uma
+pesquisa completa e autônoma. Não mencionar “TCC1” ou “TCC2” no texto acadêmico
+para distinguir entregas, justificar escolhas ou explicar mudanças entre versões.
+As perguntas Q1–Q5, o método, a implementação e os resultados integram o mesmo estudo.
+
+O material anterior serve como referência de linguagem e fonte de trabalho.
+Comparações entre versões, decisões de adaptação e histórico editorial ficam
+somente nos planos, notas de evidência e arquivos de controle. Uma etapa
+exploratória pode ser descrita quando necessária para compreender o método,
+como parte da pesquisa e com evidência própria. Ela não deve ser apresentada
+como um trabalho separado nem ter seus resultados misturados aos das campanhas.
+
+Descrever o estudo realizado, evitando promessas de execução futura já concluída.
+Remissões internas devem apontar para os capítulos atuais. Atualizar resumo,
+abstract, sumário e apresentação da organização do texto conforme essa estrutura.
+
 ## Orientações para todos os capítulos
 
 - Desenvolver uma ideia central por parágrafo e ligá-la ao argumento da seção.

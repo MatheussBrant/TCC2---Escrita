@@ -1,5 +1,10 @@
 # Capítulo 4 — plano por parágrafo
 
+**Unidade da redação — 09/11/2026:** apresentar a implementação como parte de
+uma única pesquisa completa, sem referências a TCC1/TCC2 no texto acadêmico.
+As indicações de origem deste plano são de controle editorial. Seguir a seção
+“Unidade do trabalho” dos [critérios de escrita](criterios-escrita.md).
+
 **Título proposto:** Desenvolvimento e implementação do pipeline.
 
 **Estado:** plano solicitado pelo autor a partir da estrutura discutida na conversa.
