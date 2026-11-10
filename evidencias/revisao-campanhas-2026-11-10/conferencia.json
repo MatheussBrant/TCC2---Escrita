@@ -1,0 +1,182 @@
+{
+  "campanhas": [
+    {
+      "execucao": "AMP_REAL_20261106T105533Z_aa697342",
+      "modelo": "gpt-6-luna",
+      "inicio_brasilia": "2026-11-06T07:56:29-03:00",
+      "fim_brasilia": "2026-11-06T09:57:49-03:00",
+      "casos": 78,
+      "registros": 274,
+      "principal": 221,
+      "pos_aceite": 53,
+      "casos_aceitos_criterio": 49,
+      "encerramento": {
+        "esgotamento_P4": 53,
+        "aceite_sem_separacao": 25
+      },
+      "modelos_retornados": {
+        "gpt-6-luna": 274
+      },
+      "classificacoes": {
+        "nao_aplicada:sem_edicoes": 16,
+        "rejeitada:R0F0M1": 21,
+        "rejeitada:R0F1M1": 105,
+        "aceita": 87,
+        "rejeitada:R1F0M1": 30,
+        "indeterminada_funcional": 6,
+        "nao_aplicada:ancora_nao_encontrada": 1,
+        "indeterminada_sast": 3,
+        "rejeitada:R0F1M0": 3,
+        "rejeitada:R1F1M0": 1,
+        "rejeitada:R0F0M0": 1
+      },
+      "aplicacao": {
+        "sem_edicoes": 16,
+        "aplicado": 257,
+        "ancora_nao_encontrada": 1
+      },
+      "artefatos_sha256_conferidos": 1833,
+      "geracao": {
+        "max_completion_tokens": 4096,
+        "reasoning_effort": "none",
+        "schema_sha256": "621a8e050ebaf531d8bd71a653fbf5b4d563f6cdc8809122dae71a14e662d901",
+        "temperature": 0
+      },
+      "diagnosticos_sast_inicial": 8,
+      "alertas_reproduzidos": 78,
+      "casos_pulados": [],
+      "eventos_llm": [],
+      "duracao_s": 7280.6
+    },
+    {
+      "execucao": "AMP_REAL_20261106T125801Z_0eb68fe4",
+      "modelo": "gpt-5.6-luna",
+      "inicio_brasilia": "2026-11-06T09:59:05-03:00",
+      "fim_brasilia": "2026-11-06T12:09:52-03:00",
+      "casos": 78,
+      "registros": 277,
+      "principal": 223,
+      "pos_aceite": 54,
+      "casos_aceitos_criterio": 51,
+      "encerramento": {
+        "aceite_sem_separacao": 23,
+        "esgotamento_P4": 55
+      },
+      "modelos_retornados": {
+        "gpt-5.6-luna": 277
+      },
+      "classificacoes": {
+        "indeterminada_funcional": 4,
+        "rejeitada:R1F0M1": 33,
+        "rejeitada:R0F1M1": 104,
+        "nao_aplicada:ancora_nao_encontrada": 6,
+        "aceita": 95,
+        "rejeitada:R0F0M1": 28,
+        "nao_aplicada:sem_edicoes": 3,
+        "rejeitada:R0F0M0": 2,
+        "rejeitada:R0F1M0": 1,
+        "rejeitada:R1F1M0": 1
+      },
+      "aplicacao": {
+        "aplicado": 268,
+        "ancora_nao_encontrada": 6,
+        "sem_edicoes": 3
+      },
+      "artefatos_sha256_conferidos": 1894,
+      "geracao": {
+        "max_completion_tokens": 4096,
+        "reasoning_effort": "none",
+        "schema_sha256": "621a8e050ebaf531d8bd71a653fbf5b4d563f6cdc8809122dae71a14e662d901",
+        "temperature": 0
+      },
+      "diagnosticos_sast_inicial": 8,
+      "alertas_reproduzidos": 78,
+      "casos_pulados": [],
+      "eventos_llm": [],
+      "duracao_s": 7846.3
+    },
+    {
+      "execucao": "AMP_REAL_20261106T151004Z_f49ac0d2",
+      "modelo": "gpt-4.1-mini",
+      "inicio_brasilia": "2026-11-06T12:11:11-03:00",
+      "fim_brasilia": "2026-11-06T14:20:26-03:00",
+      "casos": 78,
+      "registros": 283,
+      "principal": 241,
+      "pos_aceite": 42,
+      "casos_aceitos_criterio": 38,
+      "encerramento": {
+        "esgotamento_P4": 61,
+        "aceite_sem_separacao": 17
+      },
+      "modelos_retornados": {
+        "gpt-4.1-mini-2025-04-14": 283
+      },
+      "classificacoes": {
+        "nao_aplicada:json_invalido": 1,
+        "rejeitada:R0F1M1": 108,
+        "indeterminada_sast": 4,
+        "nao_aplicada:ancora_nao_encontrada": 8,
+        "aceita": 71,
+        "rejeitada:R0F1M0": 5,
+        "nao_aplicada:sem_edicoes": 1,
+        "rejeitada:R1F0M1": 44,
+        "rejeitada:R0F0M1": 26,
+        "indeterminada_funcional": 6,
+        "rejeitada:R0F0M0": 2,
+        "nao_aplicada:ancora_ambigua": 7
+      },
+      "aplicacao": {
+        "json_invalido": 1,
+        "aplicado": 266,
+        "ancora_nao_encontrada": 8,
+        "sem_edicoes": 1,
+        "ancora_ambigua": 7
+      },
+      "artefatos_sha256_conferidos": 1896,
+      "geracao": {
+        "max_completion_tokens": 4096,
+        "schema_sha256": "621a8e050ebaf531d8bd71a653fbf5b4d563f6cdc8809122dae71a14e662d901",
+        "seed": 42,
+        "temperature": 0
+      },
+      "diagnosticos_sast_inicial": 8,
+      "alertas_reproduzidos": 78,
+      "casos_pulados": [],
+      "eventos_llm": [],
+      "duracao_s": 7754.3
+    }
+  ],
+  "fontes_sha256": {
+    "outputs/campanha_docker/AMP_REAL_20261106T105533Z_aa697342/contrato_execucao.json": "927274691eda2c77bd966d0484108b2dd25322f5582f230a52830a9ef9406664",
+    "outputs/campanha_docker/AMP_REAL_20261106T105533Z_aa697342/resultados_consolidados/AMP_REAL_20261106T105533Z_aa697342_sessoes.json": "4f41077ab996213fd2684a5f68b2791bfd262e98727ee1bc01609010d5ec4a29",
+    "outputs/campanha_docker/AMP_REAL_20261106T105533Z_aa697342/sast_antes/reproducao.json": "9eed83363ea9e2d87d369519e90f58ea68bad07cca0c596f601e2883d87f306f",
+    "outputs/campanha_docker/AMP_REAL_20261106T105533Z_aa697342/resultados_consolidados/execucoes.jsonl": "1c1049494124f699f40da7f5461b1a14a863ede71c6cb1ae9c674bebcd9e3e6d",
+    "outputs/campanha_docker/AMP_REAL_20261106T125801Z_0eb68fe4/contrato_execucao.json": "0826431393d4e7d0987f18237f001ed4061050db1d78db65c53979b6ceefcfe3",
+    "outputs/campanha_docker/AMP_REAL_20261106T125801Z_0eb68fe4/resultados_consolidados/AMP_REAL_20261106T125801Z_0eb68fe4_sessoes.json": "2611fb0fd8807d667dae492d11907b25ef640e36c258bff57e22962243f6888f",
+    "outputs/campanha_docker/AMP_REAL_20261106T125801Z_0eb68fe4/sast_antes/reproducao.json": "d32d6b4ce57cdbcb380a1b35fbd0e22f72a4ef7977b0e712546b6ddd5d45e861",
+    "outputs/campanha_docker/AMP_REAL_20261106T125801Z_0eb68fe4/resultados_consolidados/execucoes.jsonl": "3f046d03302cce22f360d0ddbaf062c003583d63b69b4dedda61482b19dfc1ea",
+    "outputs/campanha_docker/AMP_REAL_20261106T151004Z_f49ac0d2/contrato_execucao.json": "d07b8219b6e885f27e9b580152727afd134633f3d412ecd0543834c527f8572f",
+    "outputs/campanha_docker/AMP_REAL_20261106T151004Z_f49ac0d2/resultados_consolidados/AMP_REAL_20261106T151004Z_f49ac0d2_sessoes.json": "6e5805c33fdb591836cde20d27339437dd285cbb4dfbbfe4abf8c678b0132439",
+    "outputs/campanha_docker/AMP_REAL_20261106T151004Z_f49ac0d2/sast_antes/reproducao.json": "2e95cda2f63d163ec2cf4afc1a4f49eff6c3dadc295c6aee72ba7f58987b929a",
+    "outputs/campanha_docker/AMP_REAL_20261106T151004Z_f49ac0d2/resultados_consolidados/execucoes.jsonl": "5bab37fd0639db4929365d34e0ad8da48c19a71c0dca618194445accad2d4959"
+  },
+  "campos_contrato_compartilhados": [
+    "baseline_testes_sha256",
+    "casos",
+    "commit_alvo",
+    "comparador",
+    "componentes_prompt_sha256",
+    "contrato_validacao_versao",
+    "diagnosticos",
+    "estrategias",
+    "hashes_catalogo",
+    "modo",
+    "perfil_sha256",
+    "prompts_validacao_sha256",
+    "rag",
+    "schema_versao",
+    "semgrep_versao",
+    "validacao"
+  ]
+}

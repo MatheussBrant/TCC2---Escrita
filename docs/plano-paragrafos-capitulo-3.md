@@ -116,7 +116,7 @@ Preservar as distinções necessárias para interpretar as métricas.
 | P12 | Acrescentar | Explicar como o conjunto de regras e as exclusões foram mantidos fixos para permitir comparações consistentes. |
 | P13 | Atualizar | Apresentar a seleção dos 78 casos a partir de 124 alertas, com 46 exclusões. Explicar o que representa cada ocorrência. |
 | P14 | Acrescentar | Explicar a ampliação do conjunto anteriormente preparado de 52 para 78 casos, sem misturar os resultados dessas campanhas. |
-| P15 | Corrigir | Apresentar as informações registradas por caso e as classificações da triagem, esclarecendo sua origem e os limites da verificação humana documentada. |
+| P15 | Corrigir | Apresentar as informações por caso e os rótulos da triagem. Explicar a origem dos confirmados e inconclusivos nos registros versionados e a consolidação por regra, arquivo e intervalo, com revisão explícita de divergências. Registrar a confirmação do autor em 09/11/2026: os 21 falsos positivos apontados pela LLM foram revisados pelos dois autores com exame do código, contexto do alerta e regra do Semgrep. Não atribuir essa revisão humana aos outros grupos nem exploração dinâmica a todos os casos. |
 
 **Apoio e limite da seção:** Tabela do fluxo de inclusão/exclusão. Não apresentar 78 alertas como 78 vulnerabilidades demonstradas.
 
@@ -233,9 +233,13 @@ Preservar as distinções necessárias para interpretar as métricas.
 
 ## Decisões e evidências ainda pendentes
 
+A origem e o procedimento documentado dos 55 confirmados e dois inconclusivos
+foram rastreados no código em 09/11/2026, resolvendo a pendência textual. A revisão
+humana confirmada pelo autor abrange os 21 falsos positivos; não presumir o mesmo
+para os demais grupos. Ver o [rastreio de origem](../evidencias/triagem-origem-2026-11-09/LEITURA.md).
+
 - Justificativa dos autores para a seleção dos três modelos, especialmente os dois acrescentados.
-- Identificação de quem classificou os alertas e do nível de revisão humana dessa triagem.
-- Comprovação e delimitação da inspeção qualitativa de patches efetivamente realizada.
+- Resolvido em 10/11/2026: o autor informou que não houve inspeção manual dos patches; a avaliação utilizou as métricas e verificações automatizadas. Descrever os exemplos do Capítulo 5 como análise documental com apoio automatizado, sem atribuir validação humana das correções.
 - Confirmação do uso real de IA e das revisões humanas que serão declaradas.
 - Alinhamento da ampliação Q5 com a orientadora; não afirmar aprovação sem registro.
 - Ajuste final de títulos e agrupamentos, posição da declaração de IA e destino da PoC detalhada.

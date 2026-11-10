@@ -1,0 +1,192 @@
+{
+  "original": {
+    "linhas": 424,
+    "linhas_nao_vazias": 230,
+    "palavras_por_espacos": 4408,
+    "palavras_sem_blocos_codigo_e_comentarios": 4387,
+    "secoes": 14,
+    "tabelas": 1,
+    "figuras_raster": 3,
+    "diagramas_mermaid": 0,
+    "secoes_detalhadas": [
+      {
+        "titulo": "3.1 Plano Metodológico",
+        "inicio": 410,
+        "fim": 436,
+        "linhas": 27
+      },
+      {
+        "titulo": "3.2 Contexto de aplicação do experimento",
+        "inicio": 437,
+        "fim": 446,
+        "linhas": 10
+      },
+      {
+        "titulo": "3.3 Objeto de estudo: OWASP Juice Shop",
+        "inicio": 447,
+        "fim": 454,
+        "linhas": 8
+      },
+      {
+        "titulo": "3.4 Seleção das vulnerabilidades de segurança",
+        "inicio": 455,
+        "fim": 482,
+        "linhas": 28
+      },
+      {
+        "titulo": "3.5 Ferramenta de análise estática",
+        "inicio": 483,
+        "fim": 510,
+        "linhas": 28
+      },
+      {
+        "titulo": "3.6 Estratégias de prompt",
+        "inicio": 511,
+        "fim": 538,
+        "linhas": 28
+      },
+      {
+        "titulo": "3.7 Estratégia de RAG simplificado",
+        "inicio": 539,
+        "fim": 605,
+        "linhas": 67
+      },
+      {
+        "titulo": "3.8 Pipeline",
+        "inicio": 606,
+        "fim": 647,
+        "linhas": 42
+      },
+      {
+        "titulo": "3.9 Métricas de avaliação",
+        "inicio": 648,
+        "fim": 708,
+        "linhas": 61
+      },
+      {
+        "titulo": "3.10 Armazenamento e organização dos dados",
+        "inicio": 709,
+        "fim": 769,
+        "linhas": 61
+      },
+      {
+        "titulo": "3.11 Análise dos dados",
+        "inicio": 770,
+        "fim": 787,
+        "linhas": 18
+      },
+      {
+        "titulo": "3.12 Limitações do estudo",
+        "inicio": 788,
+        "fim": 797,
+        "linhas": 10
+      },
+      {
+        "titulo": "3.13 Declaração de Uso de Inteligência Artificial",
+        "inicio": 798,
+        "fim": 805,
+        "linhas": 8
+      },
+      {
+        "titulo": "3.14 Cronograma",
+        "inicio": 806,
+        "fim": 825,
+        "linhas": 20
+      }
+    ]
+  },
+  "atual": {
+    "linhas": 277,
+    "linhas_nao_vazias": 164,
+    "palavras_por_espacos": 6390,
+    "palavras_sem_blocos_codigo_e_comentarios": 6238,
+    "secoes": 11,
+    "tabelas": 6,
+    "figuras_raster": 0,
+    "diagramas_mermaid": 1,
+    "secoes_detalhadas": [
+      {
+        "titulo": "3.1 Caracterização e desenho da pesquisa",
+        "inicio": 7,
+        "fim": 14,
+        "linhas": 8
+      },
+      {
+        "titulo": "3.2 Objeto de estudo e ambiente experimental",
+        "inicio": 15,
+        "fim": 39,
+        "linhas": 25
+      },
+      {
+        "titulo": "3.3 Análise estática e constituição do catálogo",
+        "inicio": 40,
+        "fim": 75,
+        "linhas": 36
+      },
+      {
+        "titulo": "3.4 Modelos de linguagem e condições de geração",
+        "inicio": 76,
+        "fim": 113,
+        "linhas": 38
+      },
+      {
+        "titulo": "3.5 Estratégias de prompt",
+        "inicio": 114,
+        "fim": 138,
+        "linhas": 25
+      },
+      {
+        "titulo": "3.6 Recuperação de contexto por RAG simplificado",
+        "inicio": 139,
+        "fim": 146,
+        "linhas": 8
+      },
+      {
+        "titulo": "3.7 Procedimento de execução do pipeline",
+        "inicio": 147,
+        "fim": 181,
+        "linhas": 35
+      },
+      {
+        "titulo": "3.8 Validação das correções",
+        "inicio": 182,
+        "fim": 209,
+        "linhas": 28
+      },
+      {
+        "titulo": "3.9 Métricas de avaliação",
+        "inicio": 210,
+        "fim": 256,
+        "linhas": 47
+      },
+      {
+        "titulo": "3.10 Registro e análise dos dados",
+        "inicio": 257,
+        "fim": 270,
+        "linhas": 14
+      },
+      {
+        "titulo": "3.11 Limitações metodológicas e uso de inteligência artificial",
+        "inicio": 271,
+        "fim": 277,
+        "linhas": 7
+      }
+    ]
+  },
+  "origem": {
+    "arquivo": "TCC1___Caio_Lamego_e_Matheus_Brant-11.md",
+    "linha_inicial": 402,
+    "linha_final": 825
+  },
+  "diff_por_linha": {
+    "adicionadas": 165,
+    "removidas": 312,
+    "inalteradas": 112,
+    "saldo": -147,
+    "metodo": "difflib.SequenceMatcher, autojunk=False; linhas exatas, incluindo vazias"
+  },
+  "fontes_sha256": {
+    "TCC1___Caio_Lamego_e_Matheus_Brant-11.md": "a8ba7bfad7512ff78d1692f8b7b8c65412c36deba1358d1505f73b18250e1078",
+    "manuscrito/03-metodologia.md": "1038481f7a1ef1f1bd6ed8f6f21021c291b133b8025cabcc45789a2431d8f79b"
+  }
+}

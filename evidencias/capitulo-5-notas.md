@@ -283,7 +283,7 @@ Os caminhos de código abaixo são relativos à raiz do experimento no SHA fixad
 | ID | Local | Pendência específica |
 |---|---|---|
 | PE5-01 | 5.1–5.2 / recorte | Confirmar a apresentação principal dos 78 casos, que inclui 21 rótulos de falso positivo e dois inconclusivos. O recorte dos 55 confirmados foi mostrado separadamente. Uma eventual restrição analítica exige ajustar definições, tabelas e metodologia explicitamente, preservando o que foi executado. |
-| PE5-02 | 5.2 e 5.10 | Identificar responsáveis e procedimento da triagem e revisar a adequação dos critérios de D; a análise automatizada não comprova validação humana dessas classificações. |
+| PE5-02 | 5.2 e 5.10 | Origem e procedimento documentado da triagem esclarecidos em 09/11/2026: 55 confirmados e dois inconclusivos rastreados no código; revisão humana dos 21 falsos positivos confirmada pelo autor. Não se atribuiu revisão humana nominal aos outros grupos. A adequação dos critérios de D permanece como ponto de revisão; ver atualizações abaixo. |
 | PE5-03 | 5.6 e continuidade com 3.10 | Revisar os exemplos e alinhar a declaração de análise qualitativa ao procedimento documental aqui registrado. A redação do capítulo 3 foi preservada e ainda contém pendência sobre inspeção qualitativa. |
 | PE5-04 | Integração | Conferir apresentação e largura das tabelas no template, numeração global de 12 tabelas e da figura e formato das citações. |
 | PE5-05 | 5.9 / referencial | Revisar a discussão bibliográfica e sua integração com o capítulo 2; nesta tarefa foram conferidos metadados e resumos de dois estudos, sem revisão bibliográfica integral. |
@@ -353,3 +353,26 @@ SHA-256 do rascunho: `cc8157059fd03847ad1e04f1558c3e097ed440ff4df02c298e1da66038
 
 SHA-256 de 05-consideracoes-finais.md: `111811c5fc9c2ac67a13beaa2d95eeb24e2c7bef39bcc3d3498281d284652a9e`.
 
+
+## Atualização de 09/11/2026 — revisão dos falsos positivos
+
+O usuário confirmou revisão manual dos 21 falsos positivos pelos dois autores,
+com exame do código, contexto e regras do Semgrep. A seção 5.1 foi alinhada à
+explicação da seção 3.3. A confirmação abrange a classificação desses alertas,
+não a revisão humana dos patches, os demais rótulos ou os critérios do conjunto D.
+Ver [registro da confirmação e dos limites](triagem-revisao-humana-2026-11-09.md).
+Os valores das tabelas, métricas, custos, tempos, RRIS e suas populações não foram
+alterados. O hash do primeiro rascunho nesta nota permanece como registro histórico.
+
+## Complemento de 09/11/2026 — origem dos demais rótulos
+
+A seção 5.1 foi alinhada ao rastreamento dos 55 confirmados e dois inconclusivos
+nos registros versionados e no código de consolidação, agora descrito em 3.3.
+Ver [origem das classificações](triagem-origem-2026-11-09/LEITURA.md).
+Não se atribuiu revisão humana nominal ou exploração dinâmica a todos os casos.
+As tabelas, métricas e populações foram preservadas.
+
+
+## Resolução da pendência de inspeção dos patches — 10/11/2026
+
+O autor informou que não houve inspeção manual dos patches: a avaliação utilizou as métricas e verificações automatizadas. Resolvida a pendência sobre esse procedimento (PE03 / PE5-03), com alinhamento das Seções 3.10 e 5.6. Os exemplos permanecem como análise documental com apoio automatizado, sem revisão humana das correções. A revisão humana dos falsos positivos é uma atividade distinta e não foi alterada. Ver [declaração, casos e limites](analise-patches-2026-11-10.md).

@@ -100,14 +100,14 @@ formato necessário ao template final. Não foi afirmada conformidade ABNT.
 
 | ID | Local | Informação necessária |
 |---|---|---|
-| PE01 | 3.3 / P15 | Autoria da triagem, procedimento, revisores e validação das classificações. |
+| PE01 | 3.3 / P15 | Resolvida para a descrição do procedimento em 09/11/2026: origem dos 55 confirmados e dois inconclusivos rastreada nos registros de triagem e no código de consolidação. Revisão humana dos 21 falsos positivos confirmada pelo autor. Não foi inferida revisão humana nominal dos demais grupos; ver atualizações abaixo. |
 | PE02 | 3.4 / P16 | Justificativa específica da escolha dos dois modelos Luna e contexto dessa decisão. |
 | PE03 | 3.10 / P51 | Se a inspeção qualitativa dos patches foi feita, por quem, com qual método e sobre quais casos. |
 | PE04 | 3.11 / P54 | Ferramentas e atividades de IA no desenvolvimento e nível de revisão humana realizado. |
 | PE05 | Integração | Posição definitiva da declaração de IA, da PoC e do cronograma histórico; revisão da organização do trabalho na introdução. |
 | PE06 | Pesquisa | Alinhamento acadêmico da Q5 com a orientadora; a aceitação do autor não foi tratada como aprovação dela. |
 
-Os quatro primeiros itens estão marcados no manuscrito com `[PENDENTE: ...]`.
+Os itens ainda pendentes mantêm marcações específicas no manuscrito; PE01 foi esclarecida nas atualizações de 09/11/2026.
 Esta versão não inventa motivos de escolha ou validações para preencher lacunas.
 
 ## Verificações desta entrega
@@ -181,3 +181,57 @@ Esta versão não inventa motivos de escolha ou validações para preencher lacu
 
 SHA-256 do manuscrito antes da redação: `ec63f064779f5fa508eb9153b91a9c788cfaf8e9500c8e5dd525f7ef45d3fe7e`.
 SHA-256 do rascunho: `879ace966216f4eb109f76732a1192f782e63251e1a8f437eeabe70bd6de46f9`.
+
+## Atualização de 09/11/2026 — revisão dos falsos positivos
+
+O usuário confirmou que os 21 casos apontados pela LLM como falsos positivos
+foram revisados e confirmados por ambos os autores, com exame do código, contexto
+do alerta e regra do Semgrep. A seção 3.3 foi atualizada com essa informação e
+exemplos das justificativas arquivadas. A origem e o procedimento de revisão dos
+rótulos confirmados e inconclusivos permanecem pendentes. Ver
+[registro da confirmação e dos limites](triagem-revisao-humana-2026-11-09.md).
+As notas anteriores e o hash do primeiro rascunho correspondem à versão original
+da redação, anterior a essa atualização. Não houve nova campanha ou mudança de métricas.
+
+## Complemento de 09/11/2026 — origem dos confirmados e inconclusivos
+
+A pendência de descrever a origem e o procedimento documentado desses rótulos
+foi resolvida por rastreamento de 57 casos: 56 com referências históricas diretas
+e um com revisão explícita. Os status constam das entradas de triagem versionadas,
+são aplicados por identidade do alerta e transferidos ao catálogo com os motivos.
+Foram explicitadas no texto as razões dos dois inconclusivos e o alcance do
+rótulo confirmado, sem alegar exploração dinâmica ou revisão humana de todos.
+Ver [rastreio, fontes e limites](triagem-origem-2026-11-09/LEITURA.md).
+A ausência de comprovação nominal de revisão humana dos demais grupos não foi
+preenchida por inferência; o texto passou a descrever a evidência disponível.
+
+
+## Conferência das três campanhas — 10/11/2026
+
+Revisão documental individual registrada em [revisao-campanhas-2026-11-10/LEITURA.md](revisao-campanhas-2026-11-10/LEITURA.md), com script e resultados rastreáveis. Confirmados término, cobertura dos 78 casos por campanha, igualdade das condições comuns, parâmetros de geração e integridade de 5.623 referências de artefatos. A Seção 3.7 passou a nomear as campanhas por modelo e explicitar as condições compartilhadas. A revisão não altera os resultados nem resolve a pendência de exclusão dos falsos positivos das métricas.
+
+
+## Revisão de clareza e fórmulas — 10/11/2026
+
+A pedido do autor, foram ajustadas as Seções 3.8–3.11:
+
+- F foi definido como preservação funcional, com explicação dos valores 1, 0 e indeterminado. “Regressões” no trecho apontado foi substituído pela descrição de novos problemas no funcionamento.
+- Foram retiradas a ressalva solicitada sobre cobertura completa e a narrativa de ampliação do conjunto D após exploração descartada. O histórico permanece nas evidências anteriores; a retirada editorial não altera a origem dos critérios.
+- A Tabela 5 passou a explicar diretamente o efeito das falhas em F.
+- Foram recuperadas as fórmulas e definições de R, F, M, índice j, total m, TRV, TRI, TPF, TNINI, TFF e RRIS da seção 3.9 original, adaptando os denominadores às medições disponíveis. A lista de tabelas foi sincronizada.
+- A soma da TRV foi restrita ao conjunto de tentativas aplicadas com R/F/M medidos; o denominador continua incluindo todas as tentativas da população. Essa notação evita multiplicar valores indeterminados e é equivalente à regra de contagem já utilizada. Os conjuntos e seus tamanhos foram definidos antes das fórmulas.
+- A suposição de que o sucesso em Pₓ seria mantido em uma estratégia posterior foi declarada pelo autor nesta conversa. Foi registrada como suposição do desenho, não como resultado demonstrado. O código comprova a parada sequencial; não comprova o sucesso nas estratégias não executadas.
+
+Fontes: texto integral original, Seção 3.9; experimento no commit `062a203516fd7f55ce86d9c19dc0f23f6e92ed61`, `src/pipeline/etapas/e07_validacao/execucao_cobertura.py` e `src/pipeline/orquestracao/campanha.py`; fórmulas e denominadores conferidos contra os CSVs da análise existente no apoio do Capítulo 5.
+
+Não foram alterados resultados, gráficos ou dados experimentais. A pendência de exclusão dos falsos positivos continua separada desta revisão textual.
+
+
+## Resolução da pendência de inspeção dos patches — 10/11/2026
+
+O autor informou que não houve inspeção manual dos patches: a avaliação utilizou as métricas e verificações automatizadas. Resolvida a pendência sobre esse procedimento (PE03 / PE5-03), com alinhamento das Seções 3.10 e 5.6. Os exemplos permanecem como análise documental com apoio automatizado, sem revisão humana das correções. A revisão humana dos falsos positivos é uma atividade distinta e não foi alterada. Ver [declaração, casos e limites](analise-patches-2026-11-10.md).
+
+
+## Declaração de uso de IA — 10/11/2026
+
+PE04 resolvida mediante confirmação do autor: Codex e Claude Code apoiaram a escrita de código e testes, com revisão humana, e a revisão gramatical dos textos. Atualizada a Seção 3.11, preservando a distinção entre revisão do desenvolvimento e avaliação automatizada dos patches das campanhas. Ver [confirmação e limites](uso-ia-2026-11-10.md). Não foi declarada validação integral de conteúdo ou código.
