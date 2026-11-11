@@ -237,6 +237,10 @@ Seção adicional independente para desenvolver os procedimentos de validação,
 
 **Origem no TCC1:** seção 3.9.
 
+**Diretriz do autor em 11/11/2026:** apresentar cada métrica em um parágrafo
+seguido de sua equação, como no original, sem tabela de fórmulas. Preservar os
+denominadores efetivamente utilizados e o tratamento das medições ausentes.
+
 | Parágrafo | Tratamento | Conteúdo a desenvolver |
 |---|---|---|
 | P42 | Adaptar | Apresentar a TRV e explicar seus três critérios. Informar que tentativas sem aplicação ou conclusão também entram no total considerado. |

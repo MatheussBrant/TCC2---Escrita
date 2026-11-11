@@ -342,16 +342,29 @@ O produto vale 1 apenas quando os três critérios são satisfeitos. O denominad
 
 As métricas complementares examinaram cada critério separadamente. Seus denominadores consideraram apenas as tentativas com a respectiva medição disponível. Foram definidos $J_R$, $J_F$ e $J_M$ como os conjuntos de índices com R, F e M medidos, respectivamente, e $n_R$, $n_F$ e $n_M$ como suas quantidades de tentativas. Por exemplo, $n_F=|J_F|$ representa o número de tentativas em que F recebeu valor 0 ou 1. Esses denominadores podem diferir entre si e ser menores que $m$.
 
-**Tabela 6 — Fórmulas e significado das métricas complementares**
+A Taxa de Remoção de Issues (TRI) indicou a proporção de tentativas em que o alerta original deixou de ser detectado, considerando aquelas com resultado conclusivo para R:
 
-| Métrica | Fórmula | Significado |
-|---|---|---|
-| Taxa de Remoção de Issues (TRI) | $\mathrm{TRI}=\dfrac{\sum_{j\in J_R}R_j}{n_R}$ | Proporção de tentativas com remoção do alerta original, entre as que tiveram R medido. |
-| Taxa de Preservação Funcional (TPF) | $\mathrm{TPF}=\dfrac{\sum_{j\in J_F}F_j}{n_F}$ | Proporção de tentativas com aprovação funcional, entre as que tiveram F medido na interpretação considerada. |
-| Taxa de Não Introdução de Novas Issues (TNINI) | $\mathrm{TNINI}=\dfrac{\sum_{j\in J_M}M_j}{n_M}$ | Proporção de tentativas sem novos alertas, entre as que tiveram M medido. |
-| Taxa de Falha Funcional (TFF) | $\mathrm{TFF}=\dfrac{\sum_{j\in J_F}(1-F_j)}{n_F}=1-\mathrm{TPF}$ | Proporção de tentativas com reprovação funcional, usando a mesma definição de F e o mesmo denominador da TPF. |
+$$
+\mathrm{TRI}=\frac{\sum_{j\in J_R}R_j}{n_R}
+$$
 
-Fonte: consolidação de métricas do experimento.
+A Taxa de Preservação Funcional (TPF) indicou a proporção de tentativas com aprovação nas verificações funcionais, entre aquelas com F medido na interpretação considerada:
+
+$$
+\mathrm{TPF}=\frac{\sum_{j\in J_F}F_j}{n_F}
+$$
+
+A Taxa de Não Introdução de Novas Issues (TNINI) indicou a proporção de tentativas em que a reanálise não identificou novos alertas de segurança, considerando aquelas com resultado conclusivo para M:
+
+$$
+\mathrm{TNINI}=\frac{\sum_{j\in J_M}M_j}{n_M}
+$$
+
+A Taxa de Falha Funcional (TFF) indicou a proporção de tentativas com reprovação funcional. Seu cálculo utilizou a mesma interpretação de F e o mesmo denominador da TPF, correspondendo ao complemento dessa taxa:
+
+$$
+\mathrm{TFF}=\frac{\sum_{j\in J_F}(1-F_j)}{n_F}=1-\mathrm{TPF}
+$$
 
 TRV, TRI, TPF, TNINI e TFF variam de 0 a 1 e são multiplicadas por 100 quando apresentadas em porcentagem. As tabelas de resultados informam os numeradores, os denominadores e as medições ausentes. Quando o denominador é zero, a métrica é apresentada como indisponível. A TFF descreve reprovação nas verificações realizadas, sem assegurar, isoladamente, a identificação da causa de cada falha.
 
@@ -401,9 +414,9 @@ As ferramentas Codex e Claude Code foram utilizadas como apoio à escrita de có
 
 ### 3.16 Cronograma
 
-O planejamento da pesquisa distribuiu as atividades entre a preparação do ambiente, a execução do experimento, a análise dos dados e a redação do trabalho. A Tabela 7 apresenta os períodos previstos nesse planejamento. Esses períodos representam a programação das atividades, e não um registro das datas efetivas de conclusão; as datas das campanhas analisadas foram identificadas na Seção 3.9.
+O planejamento da pesquisa distribuiu as atividades entre a preparação do ambiente, a execução do experimento, a análise dos dados e a redação do trabalho. A Tabela 6 apresenta os períodos previstos nesse planejamento. Esses períodos representam a programação das atividades, e não um registro das datas efetivas de conclusão; as datas das campanhas analisadas foram identificadas na Seção 3.9.
 
-**Tabela 7 — Cronograma previsto para o desenvolvimento da pesquisa**
+**Tabela 6 — Cronograma previsto para o desenvolvimento da pesquisa**
 
 |**Atividade**|**Período previsto**|
 |---|---|
