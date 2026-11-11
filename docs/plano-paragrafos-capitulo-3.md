@@ -165,6 +165,12 @@ Seção adicional independente. O conteúdo sobre modelos foi separado do contex
 
 **Origem no TCC1:** seção 3.6.
 
+**Diretriz do autor em 11/11/2026:** aproximar a organização e a redação do
+original: abertura sobre a comparação, apresentação da primeira à quarta
+estratégia com seus nomes completos e lista dos seis campos da resposta JSON.
+Manter a descrição do experimento realizado, as diferenças de conteúdo entre
+P1–P4 e a lista de edições efetivamente adotada.
+
 | Parágrafo | Tratamento | Conteúdo a desenvolver |
 |---|---|---|
 | P20 | Adaptar | Apresentar as quatro estratégias e os elementos comuns dos prompts, incluindo a seleção do trecho de código. |

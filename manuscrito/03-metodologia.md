@@ -166,17 +166,30 @@ As chamadas foram submetidas a limites configuráveis de quantidade e consumo, c
 
 ### 3.7 Estratégias de prompt
 
-Foram utilizadas quatro estratégias de prompt. Todas receberam uma definição de papel, a tarefa de identificar e corrigir o problema, o código selecionado, as restrições de alteração e o formato esperado de resposta. Para arquivos de até 250 linhas, foi fornecido o conteúdo completo; nos demais, foi selecionada uma janela com até 60 linhas de contexto de cada lado do intervalo do alerta. A mesma política de seleção foi aplicada às quatro estratégias.
+O experimento avaliou diferentes estratégias de prompt para examinar a qualidade das correções geradas com diferentes formas de instrução. A comparação buscou observar os resultados de estratégias mais estruturadas, com contexto adicional e raciocínio guiado, em relação a instruções simples. Foram utilizadas quatro estratégias.
 
-A estratégia P1 correspondeu ao prompt simples. O modelo recebeu o código e uma instrução direta para identificar e corrigir a vulnerabilidade, sem o bloco explícito de diagnóstico do Semgrep e sem um documento de apoio. Essa condição representou a abordagem com menor quantidade de orientação adicional entre as estratégias avaliadas.
+A primeira foi o **prompt simples (P1)**, no qual o modelo recebeu o trecho de código do OWASP Juice Shop associado ao caso selecionado e uma instrução direta para identificar e corrigir a vulnerabilidade. Nessa estratégia, o código foi fornecido sem um bloco explícito com o diagnóstico SAST e sem um documento de contexto recuperado.
 
-A estratégia P2 acrescentou um roteiro de raciocínio guiado ao conteúdo de P1. O roteiro orientou a análise da vulnerabilidade, de sua causa e da correção proposta, acompanhada de justificativa técnica e limitações. Essa organização foi utilizada para estruturar a tarefa solicitada ao modelo; não foi interpretada como acesso ou comprovação do raciocínio interno empregado na geração.
+A segunda foi o **prompt com raciocínio guiado (P2)**, inspirado na ideia de Chain-of-Thought discutida no referencial teórico. Neste trabalho, essa estratégia foi utilizada como uma maneira de estruturar a tarefa em etapas explícitas, sem representar acesso ou validação do raciocínio interno do modelo. O roteiro orientou o modelo a percorrer cinco etapas: identificar a vulnerabilidade, explicar sua causa, descrever o impacto de segurança, propor uma correção e justificar tecnicamente por que a alteração remove ou mitiga o problema. As limitações da correção foram solicitadas em um campo do formato JSON comum às quatro estratégias.
 
-A estratégia P3 incluiu o diagnóstico SAST e um documento técnico recuperado da base de conhecimento. O diagnóstico apresentou a localização do alerta, a regra, a CWE e a mensagem da ferramenta. O documento acrescentou orientações sobre o tipo de problema. Como esses dois elementos foram inseridos em conjunto, as diferenças em relação a P1 não permitem atribuir um eventual ganho exclusivamente à recuperação documental.
+A terceira foi o **prompt com RAG simplificado (P3)**, no qual o modelo recebeu, além do código e do alerta SAST, um documento de contexto recuperado automaticamente da base de conhecimento. O diagnóstico apresentou a localização do alerta, a regra, a CWE e a mensagem da ferramenta. O documento acrescentou orientações relacionadas ao tipo de problema, conforme o procedimento de recuperação descrito na Seção 3.8.
 
-A estratégia P4 combinou o conteúdo de P3 com o roteiro de raciocínio guiado. Em todas as estratégias, foram mantidas restrições para reduzir alterações alheias ao problema: preservar o comportamento existente, evitar refatorações e renomeações, não modificar testes e manter mensagens e assinaturas existentes. Essas instruções buscaram limitar a correção à necessidade identificada, sem substituir a verificação posterior por SAST e testes.
+A quarta foi o **prompt com RAG simplificado e raciocínio guiado (P4)**, combinando o contexto técnico recuperado e o diagnóstico SAST com uma estrutura de análise em etapas. Essa estratégia reuniu os elementos de contextualização de P3 e o roteiro de raciocínio guiado de P2.
 
-As respostas foram solicitadas em JSON, com campos para identificação do problema, causa, estratégia de correção, edições, justificativa e limitações. Cada edição indicou o arquivo, o trecho original e o trecho que deveria substituí-lo. O formato estruturado permitiu verificar a resposta antes da aplicação e registrar situações em que ela estava inválida ou não podia ser utilizada. A composição das estratégias está resumida na Tabela 4.
+Em todas as estratégias, foram mantidos a definição de papel, a tarefa de correção, as restrições de alteração e o formato esperado de resposta. Para arquivos de até 250 linhas, foi fornecido o conteúdo completo; nos demais, foi selecionada uma janela com até 60 linhas de contexto de cada lado do intervalo do alerta. A mesma política de seleção de código foi aplicada às quatro estratégias. As instruções também orientaram a preservar o comportamento existente, evitar refatorações e renomeações, manter mensagens e assinaturas e não modificar os testes. Essas restrições buscaram limitar a alteração ao problema analisado, mantendo a avaliação posterior por SAST e testes.
+
+Para permitir a integração automática com o pipeline, as respostas dos modelos foram solicitadas em formato estruturado JSON. O formato adotado conteve os seguintes campos:
+
+1. Vulnerabilidade identificada;
+2. Causa da vulnerabilidade;
+3. Estratégia de correção;
+4. Lista de edições para corrigir o código;
+5. Justificativa técnica;
+6. Limitações da correção.
+
+Cada edição informou o arquivo a ser alterado, o trecho original e o trecho que deveria substituí-lo. A padronização da saída permitiu ao pipeline extrair as alterações propostas, verificar se podiam ser aplicadas e registrar os dados da tentativa. Respostas com formato inválido ou edições que não podiam ser utilizadas foram identificadas antes de serem tratadas como correções aplicadas.
+
+A Tabela 4 resume as informações fornecidas em cada estratégia. Em P3 e P4, o diagnóstico SAST e o documento recuperado foram acrescentados em conjunto; por isso, as diferenças observadas em relação a P1 e P2 não permitem atribuir um eventual ganho exclusivamente ao RAG.
 
 **Tabela 4 — Informações fornecidas em cada estratégia**
 
@@ -188,6 +201,8 @@ As respostas foram solicitadas em JSON, com campos para identificação do probl
 | Documento recuperado | Não | Não | Sim | Sim |
 
 Fonte: montagem dos prompts do experimento.
+
+<!-- Evidência: seção 3.6 do texto original como referência de organização; src/pipeline/etapas/e04_prompt/montagem.py, config/prompts/roteiro_raciocinio_guiado.md e src/pipeline/etapas/e05_geracao_llm/esquema.py para composição e formato efetivamente implementados. -->
 
 ### 3.8 Estratégia de RAG simplificado
 
