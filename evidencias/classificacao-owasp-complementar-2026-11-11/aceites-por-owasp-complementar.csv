@@ -1,0 +1,22 @@
+categoria,modelo,definicao_f,casos_aceitos,total_casos,classificacao_confirmado,classificacao_falso_positivo,classificacao_inconclusivo
+A01,GPT-4.1 mini,criterio,9,26,18,7,1
+A01,GPT-5.6 Luna,criterio,18,26,18,7,1
+A01,GPT-6 Luna,criterio,16,26,18,7,1
+A02,GPT-4.1 mini,criterio,1,3,1,2,0
+A02,GPT-5.6 Luna,criterio,2,3,1,2,0
+A02,GPT-6 Luna,criterio,1,3,1,2,0
+A04,GPT-4.1 mini,criterio,2,5,1,4,0
+A04,GPT-5.6 Luna,criterio,4,5,1,4,0
+A04,GPT-6 Luna,criterio,4,5,1,4,0
+A05,GPT-4.1 mini,criterio,15,22,16,6,0
+A05,GPT-5.6 Luna,criterio,17,22,16,6,0
+A05,GPT-6 Luna,criterio,18,22,16,6,0
+A06,GPT-4.1 mini,criterio,8,12,10,1,1
+A06,GPT-5.6 Luna,criterio,7,12,10,1,1
+A06,GPT-6 Luna,criterio,7,12,10,1,1
+A07,GPT-4.1 mini,criterio,3,7,7,0,0
+A07,GPT-5.6 Luna,criterio,3,7,7,0,0
+A07,GPT-6 Luna,criterio,3,7,7,0,0
+A08,GPT-4.1 mini,criterio,0,3,2,1,0
+A08,GPT-5.6 Luna,criterio,0,3,2,1,0
+A08,GPT-6 Luna,criterio,0,3,2,1,0

@@ -8,7 +8,7 @@ Inicialmente, são caracterizados os casos e as campanhas. Em seguida, são apre
 
 Foram consideradas três campanhas reais concluídas em 6 de novembro de 2026, uma por modelo: GPT-4.1 mini, GPT-5.6 Luna e GPT-6 Luna. Elas compartilharam a revisão do Juice Shop, o catálogo, o perfil SAST, a base de contexto, o baseline e a política de validação descritos anteriormente. Todas utilizaram quatro worktrees e a sequência P1–P4. Pilotos, simulações e diagnósticos adicionais não foram reunidos com esses resultados. Os contratos e os registros de sessão permitiram conferir essas condições e a conclusão das execuções.
 
-O catálogo reuniu 78 ocorrências elegíveis, obtidas a partir de 124 alertas, com 46 exclusões na preparação. Os casos foram distribuídos em 11 rótulos de tipo de alerta. O maior grupo específico foi o de XSS, com 12 casos, seguido por IDOR, com oito, e travessia de diretórios, com sete. Outros 32 receberam o rótulo residual do catálogo, que reúne situações distintas e não constitui uma categoria homogênea. A distribuição completa é apresentada na Seção 5.5. O mapeamento OWASP estava disponível para 29 casos; os demais permaneceram sem categoria registrada.
+O catálogo reuniu 78 ocorrências elegíveis, obtidas a partir de 124 alertas, com 46 exclusões na preparação. Os casos foram distribuídos em 11 rótulos de tipo de alerta. O maior grupo específico foi o de XSS, com 12 casos, seguido por IDOR, com oito, e travessia de diretórios, com sete. Outros 32 receberam o rótulo residual do catálogo, que reúne situações distintas e não constitui uma categoria homogênea. A distribuição completa é apresentada na Seção 5.5. O mapeamento OWASP estava disponível originalmente para 29 casos; os demais 49 receberam classificação complementar após as campanhas, conforme o procedimento descrito no Capítulo 3. As duas distribuições são distinguidas na Seção 5.5.
 
 A classificação arquivada da triagem identificou 55 casos como confirmados, 21 como falsos positivos e dois como inconclusivos. Os 21 falsos positivos foram revisados e confirmados pelos dois autores, mediante exame do código, do contexto dos alertas e das regras do Semgrep. Os demais rótulos mantiveram as classificações e justificativas da triagem versionada, cuja origem e procedimento de consolidação são descritos na Seção 3.3. As campanhas foram executadas sobre os 78 casos, incluindo os três grupos; portanto, seus totais não podem ser apresentados como correção de 78 vulnerabilidades demonstradas. Para explicitar o efeito desse recorte, também foram examinados separadamente os aceites dos 55 casos rotulados como confirmados, mantendo a limitação de sua origem documental.
 
@@ -187,6 +187,26 @@ A comparação por OWASP foi limitada pela disponibilidade do mapeamento. A Tabe
 
 Fonte: campo OWASP do catálogo, sem atribuição posterior de categorias; casos aceitos/total da categoria, F por critérios. As linhas são uma partição dos 78 casos.
 
+A classificação complementar dos 49 casos permitiu agrupar os 78 casos, mantendo as 29 associações originais. A Tabela 10a apresenta esse recorte posterior às campanhas. Entre os casos acrescentados, 41 foram associados pela lista oficial de CWEs e oito por análise contextual. Quatro destes últimos usavam CWE-943, ausente da lista de A05 consultada, mas descreviam consultas NoSQL; os outros quatro usavam CWE-20, cuja associação genérica a A05 não expressava o problema específico de cada caso. Foram preservados os rótulos da triagem e a definição por critérios de F. Assim, a tabela inclui alertas classificados como falsos positivos e inconclusivos, sem convertê-los em vulnerabilidades confirmadas.
+
+**Tabela 10a — Casos aceitos por categoria OWASP na análise complementar**
+
+| Categoria OWASP 2025 | GPT-4.1 mini | GPT-5.6 Luna | GPT-6 Luna |
+|---|---|---|---|
+| A01 | 9/26 | 18/26 | 16/26 |
+| A02 | 1/3 | 2/3 | 1/3 |
+| A04 | 2/5 | 4/5 | 4/5 |
+| A05 | 15/22 | 17/22 | 18/22 |
+| A06 | 8/12 | 7/12 | 7/12 |
+| A07 | 3/7 | 3/7 | 3/7 |
+| A08 | 0/3 | 0/3 | 0/3 |
+
+Fonte: classificação complementar por caso, listas de CWEs do OWASP Top 10:2025 e registros de aceite das campanhas finais. Células apresentam casos aceitos/total da categoria, F por critérios. As linhas particionam os mesmos 78 casos; os totais permanecem 38, 51 e 49 aceites, respectivamente. O agrupamento considera o tipo de alerta, incluindo falsos positivos e inconclusivos.
+
+O recorte complementar ampliou a cobertura do agrupamento, mas não acrescentou novas tentativas ou verificações das correções. As associações contextuais dependem da interpretação documentada, e as categorias originais foram preservadas sem uma reclassificação integral. Não foram atribuídos casos a A03, A09 ou A10 nessa partição, o que limita a comparação a sete categorias representadas. Os grupos pequenos e o projeto único continuam impedindo generalizar uma ordem de dificuldade para todo o OWASP Top 10.
+
+<!-- Evidência: experimento@062a203516fd7f55ce86d9c19dc0f23f6e92ed61; evidencias/classificacao-owasp-complementar-2026-11-11/{classificacao-78-casos.csv,aceites-por-owasp-complementar.csv,manifesto-conferencia.json}; outputs/rris/AMP_REAL_20261106T{151004Z_f49ac0d2,125801Z_0eb68fe4,105533Z_aa697342}_METRICAS/casos.csv; Q3. Tabela 10 preserva a classificação original; Tabela 10a é derivada e posterior às campanhas. -->
+
 
 ### 5.6 Análise de correções e falhas representativas
 
@@ -259,7 +279,7 @@ Em relação à Q1, foi possível produzir tentativas aceitas pelo pipeline segu
 
 Para a Q2, as estratégias contribuíram de forma diferente ao longo da sequência: P1 produziu aceites iniciais e P2–P4 acrescentaram outros casos, com contribuição expressiva de P3 nos três modelos. Os dados sustentam a utilidade observada de ampliar o percurso de geração, mas não isolam a influência causal de cada estratégia. P2–P4 receberam casos remanescentes, e P3/P4 acrescentaram diagnóstico e documentação simultaneamente. Assim, não foi demonstrado um ganho atribuível exclusivamente ao RAG ou ao roteiro, nem uma estratégia universalmente superior.
 
-Quanto à Q3, o desempenho variou descritivamente conforme os tipos e as regras, como nos contrastes entre XSS, IDOR e travessia de diretórios. A distribuição por OWASP também apresentou diferenças, mas foi incompleta e composta por grupos pequenos. A resposta sustentada é que o desempenho não foi uniforme no catálogo analisado; os resultados não permitem generalizar uma ordem de dificuldade entre vulnerabilidades nem estimar a eficácia para todas as categorias OWASP.
+Quanto à Q3, o desempenho variou descritivamente conforme os tipos e as regras, como nos contrastes entre XSS, IDOR e travessia de diretórios. A distribuição original por OWASP foi incompleta; a classificação complementar agrupou os 78 casos em sete categorias, preservando os resultados e os rótulos da triagem. Esse recorte também apresentou diferenças, mas depende das associações adotadas e contém grupos pequenos. A resposta sustentada é que o desempenho não foi uniforme no catálogo analisado; os resultados não permitem generalizar uma ordem de dificuldade entre vulnerabilidades nem estimar a eficácia para todas as categorias OWASP.
 
 Para a Q4, foram identificadas limitações práticas na aplicação das edições, na avaliação funcional e na integração das propostas. Referências ausentes ou ambíguas impediram aplicações; alterações que removiam alertas falharam nos testes; definições diferentes de F mudaram os aceites; e patches aceitos separadamente encontraram conflitos ou falhas quando reunidos. A coordenação das dependências e dos recursos de execução também compôs o tempo das campanhas. Esses resultados reforçam que o desafio envolveu manter o funcionamento e a rastreabilidade, além de gerar um trecho de código plausível.
 

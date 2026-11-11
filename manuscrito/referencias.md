@@ -50,9 +50,15 @@ OWASP Foundation. _A01:2025 - Broken Access Control_. 2025. Acesso em: 18 jun. 2
 
 OWASP Foundation. _A04:2025 - Cryptographic Failures_. 2025. Acesso em: 18 jun. 2026. Disponível em: <https://owasp.org/Top10/2025/A04_2025-Cryptographic_Failures/>. Citado na página 27.
 
+OWASP Foundation. _A02:2025 - Security Misconfiguration_. 2025. Acesso em: 11 nov. 2026. Disponível em: <https://top10.owasp.org/2025/A02_2025-Security_Misconfiguration/>. Fonte da classificação complementar descrita nos capítulos 3 e 5.
+
 OWASP Foundation. _A05:2025 - Injection_. 2025. Acesso em: 18 jun. 2026. Disponível em: <https://owasp.org/Top10/2025/A05_2025-Injection/>. Citado 2 vezes nas páginas 27 e 51.
 
 OWASP Foundation. _A07:2025 - Authentication Failures_. 2025. Acesso em: 18 jun. 2026. Disponível em: <https://owasp.org/Top10/2025/A07_2025-Authentication_Failures/>. Citado na página 27.
+
+OWASP Foundation. _A06:2025 - Insecure Design_. 2025. Acesso em: 11 nov. 2026. Disponível em: <https://top10.owasp.org/2025/A06_2025-Insecure_Design/>. Fonte das associações contextuais descritas nos capítulos 3 e 5.
+
+OWASP Foundation. _A08:2025 - Software or Data Integrity Failures_. 2025. Acesso em: 11 nov. 2026. Disponível em: <https://top10.owasp.org/2025/A08_2025-Software_or_Data_Integrity_Failures/>. Fonte da classificação complementar descrita nos capítulos 3 e 5.
 
 OWASP Foundation. _A10:2025 - Mishandling of Exceptional Conditions_. 2025. Acesso em: 18 jun. 2026. Disponível em: <https://owasp.org/Top10/2025/A10_2025-Mishandling_of_Exceptional_Conditions/>. Citado na página 27.
 

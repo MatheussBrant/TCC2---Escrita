@@ -1,0 +1,65 @@
+{
+  "consulta": "2026-11-11",
+  "sha_experimento": "062a203516fd7f55ce86d9c19dc0f23f6e92ed61",
+  "sha_owasp": "3a31f35346c3f4e90f350395124382fa53af2afe",
+  "fontes_sha256": {
+    "TCC2---Escrita/evidencias/classificacao-owasp-complementar-2026-11-11/conferir_classificacao.py": "fedd13bdf7edc55de79dda446449807ef586ba27fd95f3ad8bcdfc18576cc245",
+    "tcc2-llm-sast-juiceshop/outputs/catalogos/ampliado_v1/catalogo_issues.json": "08672899e712fbeef2070f01c58b5867e080e74f716ddc7d8fd10c6d58344aee",
+    "TCC2---Escrita/evidencias/classificacao-owasp-complementar-2026-11-11/fontes-owasp/manifesto.json": "932db90485231b692c70303ffa16ff6d45785ef630d51953a748d15cdbd9373d",
+    "TCC2---Escrita/evidencias/classificacao-owasp-complementar-2026-11-11/fontes-owasp/A01_2025-Broken_Access_Control.md": "d6ebc4e65422ff4fa32c310dec3c20ed6e804edfd2d06c7e5b8a802645f556ec",
+    "TCC2---Escrita/evidencias/classificacao-owasp-complementar-2026-11-11/fontes-owasp/A02_2025-Security_Misconfiguration.md": "0df66f6c3e23ee8234567b20de786bf579dac1561632dd532d64130bb2aa2d75",
+    "TCC2---Escrita/evidencias/classificacao-owasp-complementar-2026-11-11/fontes-owasp/A03_2025-Software_Supply_Chain_Failures.md": "d4108c04991ef2f5ab1d8ef301b51cfeef0fea35c550665c3dcfba7aa346758e",
+    "TCC2---Escrita/evidencias/classificacao-owasp-complementar-2026-11-11/fontes-owasp/A04_2025-Cryptographic_Failures.md": "43d7da6637dc9d7ad7d9f7a017afc36123beb96c13d4e35d986f89bca341eaad",
+    "TCC2---Escrita/evidencias/classificacao-owasp-complementar-2026-11-11/fontes-owasp/A05_2025-Injection.md": "d617676bd8d03ab656a481d97a3e8abd2a6241f22ea10326ad05120ba07494ec",
+    "TCC2---Escrita/evidencias/classificacao-owasp-complementar-2026-11-11/fontes-owasp/A06_2025-Insecure_Design.md": "e2b2f572b43ed5a4a82d2b1207c067687c321ecc683893f6bd4c2d2d467e22e4",
+    "TCC2---Escrita/evidencias/classificacao-owasp-complementar-2026-11-11/fontes-owasp/A07_2025-Authentication_Failures.md": "9f98e0c8f055b0c87b67078ae9af4799a9f8caf0736a3fdcd66b1b092b1c60da",
+    "TCC2---Escrita/evidencias/classificacao-owasp-complementar-2026-11-11/fontes-owasp/A08_2025-Software_or_Data_Integrity_Failures.md": "3739748e2cb72c3935dbab9236ac5cb5061da39a1891362369af0c27102a26ca",
+    "TCC2---Escrita/evidencias/classificacao-owasp-complementar-2026-11-11/fontes-owasp/A09_2025-Security_Logging_and_Alerting_Failures.md": "87121126d307ea09dbf073b090609c861c9ded6dc654f73c5ea6436b9522e9c8",
+    "TCC2---Escrita/evidencias/classificacao-owasp-complementar-2026-11-11/fontes-owasp/A10_2025-Mishandling_of_Exceptional_Conditions.md": "1e05837530582feb3e96d84160cd2286d5ba93348fedca2d8f8fb35eecc27ac4",
+    "TCC2---Escrita/evidencias/classificacao-owasp-complementar-2026-11-11/decisoes-contextuais.json": "6d196b561dbbf1f6f29e5ce25f879d8e7699c715d9e918e1b379c87abfe5d313",
+    "tcc2-llm-sast-juiceshop/outputs/campanha_docker/AMP_REAL_20261106T151004Z_f49ac0d2/contrato_execucao.json": "d07b8219b6e885f27e9b580152727afd134633f3d412ecd0543834c527f8572f",
+    "tcc2-llm-sast-juiceshop/outputs/rris/AMP_REAL_20261106T151004Z_f49ac0d2_METRICAS/casos.csv": "1b8145613d940ac30137a76e6bfb2f968a054a6e5caf12f2b880b4e3e43d6201",
+    "tcc2-llm-sast-juiceshop/outputs/campanha_docker/AMP_REAL_20261106T125801Z_0eb68fe4/contrato_execucao.json": "0826431393d4e7d0987f18237f001ed4061050db1d78db65c53979b6ceefcfe3",
+    "tcc2-llm-sast-juiceshop/outputs/rris/AMP_REAL_20261106T125801Z_0eb68fe4_METRICAS/casos.csv": "9d25b9edde292de46e0c82411e583bad6cb18d9e1cd30b8418ba3d958cd7e544",
+    "tcc2-llm-sast-juiceshop/outputs/campanha_docker/AMP_REAL_20261106T105533Z_aa697342/contrato_execucao.json": "927274691eda2c77bd966d0484108b2dd25322f5582f230a52830a9ef9406664",
+    "tcc2-llm-sast-juiceshop/outputs/rris/AMP_REAL_20261106T105533Z_aa697342_METRICAS/casos.csv": "bfcf61a751deef76c333046d3580413ab6a091a754459f0615a5e888c52da222"
+  },
+  "casos": 78,
+  "originais_preservados": 29,
+  "complementares": 49,
+  "correspondencias_explicitas": 41,
+  "associacoes_contextuais": 8,
+  "arquivos_alvo_conferidos_por_caso": 78,
+  "distribuicao_78": {
+    "A01": 26,
+    "A02": 3,
+    "A04": 5,
+    "A05": 22,
+    "A06": 12,
+    "A07": 7,
+    "A08": 3
+  },
+  "distribuicao_complemento": {
+    "A01": 20,
+    "A02": 1,
+    "A04": 2,
+    "A05": 14,
+    "A06": 7,
+    "A07": 3,
+    "A08": 2
+  },
+  "totais_aceitos": {
+    "GPT-4.1 mini": 38,
+    "GPT-5.6 Luna": 51,
+    "GPT-6 Luna": 49
+  },
+  "artefatos_sha256": {
+    "classificacao-complementar.csv": "c8c8a9140617e499f0923f1c3f66282df71ad3b07a565921c16bcc6d1ff8cc9c",
+    "classificacao-78-casos.csv": "2a6d8904b51d2265b71ce2c7ed9577045a7e6410fd7d6137b0daeca4143e1080",
+    "revisao-contextual.json": "565cb3098c6aefa1835fbc22414c45c4f23a6d05c90e027e9055e726f60d611f",
+    "casos-modelos-classificados.csv": "8dcdcb3028fdee2bd7e6c3b610a338dfb9cdfde582e81ad6bc2132be8c75120f",
+    "aceites-por-owasp-complementar.csv": "5aecf037bd7d288a4381aaf579ed8594d1638598c2795dceb4768774571cc269",
+    "tabela-owasp-complementar.md": "409bc8095227cba02d1c5409fda529d95c132d01bb14d79d6bddb78ce626be43"
+  },
+  "limite": "Revisão documental com apoio automatizado; não é validação humana independente, novo teste de exploração ou revisão integral dos CWEs originais."
+}

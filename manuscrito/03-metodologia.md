@@ -6,11 +6,32 @@ O experimento foi conduzido no OWASP Juice Shop, a partir dos alertas identifica
 
 ### 3.1 Caracterização e desenho da pesquisa
 
-Esta pesquisa é um estudo empírico de natureza aplicada, com abordagem predominantemente quantitativa. Seu caráter exploratório e avaliativo decorre da investigação do desempenho de uma solução automatizada em uma aplicação de referência. Foram utilizadas medidas de remoção de alertas e preservação funcional para examinar as tentativas de correção, complementadas pela discussão das dificuldades encontradas e dos limites da avaliação.
+Esta pesquisa foi desenvolvida como um estudo empírico de natureza aplicada, com abordagem predominantemente quantitativa. Em relação aos objetivos, teve caráter exploratório e avaliativo, pois investigou o desempenho de diferentes estratégias de prompt e modelos de linguagem na correção automatizada de vulnerabilidades de segurança, considerando o fluxo de execução adotado. Em relação aos procedimentos, foi conduzida como um estudo experimental sobre uma aplicação de referência, na qual um pipeline automatizado foi executado para avaliar o desempenho das estratégias e dos modelos, com base em métricas definidas previamente. A análise quantitativa foi complementada pela discussão das dificuldades encontradas e dos limites da avaliação.
 
-O desenho do estudo foi orientado pelas cinco perguntas de pesquisa apresentadas na introdução. Elas abordam a viabilidade do pipeline, as estratégias de prompt, os tipos de vulnerabilidade, as limitações práticas e a comparação entre modelos de linguagem em termos de eficácia, custo e tempo. Para examinar essas questões, foram avaliadas diferentes condições de geração sobre um conjunto comum de casos.
+O estudo foi conduzido a partir da implementação e avaliação de um pipeline automatizado de correção de vulnerabilidades. Esse pipeline recebeu como entrada um projeto com alertas identificados por uma ferramenta SAST, coletou informações sobre as ocorrências encontradas, reuniu o código e, conforme a estratégia de prompt, enriqueceu o contexto fornecido ao modelo de linguagem. Em seguida, solicitou uma proposta de correção à LLM, verificou se a modificação gerada podia ser aplicada e, nos casos aplicáveis, alterou o código e executou novamente a análise estática e os testes automatizados.
+
+O fluxo metodológico geral foi composto pelas seguintes etapas:
+
+1. Preparação do ambiente de execução do projeto;
+2. Execução do pipeline automatizado de correção;
+3. Consolidação dos resultados em um conjunto estruturado de dados;
+4. Análise comparativa dos resultados obtidos.
+
+A Figura 1 apresenta a organização dessas etapas, desde a preparação do ambiente até a análise dos resultados.
+
+![Fluxo metodológico: preparação do ambiente, pipeline automatizado de correção, consolidação dos resultados e análise comparativa](../TCC1___Caio_Lamego_e_Matheus_Brant-11_assets/figura-1.png)
+
+**Figura 1 — Visão geral do fluxo metodológico adotado na pesquisa.** A etapa de execução do pipeline automatizado de correção está detalhada na Seção 3.7 e na Figura 2.
+
+Fonte: elaboração dos autores.
+
+O desenho do estudo foi orientado pelas cinco perguntas de pesquisa apresentadas na introdução. Elas abordam a viabilidade do pipeline, as estratégias de prompt, os tipos de vulnerabilidade, as limitações práticas e a comparação entre modelos de linguagem em termos de eficácia, custo e tempo. Para examinar essas questões, foram avaliados diferentes modelos de linguagem e estratégias de prompt sobre um conjunto comum de casos.
 
 Foram adotadas três unidades de organização dos dados. Um caso corresponde a uma ocorrência de alerta identificada no código do projeto. Uma tentativa corresponde à geração e à avaliação de uma proposta para determinado caso, com um modelo e uma estratégia de prompt. Uma campanha reúne as tentativas executadas sob uma configuração registrada. Essas unidades não equivalem ao número de vulnerabilidades comprovadas: um alerta pode indicar uma falha real, um falso positivo ou uma situação ainda sem conclusão.
+
+A metodologia partiu da premissa de que uma correção de vulnerabilidade não deveria ser considerada bem-sucedida apenas porque a ferramenta SAST deixou de apontar um alerta. Uma alteração poderia remover o alerta sem corrigir a causa real da falha ou eliminar a vulnerabilidade comprometendo a funcionalidade esperada do sistema. Por esse motivo, a avaliação combinou três critérios principais: o desaparecimento do alerta original na reanálise estática, a preservação do comportamento verificado pelos testes automatizados e a ausência de novos alertas de segurança.
+
+Assim, uma correção foi aceita somente quando aplicada ao código e aprovada simultaneamente nos três critérios, conforme as definições apresentadas nas Seções 3.8 e 3.9. Esse aceite expressou o atendimento às verificações adotadas, sem constituir, por si só, uma comprovação de eliminação da vulnerabilidade ou de ausência de falhas fora do alcance da análise estática e dos testes utilizados.
 
 ### 3.2 Objeto de estudo e ambiente experimental
 
@@ -146,7 +167,7 @@ A escolha do RAG simplificado manteve o foco na avaliação do contexto fornecid
 
 ### 3.7 Procedimento de execução do pipeline
 
-O pipeline automatizou a preparação das entradas, a geração das correções e sua avaliação. Para cada caso, o fluxo reuniu o código e as informações previstas na estratégia, solicitou uma resposta ao modelo, verificou as edições propostas, aplicou a alteração e realizou a reanálise estática e os testes. Ao final, os resultados foram registrados e o código foi restaurado. A Figura 1 apresenta esse percurso e a continuidade entre estratégias.
+O pipeline automatizou a preparação das entradas, a geração das correções e sua avaliação. Para cada caso, o fluxo reuniu o código e as informações previstas na estratégia, solicitou uma resposta ao modelo, verificou as edições propostas, aplicou a alteração e realizou a reanálise estática e os testes. Ao final, os resultados foram registrados e o código foi restaurado. A Figura 2 apresenta esse percurso e a continuidade entre estratégias.
 
 ```mermaid
 flowchart TD
@@ -163,7 +184,7 @@ flowchart TD
     H -- Sim --> J[Encerrar o caso]
 ```
 
-**Figura 1 — Procedimento de avaliação de um caso.** A sequência P1–P4 ocorre dentro de cada caso; casos distintos podem ser executados em paralelo. O aceite estrito corresponde à regra operacional de parada.
+**Figura 2 — Procedimento de avaliação de um caso.** A sequência P1–P4 ocorre dentro de cada caso; casos distintos podem ser executados em paralelo. O aceite estrito corresponde à regra operacional de parada.
 
 Fonte: elaboração a partir do fluxo do pipeline.
 
@@ -261,6 +282,10 @@ Os dados foram organizados para permitir o acompanhamento de cada caso desde o a
 A população principal foi formada pelas tentativas reais das estratégias previstas, delimitadas conforme o primeiro aceite registrado por caso. Simulações, diagnósticos adicionais, pilotos e registros posteriores ao aceite foram mantidos em categorias separadas. Essa delimitação permitiu conferir o número de casos solicitados, os casos que receberam tentativas e as medições disponíveis. Respostas reutilizadas em etapas históricas também não foram interpretadas como novas gerações independentes.
 
 A análise das estratégias e dos tipos de problema foi organizada por modelo, regra, CWE e categoria OWASP, quando disponíveis. Foram considerados os tamanhos dos grupos e os dados ausentes, evitando interpretar pequenas quantidades como diferenças gerais de desempenho. As classificações da triagem foram preservadas como informação descritiva e para análises complementares; eventual restrição a um grupo deverá ser identificada com seu próprio denominador. Esses recortes apoiam as respostas às perguntas Q1 a Q4.
+
+Após as campanhas, foi realizada uma classificação complementar dos 49 casos sem associação OWASP registrada, preservando as categorias dos outros 29 casos. Para 41 ocorrências, utilizou-se a correspondência explícita entre o CWE registrado e as listas do OWASP Top 10:2025. Oito ocorrências receberam associação contextual, fundamentada no código da revisão utilizada e nas justificativas da triagem arquivada: quatro alertas de consultas NoSQL e quatro de validação com CWE genérico. Nestes últimos, o agrupamento considerou a restrição de negócio, o controle de propriedade ou o estabelecimento de credenciais envolvidos, em vez de atribuir automaticamente todos à categoria de injeção. Essa análise documental, realizada com apoio automatizado, complementou o agrupamento dos resultados; não alterou as entradas das campanhas, os rótulos de falso positivo e inconclusivo ou os critérios de aceite. A classificação representa o tipo de fraqueza sinalizado e não constitui nova comprovação de explorabilidade. A distribuição original e a complementar são apresentadas separadamente no Capítulo 5.
+
+<!-- Evidência: experimento@062a203516fd7f55ce86d9c19dc0f23f6e92ed61; outputs/catalogos/ampliado_v1/catalogo_issues.json; evidencias/classificacao-owasp-complementar-2026-11-11/{manifesto-conferencia.json,decisoes-contextuais.json,revisao-contextual.json}; OWASP/Top10@3a31f35346c3f4e90f350395124382fa53af2afe, 2025/docs/en; Q3. -->
 
 Para responder à Q5, a comparação entre os três modelos foi organizada a partir dos mesmos casos solicitados e dos critérios de avaliação compartilhados. Foram consideradas a proporção de casos aceitos, a TRV, a preservação funcional, os novos alertas, o custo conhecido e os tempos registrados. As diferenças foram interpretadas nas condições observadas, reconhecendo os parâmetros específicos de cada modelo e as trajetórias distintas pelas estratégias. Essa comparação não foi definida como uma classificação universal de superioridade dos modelos.
 
