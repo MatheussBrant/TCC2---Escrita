@@ -101,7 +101,7 @@ O excerto reproduz a abertura da mensagem. O código, as restrições e o format
 
 A integração com os modelos foi separada do restante do processamento para permitir selecionar a geração sem reescrever as etapas de aplicação e avaliação. Nas campanhas finais, essa integração utilizou a API da OpenAI com GPT-4.1 mini, GPT-5.6 Luna e GPT-6 Luna. O repositório também contém suporte a um provedor adicional, que não integrou as campanhas do recorte final.
 
-As configurações foram convertidas para os parâmetros esperados por cada modelo, mantendo uma interface comum para o coordenador. Essa adaptação considerou diferenças como a semente utilizada no GPT-4.1 mini e o esforço de raciocínio desativado nos Luna. Além do nome solicitado, foram registrados o modelo retornado e as condições da geração. Os valores utilizados nas campanhas foram apresentados na metodologia, evitando repeti-los nesta seção.
+As configurações foram convertidas para os parâmetros esperados por cada modelo, mantendo uma interface comum para o coordenador. Essa adaptação considerou diferenças no suporte aos parâmetros, como o esforço de raciocínio desativado nos Luna. Além do nome solicitado, foram registrados o modelo retornado e as condições da geração. Os valores utilizados nas campanhas foram apresentados na metodologia, evitando repeti-los nesta seção.
 
 A resposta foi definida por uma estrutura com campos descritivos e uma lista de edições. Cada edição informou o arquivo, o trecho original e seu substituto. A verificação desse formato permitiu distinguir uma resposta utilizável de conteúdo vazio, recusa ou estrutura inválida. O excerto a seguir foi extraído da resposta real do caso ilustrativo e mostra a edição proposta sem reproduzir as justificativas completas do modelo.
 

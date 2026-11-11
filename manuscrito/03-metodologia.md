@@ -146,19 +146,15 @@ A comparação examinou diferenças de eficácia, custo e tempo dos três modelo
 
 Os parâmetros de geração estão apresentados na Tabela 3. A temperatura controla a variação das respostas e foi fixada em zero para favorecer a consistência. O limite de completamento define a quantidade máxima de tokens gerados por chamada; foram adotados 4.096 tokens nos três modelos para manter um teto comum de saída e controlar o consumo. Esse valor correspondeu a uma configuração compartilhada do experimento, sem ser apresentado como o limite ótimo para produzir as correções.
 
-A semente (seed) inicializa os mecanismos pseudoaleatórios da geração. No GPT-4.1 mini, foi mantida em 42 para reduzir variações em eventuais reexecuções, sem garantir respostas idênticas. O papel desse número foi manter uma configuração constante entre as chamadas, sem pressupor que 42 produzisse correções melhores do que outras sementes. Nos Luna, o parâmetro foi omitido porque seu suporte não foi assumido nos perfis de integração.
-
 O esforço de raciocínio configura uma etapa interna de processamento que pode afetar o tempo e o consumo de tokens. Nos Luna, foi desativado (none), pois o estudo não incluiu uma condição adicional com esse recurso ativado. No GPT-4.1 mini, o parâmetro não foi enviado porque o modelo é descrito pela [documentação oficial](https://developers.openai.com/api/docs/models/gpt-4.1-mini) como operando sem uma etapa separada de raciocínio (OPENAI, 2026). Sua omissão decorreu dessa diferença de funcionamento, e não da aplicação de um valor de esforço equivalente ao dos Luna. Esse controle é distinto das instruções de raciocínio guiado presentes nos prompts, que organizaram a tarefa solicitada aos três modelos.
-
-<!-- Evidência da configuração e finalidade da semente: tcc2-llm-sast-juiceshop@062a203516fd7f55ce86d9c19dc0f23f6e92ed61; docs/protocolo_experimental.md, seção 9; docs/historico/features/10-comparacao-modelos-openai/ENTREGA.md, seção Perfis de geração e custo. -->
 
 **Tabela 3 — Parâmetros de geração registrados nas campanhas finais**
 
-| Modelo solicitado | Temperatura | Limite de tokens de completamento | Semente | Esforço de raciocínio |
-|---|---:|---:|---|---|
-| GPT-4.1 mini | 0 | 4.096 | Fixa: 42 | Não enviado (sem etapa configurável) |
-| GPT-5.6 Luna | 0 | 4.096 | Parâmetro não enviado | Desativado (none) |
-| GPT-6 Luna | 0 | 4.096 | Parâmetro não enviado | Desativado (none) |
+| Modelo solicitado | Temperatura | Limite de tokens de completamento | Esforço de raciocínio |
+|---|---:|---:|---|
+| GPT-4.1 mini | 0 | 4.096 | Não enviado (sem etapa configurável) |
+| GPT-5.6 Luna | 0 | 4.096 | Desativado (none) |
+| GPT-6 Luna | 0 | 4.096 | Desativado (none) |
 
 Fonte: contratos de execução de cada campanha.
 
