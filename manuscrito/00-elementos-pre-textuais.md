@@ -74,6 +74,7 @@ This work evaluated an automated pipeline integrating Large Language Models (LLM
 
 - Capítulo 3 — Figura 1 — Visão geral do fluxo metodológico adotado na pesquisa
 - Capítulo 3 — Figura 2 — Procedimento de avaliação de um caso
+- Capítulo 3 — Figura 3 — Estrutura do identificador utilizado na nomenclatura dos artefatos gerados pelo pipeline
 - Capítulo 4 — Figura 1 — Principais etapas e conexões do pipeline
 - Capítulo 4 — Figura 2 — Cópias de trabalho utilizadas pelo pipeline
 - Capítulo 5 — Figura 1 — Distribuição dos casos pelo primeiro aceite e pela ausência de aceite

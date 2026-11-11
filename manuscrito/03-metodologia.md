@@ -386,6 +386,20 @@ Em que $I_{\text{antes}}$ e $I_{\text{depois}}$ representam as contagens de aler
 
 Os dados foram organizados para permitir o acompanhamento de cada caso desde o alerta inicial até sua avaliação. Prompts, respostas, edições aplicadas, código corrigido, análises estáticas e testes foram associados ao identificador da tentativa. Os contratos, os registros das sessões e as verificações de integridade permitiram relacionar esses arquivos às condições de execução. A estrutura dos diretórios e dos componentes responsáveis pelo registro é apresentada no Capítulo 4.
 
+Cada tentativa de correção recebeu um identificador único, utilizado para nomear os artefatos e relacioná-los aos registros do experimento. A composição desse identificador reuniu o caso analisado, a categoria OWASP, a sigla do tipo de vulnerabilidade, a estratégia de prompt e a execução correspondente, separados por sublinhados. A identificação do artefato foi complementada pelo diretório, pelo sufixo ou pela extensão do arquivo. A Figura 3 ilustra os componentes dessa nomenclatura com um exemplo abreviado.
+
+![Composição do nome de um artefato: caso, categoria OWASP, tipo de vulnerabilidade, prompt, execução e artefato](../TCC1___Caio_Lamego_e_Matheus_Brant-11_assets/figura-3.png)
+
+**Figura 3 — Estrutura do identificador utilizado na nomenclatura dos artefatos gerados pelo pipeline.**
+
+Fonte: elaboração dos autores.
+
+No exemplo da figura, `V01` identifica o caso, `A05` a categoria OWASP, `SQLI` o tipo de vulnerabilidade, `P1` a estratégia de prompt, `E01` a execução e `codigo` o artefato. Nos resultados do experimento, os casos receberam identificadores iniciados por `AMP`, e as execuções foram identificadas pelo código da campanha. Os códigos corrigidos mantiveram seus nomes e caminhos relativos dentro de um diretório da tentativa; prompts, respostas, patches e relatórios foram associados ao mesmo identificador em seus respectivos diretórios.
+
+Essa organização permitiu acompanhar cada tentativa desde o alerta inicial até a avaliação da proposta e comparar estratégias diferentes para o mesmo caso. Na versão final dos artefatos, os nomes incorporaram as categorias OWASP da classificação complementar descrita a seguir. Os identificadores e caminhos anteriores foram preservados em mapas de correspondência, permitindo rastrear a padronização sem modificar o conteúdo experimental dos arquivos.
+
+<!-- Evidência da nomenclatura: scripts/relatorios/padronizar_artefatos_finais.py; outputs/resultados_finais/OWASP_20261111_V2/{mapa_artefatos.csv,mapa_tentativas.csv,conferencia.json}; identificadores dos registros e dos arquivos em campanha/. A Figura 3 ilustra o esquema de campos, não reproduz literalmente os identificadores mais extensos das campanhas finais. -->
+
 A população principal foi formada pelas tentativas reais das estratégias previstas, delimitadas conforme o primeiro aceite registrado por caso. Simulações, diagnósticos adicionais, pilotos e registros posteriores ao aceite foram mantidos em categorias separadas. Essa delimitação permitiu conferir o número de casos solicitados, os casos que receberam tentativas e as medições disponíveis. Respostas reutilizadas em etapas históricas também não foram interpretadas como novas gerações independentes.
 
 A análise das estratégias e dos tipos de problema foi organizada por modelo, regra, CWE e categoria OWASP, quando disponíveis. Foram considerados os tamanhos dos grupos e os dados ausentes, evitando interpretar pequenas quantidades como diferenças gerais de desempenho. As classificações da triagem foram preservadas como informação descritiva e para análises complementares; eventual restrição a um grupo deverá ser identificada com seu próprio denominador. Esses recortes apoiam as respostas às perguntas Q1 a Q4.

@@ -251,6 +251,13 @@ denominadores efetivamente utilizados e o tratamento das medições ausentes.
 
 ### 3.12 Armazenamento, organização e análise dos dados
 
+**Diretriz posterior do autor:** recuperar a explicação da nomenclatura e a
+Figura 3 original. Explicar os campos do exemplo abreviado e sua correspondência
+com os IDs AMP e os códigos das campanhas finais. Distinguir o tipo de artefato
+indicado por diretório/sufixo/extensão e a organização dos códigos corrigidos.
+Registrar que a categoria OWASP foi padronizada nas cópias finais, com mapas de
+correspondência para os identificadores e caminhos históricos.
+
 **Origem no TCC1:** seções 3.10 e 3.11.
 
 **Decisão posterior do autor:** reunir armazenamento, organização e análise dos
