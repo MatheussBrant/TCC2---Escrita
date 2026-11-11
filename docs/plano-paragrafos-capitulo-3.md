@@ -118,6 +118,13 @@ Separar as condições de execução da caracterização do objeto. Manter aqui 
 | P06 | Adaptar | Apresentar o Juice Shop e justificar sua escolha como aplicação de estudo, reconhecendo sua finalidade didática. |
 | P07 | Precisar | Identificar a versão do projeto e suas tecnologias principais. Registrar a revisão exata em tabela ou nota de apoio. |
 
+**Atualização de 11/11/2026:** preservar a apresentação mais detalhada da seção
+original: tecnologias, 113 desafios em 16 categorias e 33 Coding Challenges na
+versão utilizada. As contagens foram conferidas no código fixado. Explicar a
+finalidade dos desafios de código e sua relação com o objeto de estudo, sem
+equiparar desafios pedagógicos aos 78 casos do catálogo. Manter o link para o
+fork e deixar os identificadores completos nas notas de evidência.
+
 ### 3.4 Seleção das vulnerabilidades de segurança
 
 **Origem no TCC1:** seção 3.4.

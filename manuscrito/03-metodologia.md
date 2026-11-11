@@ -43,7 +43,6 @@ O experimento foi conduzido em uma aplicação web com múltiplos módulos, depe
 |---|---|
 | Aplicação | OWASP Juice Shop 20.1.1 |
 | Repositório utilizado (fork) | [caiolamego/juice-shop-tcc](https://github.com/caiolamego/juice-shop-tcc) |
-| Revisão do alvo | `f915bddd82790d0f3018902d36ae9b4241a5f51f` |
 | Plataforma Docker | `linux/amd64` |
 | Node.js e npm do baseline final | 24.14.0 e 11.9.0 |
 | Ferramenta SAST | Semgrep 1.177.0 |
@@ -60,7 +59,15 @@ As campanhas finais foram executadas em um ambiente Docker padronizado, com o pr
 
 O OWASP Juice Shop é uma aplicação web que simula uma loja virtual, com funcionalidades como consulta de produtos, carrinho de compras e realização e acompanhamento de pedidos. Foi selecionado por ser um projeto de código aberto, deliberadamente vulnerável, com múltiplos módulos, dependências e testes automatizados. Essas características permitiram avaliar a abordagem considerando relações entre partes do projeto e comportamentos já definidos pela aplicação. Sua finalidade didática também ofereceu referências sobre parte das falhas intencionais, sem tornar os desafios conhecidos o único critério de seleção dos casos.
 
-Foi utilizada a versão 20.1.1 do projeto, implementada principalmente em JavaScript e TypeScript, com Node.js, Express e Angular. A versão analisada foi obtida do fork caiolamego/juice-shop-tcc, uma cópia do repositório original mantida separadamente. O código foi fixado em uma revisão específica para que todas as tentativas partissem da mesma base. O conjunto estudado foi determinado pelos alertas produzidos pelo detector no escopo definido, e não pela contagem de desafios pedagógicos da aplicação. As condições de referência estão resumidas na Tabela 1.
+Foi utilizada a versão 20.1.1 do projeto, implementada principalmente em JavaScript e TypeScript, com Node.js, Express e Angular. Por esse motivo, a metodologia utilizou ferramentas, regras de análise estática, testes e estratégias de correção compatíveis com essas linguagens e com a estrutura da aplicação. A presença de componentes no servidor e na interface web também permitiu considerar diferentes partes do sistema na identificação dos casos e na avaliação das alterações.
+
+Na versão utilizada nesta pesquisa, o OWASP Juice Shop reúne 113 desafios distribuídos em 16 categorias, abrangendo problemas como exposição de dados sensíveis, injeção, quebra de controle de acesso, validação imprópria de entrada e Cross-Site Scripting (XSS). Os desafios contemplam tipos de risco e fraquezas relacionados a referências de segurança como o OWASP Top 10, o OWASP Application Security Verification Standard (ASVS), o OWASP API Security Top 10 e a Common Weakness Enumeration (CWE). Essa diversidade permite examinar diferentes mecanismos de falha dentro de uma mesma aplicação, mantendo relações entre funcionalidades, dependências e regras de negócio (OWASP Foundation, 2026a).
+
+Além dos desafios de exploração, a versão analisada disponibiliza 33 Coding Challenges, ou desafios de código, nos quais o usuário localiza o trecho vulnerável e identifica uma alternativa de correção. Esse recurso aproxima o uso didático da aplicação das tarefas de identificação e remediação de falhas no código-fonte. Nesta pesquisa, as propostas de correção foram geradas pelos modelos de linguagem, sem utilizar as alternativas desses exercícios como respostas fornecidas ao pipeline. A existência dos desafios de código contribuiu para caracterizar o Juice Shop como um objeto de estudo voltado também à compreensão e à correção de vulnerabilidades.
+
+A versão analisada foi obtida do fork [caiolamego/juice-shop-tcc](https://github.com/caiolamego/juice-shop-tcc), uma cópia do repositório original mantida separadamente. Todas as tentativas partiram da mesma base de código, sob as condições de referência resumidas na Tabela 1. Os desafios pedagógicos apresentados nesta seção caracterizam a aplicação, enquanto o conjunto submetido ao experimento foi determinado pelos alertas produzidos pelo detector no escopo definido. Assim, a quantidade de desafios disponíveis não corresponde ao número de casos selecionados para as campanhas, cuja constituição é descrita na Seção 3.4.
+
+<!-- Evidência da caracterização: OWASP Foundation, página oficial do Juice Shop e guia de Coding Challenges; experimento@062a203516fd7f55ce86d9c19dc0f23f6e92ed61; alvo@f915bddd82790d0f3018902d36ae9b4241a5f51f: data/static/challenges.yml (113 entradas, 16 categorias), data/static/codefixes/*.info.yml (33 arquivos) e lib/codingChallenges.ts. Conferência em evidencias/juice-shop-objeto-estudo-2026-11-11.json. -->
 
 ### 3.4 Seleção das vulnerabilidades de segurança
 
