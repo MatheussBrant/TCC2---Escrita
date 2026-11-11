@@ -292,6 +292,10 @@ As campanhas finais foram configuradas para até quatro casos em paralelo, mante
 
 ### 3.10 Validação das correções
 
+A validação das correções teve como finalidade verificar se as alterações propostas pelos modelos atenderam às condições de segurança e funcionamento definidas para o experimento. Uma proposta aplicada ao código poderia retirar o alerta original, comprometer uma funcionalidade ou introduzir novos problemas detectáveis. Por esse motivo, sua avaliação combinou a reanálise estática com a execução de testes automatizados, considerando os resultados em relação ao código original.
+
+Para organizar essa avaliação, foram definidos três critérios: R, correspondente à remoção do alerta original; F, à preservação funcional; e M, à ausência de novos alertas de segurança. Esses critérios representaram condições verificadas em cada tentativa aplicada e fundamentaram a classificação das correções e o cálculo das métricas. O aceite exigiu o atendimento simultâneo aos três critérios, segundo a interpretação de F adotada em cada análise. As verificações utilizadas para avaliar cada um são descritas a seguir.
+
 O critério R representou a remoção do alerta original. Para verificá-lo, foram comparadas as ocorrências identificadas antes e depois da alteração. Como uma edição pode deslocar o código sem eliminar o problema, a comparação considerou a correspondência entre trechos e seu contexto. Quando essa correspondência não era suficiente, o comparador também utilizou a contagem da mesma regra no mesmo arquivo. A redução de contagem, isoladamente, não foi tomada como prova de remoção de uma ocorrência específica sem correspondência.
 
 O critério M representou a ausência de novos alertas na reanálise do projeto sob o perfil fixado. A avaliação observou também erros de leitura e limitações de análise, que poderiam impedir uma conclusão. O uso de contagens possui uma limitação: a retirada e a criação de ocorrências equivalentes no mesmo arquivo podem se compensar. Assim, M descreve o que foi observado pelo detector nas condições registradas, sem assegurar que nenhuma vulnerabilidade fora de seu alcance tenha sido introduzida.
