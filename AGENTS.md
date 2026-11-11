@@ -1,107 +1,119 @@
 # Escrita do TCC2 — Caio Lamego e Matheus Brant
 
-Este repositório organiza a redação do TCC2 sobre correção de vulnerabilidades com
-LLMs, Semgrep e testes no OWASP Juice Shop. Trabalhe em português brasileiro.
+Este repositório guarda a redação da monografia sobre correção de vulnerabilidades
+com LLMs, Semgrep e testes no OWASP Juice Shop. Trabalhe em português brasileiro.
 
 ## Começo de uma tarefa
 
-Leia [contexto](docs/contexto.md) e escolha somente a skill pertinente abaixo.
-Para planejar capítulos ou avaliar cumprimento, consulte a
-[matriz do TCC1](docs/compromissos-tcc1.md). Resolva os caminhos pela configuração
-efetiva: `--config` explícito, senão `fontes.local.json` quando existir, senão
-`fontes.json`. Os caminhos são relativos ao diretório do arquivo escolhido.
+Leia somente o que a tarefa pedir, nesta ordem:
 
-As tarefas de redação estão no [índice de features](features/README.md). Para
-executar uma delas, leia sua especificação, o [contrato](features/CONTRATO.md)
-e a [base comum](features/BASE_COMUM.md). Respeite sua pasta `saida`, entregáveis
-e critérios; registre progresso no `entrega.md` da própria pasta. F01–F10 podem
-começar em paralelo; as dependências de fechamento exigem reconciliação antes do
-aceite. F11 integra as versões revisadas. Não substitua uma feature por um roteiro
-genérico nem altere especificações compartilhadas durante sua execução.
+1. [Diretrizes de escrita](docs/diretrizes-escrita.md): decisões dos autores,
+   organização dos capítulos e a pergunta Q5.
+2. [Critérios de escrita](docs/criterios-escrita.md): linguagem, unidade do
+   trabalho e profundidade de cada capítulo.
+3. O plano de parágrafos do capítulo em questão, quando existir.
+4. As notas de evidência do capítulo, em `evidencias/capitulo-N-notas.md`.
+5. O texto atual em `manuscrito/`, a partir do [índice](manuscrito/README.md).
 
-O texto final tem cinco capítulos. IDs de features e números de pastas identificam
-tarefas: F02/F03 compõem o Capítulo 2, F04/F05 o 3, F06/F07 o 4 e F08 o 5.
-Novas adições ao experimento geram features E001 em diante pelo
-[fluxo de evoluções](features/EVOLUCOES.md), usando `tcc2-evoluir`. Podem ser
-planejadas antes da implementação; só descrevem resultados realizados quando
-houver evidência. F11 incorpora também as evoluções selecionadas para seu recorte.
+O [Markdown completo do TCC1](TCC1___Caio_Lamego_e_Matheus_Brant-11.md), com as
+figuras em `TCC1___Caio_Lamego_e_Matheus_Brant-11_assets/`, é a referência de
+linguagem e dos compromissos assumidos na proposta. Ele não integra o texto final.
 
-O layout compartilhado coloca o clone `tcc2-llm-sast-juiceshop/` e o PDF
-`TCC1___Caio_Lamego_e_Matheus_Brant-11.pdf` **dentro da raiz de escrita**.
-O clone `PoC-TCC-Matheus-e-Caio/` é opcional: sua ausência não bloqueia a escrita
-do experimento principal; registre a limitação quando precisar de fontes da PoC.
-Essas fontes locais estão no `.gitignore` da escrita, mas devem ser consultadas
-diretamente pelos caminhos configurados. O clone experimental tem seu próprio
-Git; use `git -C <raiz-do-experimento>` para consultá-lo, mantendo a sessão de
-escrita nesta raiz. Veja a montagem do workspace no [README](README.md).
+## Organização atual
 
-Antes de descrever o estado atual, compare HEAD, refs e alterações locais das
-fontes com o manifesto da coleta usada. Se houver evolução, examine os novos
-commits e produza uma nova coleta quando necessário, preservando a anterior.
-Caminhos gravados em coletas históricas documentam o ambiente daquela coleta;
-localize as fontes nesta máquina pela configuração efetiva, sem editar o histórico.
-Fontes ausentes são uma lacuna, não autorização para reconstruir resultados de memória.
+| Capítulo | Texto | Plano | Evidências |
+|---|---|---|---|
+| Pré-textuais | `manuscrito/00-elementos-pre-textuais.md` | — | — |
+| 1 — Introdução | `manuscrito/01-introducao.md` | — | — |
+| 2 — Referencial teórico | `manuscrito/02-referencial-teorico.md` | — | — |
+| 3 — Metodologia | `manuscrito/03-metodologia.md` | `docs/plano-paragrafos-capitulo-3.md` | `evidencias/capitulo-3-notas.md` |
+| 4 — Implementação | `manuscrito/04-implementacao.md` | `docs/plano-paragrafos-capitulo-4.md` | `evidencias/capitulo-4-notas.md` |
+| 5 — Resultados e discussão | `manuscrito/05-resultados-discussao.md` | `docs/plano-paragrafos-capitulo-5.md` | `evidencias/capitulo-5-notas.md` e `evidencias/capitulo-5-apoio/` |
+| 6 — Conclusão e trabalhos futuros | ainda não redigido | — | — |
+| Referências | `manuscrito/referencias.md` | — | — |
 
-Em uma rodada com base fixada, novos commits não substituem automaticamente o
-recorte escolhido: consulte o SHA especificado e registre a evolução encontrada.
-Qualquer atualização da base deve ser coordenada entre as entregas afetadas,
-sem checkout/reset no clone experimental compartilhado.
+As perguntas de pesquisa são Q1–Q5, conforme a introdução; Q5 compara os modelos.
+Ficam fora do texto final, como fontes históricas: `manuscrito/04-prova-de-conceito.md`,
+`manuscrito/05-consideracoes-finais.md` e o Markdown do TCC1. Não os concatene nem
+os edite. `manuscrito/03-metodologia copy.md` é uma cópia de trabalho: confirme
+com os autores antes de usá-la como fonte ou apagá-la.
 
-| Tarefa | Skill canônica |
-|---|---|
-| Relacionar promessas, perguntas e evidências | [.agents/skills/tcc2-planejar/SKILL.md](.agents/skills/tcc2-planejar/SKILL.md) |
-| Criar features para evoluções existentes ou planejadas | [.agents/skills/tcc2-evoluir/SKILL.md](.agents/skills/tcc2-evoluir/SKILL.md) |
-| Recuperar commits e decisões de implementação | [.agents/skills/tcc2-historico/SKILL.md](.agents/skills/tcc2-historico/SKILL.md) |
-| Interpretar execuções, CSVs e métricas | [.agents/skills/tcc2-resultados/SKILL.md](.agents/skills/tcc2-resultados/SKILL.md) |
-| Redigir uma seção com evidências | [.agents/skills/tcc2-redigir/SKILL.md](.agents/skills/tcc2-redigir/SKILL.md) |
-| Verificar referências e sustentar fundamentação | [.agents/skills/tcc2-bibliografia/SKILL.md](.agents/skills/tcc2-bibliografia/SKILL.md) |
-| Revisar consistência científica e textual | [.agents/skills/tcc2-revisar/SKILL.md](.agents/skills/tcc2-revisar/SKILL.md) |
-| Coordenar agentes em uma entrega de escrita | [.agents/skills/tcc2-coordenar/SKILL.md](.agents/skills/tcc2-coordenar/SKILL.md) |
+Comparações com a proposta original ficam em documentos de apoio, como
+[docs/comparacao-capitulo-3-tcc1-tcc2.md](docs/comparacao-capitulo-3-tcc1-tcc2.md),
+e pareceres datados em `revisoes/`.
+
+## Onde estão as fontes
+
+O experimento é o clone `tcc2-llm-sast-juiceshop`, na pasta irmã da raiz da escrita
+(`../tcc2-llm-sast-juiceshop`). Os scripts de `evidencias/` usam esse caminho. Se o
+clone estiver em outro lugar nesta máquina, use o caminho informado pelo usuário;
+fonte ausente é uma lacuna, não autorização para reconstruir resultados de memória.
+
+Consulte o clone com `git -C <caminho-do-clone>` e não faça nele checkout, reset,
+commit nem execução de experimento. As notas de cada capítulo registram a revisão
+(SHA) consultada; antes de descrever o estado atual, compare-a com o HEAD do clone
+e registre a evolução encontrada, sem reescrever notas antigas.
+
+No clone, as fontes principais são: `docs/protocolo_experimental.md` e
+`docs/caderno_de_laboratorio.md` para o método e as decisões;
+`outputs/campanha_docker/<EXECUCAO>/` para as tentativas; e
+`outputs/rris/<EXECUCAO>_METRICAS/` para as métricas consolidadas com a RRIS.
+O recorte de execuções usado no texto está nas notas do capítulo 5.
 
 ## Regras de evidência
 
-- Diretriz editorial do autor (09/11/2026): o texto acadêmico apresenta uma única
-  pesquisa completa e autônoma. Não mencionar TCC1/TCC2 como trabalhos separados
-  ou etapas de entrega. A origem dos trechos e a comparação entre versões ficam
-  nos planos e nas notas, conforme `docs/criterios-escrita.md`.
-
+- O texto acadêmico apresenta uma única pesquisa completa e autônoma. Não mencionar
+  TCC1/TCC2 como trabalhos separados ou etapas de entrega. A origem dos trechos e a
+  comparação entre versões ficam nos planos e nas notas, conforme
+  `docs/criterios-escrita.md` (diretriz do autor de 09/11/2026).
 - Vincule afirmações empíricas a repositório, SHA, caminho e execução; números
   precisam de população, definição de F, numerador, denominador e política.
-- Diferencie proposta do TCC1, implementação, execução observada e interpretação.
-  Mensagem de commit e checklist de entrega não comprovam eficácia experimental.
+- Diferencie proposta original, implementação, execução observada e interpretação.
+  Mensagem de commit e checklist não comprovam eficácia experimental.
 - Separe PoC Python/Bandit, histórico JS001–JS012, catálogo ampliado, pilotos,
   diagnósticos P1L, preflight, dry-run, replay e campanhas Docker. Não agregue
-  ambientes, contratos ou modelos diferentes sem justificar comparabilidade.
+  ambientes, contratos ou modelos diferentes sem justificar a comparabilidade.
 - Não invente resultados, referências, DOI, aprovação da orientadora ou experimentos.
   Use `[PENDENTE: evidência necessária]` em rascunhos quando faltar fonte.
-- As estratégias P1–P4 são sequenciais com parada no aceite; taxas brutas não
-  isolam causalmente o efeito do prompt. Ausência de medição não significa zero.
+- As estratégias P1–P4 são sequenciais, com parada no aceite: as taxas de P2–P4 são
+  condicionais aos casos restantes e não isolam o efeito do prompt. P1 e P2 recebem
+  só o código; P3 e P4 recebem também o alerta do Semgrep e o documento do RAG.
+  Ausência de medição não significa zero.
 - Preserve a diferença entre remover um alerta e demonstrar uma correção segura.
-  RRIS requer aplicação conjunta e scans comparáveis; não some aceites isolados.
-- Consulte a revisão da fonte que sustenta a afirmação. Documentos antigos podem
-  ter pendências já resolvidas; registre a mudança, sem reescrever o passado.
+  A RRIS exige aplicação conjunta e scans comparáveis; não some aceites isolados.
+- Consulte a revisão da fonte que sustenta a afirmação. Documentos antigos podem ter
+  pendências já resolvidas; registre a mudança, sem reescrever o passado.
 
 ## Trabalho nos arquivos
 
-Escreva rascunhos em `manuscrito/`, pareceres em `revisoes/` e evidências derivadas
-em `evidencias/`. Crie diretórios apenas quando houver conteúdo. O formato inicial
-é Markdown; preserve o projeto LaTeX e o estilo bibliográfico se forem adicionados.
-Não afirme conformidade ABNT sem conferir o template institucional adotado.
+Escreva o texto em `manuscrito/`, os pareceres em `revisoes/` e as evidências
+derivadas em `evidencias/`. Ao alterar um capítulo, atualize suas notas de evidência
+e, se o estado mudar, a tabela de [manuscrito/README.md](manuscrito/README.md).
+Análises novas ficam em pastas datadas, como `evidencias/<assunto>-AAAA-MM-DD/`.
+Crie diretórios apenas quando houver conteúdo. O formato é Markdown; preserve um
+projeto LaTeX e o estilo bibliográfico se forem adicionados. Não afirme conformidade
+ABNT sem conferir o template institucional.
 
-Dentro de uma feature, todo material produzido pelo redator, inclusive análises
-derivadas e bibliografia, fica na pasta exclusiva `saida`. O revisor escreve em
-`revisoes/<ID>/parecer.md` e encaminha correções ao responsável, sem disputar o
-manuscrito. As pastas gerais acima continuam disponíveis para tarefas avulsas.
+Os repositórios experimentais são fontes de consulta. Não execute a LLM nem altere
+seus resultados para preencher uma lacuna do texto; um novo experimento é uma tarefa
+distinta, pedida explicitamente. Não leia nem copie `.env` ou credenciais. Commit e
+push não fazem parte da rotina de redação.
 
-Os repositórios experimentais são fontes de consulta para esta tarefa de escrita.
-Não execute a LLM nem altere seus resultados para preencher uma lacuna do texto.
-Uma solicitação explícita de novo experimento é uma tarefa distinta. Não leia nem
-copie `.env` ou credenciais para o corpus. Commit e push não fazem parte da rotina
-automática de redação.
+Ao encerrar uma tarefa, informe os arquivos produzidos, as evidências verificadas e
+as pendências concretas. Com agentes simultâneos, cada um edita arquivos exclusivos.
 
-Edite skills em `.agents/skills/`; depois execute
-`python3 scripts/sincronizar_skills.py` e `python3 scripts/sincronizar_skills.py --check`.
-`.claude/skills/` é um espelho versionável, sem dependência de symlinks.
-Encerrando uma tarefa, informe arquivos produzidos, evidências verificadas e
-pendências concretas. Quando houver agentes simultâneos, use a divisão de arquivos
-da skill de coordenação; não atribua a agentes revisões que não ocorreram.
+## Skills
+
+As skills ficam em `.claude/skills/`. No Codex, que lê este arquivo, copie a pasta
+para `.agents/skills/` se quiser usá-las também.
+
+| Tarefa | Skill |
+|---|---|
+| Relacionar compromissos, perguntas e evidências e planejar capítulos | [tcc2-planejar](.claude/skills/tcc2-planejar/SKILL.md) |
+| Registrar mudanças do experimento e o impacto no texto | [tcc2-evoluir](.claude/skills/tcc2-evoluir/SKILL.md) |
+| Recuperar commits e decisões de implementação | [tcc2-historico](.claude/skills/tcc2-historico/SKILL.md) |
+| Interpretar execuções, CSVs e métricas | [tcc2-resultados](.claude/skills/tcc2-resultados/SKILL.md) |
+| Redigir uma seção com evidências | [tcc2-redigir](.claude/skills/tcc2-redigir/SKILL.md) |
+| Verificar referências e sustentar a fundamentação | [tcc2-bibliografia](.claude/skills/tcc2-bibliografia/SKILL.md) |
+| Revisar consistência científica e textual | [tcc2-revisar](.claude/skills/tcc2-revisar/SKILL.md) |
+| Coordenar agentes em uma entrega de escrita | [tcc2-coordenar](.claude/skills/tcc2-coordenar/SKILL.md) |

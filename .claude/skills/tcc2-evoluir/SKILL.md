@@ -1,48 +1,31 @@
 ---
 name: tcc2-evoluir
-description: Cria features de escrita para novas evoluções do experimento do TCC2, a partir de commits ou adições planejadas, com impacto nos capítulos, fontes versionadas e critérios de aceitação.
+description: Registra mudanças do experimento, a partir de commits ou de adições planejadas, e mapeia o impacto em cada capítulo e plano de parágrafos da monografia.
 ---
 
-# Incorporar evoluções ao planejamento de escrita
+# Incorporar evoluções do experimento ao texto
 
-Use para transformar mudanças do experimento em novas tarefas de escrita.
-Leia o [fluxo de evoluções](../../../features/EVOLUCOES.md), o
-[modelo](../../../features/MODELO_EVOLUCAO.md), o
-[plano de capítulos](../../../docs/plano-redacao.md) e a
-[base comum](../../../features/BASE_COMUM.md). Resolva os clones e PDF conforme
-`AGENTS.md`; o layout padrão usa o clone experimental dentro da escrita.
+Use quando o experimento mudar depois da revisão usada no texto ou quando uma adição
+estiver planejada. Localize o experimento conforme o `AGENTS.md` e compare a revisão
+registrada nas notas dos capítulos com o SHA pedido ou com o HEAD do clone.
+Confira o estado local, a ancestralidade, os commits, os diffs, a documentação e os
+artefatos; use `tcc2-historico` e `tcc2-resultados` quando necessário. Não faça
+checkout nem reset no clone. Mudanças não commitadas e intenções não têm a mesma
+proveniência de um SHA publicado.
 
-Para mudanças existentes, compare a base anterior com o SHA de destino solicitado
-ou o HEAD local. Confira estado local, ancestralidade, commits, diffs, documentação
-e artefatos; use `tcc2-historico` e `tcc2-resultados` quando necessários. Não faça
-checkout/reset no clone compartilhado. Mudanças não commitadas e intenções precisam
-ser identificadas; não recebem a mesma proveniência de um SHA publicado no histórico.
+Classifique o impacto em método, implementação, dados, medição e interpretação.
+Agrupe as mudanças por assunto de escrita e indique, para cada uma, os capítulos,
+seções e parágrafos afetados (pelos IDs dos planos em `docs/`), a operação
+necessária (acrescentar, substituir ou remover) e a evidência que a sustenta.
+Verifique efeitos indiretos na discussão, na conclusão e nos resumos. Uma campanha
+continua descrita pela revisão em que rodou, mesmo que o código posterior mude.
 
-Classifique impacto em método, implementação, dados, medição e interpretação.
-Prepare uma nova base com ID inédito e coleta nova quando houver fontes novas
-a incorporar. Preserve as anteriores; atualize o índice ativo na preparação
-coordenada da rodada, sem mudar a base de entregas em andamento. A base de uma
-campanha descreve sua execução, mesmo quando o código posterior é diferente.
+Grave o registro em `evidencias/evolucao-AAAA-MM-DD.md`. Se a adição ainda for uma
+ideia, registre-a como planejada, com as evidências necessárias para liberar a
+redação, sem descrever resultados. Atualize os planos de parágrafos só quando isso
+for pedido.
 
-Agrupe mudanças por tópico de escrita e crie o próximo ID E001 em diante,
-seguindo o modelo e registrando-o em `features/EVOLUCOES.md`. Cada especificação
-tem pasta de saída exclusiva, bases, fontes, destinos Fxx, operações de atualização,
-entregáveis, dependências e critérios próprios verificáveis. Preserve os cinco
-capítulos: uma adição costuma gerar seção ou revisão de seção existente.
-Verifique impactos transitivos em discussão, conclusão e resumos, além do arquivo
-diretamente modificado. Registre ordem de incorporação para trechos sobrepostos.
-
-Se a adição ainda for uma ideia, crie uma feature `planejada`, sem base de destino
-inventada. Liste as evidências necessárias para liberar sua execução; descreva
-comportamento esperado como proposta. Concretize os critérios conforme a adição.
-Não declare eficácia, novos resultados ou reprodução sem os registros necessários.
-
-Nesta tarefa de planejamento, altere somente as especificações, índice, registros
-de fontes e documentação pertinente. A escrita ocorre quando solicitada, usando
-`tcc2-redigir` nas pastas das evoluções; sua integração cabe à F11, incluindo
-reconciliação e revisão das partes afetadas. Não execute experimentos como efeito
-automático da atualização do planejamento.
-
-Ao encerrar, informe intervalo analisado, base preparada/ativada, features criadas,
-partes afetadas, fontes verificadas e impedimentos. Se nenhuma mudança merecer
-nova feature, explique com evidência em vez de criar uma tarefa vazia.
+Nesta tarefa, não redija os capítulos nem execute experimentos. A redação acontece
+depois, com `tcc2-redigir`. Ao encerrar, informe o intervalo analisado, as partes
+afetadas, as fontes verificadas e os impedimentos. Se nenhuma mudança afetar o
+texto, explique com evidência.

@@ -1,42 +1,34 @@
 ---
 name: tcc2-bibliografia
-description: Verifica e organiza referências científicas do TCC2, conecta fontes às afirmações e prepara citações ou BibTeX com metadados conferidos.
+description: Verifica e organiza as referências científicas da monografia, conecta fontes às afirmações e prepara citações com metadados conferidos.
 ---
 
 # Verificar bibliografia e afirmações teóricas
 
-Leia [contexto](../../../docs/contexto.md). Para reaproveitar o TCC1, consulte
-as referências nas páginas impressas 68–71 (PDF 69–72) e os trechos onde são
-citadas. Uma entrada no TCC1 é candidata a fonte; não comprova automaticamente
-que título, autoria, ano, link e interpretação estão corretos.
+As referências do texto ficam em [manuscrito/referencias.md](../../../manuscrito/referencias.md).
+Para reaproveitar a proposta original, consulte a seção de referências do
+[Markdown do TCC1](../../../TCC1___Caio_Lamego_e_Matheus_Brant-11.md) e os trechos em que
+cada uma é citada. Uma entrada ali é candidata a fonte; não comprova que título,
+autoria, ano, link e interpretação estejam corretos.
 
-O PDF fica por padrão na raiz da escrita. Use a configuração efetiva descrita
-no `AGENTS.md` para encontrá-lo; caminhos de manifestos históricos podem apontar
-para outro layout. A ausência do clone opcional da PoC não impede verificar
-referências no PDF e nas fontes primárias.
+Localize o texto primário: artigo, anais, preprint identificado ou documentação
+oficial. Com acesso à web, abra a fonte e confira o que ela sustenta; metadados de
+buscador, resumos secundários e DOI plausível não bastam. Sem acesso, registre
+"não verificada" e continue com as fontes disponíveis; não gere uma referência
+fictícia para completar o parágrafo.
 
-Localize o texto primário: artigo, proceedings, preprint identificado ou
-documentação oficial. Quando houver acesso à web, abra a fonte e confira o que
-ela sustenta. Metadados de buscador, resumos secundários e DOI plausível não bastam.
-Se faltar acesso, registre `não verificada` e continue com as fontes disponíveis;
-não gere uma referência fictícia para completar o parágrafo.
+Registre chave, título, autores, ano ou versão, URL ou DOI conferido, data real de
+acesso, seção ou página de apoio, afirmação sustentada e limitações. Diferencie
+preprint de publicação revisada e versão consultada de versão mais recente. Para
+ferramentas e modelos usados no experimento, cite a versão daquela execução; a
+documentação atual não comprova capacidades ou custos daquela data.
 
-Registre chave, título, autores, ano/versão, URL/DOI conferido, data real de acesso,
-seção/página de apoio, afirmação sustentada e limitações. Diferencie preprint de
-publicação revisada e versão consultada de versão mais recente. Para ferramentas
-e modelos usados em 2026, cite a versão histórica do experimento; a documentação
-atual não comprova automaticamente capacidades ou custos daquela execução.
+Atualize `manuscrito/referencias.md`, preservando chaves existentes e evitando
+duplicatas, e registre a verificação nas notas de evidência do capítulo ou em
+`evidencias/bibliografia-AAAA-MM-DD.md`. Não afirme conformidade ABNT sem conferir o
+template institucional. Use paráfrases próprias e citações textuais curtas, com
+localização e atribuição conferidas.
 
-Ao atuar em uma feature, mantenha a verificação em `evidencias.md` ou arquivo de
-apoio dentro da pasta `saida`, e as entradas no seu `referencias.bib`, com prefixo
-da feature conforme o [contrato](../../../features/CONTRATO.md). Não edite um
-arquivo global em paralelo; a F11 unifica duplicatas e chaves na integração.
-Em tarefas avulsas, crie ou atualize `referencias/verificacao.md` quando necessário
-e o `.bib` adotado pelo manuscrito. Preserve chaves existentes e evite duplicatas.
-Não afirme conformidade ABNT só porque o BibTeX é sintaticamente válido; siga o
-template institucional disponível. Use paráfrases próprias e citações textuais
-curtas, conferindo localização e atribuição.
-
-Entregue referências verificadas separadas de pendências, com a relação explícita
-entre cada fonte e o argumento do capítulo. Não use documentação de Codex/Claude
+Entregue as referências verificadas separadas das pendências, com a relação explícita
+entre cada fonte e o argumento do capítulo. Não use documentação de Codex ou Claude
 como evidência de eficácia do pipeline experimental.
