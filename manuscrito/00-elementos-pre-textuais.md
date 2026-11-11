@@ -159,8 +159,8 @@ This work evaluated an automated pipeline integrating Large Language Models (LLM
   - 3.1 Plano Metodológico
   - 3.2 Contexto de aplicação do experimento
   - 3.3 Objeto de estudo: OWASP Juice Shop
-  - 3.4 Seleção das vulnerabilidades de segurança
-  - 3.5 Ferramenta de análise estática
+  - 3.4 Ferramenta de análise estática
+  - 3.5 Seleção das vulnerabilidades de segurança
   - 3.6 Modelos de linguagem e condições de geração
   - 3.7 Estratégias de prompt
   - 3.8 Estratégia de RAG simplificado

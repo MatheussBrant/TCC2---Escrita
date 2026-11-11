@@ -7,7 +7,8 @@ do trabalho” dos [critérios de escrita](criterios-escrita.md).
 
 **Estado:** conteúdo e diretrizes consolidados a partir das decisões do autor
 nesta conversa. Em 11/11/2026, o autor determinou preservar os 14 tópicos do
-TCC1, separados e na ordem original, admitindo tópicos adicionais próprios.
+TCC1 separados, admitindo tópicos adicionais próprios. Por solicitação posterior,
+a ferramenta passa a anteceder a seleção dos casos nas seções 3.4 e 3.5.
 Este é um plano, não uma aprovação da orientadora.
 
 **Atualização:** incorpora a comparação entre modelos e os acréscimos metodológicos
@@ -125,7 +126,17 @@ finalidade dos desafios de código e sua relação com o objeto de estudo, sem
 equiparar desafios pedagógicos aos 78 casos do catálogo. Manter o link para o
 fork e deixar os identificadores completos nas notas de evidência.
 
-### 3.4 Seleção das vulnerabilidades de segurança
+### 3.4 Ferramenta de análise estática
+
+**Origem no TCC1:** seção 3.5.
+
+| Parágrafo | Tratamento | Conteúdo a desenvolver |
+|---|---|---|
+| P10 | Adaptar | Apresentar o Semgrep e justificar seu uso para identificar alertas antes e depois das correções. |
+| P11 | Acrescentar | Explicar por que foram combinadas regras disponíveis na ferramenta e regras elaboradas para o estudo. |
+| P12 | Acrescentar | Explicar como o conjunto de regras e as exclusões foram mantidos fixos para permitir comparações consistentes. |
+
+### 3.5 Seleção das vulnerabilidades de segurança
 
 **Origem no TCC1:** seção 3.4.
 
@@ -135,17 +146,7 @@ fork e deixar os identificadores completos nas notas de evidência.
 | P14 | Acrescentar | Explicar a ampliação do conjunto anteriormente preparado de 52 para 78 casos, sem misturar os resultados dessas campanhas. |
 | P15 | Corrigir | Apresentar as informações por caso e os rótulos da triagem. Explicar a origem dos confirmados e inconclusivos nos registros versionados e a consolidação por regra, arquivo e intervalo, com revisão explícita de divergências. Registrar a confirmação do autor em 09/11/2026: os 21 falsos positivos apontados pela LLM foram revisados pelos dois autores com exame do código, contexto do alerta e regra do Semgrep. Não atribuir essa revisão humana aos outros grupos nem exploração dinâmica a todos os casos. |
 
-Manter a constituição do catálogo, os critérios de seleção e as justificativas de triagem nesta seção. A ferramenta e o perfil de regras ficam na seção 3.5.
-
-### 3.5 Ferramenta de análise estática
-
-**Origem no TCC1:** seção 3.5.
-
-| Parágrafo | Tratamento | Conteúdo a desenvolver |
-|---|---|---|
-| P10 | Adaptar | Apresentar o Semgrep e justificar seu uso para identificar alertas antes e depois das correções. |
-| P11 | Acrescentar | Explicar por que foram combinadas regras disponíveis na ferramenta e regras elaboradas para o estudo. |
-| P12 | Acrescentar | Explicar como o conjunto de regras e as exclusões foram mantidos fixos para permitir comparações consistentes. |
+Manter a constituição do catálogo, os critérios de seleção e as justificativas de triagem nesta seção. A ferramenta e o perfil de regras ficam na seção 3.4.
 
 ### 3.6 Modelos de linguagem e condições de geração
 

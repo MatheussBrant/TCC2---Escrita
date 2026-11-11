@@ -1,7 +1,9 @@
 # Correspondência dos tópicos da metodologia
 
 Estrutura ajustada em 11/11/2026 por solicitação do autor: preservar os títulos
-e a ordem dos 14 tópicos do Capítulo 3 do TCC1, sem agrupá-los. São admitidos
+dos 14 tópicos do Capítulo 3 do TCC1, sem agrupá-los. Por solicitação posterior
+do autor, ferramenta e seleção foram invertidas para apresentar as regras antes
+da constituição dos casos. São admitidos
 tópicos adicionais independentes. A numeração muda a partir da inserção das
 novas seções, mas os títulos originais permitem a comparação direta.
 
@@ -14,8 +16,8 @@ a metodologia; não inclui a seção 1.4 da introdução nem os tópicos da PoC.
 | 3.1 Plano Metodológico | 3.1 Plano Metodológico |
 | 3.2 Contexto de aplicação do experimento | 3.2 Contexto de aplicação do experimento |
 | 3.3 Objeto de estudo: OWASP Juice Shop | 3.3 Objeto de estudo: OWASP Juice Shop |
-| 3.4 Seleção das vulnerabilidades de segurança | 3.4 Seleção das vulnerabilidades de segurança |
-| 3.5 Ferramenta de análise estática | 3.5 Ferramenta de análise estática |
+| 3.4 Seleção das vulnerabilidades de segurança | 3.5 Seleção das vulnerabilidades de segurança |
+| 3.5 Ferramenta de análise estática | 3.4 Ferramenta de análise estática |
 | 3.6 Estratégias de prompt | 3.7 Estratégias de prompt |
 | 3.7 Estratégia de RAG simplificado | 3.8 Estratégia de RAG simplificado |
 | 3.8 Pipeline | 3.9 Pipeline |
@@ -36,8 +38,8 @@ a metodologia; não inclui a seção 1.4 da introdução nem os tópicos da PoC.
 ## Redistribuição do texto atual
 
 - Contexto e ambiente foram separados da apresentação do Juice Shop.
-- Seleção, constituição do catálogo e triagem ficaram na seção 3.4; ferramenta,
-  regras e perfil da análise estática ficaram na seção 3.5.
+- Seleção, constituição do catálogo e triagem ficaram na seção 3.5; ferramenta,
+  regras e perfil da análise estática ficaram na seção 3.4.
 - Armazenamento recebeu seção própria; populações, comparações e classificação
   OWASP complementar ficaram na análise dos dados.
 - Limitações e declaração de uso de IA receberam seções distintas. O parágrafo

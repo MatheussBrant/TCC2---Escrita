@@ -65,25 +65,56 @@ Na versão utilizada nesta pesquisa, o OWASP Juice Shop reúne 113 desafios dist
 
 Além dos desafios de exploração, a versão analisada disponibiliza 33 Coding Challenges, ou desafios de código, nos quais o usuário localiza o trecho vulnerável e identifica uma alternativa de correção. Esse recurso aproxima o uso didático da aplicação das tarefas de identificação e remediação de falhas no código-fonte. Nesta pesquisa, as propostas de correção foram geradas pelos modelos de linguagem, sem utilizar as alternativas desses exercícios como respostas fornecidas ao pipeline. A existência dos desafios de código contribuiu para caracterizar o Juice Shop como um objeto de estudo voltado também à compreensão e à correção de vulnerabilidades.
 
-A versão analisada foi obtida do fork [caiolamego/juice-shop-tcc](https://github.com/caiolamego/juice-shop-tcc), uma cópia do repositório original mantida separadamente. Todas as tentativas partiram da mesma base de código, sob as condições de referência resumidas na Tabela 1. Os desafios pedagógicos apresentados nesta seção caracterizam a aplicação, enquanto o conjunto submetido ao experimento foi determinado pelos alertas produzidos pelo detector no escopo definido. Assim, a quantidade de desafios disponíveis não corresponde ao número de casos selecionados para as campanhas, cuja constituição é descrita na Seção 3.4.
+A versão analisada foi obtida do fork [caiolamego/juice-shop-tcc](https://github.com/caiolamego/juice-shop-tcc), uma cópia do repositório original mantida separadamente. Todas as tentativas partiram da mesma base de código, sob as condições de referência resumidas na Tabela 1. Os desafios pedagógicos apresentados nesta seção caracterizam a aplicação, enquanto o conjunto submetido ao experimento foi determinado pelos alertas produzidos pelo detector no escopo definido. Assim, a quantidade de desafios disponíveis não corresponde ao número de casos selecionados para as campanhas, cuja constituição é descrita na Seção 3.5.
 
 <!-- Evidência da caracterização: OWASP Foundation, página oficial do Juice Shop e guia de Coding Challenges; experimento@062a203516fd7f55ce86d9c19dc0f23f6e92ed61; alvo@f915bddd82790d0f3018902d36ae9b4241a5f51f: data/static/challenges.yml (113 entradas, 16 categorias), data/static/codefixes/*.info.yml (33 arquivos) e lib/codingChallenges.ts. Conferência em evidencias/juice-shop-objeto-estudo-2026-11-11.json. -->
 
-### 3.4 Seleção das vulnerabilidades de segurança
+### 3.4 Ferramenta de análise estática
 
-O scan combinado arquivado produziu 124 alertas, dos quais 46 foram classificados como fora do escopo. Os 78 restantes constituíram o catálogo ampliado utilizado nas campanhas finais. Cada entrada representou uma ocorrência, definida pela regra, pelo arquivo e por sua localização na revisão fixada. Assim, alertas distintos no mesmo arquivo permaneceram como casos separados, sem a deduplicação por regra e arquivo utilizada em uma etapa anterior do projeto.
+O Semgrep foi utilizado como ferramenta SAST por oferecer regras compatíveis com JavaScript e TypeScript e permitir a exportação dos alertas em formato estruturado. A ferramenta teve dois papéis no estudo: identificar os casos que poderiam receber propostas de correção e reanalisar o projeto após cada alteração. A reanálise forneceu as informações necessárias para verificar a permanência do alerta original e o aparecimento de novos alertas.
+
+Uma regra de análise estática descreve uma condição que a ferramenta deve procurar no código. No Semgrep, essas regras são definidas em arquivos YAML e associam um identificador às linguagens examinadas, aos padrões procurados e à mensagem produzida quando há correspondência. Também podem indicar severidade e informações de classificação, como o CWE relacionado. Assim, a regra expressa um critério de detecção, enquanto o alerta registra uma ocorrência encontrada ao aplicar esse critério ao código ([documentação de regras do Semgrep](https://docs.semgrep.dev/writing-rules/overview)).
+
+A detecção combinou regras disponibilizadas pelo Semgrep e regras locais elaboradas no desenvolvimento do experimento. O perfil utilizado nas campanhas finais reuniu 1.074 regras provenientes do conjunto disponibilizado pelo Semgrep e 28 regras locais. Essas quantidades descrevem os critérios disponíveis no perfil, enquanto o número de alertas depende das correspondências encontradas nos arquivos analisados. As regras locais ampliaram os padrões examinados na aplicação, incluindo consultas MongoDB construídas dinamicamente, uso de HTML tratado como confiável no Angular e operações sobre documentos selecionados por identificadores recebidos na requisição.
+
+As regras utilizadas incluíram a busca por padrões de código e o acompanhamento do fluxo de dados. Na busca por padrões, a ferramenta procura construções descritas pela regra, como uma consulta com expressão dinâmica. No acompanhamento de fluxo, denominado taint analysis, a regra define origens de entrada e operações de interesse, permitindo sinalizar quando dados dessas origens alcançam essas operações. Uma regra local, por exemplo, relacionou valores recebidos no corpo ou nos parâmetros da requisição à atualização de documentos selecionados por identificador. Esse mecanismo auxilia a localizar operações que exigem verificação de autorização no contexto da rota ([documentação de análise de fluxo do Semgrep](https://docs.semgrep.dev/writing-rules/data-flow/taint-mode/overview)).
+
+A correspondência com uma regra foi tratada como indicação de um possível problema. A interpretação de cada ocorrência dependeu do contexto, pois uma verificação anterior, uma conversão de tipo ou uma restrição de acesso poderia impedir a condição de insegurança sugerida pelo padrão. Por isso, os alertas receberam os rótulos de triagem apresentados na Seção 3.5. A aplicação de uma regra e a confirmação de uma vulnerabilidade foram consideradas etapas distintas.
+
+Para as campanhas finais, o conjunto de regras e as exclusões foram reunidos em um perfil fixado e identificado por verificações de integridade. Essa medida limitou variações do detector entre as execuções. Foram excluídos caminhos relacionados a dependências, arquivos gerados e outros elementos fora do escopo definido. Os arquivos de soluções pedagógicas do próprio Juice Shop também ficaram fora do escopo operacional, para não serem fornecidos como soluções aos modelos.
+
+<!-- Evidência das regras: contratos das campanhas finais, perfil_sha256 a9ad1f21b6e4ce3f51dd58e2ff5c4797c90d9bc87384887d17eda8ab6f6844c2; config/perfis/ampliado_piloto_v1/{perfil.json,regras_remotas.yaml,regras_locais.yaml}; regra tcc.mongodb.security.unscoped-document-write. Contagens e relação 52/78 em evidencias/regras-e-casos-2026-11-11.json. -->
+
+### 3.5 Seleção das vulnerabilidades de segurança
+
+Neste estudo, um caso corresponde a uma ocorrência de alerta selecionada para receber propostas de correção. Cada caso foi definido pela regra que originou o alerta, pelo arquivo e pela localização do trecho na versão analisada, recebendo um identificador próprio no catálogo. Uma mesma regra pode originar vários casos ao encontrar o padrão em locais diferentes. Por exemplo, a regra de uso de HTML tratado como confiável no Angular identificou duas ocorrências em posições distintas do mesmo arquivo de administração; cada ocorrência foi mantida como um caso separado.
+
+O catálogo é o conjunto organizado desses registros. Cada caso pôde receber tentativas com diferentes modelos e estratégias de prompt; uma tentativa corresponde à geração e à avaliação de uma proposta de correção para aquele caso. Portanto, os 78 casos representam 78 ocorrências selecionadas, e o número de tentativas depende do percurso de cada uma pelas estratégias. A existência de um caso no catálogo também não significa que a vulnerabilidade tenha sido confirmada, pois os alertas foram mantidos com seus respectivos rótulos de triagem.
+
+O scan combinado arquivado produziu 124 alertas, dos quais 46 foram classificados como fora do escopo. Os 78 restantes constituíram o catálogo ampliado utilizado nas campanhas finais. A seleção partiu das regras e das condições de análise apresentadas na Seção 3.4. Alertas distintos no mesmo arquivo permaneceram separados conforme sua localização, sem a deduplicação por regra e arquivo utilizada em uma etapa anterior do projeto.
+
+Os critérios de escopo delimitaram a avaliação às implementações das funcionalidades da aplicação e às alterações que poderiam ser examinadas pela análise estática e pelos testes do Juice Shop. Os alertas excluídos incidiam sobre exemplos dos desafios de código, arquivos de automação do repositório e configurações do gerenciador de pacotes npm. Os exemplos dos Coding Challenges, localizados em `data/static/codefixes/`, apresentam alternativas de implementação para os exercícios pedagógicos. Sua exclusão manteve o conjunto de correção concentrado no código das funcionalidades e evitou incorporar essas alternativas como soluções fornecidas aos modelos.
+
+Os arquivos de automação do GitHub, em `.github/workflows/`, e os arquivos de configuração `.npmrc` tratam de aspectos de integração contínua, execução de tarefas e gerenciamento de dependências. Esses aspectos ficaram fora do recorte de correção das funcionalidades, e suas propriedades de segurança não eram avaliadas pela suíte de testes da aplicação. Portanto, a classificação como fora do escopo expressou uma decisão sobre os tipos de arquivo e de problema abrangidos pelo experimento, sem determinar se cada alerta correspondia a uma falha real ou a um falso positivo. A Tabela 2 apresenta a distribuição das exclusões.
+
+<!-- Evidência das exclusões: outputs/catalogos/ampliado_v1/exclusoes.json (46 registros: 31 em data/static/codefixes/, 13 em .github/workflows/, dois em .npmrc e frontend/.npmrc); scripts/auditoria/classificar_scan_combinado.py; docs/protocolo_experimental.md, seção de exclusão de caminhos. Conferência em evidencias/exclusoes-escopo-2026-11-11.json. -->
 
 **Tabela 2 — Constituição do catálogo ampliado**
 
 | Etapa | Quantidade |
 |---|---:|
 | Alertas brutos do scan combinado | 124 |
+| Excluídos em exemplos dos Coding Challenges | 31 |
+| Excluídos em arquivos de automação do GitHub | 13 |
+| Excluídos em configurações do npm | 2 |
 | Alertas excluídos por escopo | 46 |
 | Ocorrências incluídas no catálogo | 78 |
 
 Fonte: metadados do catálogo ampliado e classificação arquivada dos alertas.
 
-A preparação do catálogo e a preparação da avaliação funcional ocorreram em etapas distintas. Uma campanha anterior foi executada sobre 52 casos que já possuíam condições de validação definidas. Posteriormente, o mapeamento e os testes foram ampliados para permitir a execução dos 78 casos. Essa evolução foi considerada na delimitação dos dados: os resultados da campanha anterior não foram somados aos das campanhas finais, pois utilizaram condições de avaliação diferentes.
+A identificação dos casos e a preparação dos testes necessários para avaliar suas correções ocorreram em etapas distintas. O catálogo já continha 78 ocorrências, mas uma campanha anterior utilizou um subconjunto de 52 casos para os quais a avaliação funcional estava preparada. Isso significava que os arquivos envolvidos nesses casos já estavam relacionados aos grupos de testes utilizados para verificar o efeito das alterações, com uma execução de referência disponível para comparação.
+
+Os outros 26 casos também pertenciam ao catálogo, mas ainda exigiam a preparação das condições de avaliação funcional adotadas no experimento. A ampliação do mapeamento entre arquivos e testes e a inclusão de verificações adicionais permitiram executar as campanhas finais sobre os 78 casos. Assim, a passagem de 52 para 78 representou a ampliação do conjunto que podia ser avaliado sob as condições preparadas. Os resultados da campanha anterior foram mantidos separados dos resultados finais, pois as referências e a cobertura da avaliação eram diferentes.
 
 Para cada caso, foram registrados identificador, regra, arquivo e localização, mensagem, severidade, trecho de código e associações a CWE e OWASP quando disponíveis. O catálogo também preservou a triagem de 55 casos classificados como confirmados, 21 como falsos positivos e dois como inconclusivos.
 
@@ -98,14 +129,6 @@ Os 21 casos apontados pela LLM como falsos positivos foram revisados pelos dois 
 Entre as justificativas registradas estavam tokens sintéticos utilizados em testes unitários e o uso de eval no CAPTCHA para calcular uma expressão formada por números aleatórios e operadores definidos internamente, sem entrada controlada pelo usuário. Nesses casos, o padrão identificado pela regra não foi considerado suficiente para caracterizar a vulnerabilidade indicada. A confirmação manual referiu-se aos 21 falsos positivos; não representou uma declaração de ausência de outras falhas na aplicação.
 
 Nas campanhas arquivadas, os rótulos de triagem não foram utilizados para retirar casos do conjunto de 78. A confirmação dos rótulos e a definição do recorte utilizado para calcular as métricas são procedimentos distintos.
-
-### 3.5 Ferramenta de análise estática
-
-O Semgrep foi utilizado como ferramenta SAST por oferecer regras compatíveis com JavaScript e TypeScript e permitir a exportação dos alertas em formato estruturado. A ferramenta teve dois papéis no estudo: identificar os casos que poderiam receber propostas de correção e reanalisar o projeto após cada alteração. A reanálise forneceu as informações necessárias para verificar a permanência do alerta original e o aparecimento de novos alertas.
-
-A detecção combinou regras disponibilizadas pelo Semgrep e regras locais elaboradas no desenvolvimento do experimento. As regras locais ampliaram os padrões examinados no código da aplicação, incluindo situações que exigiam uma descrição mais específica. A correspondência com uma regra foi tratada como indicação de um possível problema. Ela não substituiu a interpretação do contexto nem foi considerada, isoladamente, uma comprovação de vulnerabilidade.
-
-Para as campanhas finais, o conjunto de regras e as exclusões foram reunidos em um perfil fixado e identificado por verificações de integridade. Essa medida limitou variações do detector entre as execuções. Foram excluídos caminhos relacionados a dependências, arquivos gerados e outros elementos fora do escopo definido. Os arquivos de soluções pedagógicas do próprio Juice Shop também ficaram fora do escopo operacional, para não serem fornecidos como soluções aos modelos.
 
 ### 3.6 Modelos de linguagem e condições de geração
 

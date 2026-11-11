@@ -80,6 +80,10 @@ REYNOLDS, L.; MCDONELL, K. _Prompt Programming for Large Language Models: Beyond
 
 Similarweb. _Top AI Chatbots and Tools Websites Ranking_. 2026. Acesso em: 18 jun. 2026. Disponível em: <https://www.similarweb.com/top-websites/ai-chatbots-and-tools/>. Citado na página 35.
 
+SEMGREP. _Write rules_. [s.d.]. Disponível em: <https://docs.semgrep.dev/writing-rules/overview>. Acesso em: 11 nov. 2026. Fonte da descrição das regras na seção 3.4.
+
+SEMGREP. _Taint analysis overview_. [s.d.]. Disponível em: <https://docs.semgrep.dev/writing-rules/data-flow/taint-mode/overview>. Acesso em: 11 nov. 2026. Fonte da descrição do acompanhamento de fluxo de dados na seção 3.4.
+
 SonarSource. _SonarQube Rules_. 2026. Documentação do SonarQube Server. Acesso em: 11 maio 2026. Disponível em: <https://docs.sonarsource.com/sonarqube-server/quality-standards-administration/managing-rules/rules>. Citado na página 30.
 
 SRIRAM, V. et al. _Improving LLM-Assisted Secure Code Generation through RetrievalAugmented-Generation and Multi-Tool Feedback_. arXiv, 2026. ArXiv:2601.00509 [cs]. Disponível em: <http://arxiv.org/abs/2601.00509>. Citado 5 vezes nas páginas 13, 14, 18, 20 e 32.
