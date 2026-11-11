@@ -268,24 +268,13 @@ O fluxo do pipeline foi composto pelas seguintes etapas:
 
 A análise de referência e a conferência dos casos integraram a preparação da campanha. As etapas de geração, aplicação e avaliação foram repetidas para cada caso e estratégia alcançada. Quando uma proposta não podia ser aplicada, a tentativa era registrada nessa condição, sem ser tratada como uma alteração submetida à validação. A Figura 2 apresenta o processamento de um caso e a continuidade entre as estratégias.
 
-```mermaid
-flowchart TD
-    A[Verificar entradas e condições] --> B[Selecionar caso e estratégia]
-    B --> C[Montar prompt e gerar proposta]
-    C --> D{Edição aplicável?}
-    D -- Sim --> E[Aplicar e avaliar por SAST e testes]
-    D -- Não --> F[Registrar tentativa não aplicada]
-    E --> G[Registrar resultados e restaurar código]
-    F --> G
-    G --> H{Aceite estrito ou estratégias esgotadas?}
-    H -- Não --> I[Avançar para a próxima estratégia]
-    I --> B
-    H -- Sim --> J[Encerrar o caso]
-```
+![Fluxo geral do pipeline de correção, com cópias isoladas e estratégias progressivas P1–P4](../TCC1___Caio_Lamego_e_Matheus_Brant-11_assets/figura-2.png)
 
 **Figura 2 — Fluxo de correção de um caso, com tentativas progressivas por estratégia de prompt.** Casos distintos podem ser executados em paralelo. P1 corresponde ao prompt simples; P2, ao prompt com raciocínio guiado; P3, ao prompt com RAG simplificado; e P4, à combinação de RAG simplificado e raciocínio guiado. O aceite estrito corresponde à regra operacional de parada.
 
-Fonte: elaboração a partir do fluxo do pipeline.
+Fonte: elaboração dos autores.
+
+A figura apresenta a visão geral do processo. Na implementação utilizada no experimento, a reanálise SAST foi executada antes dos testes automatizados, conforme a ordem descrita nas etapas 10 e 11. A aprovação funcional indicada na decisão de continuidade correspondeu ao critério estrito da regra de parada, distinguido da classificação principal dos resultados nos parágrafos seguintes.
 
 A Figura 2 representa o processamento de um caso por vez em cada cópia de trabalho. As tentativas utilizaram cópias de trabalho separadas do projeto, gerenciadas por Git worktrees. Cada cópia foi restaurada antes e depois de seu uso, mantendo o ponto de partida fixado para a tentativa seguinte. Assim, uma correção individual não foi aplicada sobre alterações acumuladas de outros casos. O funcionamento desse isolamento e a aplicação das edições são detalhados no Capítulo 4.
 
