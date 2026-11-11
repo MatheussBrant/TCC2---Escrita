@@ -1,7 +1,8 @@
 # Correspondência dos tópicos da metodologia
 
 Estrutura ajustada em 11/11/2026 por solicitação do autor: preservar os títulos
-dos 14 tópicos do Capítulo 3 do TCC1, sem agrupá-los. Por solicitação posterior
+dos 14 tópicos do Capítulo 3 do TCC1. Por solicitação posterior, armazenamento,
+organização e análise dos dados foram reunidos em uma única seção. Também por solicitação posterior
 do autor, ferramenta e seleção foram invertidas para apresentar as regras antes
 da constituição dos casos. São admitidos
 tópicos adicionais independentes. A numeração muda a partir da inserção das
@@ -22,11 +23,11 @@ a metodologia; não inclui a seção 1.4 da introdução nem os tópicos da PoC.
 | 3.7 Estratégia de RAG simplificado | 3.8 Estratégia de RAG simplificado |
 | 3.8 Pipeline | 3.9 Pipeline |
 | 3.9 Métricas de avaliação | 3.11 Métricas de avaliação |
-| 3.10 Armazenamento e organização dos dados | 3.12 Armazenamento e organização dos dados |
-| 3.11 Análise dos dados | 3.13 Análise dos dados |
-| 3.12 Limitações do estudo | 3.14 Limitações do estudo |
-| 3.13 Declaração de Uso de Inteligência Artificial | 3.15 Declaração de Uso de Inteligência Artificial |
-| 3.14 Cronograma | 3.16 Cronograma |
+| 3.10 Armazenamento e organização dos dados | 3.12 Armazenamento, organização e análise dos dados |
+| 3.11 Análise dos dados | 3.12 Armazenamento, organização e análise dos dados |
+| 3.12 Limitações do estudo | 3.13 Limitações do estudo |
+| 3.13 Declaração de Uso de Inteligência Artificial | 3.14 Declaração de Uso de Inteligência Artificial |
+| 3.14 Cronograma | 3.15 Cronograma |
 
 ## Tópicos próprios acrescentados
 
@@ -40,8 +41,8 @@ a metodologia; não inclui a seção 1.4 da introdução nem os tópicos da PoC.
 - Contexto e ambiente foram separados da apresentação do Juice Shop.
 - Seleção, constituição do catálogo e triagem ficaram na seção 3.5; ferramenta,
   regras e perfil da análise estática ficaram na seção 3.4.
-- Armazenamento recebeu seção própria; populações, comparações e classificação
-  OWASP complementar ficaram na análise dos dados.
+- Armazenamento, organização, populações, comparações e classificação OWASP
+  complementar foram reunidos na seção 3.12 por decisão posterior do autor.
 - Limitações e declaração de uso de IA receberam seções distintas. O parágrafo
   de limitação da sequência de estratégias foi transferido para as limitações.
 - O cronograma original foi recuperado como planejamento, sem converter os

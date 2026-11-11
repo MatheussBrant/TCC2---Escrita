@@ -249,19 +249,20 @@ denominadores efetivamente utilizados e o tratamento das medições ausentes.
 | P45 | Acrescentar | Definir como serão comparados custo, tokens e tempo, distinguindo tempo de resposta do modelo de duração total da campanha. |
 | P46 | Ampliar | Explicar a RRIS e a avaliação das correções aplicadas em conjunto, distinguindo redução de alertas de preservação funcional do conjunto. |
 
-### 3.12 Armazenamento e organização dos dados
+### 3.12 Armazenamento, organização e análise dos dados
 
-**Origem no TCC1:** seção 3.10.
+**Origem no TCC1:** seções 3.10 e 3.11.
+
+**Decisão posterior do autor:** reunir armazenamento, organização e análise dos
+dados em uma seção, preservando os conteúdos antes separados. Esta é uma
+exceção à diretriz inicial de manter todos os tópicos independentes.
 
 | Parágrafo | Tratamento | Conteúdo a desenvolver |
 |---|---|---|
 | P47 | Atualizar | Explicar como cada caso é ligado ao prompt, à resposta, à alteração e aos resultados dos testes, permitindo acompanhar sua origem. |
 
-Tratar aqui da identificação e do armazenamento dos registros. A delimitação da população e as comparações ficam na seção 3.13.
-
-### 3.13 Análise dos dados
-
-**Origem no TCC1:** seção 3.11.
+Apresentar primeiro a identificação e o armazenamento dos registros e, em
+seguida, a delimitação da população e as comparações realizadas.
 
 | Parágrafo | Tratamento | Conteúdo a desenvolver |
 |---|---|---|
@@ -270,9 +271,9 @@ Tratar aqui da identificação e do armazenamento dos registros. A delimitação
 | P50 | Acrescentar | Apresentar a comparação dos três modelos para Q5, considerando eficácia, funcionamento, novos alertas, custo e tempo nas condições observadas. |
 | P51 | Precisar | Explicar os limites da sequência de estratégias e da inclusão conjunta de diagnóstico e documentos. Descrever a análise de exemplos somente se realizada. |
 
-Incluir a classificação OWASP complementar documentada em 11/11/2026. O conteúdo de P51 sobre limitações da sequência foi realocado para a seção 3.14; a análise de exemplos permanece nesta seção.
+Incluir a classificação OWASP complementar documentada em 11/11/2026. O conteúdo de P51 sobre limitações da sequência foi realocado para a seção 3.13; a análise de exemplos permanece nesta seção.
 
-### 3.14 Limitações do estudo
+### 3.13 Limitações do estudo
 
 **Origem no TCC1:** seção 3.12.
 
@@ -283,7 +284,7 @@ Incluir a classificação OWASP complementar documentada em 11/11/2026. O conte�
 
 Incluir aqui o parágrafo detalhado sobre a limitação da execução sequencial, anteriormente inserido na análise dos dados. Manter a declaração de IA separada.
 
-### 3.15 Declaração de Uso de Inteligência Artificial
+### 3.14 Declaração de Uso de Inteligência Artificial
 
 **Origem no TCC1:** seção 3.13.
 
@@ -291,7 +292,7 @@ Incluir aqui o parágrafo detalhado sobre a limitação da execução sequencial
 |---|---|---|
 | P54 | Atualizar | Declarar o uso efetivo de IA e a responsabilidade dos autores, descrevendo apenas a revisão humana que puder ser confirmada. |
 
-### 3.16 Cronograma
+### 3.15 Cronograma
 
 **Origem no TCC1:** seção 3.14.
 

@@ -166,11 +166,10 @@ This work evaluated an automated pipeline integrating Large Language Models (LLM
   - 3.9 Pipeline
   - 3.10 Validação das correções
   - 3.11 Métricas de avaliação
-  - 3.12 Armazenamento e organização dos dados
-  - 3.13 Análise dos dados
-  - 3.14 Limitações do estudo
-  - 3.15 Declaração de Uso de Inteligência Artificial
-  - 3.16 Cronograma
+  - 3.12 Armazenamento, organização e análise dos dados
+  - 3.13 Limitações do estudo
+  - 3.14 Declaração de Uso de Inteligência Artificial
+  - 3.15 Cronograma
 - 4 Desenvolvimento e implementação do pipeline
   - 4.1 Visão geral da solução
   - 4.2 Tecnologias e organização do projeto
