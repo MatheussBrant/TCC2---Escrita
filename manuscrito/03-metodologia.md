@@ -248,7 +248,25 @@ A abordagem mantém o princípio de recuperar conhecimento externo antes da gera
 
 ### 3.9 Pipeline
 
-O pipeline automatizou a preparação das entradas, a geração das correções e sua avaliação. Para cada caso, o fluxo reuniu o código e as informações previstas na estratégia, solicitou uma resposta ao modelo, verificou as edições propostas, aplicou a alteração e realizou a reanálise estática e os testes. Ao final, os resultados foram registrados e o código foi restaurado. A Figura 2 apresenta esse percurso e a continuidade entre estratégias.
+O pipeline foi implementado por meio de scripts responsáveis por orquestrar as etapas do experimento. A execução automatizada teve como objetivo reduzir a intervenção manual, padronizar a coleta de dados e permitir a repetição do procedimento sob condições registradas. O fluxo reuniu a identificação dos casos, a geração das propostas de correção, a aplicação das alterações e sua avaliação.
+
+O fluxo do pipeline foi composto pelas seguintes etapas:
+
+1. Executar a análise SAST de referência e conferir os alertas esperados no projeto;
+2. Selecionar os casos elegíveis no catálogo, conforme o escopo definido;
+3. Coletar o código associado ao caso na cópia de trabalho do projeto;
+4. Consultar os metadados do alerta, incluindo a regra, as CWEs e a categoria de contexto disponíveis;
+5. Recuperar o documento de apoio, quando a estratégia utilizava RAG simplificado;
+6. Montar o prompt de acordo com a estratégia selecionada;
+7. Enviar a requisição à API do modelo de linguagem;
+8. Receber e verificar a resposta estruturada e as edições propostas;
+9. Aplicar a correção na cópia isolada do projeto, quando a proposta era utilizável;
+10. Executar novamente a análise SAST e comparar os alertas antes e depois da alteração;
+11. Executar as verificações de compilação e os testes selecionados para os arquivos alterados;
+12. Registrar os resultados da tentativa, incluindo os critérios medidos e os artefatos produzidos;
+13. Restaurar o estado do projeto para a próxima tentativa.
+
+A análise de referência e a conferência dos casos integraram a preparação da campanha. As etapas de geração, aplicação e avaliação foram repetidas para cada caso e estratégia alcançada. Quando uma proposta não podia ser aplicada, a tentativa era registrada nessa condição, sem ser tratada como uma alteração submetida à validação. A Figura 2 apresenta o processamento de um caso e a continuidade entre as estratégias.
 
 ```mermaid
 flowchart TD
@@ -265,13 +283,11 @@ flowchart TD
     H -- Sim --> J[Encerrar o caso]
 ```
 
-**Figura 2 — Procedimento de avaliação de um caso.** A sequência P1–P4 ocorre dentro de cada caso; casos distintos podem ser executados em paralelo. O aceite estrito corresponde à regra operacional de parada.
+**Figura 2 — Fluxo de correção de um caso, com tentativas progressivas por estratégia de prompt.** Casos distintos podem ser executados em paralelo. P1 corresponde ao prompt simples; P2, ao prompt com raciocínio guiado; P3, ao prompt com RAG simplificado; e P4, à combinação de RAG simplificado e raciocínio guiado. O aceite estrito corresponde à regra operacional de parada.
 
 Fonte: elaboração a partir do fluxo do pipeline.
 
-Antes das tentativas, foi realizado o preflight, uma verificação automática das condições necessárias para iniciar a execução do experimento. Essa etapa conferiu a versão do projeto analisado, os casos selecionados, as regras de análise estática, os prompts e a referência dos testes funcionais, além de verificar se os alertas esperados eram reproduzidos. Essas condições foram registradas em um contrato de execução, isto é, um registro das configurações e dos arquivos utilizados como referência para aquela execução. Assim, o pipeline pôde identificar incompatibilidades antes de solicitar correções aos modelos e impedir a retomada de uma execução com condições diferentes das originalmente registradas.
-
-As tentativas utilizaram cópias de trabalho separadas do projeto, gerenciadas por Git worktrees. Cada cópia foi restaurada antes e depois de seu uso, mantendo o ponto de partida fixado para a tentativa seguinte. Assim, uma correção individual não foi aplicada sobre alterações acumuladas de outros casos. O funcionamento desse isolamento e a aplicação das edições são detalhados no Capítulo 4.
+A Figura 2 representa o processamento de um caso por vez em cada cópia de trabalho. As tentativas utilizaram cópias de trabalho separadas do projeto, gerenciadas por Git worktrees. Cada cópia foi restaurada antes e depois de seu uso, mantendo o ponto de partida fixado para a tentativa seguinte. Assim, uma correção individual não foi aplicada sobre alterações acumuladas de outros casos. O funcionamento desse isolamento e a aplicação das edições são detalhados no Capítulo 4.
 
 As estratégias foram executadas na ordem P1, P2, P3 e P4. Para decidir quando encerrar as tentativas de um caso, o pipeline exigiu a remoção do alerta original, a ausência de novos alertas e a aprovação da preservação funcional, representada pelo critério F. Esse critério avaliou se a alteração introduziu falhas nos testes selecionados, em comparação com a execução de referência. Na regra de parada, qualquer falha nova confirmada por reexecução impedia a aprovação funcional e levava à próxima estratégia, até o limite de P4. Essa avaliação foi denominada sem separação.
 
@@ -279,7 +295,11 @@ Na análise principal dos resultados, F recebeu um tratamento diferente. Como o 
 
 Respostas com formato inválido, edições que não encontravam o trecho original e alterações fora do escopo permitido foram registradas como tentativas não aplicadas. Falhas operacionais e interrupções receberam registros próprios. Esses estados foram diferenciados de uma correção aplicada e reprovada pela avaliação. Quando não havia evidência suficiente para medir um critério, o resultado permaneceu indeterminado, em vez de receber automaticamente o valor de falha.
 
+Antes das tentativas, foi realizado o preflight, uma verificação automática das condições necessárias para iniciar a execução do experimento. Essa etapa conferiu a versão do projeto analisado, os casos selecionados, as regras de análise estática, os prompts e a referência dos testes funcionais, além de verificar se os alertas esperados eram reproduzidos. Essas condições foram registradas em um contrato de execução, isto é, um registro das configurações e dos arquivos utilizados como referência para aquela execução. Assim, o pipeline pôde identificar incompatibilidades antes de solicitar correções aos modelos e impedir a retomada de uma execução com condições diferentes das originalmente registradas.
+
 As campanhas finais foram configuradas para até quatro casos em paralelo, mantendo sequenciais as estratégias de um mesmo caso. A retomada utilizou os registros existentes para identificar o trabalho já realizado e preservar os artefatos. O recorte principal foi composto por três campanhas concluídas em 6 de novembro de 2026, uma com GPT-4.1 mini, uma com GPT-5.6 Luna e uma com GPT-6 Luna. Cada campanha avaliou os mesmos 78 casos, mantendo a versão do projeto, as regras de análise estática, as estratégias de prompt e as condições de validação, com os parâmetros de geração definidos para cada modelo. Preflights, simulações, pilotos e campanhas descartadas permaneceram identificados como etapas de preparação, sem serem reunidos às tentativas finais para estimar a eficácia.
+
+<!-- Evidência: seção 3.8 do texto original como referência da apresentação em 13 etapas; src/pipeline/orquestracao/{campanha.py,preflight.py} e etapas e04_prompt, e06_aplicacao, e07_validacao e e08_registro. A preparação da campanha foi distinguida do ciclo por tentativa; testes selecionados e regra de parada refletem o experimento executado. -->
 
 ### 3.10 Validação das correções
 

@@ -202,6 +202,12 @@ caminhos de contingência implementados daqueles efetivamente usados.
 
 **Origem no TCC1:** seção 3.8.
 
+**Diretriz de continuidade em 11/11/2026:** recuperar a abertura sobre automação,
+a lista de 13 etapas e a explicação do fluxo por caso, da sequência P1–P4 e do
+paralelismo. Adaptar a seleção ao catálogo efetivo e a validação aos testes
+selecionados. Distinguir a preparação da campanha do ciclo de cada tentativa e
+preservar a diferença entre parada operacional e aceite na análise principal.
+
 | Parágrafo | Tratamento | Conteúdo a desenvolver |
 |---|---|---|
 | P29 | Adaptar | Apresentar o percurso de uma tentativa, da seleção do caso ao registro dos resultados, com apoio de um diagrama simples. |
