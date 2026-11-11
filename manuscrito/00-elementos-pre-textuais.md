@@ -88,6 +88,7 @@ This work evaluated an automated pipeline integrating Large Language Models (LLM
 - Capítulo 3 — Tabela 4 — Informações fornecidas em cada estratégia
 - Capítulo 3 — Tabela 5 — Tratamento das falhas nos testes para calcular F
 - Capítulo 3 — Tabela 6 — Fórmulas e significado das métricas complementares
+- Capítulo 3 — Tabela 7 — Cronograma previsto para o desenvolvimento da pesquisa
 - Capítulo 4 — Tabela 1 — Tecnologias e responsabilidades na solução
 - Capítulo 4 — Tabela 2 — Organização principal do repositório
 - Capítulo 4 — Tabela 3 — Informações preservadas por execução
@@ -155,17 +156,22 @@ This work evaluated an automated pipeline integrating Large Language Models (LLM
   - 2.4 Ferramentas de Análise Estática de Segurança (SAST)
   - 2.5 Trabalhos Relacionados
 - 3 Metodologia
-  - 3.1 Caracterização e desenho da pesquisa
-  - 3.2 Objeto de estudo e ambiente experimental
-  - 3.3 Análise estática e constituição do catálogo
-  - 3.4 Modelos de linguagem e condições de geração
-  - 3.5 Estratégias de prompt
-  - 3.6 Recuperação de contexto por RAG simplificado
-  - 3.7 Procedimento de execução do pipeline
-  - 3.8 Validação das correções
-  - 3.9 Métricas de avaliação
-  - 3.10 Registro e análise dos dados
-  - 3.11 Limitações metodológicas e uso de inteligência artificial
+  - 3.1 Plano Metodológico
+  - 3.2 Contexto de aplicação do experimento
+  - 3.3 Objeto de estudo: OWASP Juice Shop
+  - 3.4 Seleção das vulnerabilidades de segurança
+  - 3.5 Ferramenta de análise estática
+  - 3.6 Modelos de linguagem e condições de geração
+  - 3.7 Estratégias de prompt
+  - 3.8 Estratégia de RAG simplificado
+  - 3.9 Pipeline
+  - 3.10 Validação das correções
+  - 3.11 Métricas de avaliação
+  - 3.12 Armazenamento e organização dos dados
+  - 3.13 Análise dos dados
+  - 3.14 Limitações do estudo
+  - 3.15 Declaração de Uso de Inteligência Artificial
+  - 3.16 Cronograma
 - 4 Desenvolvimento e implementação do pipeline
   - 4.1 Visão geral da solução
   - 4.2 Tecnologias e organização do projeto

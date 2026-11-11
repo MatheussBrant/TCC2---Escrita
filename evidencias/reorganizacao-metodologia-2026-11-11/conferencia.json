@@ -1,0 +1,43 @@
+{
+  "fonte_anterior_sha256": "d930bde385e23d901e879d631a68b51e65eb4650206960d4b72bb1a2c9d974f5",
+  "fonte_atual_sha256": "8b6a3807695b64884e1828ad15ff4cffad6d332c53ef0a88ebe45108a6bc63cd",
+  "titulos_originais": [
+    "Plano Metodológico",
+    "Contexto de aplicação do experimento",
+    "Objeto de estudo: OWASP Juice Shop",
+    "Seleção das vulnerabilidades de segurança",
+    "Ferramenta de análise estática",
+    "Estratégias de prompt",
+    "Estratégia de RAG simplificado",
+    "Pipeline",
+    "Métricas de avaliação",
+    "Armazenamento e organização dos dados",
+    "Análise dos dados",
+    "Limitações do estudo",
+    "Declaração de Uso de Inteligência Artificial",
+    "Cronograma"
+  ],
+  "titulos_atuais": [
+    "Plano Metodológico",
+    "Contexto de aplicação do experimento",
+    "Objeto de estudo: OWASP Juice Shop",
+    "Seleção das vulnerabilidades de segurança",
+    "Ferramenta de análise estática",
+    "Modelos de linguagem e condições de geração",
+    "Estratégias de prompt",
+    "Estratégia de RAG simplificado",
+    "Pipeline",
+    "Validação das correções",
+    "Métricas de avaliação",
+    "Armazenamento e organização dos dados",
+    "Análise dos dados",
+    "Limitações do estudo",
+    "Declaração de Uso de Inteligência Artificial",
+    "Cronograma"
+  ],
+  "blocos_anteriores": 111,
+  "blocos_preservados": 111,
+  "secoes_originais_preservadas": 14,
+  "secoes_adicionais": 2,
+  "cronograma": "Recuperado do TCC1 como planejamento, sem atribuir datas efetivas."
+}

@@ -4,7 +4,7 @@ Este capítulo apresenta os procedimentos metodológicos utilizados para avaliar
 
 O experimento foi conduzido no OWASP Juice Shop, a partir dos alertas identificados pela ferramenta SAST. As seções seguintes descrevem o objeto de estudo, a constituição dos casos, as condições de geração, o procedimento de execução e os critérios de avaliação e análise dos dados. O detalhamento da implementação é apresentado no Capítulo 4, enquanto os resultados e sua interpretação são desenvolvidos no Capítulo 5.
 
-### 3.1 Caracterização e desenho da pesquisa
+### 3.1 Plano Metodológico
 
 Esta pesquisa foi desenvolvida como um estudo empírico de natureza aplicada, com abordagem predominantemente quantitativa. Em relação aos objetivos, teve caráter exploratório e avaliativo, pois investigou o desempenho de diferentes estratégias de prompt e modelos de linguagem na correção automatizada de vulnerabilidades de segurança, considerando o fluxo de execução adotado. Em relação aos procedimentos, foi conduzida como um estudo experimental sobre uma aplicação de referência, na qual um pipeline automatizado foi executado para avaliar o desempenho das estratégias e dos modelos, com base em métricas definidas previamente. A análise quantitativa foi complementada pela discussão das dificuldades encontradas e dos limites da avaliação.
 
@@ -21,7 +21,7 @@ A Figura 1 apresenta a organização dessas etapas, desde a preparação do ambi
 
 ![Fluxo metodológico: preparação do ambiente, pipeline automatizado de correção, consolidação dos resultados e análise comparativa](../TCC1___Caio_Lamego_e_Matheus_Brant-11_assets/figura-1.png)
 
-**Figura 1 — Visão geral do fluxo metodológico adotado na pesquisa.** A etapa de execução do pipeline automatizado de correção está detalhada na Seção 3.7 e na Figura 2.
+**Figura 1 — Visão geral do fluxo metodológico adotado na pesquisa.** A etapa de execução do pipeline automatizado de correção está detalhada na Seção 3.9 e na Figura 2.
 
 Fonte: elaboração dos autores.
 
@@ -31,13 +31,11 @@ Foram adotadas três unidades de organização dos dados. Um caso corresponde a 
 
 A metodologia partiu da premissa de que uma correção de vulnerabilidade não deveria ser considerada bem-sucedida apenas porque a ferramenta SAST deixou de apontar um alerta. Uma alteração poderia remover o alerta sem corrigir a causa real da falha ou eliminar a vulnerabilidade comprometendo a funcionalidade esperada do sistema. Por esse motivo, a avaliação combinou três critérios principais: o desaparecimento do alerta original na reanálise estática, a preservação do comportamento verificado pelos testes automatizados e a ausência de novos alertas de segurança.
 
-Assim, uma correção foi aceita somente quando aplicada ao código e aprovada simultaneamente nos três critérios, conforme as definições apresentadas nas Seções 3.8 e 3.9. Esse aceite expressou o atendimento às verificações adotadas, sem constituir, por si só, uma comprovação de eliminação da vulnerabilidade ou de ausência de falhas fora do alcance da análise estática e dos testes utilizados.
+Assim, uma correção foi aceita somente quando aplicada ao código e aprovada simultaneamente nos três critérios, conforme as definições apresentadas nas Seções 3.10 e 3.11. Esse aceite expressou o atendimento às verificações adotadas, sem constituir, por si só, uma comprovação de eliminação da vulnerabilidade ou de ausência de falhas fora do alcance da análise estática e dos testes utilizados.
 
-### 3.2 Objeto de estudo e ambiente experimental
+### 3.2 Contexto de aplicação do experimento
 
-O OWASP Juice Shop é uma aplicação web que simula uma loja virtual, com funcionalidades como consulta de produtos, carrinho de compras e realização e acompanhamento de pedidos. Foi selecionado por ser um projeto de código aberto, deliberadamente vulnerável, com múltiplos módulos, dependências e testes automatizados. Essas características permitiram avaliar a abordagem considerando relações entre partes do projeto e comportamentos já definidos pela aplicação. Sua finalidade didática também ofereceu referências sobre parte das falhas intencionais, sem tornar os desafios conhecidos o único critério de seleção dos casos.
-
-Foi utilizada a versão 20.1.1 do projeto, implementada principalmente em JavaScript e TypeScript, com Node.js, Express e Angular. A versão analisada foi obtida do fork caiolamego/juice-shop-tcc, uma cópia do repositório original mantida separadamente. O código foi fixado em uma revisão específica para que todas as tentativas partissem da mesma base. O conjunto estudado foi determinado pelos alertas produzidos pelo detector no escopo definido, e não pela contagem de desafios pedagógicos da aplicação. As condições de referência estão resumidas na Tabela 1.
+O experimento foi conduzido em uma aplicação web com múltiplos módulos, dependências e testes automatizados. Esse contexto permitiu avaliar as propostas dos modelos considerando o código existente e as condições de funcionamento da aplicação. A caracterização do projeto selecionado é apresentada na Seção 3.3. As condições de referência do experimento estão resumidas na Tabela 1.
 
 **Tabela 1 — Condições de referência do experimento**
 
@@ -58,13 +56,13 @@ Execuções exploratórias e pilotos contribuíram para preparar o ambiente e aj
 
 As campanhas finais foram executadas em um ambiente Docker padronizado, com o projeto-alvo e suas dependências previamente preparados. A configuração também manteve habilitados os desafios do Juice Shop que poderiam ser desativados automaticamente em contêineres, evitando uma mudança no comportamento analisado. A imagem e a referência dos testes foram identificadas em conjunto, pois utilizar a mesma versão do código não assegura equivalência quando as dependências ou as condições de execução são diferentes.
 
-### 3.3 Análise estática e constituição do catálogo
+### 3.3 Objeto de estudo: OWASP Juice Shop
 
-O Semgrep foi utilizado como ferramenta SAST por oferecer regras compatíveis com JavaScript e TypeScript e permitir a exportação dos alertas em formato estruturado. A ferramenta teve dois papéis no estudo: identificar os casos que poderiam receber propostas de correção e reanalisar o projeto após cada alteração. A reanálise forneceu as informações necessárias para verificar a permanência do alerta original e o aparecimento de novos alertas.
+O OWASP Juice Shop é uma aplicação web que simula uma loja virtual, com funcionalidades como consulta de produtos, carrinho de compras e realização e acompanhamento de pedidos. Foi selecionado por ser um projeto de código aberto, deliberadamente vulnerável, com múltiplos módulos, dependências e testes automatizados. Essas características permitiram avaliar a abordagem considerando relações entre partes do projeto e comportamentos já definidos pela aplicação. Sua finalidade didática também ofereceu referências sobre parte das falhas intencionais, sem tornar os desafios conhecidos o único critério de seleção dos casos.
 
-A detecção combinou regras disponibilizadas pelo Semgrep e regras locais elaboradas no desenvolvimento do experimento. As regras locais ampliaram os padrões examinados no código da aplicação, incluindo situações que exigiam uma descrição mais específica. A correspondência com uma regra foi tratada como indicação de um possível problema. Ela não substituiu a interpretação do contexto nem foi considerada, isoladamente, uma comprovação de vulnerabilidade.
+Foi utilizada a versão 20.1.1 do projeto, implementada principalmente em JavaScript e TypeScript, com Node.js, Express e Angular. A versão analisada foi obtida do fork caiolamego/juice-shop-tcc, uma cópia do repositório original mantida separadamente. O código foi fixado em uma revisão específica para que todas as tentativas partissem da mesma base. O conjunto estudado foi determinado pelos alertas produzidos pelo detector no escopo definido, e não pela contagem de desafios pedagógicos da aplicação. As condições de referência estão resumidas na Tabela 1.
 
-Para as campanhas finais, o conjunto de regras e as exclusões foram reunidos em um perfil fixado e identificado por verificações de integridade. Essa medida limitou variações do detector entre as execuções. Foram excluídos caminhos relacionados a dependências, arquivos gerados e outros elementos fora do escopo definido. Os arquivos de soluções pedagógicas do próprio Juice Shop também ficaram fora do escopo operacional, para não serem fornecidos como soluções aos modelos.
+### 3.4 Seleção das vulnerabilidades de segurança
 
 O scan combinado arquivado produziu 124 alertas, dos quais 46 foram classificados como fora do escopo. Os 78 restantes constituíram o catálogo ampliado utilizado nas campanhas finais. Cada entrada representou uma ocorrência, definida pela regra, pelo arquivo e por sua localização na revisão fixada. Assim, alertas distintos no mesmo arquivo permaneceram como casos separados, sem a deduplicação por regra e arquivo utilizada em uma etapa anterior do projeto.
 
@@ -94,7 +92,15 @@ Entre as justificativas registradas estavam tokens sintéticos utilizados em tes
 
 Nas campanhas arquivadas, os rótulos de triagem não foram utilizados para retirar casos do conjunto de 78. A confirmação dos rótulos e a definição do recorte utilizado para calcular as métricas são procedimentos distintos.
 
-### 3.4 Modelos de linguagem e condições de geração
+### 3.5 Ferramenta de análise estática
+
+O Semgrep foi utilizado como ferramenta SAST por oferecer regras compatíveis com JavaScript e TypeScript e permitir a exportação dos alertas em formato estruturado. A ferramenta teve dois papéis no estudo: identificar os casos que poderiam receber propostas de correção e reanalisar o projeto após cada alteração. A reanálise forneceu as informações necessárias para verificar a permanência do alerta original e o aparecimento de novos alertas.
+
+A detecção combinou regras disponibilizadas pelo Semgrep e regras locais elaboradas no desenvolvimento do experimento. As regras locais ampliaram os padrões examinados no código da aplicação, incluindo situações que exigiam uma descrição mais específica. A correspondência com uma regra foi tratada como indicação de um possível problema. Ela não substituiu a interpretação do contexto nem foi considerada, isoladamente, uma comprovação de vulnerabilidade.
+
+Para as campanhas finais, o conjunto de regras e as exclusões foram reunidos em um perfil fixado e identificado por verificações de integridade. Essa medida limitou variações do detector entre as execuções. Foram excluídos caminhos relacionados a dependências, arquivos gerados e outros elementos fora do escopo definido. Os arquivos de soluções pedagógicas do próprio Juice Shop também ficaram fora do escopo operacional, para não serem fornecidos como soluções aos modelos.
+
+### 3.6 Modelos de linguagem e condições de geração
 
 O experimento incluiu os modelos GPT-4.1 mini, GPT-5.6 Luna e GPT-6 Luna. A seleção combinou uma referência já utilizada no projeto com duas famílias mais recentes, escolhidas por sua proposta de uso econômico. O GPT-5.6 Luna foi incluído como geração intermediária, enquanto o GPT-6 Luna acrescentou a geração mais recente do trio. Essa composição permitiu investigar se a adoção de modelos mais recentes oferecia vantagens na correção dos casos avaliados e no custo de obtenção de uma correção aceita, sem presumir superioridade pela geração ou pelo preço.
 
@@ -132,7 +138,7 @@ Cada modelo foi executado em uma campanha própria sobre os mesmos 78 casos, com
 
 As chamadas foram submetidas a limites configuráveis de quantidade e consumo, com registro de tokens, custo informado e erros de comunicação. Nas campanhas finais, a reutilização de respostas armazenadas e de evidências de validação permaneceu desativada. Falhas de transporte foram registradas separadamente das tentativas com resposta disponível. Quando houve nova tentativa de comunicação, esse evento não foi tratado como uma réplica independente do experimento nem convertido automaticamente em resultado negativo de R, F ou M.
 
-### 3.5 Estratégias de prompt
+### 3.7 Estratégias de prompt
 
 Foram utilizadas quatro estratégias de prompt. Todas receberam uma definição de papel, a tarefa de identificar e corrigir o problema, o código selecionado, as restrições de alteração e o formato esperado de resposta. Para arquivos de até 250 linhas, foi fornecido o conteúdo completo; nos demais, foi selecionada uma janela com até 60 linhas de contexto de cada lado do intervalo do alerta. A mesma política de seleção foi aplicada às quatro estratégias.
 
@@ -157,7 +163,7 @@ As respostas foram solicitadas em JSON, com campos para identificação do probl
 
 Fonte: montagem dos prompts do experimento.
 
-### 3.6 Recuperação de contexto por RAG simplificado
+### 3.8 Estratégia de RAG simplificado
 
 O RAG foi implementado por recuperação de documentos técnicos em Markdown, sem utilização de embeddings ou busca vetorial. A base utilizada nas campanhas finais correspondeu à versão 2.1, com 14 documentos em português e exemplos genéricos de JavaScript e TypeScript. Os textos apresentaram características dos problemas, recomendações de correção, cuidados de preservação funcional e limitações da avaliação. A base foi ampliada durante a preparação do experimento para distinguir mecanismos que anteriormente recebiam orientações mais gerais.
 
@@ -165,7 +171,7 @@ A seleção do documento seguiu uma ordem definida. Primeiro, o pipeline procuro
 
 A escolha do RAG simplificado manteve o foco na avaliação do contexto fornecido ao modelo, em vez de transformar o mecanismo de recuperação no objeto principal da pesquisa. O índice e os documentos foram identificados por versão e hashes, permitindo conferir sua integridade e a correspondência com cada campanha. A documentação da base registrou a utilização de fontes técnicas e exemplos genéricos, sem incorporar soluções do Juice Shop ou patches anteriores; somente o corpo do documento selecionado foi enviado no prompt.
 
-### 3.7 Procedimento de execução do pipeline
+### 3.9 Pipeline
 
 O pipeline automatizou a preparação das entradas, a geração das correções e sua avaliação. Para cada caso, o fluxo reuniu o código e as informações previstas na estratégia, solicitou uma resposta ao modelo, verificou as edições propostas, aplicou a alteração e realizou a reanálise estática e os testes. Ao final, os resultados foram registrados e o código foi restaurado. A Figura 2 apresenta esse percurso e a continuidade entre estratégias.
 
@@ -194,13 +200,13 @@ As tentativas utilizaram cópias de trabalho separadas do projeto, gerenciadas p
 
 As estratégias foram executadas na ordem P1, P2, P3 e P4. Para decidir quando encerrar as tentativas de um caso, o pipeline exigiu a remoção do alerta original, a ausência de novos alertas e a aprovação da preservação funcional, representada pelo critério F. Esse critério avaliou se a alteração introduziu falhas nos testes selecionados, em comparação com a execução de referência. Na regra de parada, qualquer falha nova confirmada por reexecução impedia a aprovação funcional e levava à próxima estratégia, até o limite de P4. Essa avaliação foi denominada sem separação.
 
-Na análise principal dos resultados, F recebeu um tratamento diferente. Como o Juice Shop contém vulnerabilidades intencionais, alguns testes dependem de comportamentos inseguros, como a exploração de uma falha para concluir um desafio. Esses testes foram reunidos no conjunto D, conforme os critérios apresentados na Seção 3.8. A falha de um teste desse conjunto após uma correção não foi considerada, por si só, perda de funcionalidade legítima. Por isso, uma tentativa pôde ser aceita na análise principal e, ainda assim, ter sido seguida por outra estratégia durante a execução. Na consolidação dos resultados, a análise principal de cada caso foi encerrada no primeiro aceite segundo esse critério, mantendo os registros posteriores separados.
+Na análise principal dos resultados, F recebeu um tratamento diferente. Como o Juice Shop contém vulnerabilidades intencionais, alguns testes dependem de comportamentos inseguros, como a exploração de uma falha para concluir um desafio. Esses testes foram reunidos no conjunto D, conforme os critérios apresentados na Seção 3.10. A falha de um teste desse conjunto após uma correção não foi considerada, por si só, perda de funcionalidade legítima. Por isso, uma tentativa pôde ser aceita na análise principal e, ainda assim, ter sido seguida por outra estratégia durante a execução. Na consolidação dos resultados, a análise principal de cada caso foi encerrada no primeiro aceite segundo esse critério, mantendo os registros posteriores separados.
 
 Respostas com formato inválido, edições que não encontravam o trecho original e alterações fora do escopo permitido foram registradas como tentativas não aplicadas. Falhas operacionais e interrupções receberam registros próprios. Esses estados foram diferenciados de uma correção aplicada e reprovada pela avaliação. Quando não havia evidência suficiente para medir um critério, o resultado permaneceu indeterminado, em vez de receber automaticamente o valor de falha.
 
 As campanhas finais foram configuradas para até quatro casos em paralelo, mantendo sequenciais as estratégias de um mesmo caso. A retomada utilizou os registros existentes para identificar o trabalho já realizado e preservar os artefatos. O recorte principal foi composto por três campanhas concluídas em 6 de novembro de 2026, uma com GPT-4.1 mini, uma com GPT-5.6 Luna e uma com GPT-6 Luna. Cada campanha avaliou os mesmos 78 casos, mantendo a versão do projeto, as regras de análise estática, as estratégias de prompt e as condições de validação, com os parâmetros de geração definidos para cada modelo. Preflights, simulações, pilotos e campanhas descartadas permaneceram identificados como etapas de preparação, sem serem reunidos às tentativas finais para estimar a eficácia.
 
-### 3.8 Validação das correções
+### 3.10 Validação das correções
 
 O critério R representou a remoção do alerta original. Para verificá-lo, foram comparadas as ocorrências identificadas antes e depois da alteração. Como uma edição pode deslocar o código sem eliminar o problema, a comparação considerou a correspondência entre trechos e seu contexto. Quando essa correspondência não era suficiente, o comparador também utilizou a contagem da mesma regra no mesmo arquivo. A redução de contagem, isoladamente, não foi tomada como prova de remoção de uma ocorrência específica sem correspondência.
 
@@ -228,11 +234,11 @@ Foram registradas três formas de calcular F, que diferem no tratamento dos test
 
 Fonte: critérios do conjunto D e política de validação do experimento.
 
-### 3.9 Métricas de avaliação
+### 3.11 Métricas de avaliação
 
 As métricas avaliaram três aspectos das propostas: a remoção do alerta original, a preservação funcional e a ausência de novos alertas de segurança. Cada tentativa foi identificada pelo índice $j$, e $m$ representa o total de tentativas da população analisada. Para cada tentativa, foram registrados os critérios $R_j$, $F_j$ e $M_j$, definidos a seguir:
 
-- $R_j$: remoção do alerta original. Assume valor 1 quando o alerta deixa de ser detectado após a alteração, e 0 quando permanece, conforme a comparação descrita na Seção 3.8.
+- $R_j$: remoção do alerta original. Assume valor 1 quando o alerta deixa de ser detectado após a alteração, e 0 quando permanece, conforme a comparação descrita na Seção 3.10.
 - $F_j$: preservação funcional. Assume valor 1 quando a avaliação funcional é aprovada, e 0 quando é reprovada. Na análise principal, utiliza a interpretação por critérios: falhas nos testes do conjunto D não reprovam F por si só.
 - $M_j$: ausência de novos alertas. Assume valor 1 quando a reanálise não identifica novos alertas sob o perfil fixado, e 0 quando identifica.
 
@@ -275,9 +281,11 @@ $$
 
 Em que $I_{\text{antes}}$ e $I_{\text{depois}}$ representam as contagens de alertas nos scans comparáveis do projeto antes e depois da aplicação conjunta. O cálculo requer $I_{\text{antes}}>0$; para apresentar a redução em porcentagem, o resultado é multiplicado por 100.
 
-### 3.10 Registro e análise dos dados
+### 3.12 Armazenamento e organização dos dados
 
 Os dados foram organizados para permitir o acompanhamento de cada caso desde o alerta inicial até sua avaliação. Prompts, respostas, edições aplicadas, código corrigido, análises estáticas e testes foram associados ao identificador da tentativa. Os contratos, os registros das sessões e as verificações de integridade permitiram relacionar esses arquivos às condições de execução. A estrutura dos diretórios e dos componentes responsáveis pelo registro é apresentada no Capítulo 4.
+
+### 3.13 Análise dos dados
 
 A população principal foi formada pelas tentativas reais das estratégias previstas, delimitadas conforme o primeiro aceite registrado por caso. Simulações, diagnósticos adicionais, pilotos e registros posteriores ao aceite foram mantidos em categorias separadas. Essa delimitação permitiu conferir o número de casos solicitados, os casos que receberam tentativas e as medições disponíveis. Respostas reutilizadas em etapas históricas também não foram interpretadas como novas gerações independentes.
 
@@ -289,14 +297,36 @@ Após as campanhas, foi realizada uma classificação complementar dos 49 casos 
 
 Para responder à Q5, a comparação entre os três modelos foi organizada a partir dos mesmos casos solicitados e dos critérios de avaliação compartilhados. Foram consideradas a proporção de casos aceitos, a TRV, a preservação funcional, os novos alertas, o custo conhecido e os tempos registrados. As diferenças foram interpretadas nas condições observadas, reconhecendo os parâmetros específicos de cada modelo e as trajetórias distintas pelas estratégias. Essa comparação não foi definida como uma classificação universal de superioridade dos modelos.
 
-A execução sequencial constituiu uma limitação do desenho experimental. O projeto partiu da suposição de que, se uma estratégia Pₓ produzisse uma correção aceita, uma estratégia posterior também seria capaz de corrigir o mesmo caso. Essa suposição orientou a interrupção das tentativas após o aceite, mas não foi verificada para todos os casos: as estratégias seguintes deixaram de ser executadas quando a regra de parada foi satisfeita. Assim, P2, P3 e P4 receberam apenas os casos que não encerraram a sequência anteriormente, e suas taxas foram calculadas sobre grupos diferentes. Por isso, as diferenças brutas não permitem demonstrar a superioridade de uma estratégia nem confirmar que o sucesso seria mantido nas etapas seguintes. Além disso, P3 e P4 acrescentaram diagnóstico SAST e documentação em conjunto, o que impede atribuir eventuais diferenças exclusivamente ao RAG.
-
 A avaliação das correções foi baseada nas verificações automatizadas e nas métricas definidas, sem inspeção manual dos patches pelos autores. Para explicar os resultados, o Capítulo 5 apresenta exemplos de acompanhamento de pedidos e de cálculo do CAPTCHA, selecionados pela disponibilidade dos artefatos e pelos resultados contrastantes. A análise documental desses exemplos, realizada com apoio automatizado, relacionou as alterações de código aos registros de análise estática e de testes. Essa leitura apoiou a discussão, sem acrescentar uma etapa de validação humana ao aceite das correções.
 
-### 3.11 Limitações metodológicas e uso de inteligência artificial
+### 3.14 Limitações do estudo
 
 A utilização de uma única aplicação deliberadamente vulnerável limita a generalização dos resultados para outros projetos. A avaliação também depende do alcance das regras SAST, da cobertura dos testes selecionados e das classificações arquivadas dos alertas. A remoção de um alerta e a aprovação dos testes representam evidências sob condições definidas, mas não demonstram ausência de falhas em toda a aplicação. As limitações de cada mecanismo foram consideradas na interpretação dos resultados.
 
 A sequência das estratégias, a variabilidade das respostas e as diferenças de parâmetros entre modelos também restringem as comparações. O RAG simplificado pode recuperar orientações menos específicas para certos casos. O recorte principal contém uma campanha final por modelo, sem sustentar estimativas de estabilidade por réplicas independentes. A distribuição do ambiente Docker apoia a repetição do procedimento, mas não assegura respostas idênticas das LLMs ou tempos iguais em equipamentos diferentes.
 
+A execução sequencial constituiu uma limitação do desenho experimental. O projeto partiu da suposição de que, se uma estratégia Pₓ produzisse uma correção aceita, uma estratégia posterior também seria capaz de corrigir o mesmo caso. Essa suposição orientou a interrupção das tentativas após o aceite, mas não foi verificada para todos os casos: as estratégias seguintes deixaram de ser executadas quando a regra de parada foi satisfeita. Assim, P2, P3 e P4 receberam apenas os casos que não encerraram a sequência anteriormente, e suas taxas foram calculadas sobre grupos diferentes. Por isso, as diferenças brutas não permitem demonstrar a superioridade de uma estratégia nem confirmar que o sucesso seria mantido nas etapas seguintes. Além disso, P3 e P4 acrescentaram diagnóstico SAST e documentação em conjunto, o que impede atribuir eventuais diferenças exclusivamente ao RAG.
+
+### 3.15 Declaração de Uso de Inteligência Artificial
+
 As ferramentas Codex e Claude Code foram utilizadas como apoio à escrita de código e de testes do pipeline, com revisão humana do material produzido. Também apoiaram a organização e a redação do trabalho e a revisão gramatical dos textos. A revisão do código de desenvolvimento foi distinta da avaliação dos patches gerados nas campanhas, que seguiu as verificações automatizadas e as métricas definidas neste capítulo. A responsabilidade pelas escolhas metodológicas, pelas informações apresentadas e pela versão final permanece com os autores.
+
+### 3.16 Cronograma
+
+O planejamento da pesquisa distribuiu as atividades entre a preparação do ambiente, a execução do experimento, a análise dos dados e a redação do trabalho. A Tabela 7 apresenta os períodos previstos nesse planejamento. Esses períodos representam a programação das atividades, e não um registro das datas efetivas de conclusão; as datas das campanhas analisadas foram identificadas na Seção 3.9.
+
+**Tabela 7 — Cronograma previsto para o desenvolvimento da pesquisa**
+
+|**Atividade**|**Período previsto**|
+|---|---|
+|Preparação do ambiente experimental com o OWASP<br>Juice Shop|Agosto de 2026|
+|Estudo do código-fonte e identificação das<br>vulnerabilidades elegíveis|Agosto de 2026|
+|Execução inicial do SAST e catalogação das _issues_|Agosto – Setembro de<br>2026|
+|Implementação e ajustes do _pipeline_ automatizado|Setembro de 2026|
+|Implementação do RAG simplificado|Setembro de 2026|
+|Paralelização das chamadas à API da LLM|Setembro – Outubro de<br>2026|
+|Definição e refinamento das estratégias de _prompt_|Outubro de 2026|
+|Execução do _pipeline_ sobre as vulnerabilidades<br>selecionadas|Outubro – Novembro de<br>2026|
+|Coleta e consolidação das métricas experimentais|Novembro de 2026|
+|Análise dos resultados e discussão dos achados|Novembro – Dezembro de<br>2026|
+|Escrita, revisão e preparação da versão final do TCC|Dezembro de 2026|

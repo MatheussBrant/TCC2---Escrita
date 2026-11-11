@@ -6,9 +6,9 @@ de origem abaixo servem apenas ao controle editorial. Seguir a seção “Unidad
 do trabalho” dos [critérios de escrita](criterios-escrita.md).
 
 **Estado:** conteúdo e diretrizes consolidados a partir das decisões do autor
-nesta conversa. Os títulos, o agrupamento e a quantidade de parágrafos podem ser
-refinados durante a revisão. Este é um plano, não o capítulo redigido nem uma
-aprovação da orientadora.
+nesta conversa. Em 11/11/2026, o autor determinou preservar os 14 tópicos do
+TCC1, separados e na ordem original, admitindo tópicos adicionais próprios.
+Este é um plano, não uma aprovação da orientadora.
 
 **Atualização:** incorpora a comparação entre modelos e os acréscimos metodológicos
 desenvolvidos no TCC2. Substitui o roteiro inicial de 45 parágrafos; os IDs foram
@@ -73,6 +73,12 @@ Preservar as distinções necessárias para interpretar as métricas.
 
 ## Roteiro consolidado
 
+**Diretriz estrutural de 11/11/2026:** os títulos abaixo correspondem ao manuscrito
+reorganizado. Os IDs P01–P54 foram preservados para rastrear o planejamento anterior;
+sua ordem nesta lista pode mudar quando um conteúdo foi separado. O mapa entre os
+14 tópicos originais e os 16 atuais está em
+[comparacao-topicos-metodologia.md](comparacao-topicos-metodologia.md).
+
 ### Abertura do capítulo
 
 **Origem no TCC1:** Abertura do capítulo 3 do TCC1.
@@ -82,9 +88,9 @@ Preservar as distinções necessárias para interpretar as métricas.
 | P01 | Adaptar | Apresentar a finalidade do capítulo: explicar como o experimento foi conduzido e como as correções foram avaliadas. |
 | P02 | Ampliar | Apresentar a sequência do método e indicar o que será desenvolvido nos capítulos de implementação e resultados. |
 
-### 3.1 Caracterização e desenho da pesquisa
+### 3.1 Plano Metodológico
 
-**Origem no TCC1:** Antiga seção 3.1 — Plano metodológico.
+**Origem no TCC1:** seção 3.1.
 
 | Parágrafo | Tratamento | Conteúdo a desenvolver |
 |---|---|---|
@@ -92,37 +98,51 @@ Preservar as distinções necessárias para interpretar as métricas.
 | P04 | Ampliar | Relacionar o experimento aos objetivos e a Q1–Q5, incluindo a comparação entre modelos. |
 | P05 | Acrescentar | Explicar o significado de caso, tentativa e campanha. Esclarecer que um alerta não comprova, sozinho, uma vulnerabilidade. |
 
-### 3.2 Objeto de estudo e ambiente experimental
+### 3.2 Contexto de aplicação do experimento
 
-**Origem no TCC1:** Antigas seções 3.2 e 3.3; ambiente Docker desenvolvido no TCC2.
+**Origem no TCC1:** seção 3.2.
+
+| Parágrafo | Tratamento | Conteúdo a desenvolver |
+|---|---|---|
+| P08 | Adaptar | Explicar o papel das execuções exploratórias e dos pilotos na preparação do experimento, mantendo seus registros separados das campanhas finais. |
+| P09 | Acrescentar | Explicar como o Docker ajudou a manter o mesmo ambiente e a mesma referência de testes nas campanhas. |
+
+Separar as condições de execução da caracterização do objeto. Manter aqui a tabela do ambiente, os pilotos e a padronização Docker.
+
+### 3.3 Objeto de estudo: OWASP Juice Shop
+
+**Origem no TCC1:** seção 3.3.
 
 | Parágrafo | Tratamento | Conteúdo a desenvolver |
 |---|---|---|
 | P06 | Adaptar | Apresentar o Juice Shop e justificar sua escolha como aplicação de estudo, reconhecendo sua finalidade didática. |
 | P07 | Precisar | Identificar a versão do projeto e suas tecnologias principais. Registrar a revisão exata em tabela ou nota de apoio. |
-| P08 | Adaptar | Explicar o papel das execuções exploratórias e dos pilotos na preparação do experimento, mantendo seus registros separados das campanhas finais. |
-| P09 | Acrescentar | Explicar como o Docker ajudou a manter o mesmo ambiente e a mesma referência de testes nas campanhas. |
 
-**Apoio e limite da seção:** Tabela do ambiente, identificando a referência das campanhas finais. Comandos, Dockerfile e construção da imagem ficam no capítulo 4 ou apêndice.
+### 3.4 Seleção das vulnerabilidades de segurança
 
-### 3.3 Análise estática e constituição do catálogo
+**Origem no TCC1:** seção 3.4.
 
-**Origem no TCC1:** Antigas seções 3.4 e 3.5.
+| Parágrafo | Tratamento | Conteúdo a desenvolver |
+|---|---|---|
+| P13 | Atualizar | Apresentar a seleção dos 78 casos a partir de 124 alertas, com 46 exclusões. Explicar o que representa cada ocorrência. |
+| P14 | Acrescentar | Explicar a ampliação do conjunto anteriormente preparado de 52 para 78 casos, sem misturar os resultados dessas campanhas. |
+| P15 | Corrigir | Apresentar as informações por caso e os rótulos da triagem. Explicar a origem dos confirmados e inconclusivos nos registros versionados e a consolidação por regra, arquivo e intervalo, com revisão explícita de divergências. Registrar a confirmação do autor em 09/11/2026: os 21 falsos positivos apontados pela LLM foram revisados pelos dois autores com exame do código, contexto do alerta e regra do Semgrep. Não atribuir essa revisão humana aos outros grupos nem exploração dinâmica a todos os casos. |
+
+Manter a constituição do catálogo, os critérios de seleção e as justificativas de triagem nesta seção. A ferramenta e o perfil de regras ficam na seção 3.5.
+
+### 3.5 Ferramenta de análise estática
+
+**Origem no TCC1:** seção 3.5.
 
 | Parágrafo | Tratamento | Conteúdo a desenvolver |
 |---|---|---|
 | P10 | Adaptar | Apresentar o Semgrep e justificar seu uso para identificar alertas antes e depois das correções. |
 | P11 | Acrescentar | Explicar por que foram combinadas regras disponíveis na ferramenta e regras elaboradas para o estudo. |
 | P12 | Acrescentar | Explicar como o conjunto de regras e as exclusões foram mantidos fixos para permitir comparações consistentes. |
-| P13 | Atualizar | Apresentar a seleção dos 78 casos a partir de 124 alertas, com 46 exclusões. Explicar o que representa cada ocorrência. |
-| P14 | Acrescentar | Explicar a ampliação do conjunto anteriormente preparado de 52 para 78 casos, sem misturar os resultados dessas campanhas. |
-| P15 | Corrigir | Apresentar as informações por caso e os rótulos da triagem. Explicar a origem dos confirmados e inconclusivos nos registros versionados e a consolidação por regra, arquivo e intervalo, com revisão explícita de divergências. Registrar a confirmação do autor em 09/11/2026: os 21 falsos positivos apontados pela LLM foram revisados pelos dois autores com exame do código, contexto do alerta e regra do Semgrep. Não atribuir essa revisão humana aos outros grupos nem exploração dinâmica a todos os casos. |
 
-**Apoio e limite da seção:** Tabela do fluxo de inclusão/exclusão. Não apresentar 78 alertas como 78 vulnerabilidades demonstradas.
+### 3.6 Modelos de linguagem e condições de geração
 
-### 3.4 Modelos de linguagem e condições de geração
-
-**Origem no TCC1:** Parte sobre gpt-4.1-mini da antiga seção 3.2; seção própria aceita para a ampliação do estudo.
+**Origem no TCC1:** seção 3.2.
 
 | Parágrafo | Tratamento | Conteúdo a desenvolver |
 |---|---|---|
@@ -131,11 +151,11 @@ Preservar as distinções necessárias para interpretar as métricas.
 | P18 | Acrescentar | Explicar como os modelos foram avaliados sobre os mesmos casos e estratégias, indicando as condições comuns e as diferenças relevantes. |
 | P19 | Acrescentar | Descrever brevemente o controle de chamadas, falhas e consumo. Esclarecer que as campanhas finais não reutilizaram respostas armazenadas. |
 
-**Apoio e limite da seção:** Tabela dos três modelos e parâmetros. Critérios de escolha ainda exigem explicação dos autores; não inventar justificativa retrospectiva.
+Seção adicional independente. O conteúdo sobre modelos foi separado do contexto de aplicação para explicitar a comparação e os parâmetros de geração.
 
-### 3.5 Estratégias de prompt
+### 3.7 Estratégias de prompt
 
-**Origem no TCC1:** Antiga seção 3.6.
+**Origem no TCC1:** seção 3.6.
 
 | Parágrafo | Tratamento | Conteúdo a desenvolver |
 |---|---|---|
@@ -146,11 +166,9 @@ Preservar as distinções necessárias para interpretar as métricas.
 | P24 | Precisar | Descrever P4, que combina contexto e roteiro, e explicar as restrições comuns às alterações propostas. |
 | P25 | Atualizar | Explicar que as respostas seguiram um formato padronizado com os trechos originais e corrigidos, permitindo a aplicação automática. |
 
-**Apoio e limite da seção:** Tabela de presença/ausência de código, diagnóstico, RAG e roteiro em cada estratégia. P1L é diagnóstico adicional e só deve entrar se usado no recorte descrito.
+### 3.8 Estratégia de RAG simplificado
 
-### 3.6 Recuperação de contexto por RAG simplificado
-
-**Origem no TCC1:** Antiga seção 3.7.
+**Origem no TCC1:** seção 3.7.
 
 | Parágrafo | Tratamento | Conteúdo a desenvolver |
 |---|---|---|
@@ -158,11 +176,9 @@ Preservar as distinções necessárias para interpretar as métricas.
 | P27 | Precisar | Explicar como o documento é selecionado pelo tipo de fraqueza e como se utiliza um texto genérico quando não há correspondência. |
 | P28 | Ampliar | Justificar a recuperação simplificada e explicar como a base foi mantida identificável, sem incorporar soluções do alvo ou correções anteriores. |
 
-**Apoio e limite da seção:** Esquema curto da recuperação. Estrutura dos arquivos e detalhes do recuperador ficam no capítulo 4.
+### 3.9 Pipeline
 
-### 3.7 Procedimento de execução do pipeline
-
-**Origem no TCC1:** Antiga seção 3.8.
+**Origem no TCC1:** seção 3.8.
 
 | Parágrafo | Tratamento | Conteúdo a desenvolver |
 |---|---|---|
@@ -173,11 +189,9 @@ Preservar as distinções necessárias para interpretar as métricas.
 | P33 | Acrescentar | Explicar o tratamento de respostas inválidas, correções não aplicáveis e interrupções, distinguindo ausência de medição de falha comprovada. |
 | P34 | Atualizar | Descrever a execução de até quatro casos em paralelo e a retomada das campanhas. Identificar as execuções finais separadamente dos pilotos. |
 
-**Apoio e limite da seção:** Diagrama atualizado do fluxo, com caminhos de falha e regra de parada. Worktrees e orquestrador são detalhados no capítulo 4.
+### 3.10 Validação das correções
 
-### 3.8 Validação das correções
-
-**Origem no TCC1:** Subseção própria aceita; desenvolve critérios antes resumidos nas antigas seções 3.5, 3.8 e 3.9.
+**Origem no TCC1:** seção 3.5, 3.8 e 3.9.
 
 | Parágrafo | Tratamento | Conteúdo a desenvolver |
 |---|---|---|
@@ -189,11 +203,11 @@ Preservar as distinções necessárias para interpretar as métricas.
 | P40 | Acrescentar | Apresentar o conjunto D e explicar por que determinados testes deixam de passar quando a vulnerabilidade é corrigida. |
 | P41 | Acrescentar | Explicar as diferentes formas de interpretar F e o tratamento de falhas intermitentes ou resultados inconclusivos, com uma tabela de apoio. |
 
-**Apoio e limite da seção:** Tabela R/F/M e tabela das definições de F. A comparação numérica das sensibilidades entra no capítulo 5.
+Seção adicional independente para desenvolver os procedimentos de validação, mantendo as fórmulas e métricas na seção 3.11.
 
-### 3.9 Métricas de avaliação
+### 3.11 Métricas de avaliação
 
-**Origem no TCC1:** Antiga seção 3.9, após explicitar os procedimentos de validação.
+**Origem no TCC1:** seção 3.9.
 
 | Parágrafo | Tratamento | Conteúdo a desenvolver |
 |---|---|---|
@@ -203,33 +217,53 @@ Preservar as distinções necessárias para interpretar as métricas.
 | P45 | Acrescentar | Definir como serão comparados custo, tokens e tempo, distinguindo tempo de resposta do modelo de duração total da campanha. |
 | P46 | Ampliar | Explicar a RRIS e a avaliação das correções aplicadas em conjunto, distinguindo redução de alertas de preservação funcional do conjunto. |
 
-**Apoio e limite da seção:** Equações e tabela com métrica, unidade, numerador, denominador e tratamento de ausência. Não somar aceites individuais para obter RRIS.
+### 3.12 Armazenamento e organização dos dados
 
-### 3.10 Registro e análise dos dados
-
-**Origem no TCC1:** Antigas seções 3.10 e 3.11.
+**Origem no TCC1:** seção 3.10.
 
 | Parágrafo | Tratamento | Conteúdo a desenvolver |
 |---|---|---|
 | P47 | Atualizar | Explicar como cada caso é ligado ao prompt, à resposta, à alteração e aos resultados dos testes, permitindo acompanhar sua origem. |
+
+Tratar aqui da identificação e do armazenamento dos registros. A delimitação da população e as comparações ficam na seção 3.13.
+
+### 3.13 Análise dos dados
+
+**Origem no TCC1:** seção 3.11.
+
+| Parágrafo | Tratamento | Conteúdo a desenvolver |
+|---|---|---|
 | P48 | Ampliar | Explicar quais registros entram na análise principal e como são separados pilotos, simulações e tentativas posteriores ao primeiro aceite. |
 | P49 | Ampliar | Apresentar as comparações por estratégia e tipo de vulnerabilidade, considerando o tamanho dos grupos e as informações ausentes. |
 | P50 | Acrescentar | Apresentar a comparação dos três modelos para Q5, considerando eficácia, funcionamento, novos alertas, custo e tempo nas condições observadas. |
 | P51 | Precisar | Explicar os limites da sequência de estratégias e da inclusão conjunta de diagnóstico e documentos. Descrever a análise de exemplos somente se realizada. |
 
-**Apoio e limite da seção:** A árvore detalhada de diretórios e comandos vai para o capítulo 4. Tabelas com resultados e respostas Q1–Q5 ficam no capítulo 5.
+Incluir a classificação OWASP complementar documentada em 11/11/2026. O conteúdo de P51 sobre limitações da sequência foi realocado para a seção 3.14; a análise de exemplos permanece nesta seção.
 
-### 3.11 Limitações metodológicas e uso de inteligência artificial
+### 3.14 Limitações do estudo
 
-**Origem no TCC1:** Antigas seções 3.12 e 3.13; destino editorial da declaração ainda ajustável.
+**Origem no TCC1:** seção 3.12.
 
 | Parágrafo | Tratamento | Conteúdo a desenvolver |
 |---|---|---|
 | P52 | Atualizar | Apresentar os limites do alvo, do detector, dos testes e das classificações dos alertas, sem antecipar a discussão dos resultados. |
 | P53 | Ampliar | Explicar como a sequência de estratégias, a variação das respostas e as configurações dos modelos limitam as comparações. |
+
+Incluir aqui o parágrafo detalhado sobre a limitação da execução sequencial, anteriormente inserido na análise dos dados. Manter a declaração de IA separada.
+
+### 3.15 Declaração de Uso de Inteligência Artificial
+
+**Origem no TCC1:** seção 3.13.
+
+| Parágrafo | Tratamento | Conteúdo a desenvolver |
+|---|---|---|
 | P54 | Atualizar | Declarar o uso efetivo de IA e a responsabilidade dos autores, descrevendo apenas a revisão humana que puder ser confirmada. |
 
-**Apoio e limite da seção:** Os efeitos efetivamente observados e as ameaças discutidas a partir dos resultados serão desenvolvidos no capítulo 5.
+### 3.16 Cronograma
+
+**Origem no TCC1:** seção 3.14.
+
+Recuperar a tabela de planejamento da seção 3.14 original. Identificar os períodos como previstos; não convertê-los em datas efetivas nem afirmar a conclusão de atividades futuras sem evidência.
 
 ## Decisões e evidências ainda pendentes
 
@@ -242,8 +276,8 @@ para os demais grupos. Ver o [rastreio de origem](../evidencias/triagem-origem-2
 - Resolvido em 10/11/2026: o autor informou que não houve inspeção manual dos patches; a avaliação utilizou as métricas e verificações automatizadas. Descrever os exemplos do Capítulo 5 como análise documental com apoio automatizado, sem atribuir validação humana das correções.
 - Confirmação do uso real de IA e das revisões humanas que serão declaradas.
 - Alinhamento da ampliação Q5 com a orientadora; não afirmar aprovação sem registro.
-- Ajuste final de títulos e agrupamentos, posição da declaração de IA e destino da PoC detalhada.
-- Decisão editorial sobre o cronograma do TCC1: recomenda-se retirar a previsão futura ou substituí-la por etapas executadas com datas verificadas. Essa recomendação ainda não é uma decisão final do autor.
+- Resolvido em 11/11/2026: os tópicos originais foram separados, a declaração de IA recebeu seção própria e os tópicos de modelos e validação foram mantidos como acréscimos. O destino da PoC detalhada permanece fora desta reorganização.
+- Resolvido em 11/11/2026: por determinação do autor de manter todos os tópicos, o cronograma foi recuperado como planejamento, com períodos explicitamente previstos.
 
 ## Fontes do experimento para a redação
 
