@@ -1,0 +1,43 @@
+{
+  "data": "2026-11-11",
+  "base_versao": "2.1",
+  "documentos": 14,
+  "secoes_obrigatorias": [
+    "Descrição e sinais",
+    "Origem e condições",
+    "Impactos e interpretação",
+    "Mitigação por mecanismo",
+    "Preservação funcional",
+    "Exemplo genérico",
+    "Limitações e verificação"
+  ],
+  "base_sha256": "2dac9836de6650c33244cbd5a90985a1661b74f7cfd8861300e1443fe708558d",
+  "index_sha256": "ab80974a0cf9829954bf7f3f2873893a2f0dec4cbede9a9cd8f31dd5c7f385aa",
+  "motivos_por_caso": {
+    "cwe": 78
+  },
+  "campanhas": [
+    {
+      "execucao": "AMP_REAL_20261106T105533Z_aa697342",
+      "prompts_com_rag": 124
+    },
+    {
+      "execucao": "AMP_REAL_20261106T125801Z_0eb68fe4",
+      "prompts_com_rag": 126
+    },
+    {
+      "execucao": "AMP_REAL_20261106T151004Z_f49ac0d2",
+      "prompts_com_rag": 132
+    }
+  ],
+  "prompts_por_estrategia": {
+    "P3": 207,
+    "P4": 175
+  },
+  "prompts_com_rag_conferidos": 382,
+  "exemplo_sql": {
+    "cwe": "CWE-89",
+    "categoria": "injection",
+    "arquivo": "injection.md"
+  }
+}

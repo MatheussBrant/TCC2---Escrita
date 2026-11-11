@@ -184,6 +184,14 @@ P1–P4 e a lista de edições efetivamente adotada.
 
 **Origem no TCC1:** seção 3.7.
 
+**Diretriz do autor em 11/11/2026:** aproximar a exposição do original, mantendo
+justificativa, composição dos documentos, exemplo e fluxo em etapas. Adaptar à
+base 2.1 com 14 documentos, às sete seções obrigatórias e à recuperação por
+primeira CWE mapeada, categoria do catálogo e documento genérico. O exemplo
+CWE-89 usa `injection.md`. Conferência dos 382 prompts P3/P4 confirmou os corpos
+e hashes recuperados; os 78 casos têm correspondência por CWE. Distinguir os
+caminhos de contingência implementados daqueles efetivamente usados.
+
 | Parágrafo | Tratamento | Conteúdo a desenvolver |
 |---|---|---|
 | P26 | Atualizar | Apresentar a base de 14 documentos e seu propósito. Identificar sua versão em nota ou tabela de apoio. |

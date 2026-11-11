@@ -206,11 +206,45 @@ Fonte: montagem dos prompts do experimento.
 
 ### 3.8 Estratégia de RAG simplificado
 
-O RAG foi implementado por recuperação de documentos técnicos em Markdown, sem utilização de embeddings ou busca vetorial. A base utilizada nas campanhas finais correspondeu à versão 2.1, com 14 documentos em português e exemplos genéricos de JavaScript e TypeScript. Os textos apresentaram características dos problemas, recomendações de correção, cuidados de preservação funcional e limitações da avaliação. A base foi ampliada durante a preparação do experimento para distinguir mecanismos que anteriormente recebiam orientações mais gerais.
+Neste trabalho, o RAG foi implementado de forma simplificada, por meio da recuperação automática de documentos de contexto associados ao tipo de problema indicado pelo alerta SAST. A abordagem utilizou uma base documental controlada e um mapeamento explícito entre CWEs, categorias de contexto e documentos de apoio, sem empregar embeddings, bancos vetoriais ou ranqueamento por similaridade semântica.
 
-A seleção do documento seguiu uma ordem definida. Primeiro, o pipeline procurou uma correspondência para as CWEs registradas no caso; na ausência de correspondência, considerou a categoria de contexto disponível e, por último, o documento genérico. Dessa forma, o procedimento não dependeu de uma busca semântica nem da interpretação de respostas anteriores. A disponibilidade desse recurso de contingência não significa que ele tenha sido acionado em todos os casos: o documento efetivamente recuperado foi registrado por tentativa.
+Essa decisão metodológica foi adotada por questões de viabilidade e alinhamento com o escopo do trabalho. O objetivo foi avaliar a correção automatizada com diferentes formas de instrução e de contexto técnico fornecido aos modelos, mantendo o mecanismo de recuperação simples e identificável. Assim, a recuperação foi baseada na associação direta entre as informações registradas no caso e o documento correspondente.
 
-A escolha do RAG simplificado manteve o foco na avaliação do contexto fornecido ao modelo, em vez de transformar o mecanismo de recuperação no objeto principal da pesquisa. O índice e os documentos foram identificados por versão e hashes, permitindo conferir sua integridade e a correspondência com cada campanha. A documentação da base registrou a utilização de fontes técnicas e exemplos genéricos, sem incorporar soluções do Juice Shop ou patches anteriores; somente o corpo do documento selecionado foi enviado no prompt.
+A base de conhecimento foi composta por arquivos em formato Markdown, organizados no diretório `knowledge_base/` do projeto. Nas campanhas finais, foi utilizada a versão 2.1, com 14 documentos em português e exemplos genéricos em JavaScript e TypeScript. Os documentos contemplaram temas como injeção, controle de acesso, criptografia, autenticação, XSS, validação de entrada, integridade, concorrência, travessia de diretórios, redirecionamento aberto e SSRF, além de um documento genérico. A base foi ampliada durante a preparação para distinguir mecanismos que anteriormente recebiam orientações mais gerais.
+
+Cada documento de contexto foi organizado nos seguintes elementos:
+
+1. Descrição e sinais do problema;
+2. Origem e condições para sua ocorrência;
+3. Impactos e interpretação;
+4. Mitigação por mecanismo;
+5. Preservação funcional;
+6. Exemplo genérico de código vulnerável e corrigido;
+7. Limitações e verificação da correção.
+
+Além do corpo técnico, os arquivos mantiveram informações de categoria, versão e fontes consultadas. Os exemplos foram genéricos, sem incorporar soluções do Juice Shop ou patches gerados em tentativas anteriores. Somente o corpo do documento selecionado foi enviado no prompt; os metadados permaneceram disponíveis para identificar e conferir a origem do contexto utilizado.
+
+Durante a execução do pipeline, a seleção priorizou a primeira CWE do caso que possuísse correspondência no índice da base. Quando nenhuma CWE era reconhecida, o procedimento considerava a categoria de contexto registrada no catálogo. Se essa categoria também não estivesse disponível no índice, era selecionado o documento genérico. Essas categorias serviram à recuperação de orientações técnicas; a associação de um alerta a um documento não foi considerada uma confirmação da vulnerabilidade.
+
+Por exemplo, para um caso com CWE-89, relacionada a SQL Injection, o índice associou a ocorrência à categoria de contexto `injection` e selecionou o arquivo `injection.md`. O corpo desse documento foi incorporado ao prompt juntamente com o código analisado e o diagnóstico SAST. Nas estratégias P3 e P4, esse procedimento acrescentou orientações de mitigação e preservação funcional para apoiar a geração da proposta de correção.
+
+O fluxo do RAG simplificado foi composto pelas seguintes etapas:
+
+1. Identificação do alerta pela ferramenta SAST;
+2. Leitura das CWEs e da categoria de contexto registradas no caso;
+3. Seleção automática do documento conforme a prioridade de recuperação;
+4. Leitura do arquivo Markdown e verificação de sua integridade;
+5. Inclusão do corpo do documento no prompt, junto ao código e ao diagnóstico SAST;
+6. Envio do prompt enriquecido ao modelo de linguagem;
+7. Geração da proposta de correção.
+
+O índice e os documentos foram identificados por versão e verificações de integridade, permitindo relacionar o contexto fornecido às condições de cada campanha. O documento selecionado e o motivo da recuperação também foram registrados por tentativa. Nos 78 casos do catálogo final, havia correspondência pelo CWE; os caminhos alternativos por categoria ou documento genérico permaneceram implementados como contingência.
+
+Essa estratégia permitiu comparar condições com e sem documentação recuperada. Entretanto, como P3 e P4 também acrescentaram o diagnóstico SAST, as diferenças observadas não permitem isolar um efeito exclusivo do RAG. O contexto adicional foi tratado como apoio à geração, mantendo a avaliação das propostas pela reanálise estática e pelos testes automatizados.
+
+A abordagem mantém o princípio de recuperar conhecimento externo antes da geração da resposta. Por isso, neste trabalho, foi denominada RAG simplificado ou contextualização baseada em recuperação por categoria, com prioridade de seleção pelo CWE.
+
+<!-- Evidência: seção 3.7 do texto original como referência de organização; src/pipeline/etapas/e03_contexto_rag/recuperacao.py, knowledge_base/{_index.yaml,manifesto.json,README.md}, documentos da base e montagem.py para o procedimento implementado. Conferência dos 78 casos e de 382 prompts P3/P4 das campanhas finais em evidencias/rag-simplificado-2026-11-11.json. -->
 
 ### 3.9 Pipeline
 
