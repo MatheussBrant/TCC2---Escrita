@@ -261,8 +261,8 @@ O fluxo do pipeline foi composto pelas seguintes etapas:
 7. Enviar a requisição à API do modelo de linguagem;
 8. Receber e verificar a resposta estruturada e as edições propostas;
 9. Aplicar a correção na cópia isolada do projeto, quando a proposta era utilizável;
-10. Executar novamente a análise SAST e comparar os alertas antes e depois da alteração;
-11. Executar as verificações de compilação e os testes selecionados para os arquivos alterados;
+10. Executar as verificações de compilação e os testes selecionados para os arquivos alterados;
+11. Executar novamente a análise SAST e comparar os alertas antes e depois da alteração;
 12. Registrar os resultados da tentativa, incluindo os critérios medidos e os artefatos produzidos;
 13. Restaurar o estado do projeto para a próxima tentativa.
 
@@ -274,7 +274,7 @@ A análise de referência e a conferência dos casos integraram a preparação d
 
 Fonte: elaboração dos autores.
 
-A figura apresenta a visão geral do processo. Na implementação utilizada no experimento, a reanálise SAST foi executada antes dos testes automatizados, conforme a ordem descrita nas etapas 10 e 11. A aprovação funcional indicada na decisão de continuidade correspondeu ao critério estrito da regra de parada, distinguido da classificação principal dos resultados nos parágrafos seguintes.
+A figura apresenta a visão geral do processo. Na implementação utilizada no experimento, a reanálise SAST foi executada depois das verificações de compilação e dos testes automatizados, como representado na figura e na ordem descrita nas etapas 10 e 11. A aprovação funcional indicada na decisão de continuidade correspondeu ao critério estrito da regra de parada, distinguido da classificação principal dos resultados nos parágrafos seguintes.
 
 A Figura 2 representa o processamento de um caso por vez em cada cópia de trabalho. As tentativas utilizaram cópias de trabalho separadas do projeto, gerenciadas por Git worktrees. Cada cópia foi restaurada antes e depois de seu uso, mantendo o ponto de partida fixado para a tentativa seguinte. Assim, uma correção individual não foi aplicada sobre alterações acumuladas de outros casos. O funcionamento desse isolamento e a aplicação das edições são detalhados no Capítulo 4.
 

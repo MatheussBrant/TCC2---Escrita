@@ -170,3 +170,140 @@ da metodologia, sem terem sido preenchidos por inferência neste capítulo.
 
 SHA-256 do rascunho: `ba63d3922589df9acb9c367424101bcf4243493455cc00fc0336c8029f2bc70f`.
 SHA-256 da PoC preservada: `9605651e22a395f253a96e67b6592d343222a6771a9c4485c21779abf62b6df9`.
+
+## Reescrita de 11/11/2026
+
+**Motivo:** revisão do autor (Caio) no Notion, com 27 comentários no capítulo anterior. Pontos principais: linguagem distante da usada no
+restante do trabalho, uso de ponto e vírgula e travessões, termos usados sem explicação (painel, perfil, scan, worktree, revisão do alvo,
+semente, coordenador, retomada) e trechos que pressupunham que a banca conhecia a implementação. Por orientação da professora, o capítulo
+de implementação substitui o capítulo da prova de conceito e passou a seguir a sua estrutura (visão geral, elaboração, estrutura do
+projeto, fluxo de execução e armazenamento, métricas, execução e contribuição). O conteúdo da prova de conceito foi retirado.
+
+**Experimento consultado:** `../../tcc2-llm-sast-juiceshop`, revisão `36c554d`. Execução do exemplo:
+`AMP_REAL_20261106T151004Z_f49ac0d2` (GPT-4.1 mini), caso `AMP95adf572d3c6677f` (`routes/keyServer.ts:14`, regra
+`express-res-sendfile`, CWE-73). P1 e P2 rejeitadas por R=0 com F=1 e M=1; P3 aceita com todos os testes passando; P4 não executada.
+
+**Fatos do texto e fontes (caminhos no experimento):**
+
+| Afirmação | Fonte |
+|---|---|
+| Node.js 24.14.0, Python 3.11, Semgrep 1.177.0, Juice Shop v20.1.1 no commit `f915bddd8279` | `Dockerfile`, `config/perfis/ampliado_piloto_v1/perfil.json` |
+| Cópia das dependências para as worktrees conferida por hash | `docker/workspace.py` |
+| Perfil: 1.074 regras de `p/default` e 28 regras próprias, exclusões e limites de tempo | `config/perfis/ampliado_piloto_v1/` |
+| Identificador AMP: hash de commit, regra, arquivo e coordenadas | `src/pipeline/etapas/e02_catalogo/catalogo.py` |
+| 52 grupos (36 API, 7 servidor, 9 interface), 46 arquivos mapeados | `config/cobertura_funcional_v8.yaml`, `config/mapa_testes_relacionados_v9.yaml` |
+| Linha de base com 574 testes executados | `outputs/cobertura_funcional/IMAGEM_81FE_D3_20261106/baseline/baseline_testes.json` |
+| 16 arquivos de testes adicionais | `tests/functional/juice_shop/` |
+| Arquivo completo até 250 linhas, janela de 60 linhas para cada lado, restrições e formato | `src/pipeline/etapas/e04_prompt/montagem.py` |
+| Roteiro de cinco etapas | `config/prompts/roteiro_raciocinio_guiado.md` |
+| 14 documentos, índice por CWE, documento genérico e manifesto com hashes | `knowledge_base/`, `src/pipeline/etapas/e03_contexto_rag/recuperacao.py` |
+| Temperatura 0, 4.096 tokens, semente 42 no GPT-4.1 mini, raciocínio desativado nos Luna | `src/pipeline/etapas/e05_geracao_llm/modelos.py` |
+| Chamadas uma de cada vez, 120 s, até três envios, limites de chamadas e custo, conferência do modelo retornado | `src/pipeline/etapas/e05_geracao_llm/cliente_openai.py` |
+| Arquivos protegidos, âncora única, aplicação só depois de conferir todas as edições | `src/pipeline/etapas/e06_aplicacao/aplicador.py` |
+| Recuo uniforme em blocos de duas ou mais linhas, conferência por analisador TypeScript | `src/pipeline/etapas/e06_aplicacao/indentacao.py`, `docs/aplicacao_ancoras.md` |
+| Restauração preservando dependências e trava entre execuções | `src/pipeline/etapas/e06_aplicacao/worktrees.py` |
+| Grupos de API executados um de cada vez | `src/pipeline/etapas/e07_validacao/execucao_cobertura.py` |
+| Comparação por posição, contexto e contagem | `src/pipeline/etapas/e01_analise_sast/comparacao.py` |
+| Modos de execução, contrato, retomada e conferência do ambiente na verificação inicial | `executar.py`, `src/pipeline/orquestracao/campanha.py`, `src/pipeline/orquestracao/preflight.py` |
+| Painel local em 127.0.0.1, seleção de modelo e modo, interrupção que aguarda as tentativas em andamento | `src/pipeline/painel/` |
+| RRIS por aplicação conjunta dos patches validados | `scripts/experimento/avaliacao_conjunta_rris.py` |
+
+**Decisões de redação:** não usar ponto e vírgula nem travessão no texto. As legendas seguem o formato do trabalho original
+("Figura 1 – ..."), gerado pelo modelo ABNT. Termos técnicos são explicados no primeiro uso. A regra de parada é descrita como na
+metodologia original: a sequência termina quando a correção atende R, F e M. O conjunto D é apresentado como registro complementar,
+com pendência para o Capítulo 3. Não foram mencionados a campanha descartada, o provedor adicional sem uso nem detalhes de depuração.
+
+**Pendências:** 10 marcadores `[PENDENTE]` no texto, oito deles dependentes da versão final do Capítulo 3, além da referência ao
+repositório e das capturas de tela do painel.
+
+SHA-256 do texto reescrito: `722baa022acac304a9c519cc0c0bc55cd1ce8097dac4649b523b942ac90fb4bd`.
+
+## Integração com a revisão do Matheus (12/11/2026)
+
+O commit `e2982af` ("Retira referencias a sementes", Matheus, 11/11/2026) alterou um parágrafo da versão anterior do
+capítulo, removendo a menção à semente usada no GPT-4.1 mini. Esse parágrafo já não existia na reescrita de 11/11.
+Para manter a decisão dele, a frase equivalente da reescrita (definição de semente na subseção de integração com os
+modelos) foi removida. O fato continua registrado no experimento, mas não aparece mais no texto.
+
+SHA-256 do texto após a integração: `7fa8a24266f46d19e234ed8ea8b46863f92327e9d49b503ab9ec15161158f892`.
+
+## Revisão dos autores e alinhamento com o Capítulo 3 (12/11/2026)
+
+**Fonte do texto:** página "Cap 4 - Revisado" do Notion (`415a7d2d-0315-80de-8eda-f5960fdacd4c`), última edição em
+12/11/2026 às 16:49 UTC, com os cortes feitos pelo Caio e 13 comentários. O Notion não foi alterado. O texto foi copiado
+como estava e só então recebeu as correções abaixo. Referência do Capítulo 3: `manuscrito/03-metodologia.md` no commit
+`345c9dc` (Matheus, 11/11/2026). Experimento consultado em `2e8f9a9` (branch `feat/reorganizacao-codigo`).
+
+**Diferenças de forma em relação ao Notion:** o bloco da Figura 5 (worktrees) chegou vazio do Notion e foi
+restaurado com o diagrama da versão anterior. Os blocos de código mantiveram as linguagens `typescript` e `text`, que o
+Notion converte para `ts` e `txt`.
+
+**Comentários atendidos no texto:**
+
+| Comentário | O que foi feito |
+|---|---|
+| Resumir a lista da introdução | Frase trocada por "os principais passos da sua elaboração" |
+| 4.1 repetitivo com o Capítulo 3 | Primeiro parágrafo trocado por uma remissão à Seção 3.9 e à Figura 2 |
+| Dutos e filtros já está no Capítulo 3? | Não está. Parágrafo mantido |
+| PENDENTE das regras próprias | A Seção 3.4 trata delas. Texto passou a dizer "regras locais", como no Capítulo 3, e remete à Seção 3.4 |
+| PENDENTE do conjunto D | Parágrafo alinhado às Seções 3.9 e 3.10 e à Tabela 5: parada sem separação, F por critérios calculado na mesma validação |
+| Quantos alertas usaram o documento genérico | Nenhum. Os 382 prompts P3/P4 recuperaram pelo CWE (`rag_motivo_recuperacao`). Frase acrescentada |
+| Recuperação direta ficou ambígua | Reescrito: "Conforme definido na Seção 3.8, a recuperação é feita por essa associação direta, sem busca por similaridade" |
+| PENDENTE da figura do fluxo | É a Figura 2 da Seção 3.9 |
+| PENDENTE do repositório | Link no formato do Capítulo 3: `caiolamego/tcc2-llm-sast-juiceshop` (público) |
+| Âncora como limitação, com contagem | Frase acrescentada na 4.4 com os números da população principal (tabela abaixo) |
+| Analisador da linguagem | Texto passou a dizer que é o compilador do TypeScript do próprio Juice Shop e o que ele compara |
+| Grupos de testes (estudo) | Sem mudança no texto. Resumo para estudo abaixo |
+| PENDENTE das capturas do painel | Continua pendente |
+
+**Ajustes para bater com o Capítulo 3:** figuras renumeradas para 4 e 5, continuando a numeração do Capítulo 3, com
+legenda no formato dele (negrito, travessão e "Fonte: elaboração dos autores."). "Execução oficial" passou a "campanhas
+finais", "linha de base" passou a _baseline_, "modo de verificação inicial" ganhou o nome _preflight_, "sem conclusão"
+passou a "indeterminadas" e as falhas repetidas passaram a ser chamadas de persistentes. As passagens sobre o
+encerramento do caso usam "regra de parada" (Seção 3.9). A frase da semente foi removida de novo, porque o Capítulo 3
+não a menciona (decisão do Matheus em `e2982af`). A janela de código passou a "até 60 linhas antes e 60 depois das
+linhas apontadas" (`montagem.py`, linhas 101 e 102). A seleção do RAG passou a "primeira CWE do alerta presente no
+índice" (`recuperacao.py`, linha 179). A RRIS passou a "primeiro aceite de cada caso na análise principal, na ordem em
+que as tentativas começaram" (`scripts/experimento/avaliacao_conjunta_rris.py`, função `selecionar`). A frase do
+`SEMOWASP`, que tinha ficado solta depois do corte da nomenclatura, remete à Seção 3.12 e à Figura 3 e cita a pasta
+`outputs/resultados_finais/`.
+
+**Tentativas não aplicadas por âncora** (`status_aplicacao` igual a `ancora_nao_encontrada` ou `ancora_ambigua`,
+população principal delimitada pelo primeiro aceite por critérios, igual à Tabela 1 do Capítulo 5):
+
+| Modelo | População principal | Âncora (população) | Casos | Todos os registros |
+|---|---:|---:|---:|---:|
+| GPT-4.1 mini | 241 | 15 (8 não encontradas e 7 repetidas) | 7 | 15 |
+| GPT-5.6 Luna | 223 | 4 | 3 | 6 |
+| GPT-6 Luna | 221 | 1 | 1 | 1 |
+
+No GPT-4.1 mini, nenhum dos 7 casos afetados obteve aceite. O ajuste de recuo foi usado em 24 edições, todas do
+GPT-4.1 mini. Os outros dois modelos tiveram só correspondências exatas.
+
+**Divergência encontrada no Capítulo 3 (não alterado):** a Seção 3.9 diz que a reanálise SAST foi executada antes dos
+testes. Nas campanhas finais (`politica_validacao: relacionada_v2` nos três contratos), a ordem foi compilação, grupos de
+testes e só depois o Semgrep: `src/pipeline/etapas/e07_validacao/execucao_cobertura.py`, função `validar`, chama o
+`callback` do SAST depois do laço dos grupos. O Capítulo 4 segue o código.
+
+**Para estudo dos autores (grupos de testes):** os grupos ficam em `config/cobertura_funcional_v8.yaml` e o mapa em
+`config/mapa_testes_relacionados_v9.yaml`, as versões citadas em `config/execucao_docker_78.yaml`. São 52 grupos (36 de
+API, 7 do servidor e 9 da interface), cada um com um arquivo de teste: 36 da suíte do Juice Shop e 16 escritos pelos
+autores (`tests/functional/juice_shop`). Cada grupo declara o domínio, a compilação exigida (servidor, interface ou
+ambas), os comportamentos que protege, os testes obrigatórios e as linhas de asserção usadas como evidência. O mapa
+liga 46 arquivos a grupos: 34 a um grupo, 11 a dois e o `server.ts` a dez. O `routes/keyServer.ts` do exemplo está
+ligado ao grupo `key`, que roda `test/api/file-serving.test.ts`. O conjunto D usado está em
+`config/conjunto_d_cobertura_v3.json`.
+
+**Para estudo dos autores (analisador):** `src/pipeline/etapas/e06_aplicacao/indentacao.py` chama
+`src/pipeline/etapas/e01_analise_sast/estrutura.cjs`, que carrega o `typescript` instalado no Juice Shop, monta a árvore
+sintática com `ts.createSourceFile` e guarda as folhas da árvore (nomes, operadores, sinais). A correspondência por recuo
+só é aceita se essas listas forem iguais.
+
+**Pendências:** capturas de tela do painel. A `main` do repositório do experimento está em `d645466` (13/10/2026),
+55 commits atrás da branch de trabalho. O link do texto aponta para a raiz do repositório, que abre a `main`.
+
+SHA-256 do texto após esta revisão: `24c3cfb051da2941779d79b21bee4efef2e0071b283d152cff427e1d7df771c5`.
+
+**Decisões do Caio (12/11/2026):** a divergência da Seção 3.9 foi corrigida no Capítulo 3 (registro em
+`capitulo-3-notas.md`). O link do repositório fica apontando para a `main`. O itálico será tratado na passagem para o
+Overleaf. Os cortes feitos no Notion, inclusive as definições de _hash_ e _commit_, foram intencionais.

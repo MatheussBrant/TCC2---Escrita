@@ -1,222 +1,295 @@
-## 4 Desenvolvimento e implementação do pipeline
+## 4 Implementação
 
-Este capítulo apresenta o desenvolvimento do pipeline utilizado para executar o experimento descrito no Capítulo 3. A solução integrou a leitura dos alertas de segurança, a geração de propostas pelos modelos de linguagem, a aplicação das edições e a avaliação das alterações. O foco desta apresentação é explicar como essas partes foram organizadas e conectadas, mantendo os resultados e a comparação de desempenho para o Capítulo 5.
+Este capítulo apresenta a implementação do _pipeline_ utilizado para executar o experimento descrito no Capítulo 3. São descritos os principais passos da sua elaboração, a estrutura do projeto, a organização dos arquivos produzidos e a forma de execução do _pipeline_. Os resultados obtidos são apresentados e discutidos no Capítulo 5.
 
-A exposição começa pela visão geral da solução e pela organização do projeto. Em seguida, são descritas a preparação dos casos, a construção dos prompts, a integração com os modelos, o isolamento das tentativas e a validação. Por fim, são apresentados o controle das campanhas, o painel web e a organização dos registros que permitem acompanhar e repetir o procedimento.
+Para facilitar o acompanhamento, o capítulo utiliza um caso real como exemplo ao longo das seções: um alerta de _path traversal_ no arquivo `routes/keyServer.ts` do OWASP Juice Shop, processado pelo modelo GPT-4.1 mini em uma das campanhas finais do experimento.
 
-### 4.1 Visão geral da solução
+### 4.1 Visão geral
 
-O pipeline foi desenvolvido para transformar alertas identificados no Juice Shop em tentativas de correção que pudessem ser aplicadas e avaliadas de forma automatizada. Para isso, foi necessário reunir informações do código, solicitar respostas em um formato utilizável e executar ferramentas externas após cada alteração. A automação também incluiu o registro de situações em que a resposta não podia ser aplicada ou a avaliação não produzia uma conclusão.
+O fluxo do _pipeline_ foi apresentado na Seção 3.9 e representado na Figura 2. Esta seção descreve como esse fluxo foi organizado na implementação.
 
-A solução foi organizada no estilo dutos e filtros, em que cada etapa possui uma responsabilidade e produz informações utilizadas pelas seguintes. Nesse contexto, os filtros correspondem às etapas de análise, preparação, geração, aplicação, validação e registro; os dutos são os dados e arquivos que as conectam. Um coordenador organiza a execução dessas etapas para os diferentes casos. A Figura 1 resume as principais conexões, sem representar a ordem interna de todos os testes.
+Diferentemente de um conjunto pequeno de casos criados especificamente para um experimento, o Juice Shop é uma aplicação completa, com servidor em Node.js e Express, interface em Angular, banco de dados, dependências externas e uma suíte de testes própria. Essa característica exigiu soluções específicas de implementação, como a preparação de um ambiente padronizado, o isolamento das alterações de cada tentativa, a aplicação de edições em arquivos extensos e a seleção dos testes relacionados ao código modificado. Essas soluções são apresentadas ao longo deste capítulo.
+
+A solução foi organizada no estilo arquitetural conhecido como dutos e filtros (_pipes and filters_). Nesse estilo, cada etapa do processamento, chamada de filtro, executa uma única responsabilidade: ela lê arquivos de entrada e grava arquivos de saída, que passam a ser a entrada da etapa seguinte. Os arquivos que ligam uma etapa à outra são os dutos. Essa organização permitiu desenvolver e verificar cada etapa separadamente e deixou registrado em arquivo tudo o que foi produzido em cada tentativa. A Figura 4 apresenta as etapas principais e a forma como se conectam.
 
 ```mermaid
 flowchart LR
-    A[Semgrep e catálogo] --> B[Montagem do prompt]
-    C[Base de contexto] --> B
-    B --> D[Modelo de linguagem]
-    D --> E[Aplicação em cópia isolada]
-    E --> F[Reanálise e testes]
-    F --> G[Registro da tentativa]
-    G --> H[Consolidação das métricas]
-    G -. próxima estratégia quando prevista .-> B
+    A[Análise SAST inicial] --> B[Catálogo de casos]
+    B --> D[Montagem do prompt]
+    C[Base de conhecimento do RAG] --> D
+    D --> E[Modelo de linguagem]
+    E --> F[Aplicação da correção em cópia isolada]
+    F --> G[Reanálise SAST: R e M]
+    F --> H[Testes automatizados: F]
+    G --> I[Registro da tentativa]
+    H --> I
+    I --> J[Consolidação das métricas]
+    I -. regra de parada não atendida: próxima estratégia .-> D
 ```
 
-**Figura 1 — Principais etapas e conexões do pipeline.** A recuperação de contexto participa da montagem dos prompts que utilizam RAG. O coordenador controla os casos, as estratégias e o uso das cópias isoladas.
+**Figura 4 — Etapas principais do _pipeline_ e suas conexões.**
 
-Fonte: elaboração a partir da organização e do fluxo do código do projeto.
+Fonte: elaboração dos autores.
 
-As entradas principais foram o código do alvo, o catálogo de casos, o perfil de regras e as configurações da campanha. As saídas incluíram prompts, respostas, patches, análises estáticas, testes e métricas. Para ilustrar esse percurso, foi selecionada uma tentativa real sobre a consulta de acompanhamento de pedidos, no arquivo routes/trackOrder.ts, gerada com GPT-4.1 mini e P1. O exemplo será utilizado para mostrar como os componentes se conectam; a interpretação dos resultados de segurança permanece reservada ao capítulo seguinte.
+Na figura, a seta tracejada representa a sequência de estratégias de _prompt_. Quando a correção produzida por uma estratégia não atende à regra de parada descrita na Seção 3.9, que exige R, F e M iguais a 1, o mesmo caso é submetido à estratégia seguinte, até que uma correção atenda a essa regra ou que as quatro estratégias sejam utilizadas.
 
-### 4.2 Tecnologias e organização do projeto
+### 4.2 Elaboração do _pipeline_
 
-A automação foi desenvolvida principalmente em Python, responsável por preparar as chamadas, coordenar os processos e organizar os arquivos produzidos. O Semgrep realizou a análise estática, enquanto as ferramentas do ecossistema JavaScript e TypeScript foram utilizadas para compilar e testar o Juice Shop. O Git apoiou a preparação do alvo e o isolamento das tentativas. A Tabela 1 apresenta a função dessas tecnologias na solução.
+A elaboração do _pipeline_ foi organizada em sete partes: a preparação do ambiente experimental, a identificação das vulnerabilidades com o Semgrep, a definição dos testes automatizados utilizados na validação, a construção das estratégias de _prompt_, a montagem da base de conhecimento do RAG simplificado, a integração com os modelos de linguagem e a definição do fluxo experimental.
 
-**Tabela 1 — Tecnologias e responsabilidades na solução**
+#### 4.2.1 Preparação do ambiente experimental
 
-| Tecnologia | Responsabilidade |
-|---|---|
-| Python | Coordenação das etapas, integração e registro dos dados. |
-| Semgrep | Identificação e reanálise dos alertas de segurança. |
-| Git | Controle da revisão do alvo e gerenciamento das cópias de trabalho. |
-| Node.js e ferramentas JavaScript/TypeScript | Execução, compilação e testes da aplicação estudada. |
-| Docker | Disponibilização do ambiente preparado. |
-| HTML, CSS e JavaScript | Interface web local de acompanhamento. |
+Para que todas as execuções utilizassem exatamente as mesmas ferramentas e versões, o ambiente foi empacotado com o Docker. Assim, a execução não depende das versões instaladas na máquina de cada pesquisador, e qualquer computador com o Docker executa o _pipeline_ nas mesmas condições.
 
-Fonte: código e arquivos de configuração do projeto.
+A imagem construída para este trabalho reúne o Node.js 24.14.0, o Python 3.11, o Semgrep 1.177.0 e uma cópia do OWASP Juice Shop na versão v20.1.1, já com as dependências instaladas e o código compilado. O Juice Shop foi fixado em um _commit_ específico do seu repositório, identificado por `f915bddd8279`. Fixar o _commit_ garantiu que todas as tentativas partissem do mesmo código-fonte. O código do _pipeline_, as configurações e os resultados não ficam dentro da imagem. A pasta do projeto é conectada ao contêiner durante a execução, e os arquivos produzidos permanecem no computador de quem executa.
 
-O repositório foi dividido para separar implementação, configuração e evidências de execução. Essa organização permitiu localizar as entradas de uma campanha e os resultados que ela produziu, sem reunir todos os arquivos na mesma pasta. A Tabela 2 apresenta os diretórios principais; os arquivos individuais são mencionados apenas quando ajudam a compreender uma responsabilidade.
+Cada tentativa de correção altera arquivos do Juice Shop. Se todas as tentativas utilizassem a mesma pasta, a alteração feita em uma poderia interferir na avaliação de outra, e cada tentativa precisaria terminar antes que a seguinte começasse. Para evitar esse problema, foram utilizadas as _worktrees_ do Git.
 
-**Tabela 2 — Organização principal do repositório**
+Normalmente, um repositório Git possui uma única pasta de trabalho, onde ficam os arquivos que podem ser editados. O recurso de _worktrees_ permite criar pastas de trabalho adicionais, todas ligadas ao mesmo repositório. Cada _worktree_ contém a sua própria cópia dos arquivos em uma versão escolhida, enquanto o histórico do projeto continua armazenado uma única vez. Na prática, cada _worktree_ funciona como uma cópia separada do Juice Shop, na qual uma correção pode ser aplicada e testada sem afetar as demais.
 
-| Diretório | Conteúdo |
-|---|---|
-| src/ | Etapas do pipeline, coordenação e painel. |
-| config/ | Configurações, perfis e mapas usados na execução. |
-| rules/ | Regras locais de análise estática e exemplos associados. |
-| knowledge_base/ | Documentos e índice de recuperação de contexto. |
-| tests/ | Testes do pipeline, das regras e verificações adicionais do alvo. |
-| scripts/ | Rotinas de preparação, avaliação e relatórios. |
-| outputs/ | Entradas geradas e resultados identificados por execução. |
-| workspace/ | Repositório e cópias de trabalho do Juice Shop. |
-| .cache/ | Dados locais de controle e armazenamento temporário. |
+Neste trabalho, foram criadas quatro _worktrees_, chamadas wt-1, wt-2, wt-3 e wt-4, todas na versão fixada do Juice Shop. Com elas, até quatro casos diferentes puderam ser processados ao mesmo tempo, cada um em sua própria cópia. A Figura 5 representa essa organização.
 
-Fonte: estrutura do repositório experimental.
+```mermaid
+flowchart TD
+    R[Repositório do Juice Shop na versão fixada] --> W1[wt-1]
+    R --> W2[wt-2]
+    R --> W3[wt-3]
+    R --> W4[wt-4]
+    W1 --> T1[Tentativa de um caso]
+    W2 --> T2[Tentativa de outro caso]
+    W3 --> T3[Tentativa de outro caso]
+    W4 --> T4[Tentativa de outro caso]
+```
 
-Dentro do código principal, as etapas do pipeline foram organizadas em módulos que acompanham o fluxo do experimento. A coordenação das campanhas ficou separada das rotinas de análise, geração, aplicação e validação. Também foram reunidas funções comuns, como identificação de caminhos e verificação das condições de execução. O painel utilizou os mesmos componentes de controle, evitando criar um segundo fluxo de avaliação.
+**Figura 5 — Cópias de trabalho do Juice Shop utilizadas pelo _pipeline_.**
 
-O ambiente Docker reuniu as ferramentas e uma referência do Juice Shop com as dependências preparadas. O repositório do pipeline foi montado no contêiner, permitindo manter código e resultados acessíveis no computador do usuário. Arquivos de configuração e comandos de apoio organizaram a preparação e a conferência do ambiente. Essa distribuição preservou a distinção entre a imagem de referência, as configurações do experimento e os dados produzidos pelas campanhas.
+Fonte: elaboração dos autores.
 
-### 4.3 Detecção e preparação dos casos
+As _worktrees_ não receberam uma instalação nova das dependências do Juice Shop. As bibliotecas da aplicação e os arquivos já compilados foram copiados da cópia de referência existente na imagem para cada _worktree_. Para confirmar que cada cópia era idêntica à referência, foi calculado o _hash_ dos arquivos copiados e comparado com o _hash_ da referência.
 
-A integração com o Semgrep foi responsável por executar a ferramenta com o perfil selecionado e interpretar sua saída em JSON. As ocorrências foram organizadas em campos como regra, arquivo, localização, mensagem e classificação associada. O sistema também registrou avisos e falhas de análise, para que uma leitura incompleta não fosse confundida com ausência de alertas. O perfil foi verificado antes de ser utilizado.
+Durante o desenvolvimento, também foi mantida uma rotina que prepara o Juice Shop e as _worktrees_ diretamente no computador, sem o Docker. Essa rotina clona o repositório do Juice Shop, cria as quatro _worktrees_ na versão fixada e instala as dependências em cada uma. As campanhas finais do experimento utilizaram o ambiente Docker descrito nesta seção. A forma como as _worktrees_ são reservadas e restauradas durante a execução é detalhada na Seção 4.4.
 
-As regras locais foram organizadas em arquivos próprios, acompanhados por exemplos de código. No caso ilustrativo, a regra procurou consultas que utilizavam o operador $where com uma expressão construída dinamicamente. O padrão buscava sinalizar situações em que valores poderiam ser incorporados à expressão da consulta. Essa regra permitiu localizar a linha de acompanhamento de pedidos, sem tornar sua correspondência uma análise completa de todas as condições de exploração.
+#### 4.2.2 Identificação das vulnerabilidades com o Semgrep
 
-A formação do catálogo foi implementada em uma rotina que leu o scan e a classificação arquivada dos alertas. Antes de publicar os casos, a rotina conferiu a correspondência entre regra, arquivo, localização e revisão do alvo. Dessa forma, a tarefa de organizar as entradas permaneceu distinta da atribuição dos rótulos da triagem. A existência desses rótulos e os limites de sua validação foram apresentados na metodologia.
+O ponto de partida do experimento foi a análise estática do Juice Shop com o Semgrep. Neste trabalho, cada execução dessa análise sobre o código é chamada de _scan_. Em um _scan_, o Semgrep percorre os arquivos do projeto, compara o código com um conjunto de regras e gera um relatório em formato JSON com os alertas encontrados. Cada alerta informa a regra acionada, o arquivo e a linha do código, uma mensagem explicativa e, quando disponíveis, a CWE, a categoria do OWASP Top 10 e a severidade.
 
-Cada ocorrência recebeu um identificador associado à regra e à sua localização no código fixado. Também foram armazenados o trecho relacionado, as informações de segurança disponíveis e a identificação do arquivo de origem. A composição do identificador permitiu manter separados alertas próximos ou repetidos no mesmo arquivo. Isso apoiou a ligação entre o caso inicial e as diferentes estratégias utilizadas para avaliá-lo.
+As regras e as configurações da análise foram reunidas em um perfil de regras. O perfil define quais regras são aplicadas, quais pastas ficam fora da análise e os limites de tempo do Semgrep. O perfil utilizado combina 1.074 regras do conjunto público `p/default`, mantido pelos desenvolvedores do Semgrep, com 28 regras locais, escritas pelos autores para padrões de vulnerabilidade presentes no Juice Shop que as regras públicas não identificavam, conforme a Seção 3.4. As regras públicas foram copiadas para um arquivo e mantidas fixas no perfil, de forma que uma atualização do Semgrep não alterasse o conjunto de regras durante o experimento.
 
-No exemplo selecionado, o catálogo apontou uma consulta em que o identificador do pedido era incorporado a uma expressão de $where. Ao carregar esse caso, o pipeline conferiu as entradas e leu o arquivo da cópia de trabalho para montar o prompt. O exemplo mostra a passagem de uma ocorrência do detector para uma tarefa de geração. A classificação posterior da tentativa dependeu das etapas de aplicação e validação, descritas adiante.
+Antes de cada _scan_, o _pipeline_ confere o perfil. São comparados os _hashes_ dos arquivos de regras e da lista de exclusões com os valores registrados, e a versão do Semgrep é verificada. Caso algum desses elementos tenha sido alterado, a execução é interrompida. Esse cuidado garante que a análise feita antes da correção e a análise feita depois dela utilizam exatamente as mesmas regras.
 
-### 4.4 Construção dos prompts e recuperação de contexto
+O _scan_ inicial deu origem ao catálogo de casos, que é a lista de alertas submetidos ao _pipeline_. Cada caso corresponde a um alerta em uma posição específica do código e reúne as informações descritas na Seção 3.5. O catálogo final contém 78 casos.
 
-A montagem dos prompts reuniu uma instrução de tarefa, o código selecionado, as restrições de alteração e o formato esperado de resposta. O componente responsável leu o conteúdo da cópia de trabalho, utilizando o arquivo completo ou uma janela de linhas conforme a política descrita no Capítulo 3. Essa leitura evitou depender exclusivamente do trecho fornecido no relatório da ferramenta, que poderia não estar disponível na execução anônima do Semgrep.
+O identificador de cada caso é formado pelo prefixo AMP seguido de 16 caracteres calculados a partir do _hash_ da regra, do arquivo e da posição do alerta. Dessa forma, dois alertas da mesma regra em linhas diferentes de um mesmo arquivo recebem identificadores distintos, e um mesmo alerta mantém sempre o mesmo identificador.
 
-As diferenças entre as estratégias P1–P4 foram implementadas pela inclusão dos blocos previstos para cada uma. O roteiro foi acrescentado em P2 e P4; o diagnóstico SAST e a documentação recuperada foram acrescentados em P3 e P4. Os demais elementos permaneceram comuns. Essa composição permitiu utilizar uma mesma rotina de montagem, mantendo registradas as informações efetivamente fornecidas em cada tentativa, conforme a comparação apresentada no capítulo metodológico.
+No caso utilizado como exemplo, o Semgrep apontou a linha 14 do arquivo `routes/keyServer.ts` com a regra `express-res-sendfile`, do conjunto público, associada à CWE-73. O código não garante que o caminho final permaneça dentro da pasta prevista, o que caracteriza uma vulnerabilidade de _path traversal_, na qual um atacante manipula o caminho para ler arquivos fora do local permitido. O caso recebeu o identificador `AMP95adf572d3c6677f`. O trecho apontado é apresentado a seguir.
 
-O recuperador de contexto consultou o índice da base e selecionou o documento correspondente à primeira CWE mapeada. Quando necessário, utilizou a categoria disponível ou o documento genérico. Antes de entregar o texto ao montador, conferiu a integridade do índice e dos documentos. Somente o corpo do documento selecionado foi incorporado ao prompt; os dados sobre fontes e versões permaneceram disponíveis nos registros de apoio.
+```typescript
+if (!file.includes('/')) {
+  res.sendFile(path.resolve('encryptionkeys/', file))
+} else {
+  res.status(403)
+  next(new Error('File names cannot contain forward slashes!'))
+}
+```
 
-No exemplo de acompanhamento de pedidos, P1 recebeu o arquivo completo, com 29 linhas, e a instrução direta de correção. Não foram acrescentados o diagnóstico explícito ou um documento recuperado. O prompt foi salvo antes da geração, permitindo consultar exatamente o conteúdo enviado ao modelo. Nas estratégias com RAG, o mesmo registro também identifica o documento recuperado e sua versão, sem exigir que todas essas informações apareçam no texto destinado ao modelo.
+#### 4.2.3 Testes automatizados utilizados na validação
 
-**Excerto do prompt registrado no caso ilustrativo:**
+A verificação funcional das correções utilizou a suíte de testes do próprio Juice Shop. Essa suíte possui três tipos de teste. Os testes unitários do servidor verificam funções isoladas da aplicação. Os testes de API enviam requisições HTTP à aplicação, carregada em memória durante o teste, e conferem as respostas, como o código de status e o conteúdo retornado. Os testes de interface verificam os componentes Angular em um navegador simulado. Os dois primeiros tipos utilizam o executor de testes do próprio Node.js, e o terceiro utiliza a ferramenta Vitest. Além dos testes, a validação inclui a compilação do código, realizada pelo compilador do TypeScript para o servidor e pela ferramenta de compilação do Angular quando a interface é alterada. Uma correção que impede a compilação já é considerada uma falha funcional.
 
-> Tarefa: identifique e corrija a vulnerabilidade de seguranca presente no codigo abaixo.
->
-> Arquivo: routes/trackOrder.ts (completo, 29 linhas)
+Executar a suíte completa em cada tentativa tornaria o experimento muito demorado, pois a suíte reúne centenas de testes e exige a inicialização da aplicação. Por isso, os testes foram organizados em 52 grupos, cada um reunindo os testes de uma funcionalidade da aplicação, como o carrinho de compras, o envio de arquivos ou a entrega de arquivos. Desses grupos, 36 são de API, 7 do servidor e 9 da interface. Um mapa relaciona cada um dos 46 arquivos do Juice Shop que possuem alertas no catálogo aos grupos que exercitam o seu comportamento. Quando uma correção altera um arquivo, são executados os grupos ligados a ele no mapa. Se a correção altera mais de um arquivo, são executados os grupos ligados a todos eles, e um grupo comum a dois arquivos é executado uma única vez.
 
-O excerto reproduz a abertura da mensagem. O código, as restrições e o formato de resposta permanecem no arquivo completo da tentativa, identificado nas notas de evidência.
+Em alguns arquivos, a suíte original do Juice Shop não exercitava o comportamento que uma correção poderia alterar. Para esses casos, os autores escreveram testes adicionais, reunidos em 16 arquivos. Um exemplo são os testes do CAPTCHA aritmético, que conferem se a expressão gerada é calculada corretamente, se o resultado é armazenado e se uma resposta incorreta continua sendo recusada no envio de comentários. Esses testes adicionais são copiados para o Juice Shop somente durante a validação e removidos em seguida, de forma que o código analisado pelo Semgrep não é afetado por eles.
 
-### 4.5 Integração com os modelos de linguagem
+Antes da execução do experimento, todos os grupos foram executados no código original do Juice Shop, sem nenhuma correção. Esse resultado corresponde ao _baseline_ descrito na Seção 3.10 e registrou a situação de cada um dos 574 testes executados nos grupos. Durante a validação de uma tentativa, o resultado dos testes é comparado com o _baseline_, e somente as falhas que não existiam no código original são atribuídas à correção. Quando um teste falha pela primeira vez em uma tentativa, o grupo é executado novamente, e apenas as falhas que se repetem nas duas execuções, chamadas de persistentes, são consideradas. Esse procedimento evita que uma instabilidade momentânea, como um atraso do sistema, seja contada como quebra de funcionalidade.
 
-A integração com os modelos foi separada do restante do processamento para permitir selecionar a geração sem reescrever as etapas de aplicação e avaliação. Nas campanhas finais, essa integração utilizou a API da OpenAI com GPT-4.1 mini, GPT-5.6 Luna e GPT-6 Luna. O repositório também contém suporte a um provedor adicional, que não integrou as campanhas do recorte final.
+Durante o desenvolvimento, observou-se também que parte dos testes do Juice Shop só passa enquanto a vulnerabilidade existe. Como o Juice Shop é uma aplicação criada para o ensino de segurança, alguns testes foram escritos para confirmar que os seus desafios de exploração funcionam. Um exemplo é um teste que altera um produto sem autenticação e espera que a operação seja aceita. Uma correção bem-sucedida faz esse tipo de teste falhar. Esses testes formam o conjunto D, definido na Seção 3.10. A implementação manteve a lista desses testes, com o critério de inclusão de cada um, e registrou separadamente as falhas que pertencem a ela. Durante a execução, a decisão de passar para a estratégia seguinte considerou as falhas de todos os testes, inclusive as do conjunto D, como na interpretação sem separação apresentada na Tabela 5. O registro separado permitiu calcular F, na mesma validação, também na interpretação por critérios, adotada na análise principal.
 
-As configurações foram convertidas para os parâmetros esperados por cada modelo, mantendo uma interface comum para o coordenador. Essa adaptação considerou diferenças no suporte aos parâmetros, como o esforço de raciocínio desativado nos Luna. Além do nome solicitado, foram registrados o modelo retornado e as condições da geração. Os valores utilizados nas campanhas foram apresentados na metodologia, evitando repeti-los nesta seção.
+#### 4.2.4 Elaboração das estratégias de _prompt_
 
-A resposta foi definida por uma estrutura com campos descritivos e uma lista de edições. Cada edição informou o arquivo, o trecho original e seu substituto. A verificação desse formato permitiu distinguir uma resposta utilizável de conteúdo vazio, recusa ou estrutura inválida. O excerto a seguir foi extraído da resposta real do caso ilustrativo e mostra a edição proposta sem reproduzir as justificativas completas do modelo.
+As quatro estratégias de _prompt_ descritas na Seção 3.7, identificadas como P1, P2, P3 e P4, foram implementadas por uma rotina única de montagem, que reúne blocos de texto conforme a estratégia selecionada, nas combinações resumidas na Tabela 4.
+
+Todos os _prompts_ compartilham uma base comum. Ela é formada por uma mensagem que define o papel do modelo, como um engenheiro de segurança de aplicações especializado em TypeScript, Node.js e Express, pela tarefa de identificar e corrigir a vulnerabilidade presente no código, pelo código do arquivo, por um conjunto de restrições e pela descrição do formato da resposta. Quando o arquivo tem até 250 linhas, ele é enviado completo. Em arquivos maiores, é enviado um trecho com até 60 linhas antes e 60 linhas depois das linhas apontadas pelo alerta, e o _prompt_ informa quais linhas foram mostradas. O código é lido diretamente da _worktree_, e não do relatório do Semgrep, para que o modelo receba o texto exato do arquivo que será alterado.
+
+As restrições pedem que o modelo altere apenas o necessário para corrigir a vulnerabilidade, sem refatorar ou renomear o código, que não altere mensagens de erro, textos exibidos ao usuário ou assinaturas de funções, que não modifique arquivos de teste e que preserve o comportamento funcional existente. Também pedem que cada trecho a ser substituído seja copiado literalmente do código fornecido e apareça uma única vez no arquivo, condição necessária para que a correção possa ser aplicada automaticamente, como descrito na Seção 4.4. Esse texto foi mantido igual nas quatro estratégias e em todos os modelos.
+
+A resposta do modelo foi definida como um objeto JSON com seis campos: a vulnerabilidade identificada, a causa da vulnerabilidade, a estratégia de correção, as edições, a justificativa técnica e as limitações da correção. O campo de edições é uma lista em que cada item informa o arquivo, o trecho original e o trecho que o substitui. Esse formato permite que o _pipeline_ altere apenas as linhas necessárias, sem que o modelo precise reescrever o arquivo inteiro, o que seria inviável em arquivos extensos do Juice Shop. Cada _prompt_ é gravado em arquivo antes do envio, o que permite consultar exatamente o conteúdo recebido pelo modelo em cada tentativa.
+
+No caso utilizado como exemplo, o arquivo `routes/keyServer.ts` possui 20 linhas e foi enviado completo. Na estratégia P3, o _prompt_ recebeu também o bloco do alerta, reproduzido a seguir com a mensagem resumida, e o documento sobre _path traversal_ da base de conhecimento.
+
+```text
+Alerta da ferramenta de analise estatica (Semgrep) que deve ser corrigido:
+- Arquivo: routes/keyServer.ts
+- Linha: 14
+- Regra: javascript.express.security.audit.express-res-sendfile.express-res-sendfile
+- CWE: CWE-73: External Control of File Name or Path
+- Mensagem: The application processes user-input, this is passed to res.sendFile
+  which can allow an attacker to arbitrarily read files on the system through
+  path traversal. (...)
+```
+
+#### 4.2.5 Base de conhecimento do RAG simplificado
+
+O RAG simplificado foi implementado com uma base de conhecimento formada por 14 documentos em formato Markdown. Treze deles são dedicados a uma categoria de vulnerabilidade, como injeção, controle de acesso, falhas criptográficas, _Cross-Site Scripting_ e _path traversal_, e o último é um documento genérico, utilizado quando nenhuma categoria específica corresponde ao alerta. Cada documento é organizado em sete seções: descrição e sinais da falha, origem e condições em que ela ocorre, impactos, formas de mitigação, cuidados para preservar o funcionamento da aplicação, um exemplo genérico de código vulnerável e corrigido, e limitações e formas de verificação da correção.
+
+A escolha do documento é feita por um índice, que associa cada CWE ao documento correspondente. Para cada caso, o recuperador utiliza a primeira CWE do alerta que esteja presente no índice. Quando nenhuma CWE do alerta está no índice, utiliza a categoria registrada no catálogo e, se ela também não corresponder a um documento, utiliza o documento genérico. Nas campanhas finais, todos os 78 casos tiveram uma CWE reconhecida pelo índice, e o documento genérico não precisou ser utilizado. Conforme definido na Seção 3.8, a recuperação é feita por essa associação direta, sem busca por similaridade.
+
+#### 4.2.6 Integração com os modelos de linguagem
+
+A comunicação com os modelos de linguagem foi isolada em um componente próprio, responsável por enviar o _prompt_, receber a resposta e registrar as informações da chamada. Com essa separação, a troca do modelo não exige alterar as etapas de aplicação e validação. Nas campanhas finais, esse componente utilizou a API da OpenAI com os modelos GPT-4.1 mini, GPT-5.6 Luna e GPT-6 Luna.
+
+As chamadas utilizaram o recurso de saída estruturada da API, no qual o formato JSON esperado é enviado junto com o _prompt_ e a resposta é obrigatoriamente gerada nesse formato. Esse recurso reduz respostas que não podem ser interpretadas pelo _pipeline_. A temperatura foi fixada em zero, valor que torna as respostas do modelo menos variáveis, e o tamanho máximo da resposta foi limitado a 4.096 _tokens_.
+
+As chamadas foram enviadas uma de cada vez, mesmo quando havia casos sendo processados em paralelo, para respeitar os limites de requisições da API e permitir o controle preciso do consumo. Cada requisição teve tempo limite de 120 segundos. Em erros temporários de comunicação, como falhas de rede ou excesso momentâneo de requisições, a chamada foi repetida, com no máximo três envios.
+
+No caso utilizado como exemplo, a resposta do GPT-4.1 mini na estratégia P3 propôs a edição apresentada a seguir, reproduzida sem os campos de justificativa.
 
 ```json
 {
   "edicoes": [
     {
-      "arquivo": "routes/trackOrder.ts",
-      "trecho_original": "    db.ordersCollection.find({ $where: `this.orderId === '${id}'` }).then((order: any) => {",
-      "trecho_corrigido": "    db.ordersCollection.find({ orderId: id }).then((order: any) => {"
+      "arquivo": "routes/keyServer.ts",
+      "trecho_original": "    if (!file.includes('/')) {\n      res.sendFile(path.resolve('encryptionkeys/', file))\n    } else {",
+      "trecho_corrigido": "    if (!file.includes('/')) {\n      res.sendFile(file, { root: path.resolve('encryptionkeys/') })\n    } else {"
     }
   ]
 }
 ```
 
-**Excerto da resposta — Edição proposta para o acompanhamento de pedidos.** Fonte: resposta arquivada da campanha com GPT-4.1 mini.
+Na justificativa, o modelo explicou que a opção `root` da função `res.sendFile` define a pasta raiz permitida e faz com que o próprio Express recuse caminhos que saiam dela, mantendo a verificação original que rejeita nomes com barras.
 
-O cliente também registrou as respostas, os tokens, o tempo de geração e o custo calculado a partir dos preços configurados. Erros de comunicação receberam tratamento próprio, com novas tentativas limitadas e controle do consumo. O armazenamento de respostas para reutilização foi implementado como opção, mas permaneceu desativado nas campanhas finais. Essas diferenças entre recursos disponíveis e condições utilizadas foram mantidas nos registros.
+#### 4.2.7 Definição do fluxo experimental
 
-### 4.6 Aplicação das correções e isolamento
+Com o ambiente, o catálogo, os testes, as estratégias de _prompt_, a base de conhecimento e a integração com os modelos definidos, foi estabelecido o fluxo experimental. A execução geral seguiu a sequência apresentada a seguir.
 
-#### 4.6.1 Isolamento com Git worktrees
-
-As worktrees foram utilizadas como cópias de trabalho separadas, ligadas ao mesmo repositório Git. Cada uma disponibilizou arquivos próprios para receber uma edição e executar as verificações da tentativa. Esse arranjo permitiu manter diferentes trabalhos em andamento sem que uma correção substituísse diretamente o código utilizado por outra. A relação entre o repositório de referência e as cópias é representada na Figura 2.
-
-```mermaid
-flowchart TD
-    R[Repositório do Juice Shop na revisão fixada] --> W1[wt-1]
-    R --> W2[wt-2]
-    R --> W3[wt-3]
-    R --> W4[wt-4]
-    W1 --> A[Arquivos e verificações separados por tentativa]
-    W2 --> A
-    W3 --> A
-    W4 --> A
+```text
+Juice Shop na versão fixada
+→ Análise SAST inicial com o Semgrep e formação do catálogo de casos
+→ Para cada caso, nas estratégias P1, P2, P3 e P4, em sequência:
+    → Reserva de uma worktree
+    → Montagem e registro do prompt
+    → Geração da correção pelo modelo de linguagem
+    → Aplicação da correção na worktree
+    → Execução dos testes relacionados ao arquivo alterado (F)
+    → Nova análise com o Semgrep e comparação dos alertas (R e M)
+    → Registro da tentativa e restauração da worktree
+    → Encerramento do caso quando a correção atende à regra de parada
+→ Consolidação das métricas
+→ Avaliação conjunta das correções aceitas (RRIS)
 ```
 
-**Figura 2 — Cópias de trabalho utilizadas pelo pipeline.** Cada tentativa utiliza uma cópia reservada, que é restaurada antes de ser disponibilizada novamente. A figura representa o isolamento dos arquivos, e não máquinas ou redes independentes.
+Os casos foram processados em paralelo, em até quatro ao mesmo tempo, um em cada _worktree_. Dentro de um mesmo caso, as estratégias foram executadas em sequência, e a estratégia seguinte só foi utilizada quando a anterior não produziu uma correção que atendesse à regra de parada, conforme a Figura 2, apresentada na Seção 3.9.
 
-Fonte: preparação do ambiente e gerenciamento das worktrees.
+### 4.3 Estrutura do projeto
 
-A preparação partiu da mesma revisão fixada do Juice Shop. No ambiente Docker, as worktrees receberam as dependências e os arquivos preparados da referência da imagem, com conferência do conteúdo copiado. As campanhas finais utilizaram quatro cópias de execução. O projeto também disponibilizou uma rotina de preparação fora do Docker, distinguindo essa possibilidade do procedimento efetivamente adotado no recorte principal.
+A implementação está disponível em repositório público no GitHub, em [caiolamego/tcc2-llm-sast-juiceshop](https://github.com/caiolamego/tcc2-llm-sast-juiceshop). A estrutura principal do projeto foi organizada da seguinte forma:
 
-Esse isolamento se refere aos arquivos utilizados por cada tentativa e não cria, por si só, uma máquina independente. Portas e outros recursos locais ainda precisaram ser coordenados. A execução de testes que compartilham recursos recebeu controle próprio para evitar interferência. Essa distinção é importante para compreender por que disponibilizar quatro worktrees não significa executar todas as etapas de quatro tentativas simultaneamente.
+```text
+tcc2-llm-sast-juiceshop/
+  src/pipeline/
+    etapas/
+      e01_analise_sast/
+      e02_catalogo/
+      e03_contexto_rag/
+      e04_prompt/
+      e05_geracao_llm/
+      e06_aplicacao/
+      e07_validacao/
+      e08_registro/
+      e09_metricas/
+    orquestracao/
+    painel/
+  config/
+  rules/
+  knowledge_base/
+  tests/
+  scripts/
+  docker/
+  outputs/
+  workspace/
+  executar.py
+  painel.py
+  Dockerfile
+  compose.yaml
+```
 
-#### 4.6.2 Gerenciamento das worktrees
+O diretório `src/pipeline/etapas/` contém as etapas do _pipeline_, numeradas na ordem do fluxo. A etapa `e01_analise_sast` executa o Semgrep, interpreta o relatório e compara os alertas antes e depois da correção. A `e02_catalogo` carrega e confere o catálogo de casos. A `e03_contexto_rag` recupera o documento da base de conhecimento. A `e04_prompt` monta os _prompts_ de cada estratégia. A `e05_geracao_llm` realiza a comunicação com os modelos de linguagem. A `e06_aplicacao` gerencia as _worktrees_ e aplica as edições propostas. A `e07_validacao` seleciona e executa os testes. A `e08_registro` grava o resultado de cada tentativa, e a `e09_metricas` calcula as métricas a partir desses registros.
 
-O gerenciamento manteve um conjunto de worktrees disponíveis e entregou uma delas ao trabalho que precisava aplicar e avaliar uma proposta. Antes do uso, foram verificadas a existência da cópia, a revisão do alvo e as dependências necessárias. A reserva retirou temporariamente a worktree do conjunto disponível, evitando que outra tentativa utilizasse os mesmos arquivos enquanto a avaliação estava em andamento.
+O diretório `orquestracao/` contém a rotina que conduz a execução, ligando as etapas para cada caso e estratégia, e a verificação inicial das entradas. O diretório `painel/` contém a interface web de acompanhamento, apresentada na Seção 4.6.
 
-O ciclo de uso incluiu restauração antes da entrega e após a conclusão, com a devolução da cópia ao conjunto disponível. A rotina de encerramento também foi prevista para situações de erro, reduzindo a possibilidade de uma alteração incompleta alcançar a tentativa seguinte. Essa restauração permitiu manter o ponto de partida do experimento mesmo quando a proposta não era aplicável ou a avaliação falhava.
+O diretório `config/` reúne as configurações do experimento, como o perfil de regras do Semgrep, o mapa entre arquivos e grupos de testes, a lista do conjunto D, o roteiro de raciocínio guiado e as configurações de cada execução. O diretório `rules/` contém as regras locais do Semgrep e os seus arquivos de exemplo. O diretório `knowledge_base/` contém os 14 documentos do RAG simplificado, o índice e o manifesto com os _hashes_.
 
-Além da reserva de cada cópia, o sistema impediu que processos diferentes utilizassem o mesmo conjunto de worktrees ao mesmo tempo. A limpeza recuperou arquivos rastreados e removeu arquivos novos não ignorados, preservando explicitamente as dependências instaladas. Ela não foi tratada como remoção de todo conteúdo local: a preparação e as verificações do ambiente permaneceram necessárias para conferir os elementos mantidos entre as tentativas.
+O diretório `tests/` contém dois tipos de teste. Os testes unitários verificam o funcionamento do próprio _pipeline_, como a montagem dos _prompts_, a aplicação das edições e o cálculo das métricas, sem chamar os modelos de linguagem. Os testes adicionais do Juice Shop, descritos na Seção 4.2.3, ficam separados em uma pasta própria. O diretório `scripts/` reúne rotinas auxiliares, como a preparação do Juice Shop, a geração do catálogo e do _baseline_ dos testes, a avaliação conjunta da RRIS e a geração de relatórios. O diretório `docker/` contém as rotinas de preparação das _worktrees_ dentro do contêiner e a referência da imagem utilizada.
 
-#### 4.6.3 Aplicação das edições
+O diretório `outputs/` armazena os arquivos produzidos em cada execução, organizados conforme descrito na próxima seção. O diretório `workspace/` contém o repositório do Juice Shop e as quatro _worktrees_. Ele não faz parte do controle de versões do projeto, pois é preparado a partir da versão fixada do Juice Shop. Por fim, o arquivo `executar.py` inicia a execução pelo terminal, o arquivo `painel.py` inicia a interface web, e os arquivos `Dockerfile` e `compose.yaml` definem, respectivamente, a construção da imagem e a forma como o contêiner é executado.
 
-Antes de modificar o código, o aplicador verificou se o caminho informado estava dentro da cópia de trabalho e se o arquivo existia. Também restringiu alterações em elementos protegidos, como os testes do alvo e arquivos centrais de dependências. As edições foram verificadas e organizadas antes da gravação. Isso permitiu registrar uma proposta fora do escopo ou incompleta sem tratá-la como correção aplicada.
+### 4.4 Fluxo de execução e armazenamento dos resultados
 
-A substituição utilizou o trecho original da resposta como ponto de referência, denominado âncora. Uma correspondência única permitiu localizar a alteração; trechos ausentes ou repetidos podiam tornar a aplicação inviável. Para diferenças limitadas de indentação em JavaScript e TypeScript, foi incorporado um tratamento conservador. A solução buscou acomodar esse problema de formatação, sem interpretar livremente a intenção do modelo ou escolher arbitrariamente entre posições ambíguas.
+Esta seção descreve o caminho percorrido por uma tentativa de correção, desde a reserva de uma _worktree_ até o registro do resultado, e os arquivos gravados em cada etapa.
 
-No caso ilustrativo, a edição substituiu a consulta com $where por um filtro direto no campo orderId. Após a gravação, foram preservados o arquivo corrigido e o patch, isto é, o registro das diferenças entre as versões. O excerto abaixo reproduz as linhas alteradas e permite acompanhar a proposta. A aplicação bem-sucedida apenas habilitou sua avaliação; ela não demonstrou, isoladamente, segurança ou equivalência funcional.
+**Reserva da _worktree_.** As quatro _worktrees_ formam um conjunto de cópias disponíveis. Quando um caso começa a ser processado, ele recebe uma _worktree_ livre, que fica reservada até o fim da tentativa e não pode ser utilizada por outro caso nesse intervalo. Antes de ser entregue, a _worktree_ é restaurada para a versão fixada do Juice Shop: os arquivos alterados voltam ao conteúdo original e os arquivos criados são removidos, preservando apenas as dependências instaladas. O _pipeline_ também impede que duas execuções diferentes utilizem o mesmo conjunto de _worktrees_ ao mesmo tempo. Com isso, cada tentativa parte sempre do código original, mesmo que a tentativa anterior naquela cópia tenha sido interrompida por um erro.
+
+**Montagem do _prompt_ e chamada ao modelo.** O _prompt_ é montado conforme a estratégia, a partir do código lido na _worktree_, e gravado em arquivo. Em seguida, é enviado ao modelo, e a resposta recebida também é gravada, junto com as informações da chamada descritas na Seção 4.2.6.
+
+**Aplicação da correção.** Antes de alterar qualquer arquivo, o _pipeline_ confere cada edição proposta. O arquivo indicado precisa existir dentro da _worktree_. Em seguida, o trecho original de cada edição é procurado no arquivo. Esse trecho funciona como uma âncora, isto é, uma referência que indica o local exato da alteração. Quando a âncora aparece exatamente uma vez no arquivo, ela é substituída pelo trecho corrigido. Quando não aparece ou aparece mais de uma vez, a tentativa é registrada como não aplicada, pois não é possível saber com segurança onde a alteração deveria ser feita. Essa exigência é uma limitação do _pipeline_, pois uma correção adequada pode deixar de ser avaliada apenas porque o modelo copiou o trecho original de forma imprecisa. Na população principal das campanhas finais, isso ocorreu em 20 das 685 tentativas: 15 do GPT-4.1 mini, em sete casos, quatro do GPT-5.6 Luna, em três casos, e uma do GPT-6 Luna.
+
+Durante o desenvolvimento, observou-se que, em alguns casos, os modelos copiavam o trecho original com uma quantidade diferente de espaços no início das linhas, o que impedia a correspondência exata. Para os arquivos JavaScript e TypeScript, foi implementado um tratamento para essa situação. Se a âncora, com duas ou mais linhas, não é encontrada exatamente, o _pipeline_ procura no arquivo um bloco com o mesmo conteúdo, linha por linha, que difira apenas por um recuo uniforme, ou seja, a mesma quantidade de espaços a mais ou a menos em todas as linhas. Nomes, aspas, operadores e qualquer outro conteúdo precisam ser idênticos. Se existir exatamente um bloco nessas condições, a substituição é feita nesse bloco, e o trecho corrigido recebe o mesmo ajuste de recuo para ficar alinhado ao código ao redor. Antes de aceitar a correspondência, o _pipeline_ também confirma, por meio do compilador do TypeScript instalado no próprio Juice Shop, que o bloco encontrado e o trecho enviado pelo modelo possuem os mesmos elementos de código. O compilador monta a estrutura sintática de cada trecho e separa os seus elementos básicos, como nomes, operadores e sinais de pontuação, que precisam aparecer na mesma ordem nos dois trechos. Se nenhum bloco ou mais de um bloco atender a essas condições, a tentativa continua registrada como não aplicada.
+
+As edições de uma mesma resposta são todas conferidas antes que qualquer arquivo seja gravado. Se uma delas falhar, nenhuma alteração é feita. Dessa forma, a _worktree_ nunca fica com uma correção aplicada pela metade. Quando a aplicação é concluída, são gravados o arquivo corrigido e o _patch_, que é o registro das diferenças entre o código original e o código alterado.
+
+**Validação funcional.** Com a correção aplicada, são executados a compilação e os grupos de testes ligados aos arquivos alterados, conforme a Seção 4.2.3. Os testes adicionais desses grupos são copiados para a _worktree_ apenas durante a execução. As compilações e os testes de interface de casos diferentes podem ser executados ao mesmo tempo. Os grupos de testes de API, por outro lado, foram executados um de cada vez, porque alguns desses testes utilizam recursos de rede do computador que não podem ser compartilhados por duas execuções simultâneas. O resultado de cada grupo, com os testes executados, as falhas e o tempo, é gravado em arquivo e define o valor de F.
+
+**Nova análise estática.** Em seguida, o Semgrep analisa novamente o projeto na _worktree_, com o mesmo perfil de regras da análise inicial. O relatório resultante é comparado ao relatório inicial para definir R e M. A comparação precisa reconhecer um mesmo alerta mesmo quando a correção desloca as linhas do arquivo. Para isso, o comparador procura primeiro alertas da mesma regra, no mesmo arquivo e na mesma posição. Quando a posição muda, compara o código ao redor de cada alerta para identificar a correspondência. Se ainda assim não for possível relacionar os alertas, considera a quantidade de alertas da mesma regra no mesmo arquivo: se a quantidade não diminuiu, o alerta original é considerado presente, e se aumentou, considera-se que um alerta novo apareceu. As situações em que nenhuma dessas verificações permite uma conclusão segura são registradas como indeterminadas e não são contadas como correções aceitas. O relatório da nova análise e o resultado da comparação são gravados em arquivo.
+
+**Registro e restauração.** Por fim, o resultado da tentativa é acrescentado ao arquivo consolidado da execução, que reúne em uma linha por tentativa o caso, a estratégia, o modelo, os valores de R, F e M, a classificação final, os tempos, os _tokens_, o custo e os caminhos de todos os arquivos produzidos. A _worktree_ é então restaurada e devolvida ao conjunto de cópias disponíveis. Se a correção atendeu à regra de parada, o caso é encerrado. Caso contrário, o mesmo caso é submetido à próxima estratégia.
+
+Os arquivos de cada tentativa são nomeados com o identificador descrito na Seção 3.12 e ilustrado na Figura 3. Durante as campanhas, quando a regra do Semgrep não informava uma categoria do OWASP, o campo correspondente desse identificador recebia o valor `SEMOWASP`. Na versão final dos artefatos, esse valor foi substituído pela categoria da classificação complementar descrita na mesma seção. O identificador da execução indica o tipo de execução, a data e a hora de início e um código aleatório que diferencia execuções iniciadas no mesmo momento. Os arquivos de uma execução ficam reunidos em uma pasta própria, com a seguinte estrutura:
+
+```text
+outputs/campanha_docker/<EXECUCAO>/
+  contrato_execucao.json
+  sast_antes/
+  prompts/
+  respostas_llm/
+  patches/
+  codigos_corrigidos/
+  testes/
+  sast_depois/
+  comparacoes/
+  resultados_consolidados/
+```
+
+O arquivo `contrato_execucao.json` registra as condições da execução, como os modelos e parâmetros utilizados, a versão do Juice Shop, as estratégias, a lista de casos e os _hashes_ do catálogo, do perfil de regras, da base de conhecimento, dos testes e do próprio código do _pipeline_. As pastas `sast_antes/` e `sast_depois/` guardam os relatórios do Semgrep antes e depois das correções. As pastas `prompts/` e `respostas_llm/` guardam o conteúdo enviado e recebido em cada tentativa. As pastas `patches/` e `codigos_corrigidos/` guardam as alterações aplicadas, `testes/` guarda os resultados da validação funcional e `comparacoes/` guarda o resultado da comparação dos alertas. A pasta `resultados_consolidados/` contém o arquivo consolidado com uma linha por tentativa. A versão final dos artefatos, com a classificação complementar nos nomes, foi reunida na pasta `outputs/resultados_finais/`, que contém uma cópia dessa estrutura para cada campanha e mapas que relacionam os nomes originais aos atuais. As métricas calculadas a partir desses registros são gravadas em uma pasta separada, descrita na Seção 4.5.
+
+No caso utilizado como exemplo, as estratégias P1 e P2 produziram correções que foram aplicadas e não quebraram os testes, mas o Semgrep continuou apontando o alerta na mesma linha. Por isso, o caso foi submetido à estratégia P3. A correção proposta pelo GPT-4.1 mini nessa estratégia foi aplicada por correspondência exata da âncora e gerou o _patch_ a seguir.
 
 ```diff
--    db.ordersCollection.find({ $where: `this.orderId === '${id}'` }).then((order: any) => {
-+    db.ordersCollection.find({ orderId: id }).then((order: any) => {
+     if (!file.includes('/')) {
+-      res.sendFile(path.resolve('encryptionkeys/', file))
++      res.sendFile(file, { root: path.resolve('encryptionkeys/') })
+     } else {
 ```
 
-**Excerto do patch do caso ilustrativo.** Fonte: alteração registrada na campanha com GPT-4.1 mini. O patch completo e o código corrigido permanecem associados à tentativa.
+O código alterado foi compilado e aprovado nos testes do grupo de entrega de arquivos. Na nova análise, o alerta original deixou de ser apontado e nenhum alerta novo apareceu. Com R, F e M iguais a 1, a correção atendeu à regra de parada e o caso foi encerrado, sem a execução da estratégia P4. Os arquivos dessa tentativa receberam o identificador `AMP95adf572d3c6677f_A06_PATHTRAV_P3_AMP_REAL_20261106T151004Z_f49ac0d2`, no qual `A06` é a categoria do OWASP Top 10:2025 associada à regra e `PATHTRAV` é a sigla do tipo de vulnerabilidade.
 
-### 4.7 Implementação da validação
+### 4.5 Métricas de avaliação
 
-A validação reuniu a reanálise de segurança e os testes para produzir os valores de R, F e M definidos no Capítulo 3. O componente de medição recebeu o código alterado e as referências da campanha, executou as verificações previstas e reuniu os resultados. Essa separação permitiu registrar aprovação, reprovação e ausência de conclusão, incluindo os motivos de interrupção e os limites da evidência disponível.
+As métricas utilizadas seguem a definição apresentada na Seção 3.11. Nesta etapa, elas foram calculadas a partir dos registros gerados pelo _pipeline_, para classificar cada tentativa de correção e consolidar o desempenho das estratégias de _prompt_ e dos modelos.
 
-O comparador SAST procurou acompanhar as ocorrências entre o código original e o alterado. Para isso, considerou correspondências de posição e contexto e, quando necessário, a quantidade de alertas da mesma regra no mesmo arquivo. Essa solução enfrentou a dificuldade de alterações que deslocam linhas sem remover o problema. As situações que não podiam ser resolvidas com segurança permaneceram inconclusivas, conforme os limites metodológicos já apresentados.
+O cálculo das métricas foi implementado em uma rotina separada, que lê o arquivo consolidado e os arquivos de cada tentativa e gera as métricas em formato JSON e CSV. Essa rotina permite que as métricas possam ser recalculadas a qualquer momento a partir dos registros da execução. As métricas são geradas de forma geral e agrupadas por estratégia de _prompt_, por caso, por CWE, por categoria do OWASP Top 10, por severidade, por regra do Semgrep e por documento da base de conhecimento, o que permite responder às perguntas de pesquisa sobre estratégias, modelos e tipos de vulnerabilidade.
 
-A verificação funcional utilizou uma referência dos testes e um mapa que relaciona arquivos alterados a grupos de verificações. Quando a proposta modificou mais de um arquivo, foram reunidos os grupos correspondentes, sem repetir desnecessariamente o mesmo grupo. A rotina também conferiu a compatibilidade da referência com as condições da execução. Assim, a seleção dos testes foi um procedimento explícito e registrado.
+A RRIS foi calculada por uma rotina própria, pois depende da aplicação conjunta das correções. Para cada modelo, essa rotina reserva uma _worktree_ restaurada, executa o Semgrep sobre o projeto original e aplica, em sequência, os _patches_ do primeiro aceite de cada caso na análise principal, na ordem em que as tentativas começaram. Quando um _patch_ não pode ser aplicado sobre os anteriores, porque altera linhas já modificadas por outra correção, ele é registrado como conflito e deixado de fora. Em seguida, o projeto com as correções reunidas é analisado novamente pelo Semgrep e submetido aos testes.
 
-As verificações incluíram compilação e execução dos grupos selecionados, com preparação das condições locais e limites de tempo. Falhas de execução, testes ausentes ou relatórios insuficientes foram tratados separadamente de uma asserção funcional reprovada. Quando surgiram falhas novas, houve reexecução para identificar sua persistência. Esses controles permitiram evitar que uma verificação incompleta fosse interpretada automaticamente como aprovação.
+### 4.6 Execução do _pipeline_
 
-As falhas registradas foram classificadas automaticamente segundo o conjunto D, preservando as três interpretações de F. O processamento aplicou os critérios para distinguir falhas novas associadas à manutenção da vulnerabilidade daquelas consideradas problemas funcionais. Os valores foram armazenados juntos, permitindo a análise posterior de sensibilidade sem perder o resultado da avaliação mais estrita. A classificação principal e a regra de parada utilizaram esses valores de formas distintas, descritas na seção de coordenação.
+A execução do _pipeline_ é iniciada por um arquivo de configuração, que define a lista de casos, as estratégias de _prompt_, o modelo, a quantidade de _worktrees_ utilizadas e o modo de execução. Com o ambiente Docker preparado, a execução de um modelo é iniciada pelo terminal com um comando como o apresentado a seguir.
 
-Entre os testes adicionais, o conjunto de CAPTCHA aritmético verificou a geração da expressão, o resultado calculado, sua persistência e o uso na submissão de feedback. Por exemplo, o teste associado a 2+3*4 conferiu o resultado 14, além da rejeição de uma resposta incorreta e da aceitação da resposta esperada. Esse tipo de verificação apoiou a preservação de comportamentos legítimos quando a lógica interna era modificada. Sua existência não foi tomada como cobertura completa da funcionalidade ou prova de ausência de vulnerabilidades.
+```text
+docker compose run --rm tcc .venv/bin/python executar.py \
+  --config config/execucao_docker_78.yaml --modelo gpt-4.1-mini --modo real
+```
 
-### 4.8 Orquestração e execução das campanhas
+Foram implementados três modos de execução. O modo de verificação inicial, chamado de _preflight_ na Seção 3.9, confere as entradas, como o catálogo, o perfil de regras, a base de conhecimento, o _baseline_ dos testes e as _worktrees_, repete a análise inicial do Semgrep para confirmar que ela reproduz o catálogo e monta os _prompts_, sem chamar os modelos. O modo de simulação percorre todo o fluxo com respostas simuladas, sem custo com a API, e foi utilizado para testar o _pipeline_ durante o desenvolvimento. O modo real executa o fluxo completo com chamadas aos modelos de linguagem e foi o utilizado nas campanhas finais. Os resultados de cada modo são gravados em pastas separadas, o que impede que dados de verificação ou de simulação sejam confundidos com os das campanhas finais.
 
-O coordenador conectou as etapas e organizou o processamento dos casos. Antes da geração, a verificação inicial conferiu as entradas e reuniu as condições no contrato de execução. O mesmo contrato foi utilizado para comparar uma eventual retomada com a configuração original. Dessa forma, o controle da campanha permaneceu separado das tarefas específicas de geração, aplicação e validação.
+No início da execução, o contrato de execução é gravado com as condições descritas na Seção 4.4. Ele também permite retomar uma execução interrompida, por exemplo por uma queda de energia. Ao ser iniciada novamente com o mesmo identificador, a execução reaproveita as tentativas já registradas e continua a partir do ponto em que parou.
 
-Os casos foram distribuídos entre trabalhos de execução que utilizaram as worktrees disponíveis. Dentro de cada caso, as estratégias seguiram em sequência, enquanto casos distintos puderam avançar de forma concorrente. O acesso a recursos compartilhados, como chamadas ao provedor e determinados testes, recebeu coordenação adicional. Por isso, o paralelismo foi definido no nível dos casos, sem pressupor simultaneidade de todas as operações internas.
-
-A decisão de interromper as estratégias foi implementada a partir do aceite sem separação das falhas do conjunto D. A classificação principal da tentativa, por sua vez, considerou F por critérios. Essa diferença permitiu que a execução produzisse registros posteriores a um aceite da definição principal, posteriormente identificados na consolidação. Na retomada, o coordenador consultou os registros existentes e a regra de parada para decidir o que ainda precisava executar.
-
-A execução por terminal foi disponibilizada por um lançador que reuniu as configurações e preparou os comandos do coordenador e da consolidação. Foram distinguidos três modos: verificação inicial, que confere as entradas e prepara os prompts; simulação, que utiliza geração simulada; e execução real, que realiza chamadas ao modelo. A escolha desses modos permaneceu explícita, evitando interpretar dados de preparação ou simulação como respostas reais de uma campanha.
-
-O painel web local ofereceu a seleção do modelo e do modo, o início e a parada cooperativa, além do acompanhamento dos logs, das tentativas e dos tempos registrados. Sua interface foi implementada em HTML, CSS e JavaScript, atendida por um servidor Python restrito ao computador local. O painel utilizou os mesmos comandos e critérios do lançador por terminal. O pedido de parada aguardou o encerramento da atividade em curso, em vez de forçar a interrupção imediata. [PENDENTE: inserir uma ou duas capturas reais do painel, identificando a configuração e as informações de acompanhamento exibidas.]
-
-### 4.9 Registro, métricas e reprodução
-
-Os arquivos foram organizados por execução e vinculados aos identificadores das tentativas. Essa estrutura permitiu acompanhar o caso ilustrativo desde o prompt e a resposta até o patch, a comparação dos alertas e os testes. O registro consolidado reuniu os caminhos desses arquivos e as classificações correspondentes. A Tabela 3 resume os principais grupos de informações preservados, sem reproduzir toda a árvore de resultados.
-
-**Tabela 3 — Informações preservadas por execução**
-
-| Grupo | Conteúdo |
-|---|---|
-| Entradas e contrato | Condições e referências utilizadas na campanha. |
-| Prompts e respostas | Conteúdo enviado e recebido em cada tentativa. |
-| Patches e código corrigido | Alteração aplicada e arquivos produzidos. |
-| Comparações e testes | Evidências da avaliação estática e funcional. |
-| Registros e sessões | Identificação, classificações e informações operacionais. |
-| Métricas | Dados consolidados e tabelas de análise. |
-
-Fonte: arquivos de resultados e rotinas de registro do pipeline.
-
-O contrato de execução e as verificações de integridade identificaram os componentes utilizados, incluindo catálogo, regras, base documental e referência dos testes. A retomada exigiu correspondência com essas condições. Os registros de sessão também preservaram o contexto operacional da campanha, enquanto cada tentativa foi acrescentada ao arquivo consolidado. Esses recursos apoiaram a conferência da origem dos dados sem depender apenas da descrição textual do experimento.
-
-A consolidação leu os registros e os artefatos associados para produzir métricas em JSON e tabelas CSV. O processamento distinguiu a população principal, os registros posteriores ao primeiro aceite e as condições de simulação ou diagnóstico. Também manteve as medições ausentes e as interpretações alternativas de F. As fórmulas e os denominadores foram definidos no capítulo metodológico; a implementação organizou os dados para aplicar essas definições de forma verificável.
-
-A avaliação conjunta da RRIS foi implementada em uma rotina separada, que selecionou patches aceitos individualmente e tentou aplicá-los em sequência sobre uma cópia limpa. Alterações incompatíveis foram registradas, sem substituir silenciosamente a seleção original. O conjunto resultante recebeu reanálise estática e avaliação funcional. Seus arquivos e condições foram preservados para distinguir redução conjunta dos alertas e funcionamento das alterações integradas, cuja interpretação será apresentada no Capítulo 5.
-
-A organização também permite repetir o procedimento em outra máquina compatível mediante a imagem Docker exportada, a revisão do repositório, as configurações e o baseline correspondentes. Foram disponibilizadas rotinas para salvar e carregar a imagem, acompanhadas de verificações da referência utilizada. Essa possibilidade de replicação não exige reconstruir todas as dependências a cada transferência, mas também não implica obter respostas idênticas dos modelos nem comprova que uma execução independente já tenha sido realizada.
+Além do terminal, foi desenvolvido um painel web para acompanhar as execuções. O painel é uma página aberta no navegador do próprio computador, acessível apenas localmente. Nele, é possível escolher o modelo e o modo de execução, iniciar e interromper uma execução e acompanhar o seu andamento. São exibidas todas as informações relevantes do processamento. O painel utiliza o mesmo arquivo de configuração e os mesmos comandos da execução pelo terminal, de forma que os dois caminhos produzem resultados equivalentes. Quando uma interrupção é solicitada, o painel aguarda a conclusão das tentativas em andamento antes de encerrar a execução, evitando que uma correção fique aplicada pela metade ou que uma tentativa seja registrada de forma incompleta. [PENDENTE: inserir uma ou duas capturas de tela do painel, mostrando a seleção do modelo e o acompanhamento de uma execução.]

@@ -235,3 +235,14 @@ O autor informou que não houve inspeção manual dos patches: a avaliação uti
 ## Declaração de uso de IA — 10/11/2026
 
 PE04 resolvida mediante confirmação do autor: Codex e Claude Code apoiaram a escrita de código e testes, com revisão humana, e a revisão gramatical dos textos. Atualizada a Seção 3.11, preservando a distinção entre revisão do desenvolvimento e avaliação automatizada dos patches das campanhas. Ver [confirmação e limites](uso-ia-2026-11-10.md). Não foi declarada validação integral de conteúdo ou código.
+
+## Ordem entre testes e reanálise SAST na Seção 3.9 — 12/11/2026
+
+Corrigida a pedido do Caio. A lista de etapas trazia a reanálise SAST (etapa 10) antes da compilação e dos testes
+(etapa 11), e o parágrafo após a Figura 2 afirmava que a reanálise foi executada antes dos testes. Nas três campanhas
+finais (`politica_validacao: relacionada_v2` nos contratos), a ordem foi compilação, grupos de testes e só depois o
+Semgrep: `src/pipeline/etapas/e07_validacao/execucao_cobertura.py`, função `validar`, chama o `callback` do SAST depois
+do laço dos grupos (experimento em `2e8f9a9`). A Figura 2 já mostrava essa ordem. As etapas 10 e 11 foram trocadas e o
+parágrafo passou a dizer que a reanálise veio depois das verificações de compilação e dos testes, como na figura.
+Nenhuma outra parte do capítulo foi alterada. SHA-256 do capítulo após a correção:
+`cc8753e396122cb8f957b67a43dc65567cfc9fae16c1dc42f0e621d141288b3b`.
