@@ -1,0 +1,319 @@
+\chapter[Implementação]{Implementação}
+\label{cap:implementacao}
+
+% Remissão ao Capítulo 5 escrita por extenso: trocar por \ref quando o capítulo estiver no Overleaf.
+Este capítulo apresenta a implementação do \textit{pipeline} utilizado para executar o experimento descrito no Capítulo~\ref{cap:metodologia}. São descritos os principais passos da sua elaboração, a estrutura do projeto, a organização dos arquivos produzidos e a forma de execução do \textit{pipeline}. Os resultados obtidos são apresentados e discutidos no Capítulo 5.
+
+Para facilitar o acompanhamento, o capítulo utiliza um caso real como exemplo ao longo das seções: um alerta de \textit{path traversal} no arquivo \texttt{routes/keyServer.ts} do OWASP Juice Shop, processado pelo modelo GPT-4.1 mini em uma das campanhas finais do experimento.
+
+\section{Visão geral}
+\label{sec:impl-visao}
+
+O fluxo do \textit{pipeline} foi apresentado na Seção~\ref{sec:met-pipeline} e representado na Figura~\ref{fig:pipeline}. Esta seção descreve como esse fluxo foi organizado na implementação.
+
+Diferentemente de um conjunto pequeno de casos criados especificamente para um experimento, o Juice Shop é uma aplicação completa, com servidor em Node.js e Express, interface em Angular, banco de dados, dependências externas e uma suíte de testes própria. Essa característica exigiu soluções específicas de implementação, como a preparação de um ambiente padronizado, o isolamento das alterações de cada tentativa, a aplicação de edições em arquivos extensos e a seleção dos testes relacionados ao código modificado. Essas soluções são apresentadas ao longo deste capítulo.
+
+A solução foi organizada no estilo arquitetural conhecido como dutos e filtros (\textit{pipes and filters}). Nesse estilo, cada etapa do processamento, chamada de filtro, executa uma única responsabilidade: ela lê arquivos de entrada e grava arquivos de saída, que passam a ser a entrada da etapa seguinte. Os arquivos que ligam uma etapa à outra são os dutos. Essa organização permitiu desenvolver e verificar cada etapa separadamente e deixou registrado em arquivo tudo o que foi produzido em cada tentativa. A Figura~\ref{fig:impl-etapas} apresenta as etapas principais e a forma como se conectam.
+
+% Figura gerada a partir de figuras/etapas-pipeline.mmd (Mermaid). Enquanto o PNG não existir, aparece um quadro no lugar.
+\begin{figure}[H]
+    \centering
+    \IfFileExists{figuras/etapas-pipeline.png}{%
+    \includegraphics[
+        width=0.95\textwidth,
+        height=0.55\textheight,
+        keepaspectratio
+    ]{figuras/etapas-pipeline.png}%
+    }{\fbox{\parbox{0.9\textwidth}{\centering\vspace{1cm}Inserir \texttt{figuras/etapas-pipeline.png}\vspace{1cm}}}}
+
+    \caption{Etapas principais do \textit{pipeline} e suas conexões.}
+    \label{fig:impl-etapas}
+
+    \vspace{0.2cm}
+    \begin{minipage}{0.95\textwidth}
+        \footnotesize
+        Fonte: elaboração dos autores.
+    \end{minipage}
+\end{figure}
+
+Na figura, a seta tracejada representa a sequência de estratégias de \textit{prompt}. Quando a correção produzida por uma estratégia não atende à regra de parada descrita na Seção~\ref{sec:met-pipeline}, que exige R, F e M iguais a 1, o mesmo caso é submetido à estratégia seguinte, até que uma correção atenda a essa regra ou que as quatro estratégias sejam utilizadas.
+
+\section{Elaboração do \textit{pipeline}}
+\label{sec:impl-elaboracao}
+
+A elaboração do \textit{pipeline} foi organizada em sete partes: a preparação do ambiente experimental, a identificação das vulnerabilidades com o Semgrep, a definição dos testes automatizados utilizados na validação, a construção das estratégias de \textit{prompt}, a montagem da base de conhecimento do RAG simplificado, a integração com os modelos de linguagem e a definição do fluxo experimental.
+
+\subsection{Preparação do ambiente experimental}
+\label{sec:impl-ambiente}
+
+Para que todas as execuções utilizassem exatamente as mesmas ferramentas e versões, o ambiente foi empacotado com o Docker. Assim, a execução não depende das versões instaladas na máquina de cada pesquisador, e qualquer computador com o Docker executa o \textit{pipeline} nas mesmas condições.
+
+A imagem construída para este trabalho reúne o Node.js 24.14.0, o Python 3.11, o Semgrep 1.177.0 e uma cópia do OWASP Juice Shop na versão v20.1.1, já com as dependências instaladas e o código compilado. O Juice Shop foi obtido do \textit{fork} indicado na Tabela~\ref{tab:condicoes} e fixado em um \textit{commit} específico, identificado por \texttt{f915bddd8279}. Fixar o \textit{commit} garantiu que todas as tentativas partissem do mesmo código-fonte. O código do \textit{pipeline}, as configurações e os resultados não ficam dentro da imagem. A pasta do projeto é conectada ao contêiner durante a execução, e os arquivos produzidos permanecem no computador de quem executa.
+
+Cada tentativa de correção altera arquivos do Juice Shop. Se todas as tentativas utilizassem a mesma pasta, a alteração feita em uma poderia interferir na avaliação de outra, e cada tentativa precisaria terminar antes que a seguinte começasse. Para evitar esse problema, foram utilizadas as \textit{worktrees} do Git.
+
+Normalmente, um repositório Git possui uma única pasta de trabalho, onde ficam os arquivos que podem ser editados. O recurso de \textit{worktrees} permite criar pastas de trabalho adicionais, todas ligadas ao mesmo repositório. Cada \textit{worktree} contém a sua própria cópia dos arquivos em uma versão escolhida, enquanto o histórico do projeto continua armazenado uma única vez. Na prática, cada \textit{worktree} funciona como uma cópia separada do Juice Shop, na qual uma correção pode ser aplicada e testada sem afetar as demais.
+
+Neste trabalho, foram criadas quatro \textit{worktrees}, chamadas wt-1, wt-2, wt-3 e wt-4, todas na versão fixada do Juice Shop. Com elas, até quatro casos diferentes puderam ser processados ao mesmo tempo, cada um em sua própria cópia. A Figura~\ref{fig:impl-worktrees} representa essa organização.
+
+% Figura gerada a partir de figuras/worktrees.mmd (Mermaid). Enquanto o PNG não existir, aparece um quadro no lugar.
+\begin{figure}[H]
+    \centering
+    \IfFileExists{figuras/worktrees.png}{%
+    \includegraphics[
+        width=0.95\textwidth,
+        height=0.55\textheight,
+        keepaspectratio
+    ]{figuras/worktrees.png}%
+    }{\fbox{\parbox{0.9\textwidth}{\centering\vspace{1cm}Inserir \texttt{figuras/worktrees.png}\vspace{1cm}}}}
+
+    \caption{Cópias de trabalho do Juice Shop utilizadas pelo \textit{pipeline}.}
+    \label{fig:impl-worktrees}
+
+    \vspace{0.2cm}
+    \begin{minipage}{0.95\textwidth}
+        \footnotesize
+        Fonte: elaboração dos autores.
+    \end{minipage}
+\end{figure}
+
+As \textit{worktrees} não receberam uma instalação nova das dependências do Juice Shop. As bibliotecas da aplicação e os arquivos já compilados foram copiados da cópia de referência existente na imagem para cada \textit{worktree}. Para confirmar que cada cópia era idêntica à referência, foi calculado o \textit{hash} dos arquivos copiados e comparado com o \textit{hash} da referência.
+
+Durante o desenvolvimento, também foi mantida uma rotina que prepara o Juice Shop e as \textit{worktrees} diretamente no computador, sem o Docker. Essa rotina clona o repositório do Juice Shop, cria as quatro \textit{worktrees} na versão fixada e instala as dependências em cada uma. As campanhas finais do experimento utilizaram o ambiente Docker descrito nesta seção. A forma como as \textit{worktrees} são reservadas e restauradas durante a execução é detalhada na Seção~\ref{sec:impl-fluxo}.
+
+\subsection{Identificação das vulnerabilidades com o Semgrep}
+\label{sec:impl-semgrep}
+
+O ponto de partida do experimento foi a análise estática do Juice Shop com o Semgrep. Neste trabalho, cada execução dessa análise sobre o código é chamada de \textit{scan}. Em um \textit{scan}, o Semgrep percorre os arquivos do projeto, compara o código com um conjunto de regras e gera um relatório em formato JSON com os alertas encontrados. Cada alerta informa a regra acionada, o arquivo e a linha do código, uma mensagem explicativa e, quando disponíveis, a CWE, a categoria do OWASP Top 10 e a severidade.
+
+As regras e as configurações da análise foram reunidas em um perfil de regras. O perfil define quais regras são aplicadas, quais pastas ficam fora da análise e os limites de tempo do Semgrep. O perfil utilizado combina 1.074 regras do conjunto público \texttt{p/default}, mantido pelos desenvolvedores do Semgrep, com 28 regras locais, escritas pelos autores para padrões de vulnerabilidade presentes no Juice Shop que as regras públicas não identificavam, conforme a Seção~\ref{sec:met-sast}. As regras públicas foram copiadas para um arquivo e mantidas fixas no perfil, de forma que uma atualização do Semgrep não alterasse o conjunto de regras durante o experimento.
+
+Antes de cada \textit{scan}, o \textit{pipeline} confere o perfil. São comparados os \textit{hashes} dos arquivos de regras e da lista de exclusões com os valores registrados, e a versão do Semgrep é verificada. Caso algum desses elementos tenha sido alterado, a execução é interrompida. Esse cuidado garante que a análise feita antes da correção e a análise feita depois dela utilizam exatamente as mesmas regras.
+
+O \textit{scan} inicial deu origem ao catálogo de casos, que é a lista de alertas submetidos ao \textit{pipeline}. Cada caso corresponde a um alerta em uma posição específica do código e reúne as informações descritas na Seção~\ref{sec:met-selecao}. O catálogo final contém 78 casos.
+
+O identificador de cada caso é formado pelo prefixo AMP seguido de 16 caracteres calculados a partir do \textit{hash} da regra, do arquivo e da posição do alerta. Dessa forma, dois alertas da mesma regra em linhas diferentes de um mesmo arquivo recebem identificadores distintos, e um mesmo alerta mantém sempre o mesmo identificador.
+
+No caso utilizado como exemplo, o Semgrep apontou a linha 14 do arquivo \texttt{routes/keyServer.ts} com a regra \texttt{express-res-sendfile}, do conjunto público, associada à CWE-73. O código não garante que o caminho final permaneça dentro da pasta prevista, o que caracteriza uma vulnerabilidade de \textit{path traversal}, na qual um atacante manipula o caminho para ler arquivos fora do local permitido. O caso recebeu o identificador \texttt{AMP95adf572d3c6677f}. O trecho apontado é apresentado a seguir.
+
+{\footnotesize
+\begin{verbatim}
+if (!file.includes('/')) {
+  res.sendFile(path.resolve('encryptionkeys/', file))
+} else {
+  res.status(403)
+  next(new Error('File names cannot contain forward slashes!'))
+}
+\end{verbatim}
+}
+
+\subsection{Testes automatizados utilizados na validação}
+\label{sec:impl-testes}
+
+A verificação funcional das correções utilizou a suíte de testes do próprio Juice Shop. Essa suíte possui três tipos de teste. Os testes unitários do servidor verificam funções isoladas da aplicação. Os testes de API enviam requisições HTTP à aplicação, carregada em memória durante o teste, e conferem as respostas, como o código de status e o conteúdo retornado. Os testes de interface verificam os componentes Angular em um navegador simulado. Os dois primeiros tipos utilizam o executor de testes do próprio Node.js, e o terceiro utiliza a ferramenta Vitest. Além dos testes, a validação inclui a compilação do código, realizada pelo compilador do TypeScript para o servidor e pela ferramenta de compilação do Angular quando a interface é alterada. Uma correção que impede a compilação já é considerada uma falha funcional.
+
+Executar a suíte completa em cada tentativa tornaria o experimento muito demorado, pois a suíte reúne centenas de testes e exige a inicialização da aplicação. Por isso, os testes foram organizados em 52 grupos, cada um reunindo os testes de uma funcionalidade da aplicação, como o carrinho de compras, o envio de arquivos ou a entrega de arquivos. Desses grupos, 36 são de API, 7 do servidor e 9 da interface. Um mapa relaciona cada um dos 46 arquivos do Juice Shop que possuem alertas no catálogo aos grupos que exercitam o seu comportamento. Quando uma correção altera um arquivo, são executados os grupos ligados a ele no mapa. Se a correção altera mais de um arquivo, são executados os grupos ligados a todos eles, e um grupo comum a dois arquivos é executado uma única vez.
+
+Em alguns arquivos, a suíte original do Juice Shop não exercitava o comportamento que uma correção poderia alterar. Para esses casos, os autores escreveram testes adicionais, reunidos em 16 arquivos. Um exemplo são os testes do CAPTCHA aritmético, que conferem se a expressão gerada é calculada corretamente, se o resultado é armazenado e se uma resposta incorreta continua sendo recusada no envio de comentários. Esses testes adicionais são copiados para o Juice Shop somente durante a validação e removidos em seguida, de forma que o código analisado pelo Semgrep não é afetado por eles.
+
+O \textit{baseline} descrito na Seção~\ref{sec:met-validacao} foi obtido com a execução de todos os grupos no código original do Juice Shop, sem nenhuma correção, e registrou a situação de cada um dos 574 testes executados. A reexecução dos grupos com falhas novas, que separa as falhas persistentes das intermitentes, evita que uma instabilidade momentânea, como um atraso do sistema, seja contada como quebra de funcionalidade.
+
+Os testes do conjunto D, definido na Seção~\ref{sec:met-validacao}, exigiram um tratamento próprio. Um exemplo desse conjunto é um teste que altera um produto sem autenticação e espera que a operação seja aceita, de modo que uma correção bem-sucedida o faz falhar. A implementação manteve a lista desses testes, com o critério de inclusão de cada um, e registrou separadamente as falhas que pertencem a ela. Com esse registro, as três interpretações de F da Tabela~\ref{tab:interpretacoes-f} puderam ser calculadas na mesma validação, enquanto a regra de parada utilizou a interpretação sem separação.
+
+\subsection{Elaboração das estratégias de \textit{prompt}}
+\label{sec:impl-prompts}
+
+As quatro estratégias de \textit{prompt} descritas na Seção~\ref{sec:met-prompts}, identificadas como P1, P2, P3 e P4, foram implementadas por uma rotina única de montagem, que reúne blocos de texto conforme a estratégia selecionada, nas combinações resumidas na Tabela~\ref{tab:estrategias}.
+
+Na base comum apresentada na Seção~\ref{sec:met-prompts}, a mensagem de papel define o modelo como um engenheiro de segurança de aplicações especializado em TypeScript, Node.js e Express. Quando o arquivo tem até 250 linhas, ele é enviado completo. Em arquivos maiores, é enviado um trecho com até 60 linhas antes e 60 linhas depois das linhas apontadas pelo alerta, e o \textit{prompt} informa quais linhas foram mostradas. O código é lido diretamente da \textit{worktree}, e não do relatório do Semgrep, para que o modelo receba o texto exato do arquivo que será alterado.
+
+Além das restrições descritas na Seção~\ref{sec:met-prompts}, o \textit{prompt} pede que cada trecho a ser substituído seja copiado literalmente do código fornecido e apareça uma única vez no arquivo, condição necessária para que a correção possa ser aplicada automaticamente, como descrito na Seção~\ref{sec:impl-fluxo}. Esse texto foi mantido igual nas quatro estratégias e em todos os modelos.
+
+No formato JSON de resposta, também descrito na Seção~\ref{sec:met-prompts}, a lista de edições permite que o \textit{pipeline} altere apenas as linhas necessárias, sem que o modelo precise reescrever o arquivo inteiro, o que seria inviável em arquivos extensos do Juice Shop. Cada \textit{prompt} é gravado em arquivo antes do envio, o que permite consultar exatamente o conteúdo recebido pelo modelo em cada tentativa.
+
+No caso utilizado como exemplo, o arquivo \texttt{routes/keyServer.ts} possui 20 linhas e foi enviado completo. Na estratégia P3, o \textit{prompt} recebeu também o bloco do alerta, reproduzido a seguir com a mensagem resumida, e o documento sobre \textit{path traversal} da base de conhecimento.
+
+{\footnotesize
+\begin{verbatim}
+Alerta da ferramenta de analise estatica (Semgrep) que deve ser corrigido:
+- Arquivo: routes/keyServer.ts
+- Linha: 14
+- Regra: javascript.express.security.audit.express-res-sendfile.express-res-sendfile
+- CWE: CWE-73: External Control of File Name or Path
+- Mensagem: The application processes user-input, this is passed to res.sendFile
+  which can allow an attacker to arbitrarily read files on the system through
+  path traversal. (...)
+\end{verbatim}
+}
+
+\subsection{Base de conhecimento do RAG simplificado}
+\label{sec:impl-rag}
+
+O RAG simplificado foi implementado com uma base de conhecimento formada por 14 documentos escritos em português, em formato \textit{Markdown}. Treze deles são dedicados a uma categoria de vulnerabilidade, como injeção, controle de acesso, falhas criptográficas, \textit{Cross-Site Scripting} e \textit{path traversal}, e o último é um documento genérico, utilizado quando nenhuma categoria específica corresponde ao alerta. Cada documento segue a organização em sete elementos apresentada na Seção~\ref{sec:met-rag}.
+
+A escolha do documento é feita por um índice, que associa cada CWE ao documento correspondente. Para cada caso, o recuperador utiliza a primeira CWE do alerta que esteja presente no índice. Quando nenhuma CWE do alerta está no índice, utiliza a categoria registrada no catálogo e, se ela também não corresponder a um documento, utiliza o documento genérico. Nas campanhas finais, todos os 78 casos tiveram uma CWE reconhecida pelo índice, e o documento genérico não precisou ser utilizado. Conforme definido na Seção~\ref{sec:met-rag}, a recuperação é feita por essa associação direta, sem busca por similaridade.
+
+\subsection{Integração com os modelos de linguagem}
+\label{sec:impl-modelos}
+
+A comunicação com os modelos de linguagem foi isolada em um componente próprio, responsável por enviar o \textit{prompt}, receber a resposta e registrar as informações da chamada. Com essa separação, a troca do modelo não exige alterar as etapas de aplicação e validação. Nas campanhas finais, esse componente utilizou a API da OpenAI com os modelos GPT-4.1 mini, GPT-5.6 Luna e GPT-6 Luna.
+
+As chamadas utilizaram o recurso de saída estruturada da API, no qual o formato JSON esperado é enviado junto com o \textit{prompt} e a resposta é obrigatoriamente gerada nesse formato. Esse recurso reduz respostas que não podem ser interpretadas pelo \textit{pipeline}. A temperatura foi fixada em zero, valor que torna as respostas do modelo menos variáveis, e o tamanho máximo da resposta foi limitado a 4.096 \textit{tokens}, nos três modelos. Nos modelos GPT-5.6 Luna e GPT-6 Luna, o esforço de raciocínio, parâmetro que controla uma etapa interna de processamento do modelo antes da resposta, foi desativado. No GPT-4.1 mini, esse parâmetro não foi enviado, pois o modelo não possui essa etapa \cite{openai_gpt41mini}. Esse parâmetro é diferente do raciocínio guiado das estratégias P2 e P4, que é uma instrução escrita no próprio \textit{prompt}.
+
+As chamadas foram enviadas uma de cada vez, mesmo quando havia casos sendo processados em paralelo, para respeitar os limites de requisições da API e permitir o controle preciso do consumo. Cada requisição teve tempo limite de 120 segundos. Em erros temporários de comunicação, como falhas de rede ou excesso momentâneo de requisições, a chamada foi repetida, com no máximo três envios. Nas campanhas finais, o reaproveitamento de respostas e de resultados de validação de execuções anteriores ficou desligado, de modo que cada tentativa recebeu uma resposta nova do modelo e uma validação própria.
+
+No caso utilizado como exemplo, a resposta do GPT-4.1 mini na estratégia P3 propôs a edição apresentada a seguir, reproduzida sem os campos de justificativa.
+
+% Os valores de trecho_original e trecho_corrigido foram quebrados depois de cada \n para caber na página.
+% O conteúdo dos textos é o mesmo da resposta do modelo.
+{\footnotesize
+\begin{verbatim}
+{
+  "edicoes": [
+    {
+      "arquivo": "routes/keyServer.ts",
+      "trecho_original": "    if (!file.includes('/')) {\n
+      res.sendFile(path.resolve('encryptionkeys/', file))\n
+    } else {",
+      "trecho_corrigido": "    if (!file.includes('/')) {\n
+      res.sendFile(file, { root: path.resolve('encryptionkeys/') })\n
+    } else {"
+    }
+  ]
+}
+\end{verbatim}
+}
+
+Na justificativa, o modelo explicou que a opção \texttt{root} da função \texttt{res.sendFile} define a pasta raiz permitida e faz com que o próprio Express recuse caminhos que saiam dela, mantendo a verificação original que rejeita nomes com barras.
+
+\subsection{Definição do fluxo experimental}
+\label{sec:impl-fluxo-experimental}
+
+Com o ambiente, o catálogo, os testes, as estratégias de \textit{prompt}, a base de conhecimento e a integração com os modelos definidos, o fluxo experimental seguiu as etapas apresentadas na Seção~\ref{sec:met-pipeline} e na Figura~\ref{fig:pipeline}. Os casos foram processados em paralelo, em até quatro ao mesmo tempo, um em cada \textit{worktree}, e as estratégias de um mesmo caso foram executadas em sequência. Depois do encerramento de todos os casos, os registros das tentativas foram consolidados nas métricas, e as correções aceitas foram avaliadas em conjunto para o cálculo da RRIS, como descrito na Seção~\ref{sec:impl-metricas}.
+
+\section{Estrutura do projeto}
+\label{sec:impl-estrutura}
+
+A implementação está disponível em repositório público no GitHub, em \href{https://github.com/caiolamego/tcc2-llm-sast-juiceshop}{caiolamego/tcc2-llm-sast-juiceshop}. A estrutura principal do projeto foi organizada da seguinte forma:
+
+{\footnotesize
+\begin{verbatim}
+tcc2-llm-sast-juiceshop/
+  src/pipeline/
+    etapas/
+      e01_analise_sast/
+      e02_catalogo/
+      e03_contexto_rag/
+      e04_prompt/
+      e05_geracao_llm/
+      e06_aplicacao/
+      e07_validacao/
+      e08_registro/
+      e09_metricas/
+    orquestracao/
+    painel/
+  config/
+  rules/
+  knowledge_base/
+  tests/
+  scripts/
+  docker/
+  outputs/
+  workspace/
+  executar.py
+  painel.py
+  Dockerfile
+  compose.yaml
+\end{verbatim}
+}
+
+O diretório \texttt{src/pipeline/etapas/} contém as etapas do \textit{pipeline}, numeradas na ordem do fluxo. A etapa \texttt{e01\_analise\_sast} executa o Semgrep, interpreta o relatório e compara os alertas antes e depois da correção. A \texttt{e02\_catalogo} carrega e confere o catálogo de casos. A \texttt{e03\_contexto\_rag} recupera o documento da base de conhecimento. A \texttt{e04\_prompt} monta os \textit{prompts} de cada estratégia. A \texttt{e05\_geracao\_llm} realiza a comunicação com os modelos de linguagem. A \texttt{e06\_aplicacao} gerencia as \textit{worktrees} e aplica as edições propostas. A \texttt{e07\_validacao} seleciona e executa os testes. A \texttt{e08\_registro} grava o resultado de cada tentativa, e a \texttt{e09\_metricas} calcula as métricas a partir desses registros.
+
+O diretório \texttt{orquestracao/} contém a rotina que conduz a execução, ligando as etapas para cada caso e estratégia, e a verificação inicial das entradas. O diretório \texttt{painel/} contém a interface web de acompanhamento, apresentada na Seção~\ref{sec:impl-execucao}.
+
+O diretório \texttt{config/} reúne as configurações do experimento, como o perfil de regras do Semgrep, o mapa entre arquivos e grupos de testes, a lista do conjunto D, o roteiro de raciocínio guiado e as configurações de cada execução. O diretório \texttt{rules/} contém as regras locais do Semgrep e os seus arquivos de exemplo. O diretório \texttt{knowledge\_base/} contém os 14 documentos do RAG simplificado, o índice e o manifesto com os \textit{hashes}.
+
+O diretório \texttt{tests/} contém dois tipos de teste. Os testes unitários verificam o funcionamento do próprio \textit{pipeline}, como a montagem dos \textit{prompts}, a aplicação das edições e o cálculo das métricas, sem chamar os modelos de linguagem. Os testes adicionais do Juice Shop, descritos na Seção~\ref{sec:impl-testes}, ficam separados em uma pasta própria. O diretório \texttt{scripts/} reúne rotinas auxiliares, como a preparação do Juice Shop, a geração do catálogo e do \textit{baseline} dos testes, a avaliação conjunta da RRIS e a geração de relatórios. O diretório \texttt{docker/} contém as rotinas de preparação das \textit{worktrees} dentro do contêiner e a referência da imagem utilizada.
+
+O diretório \texttt{outputs/} armazena os arquivos produzidos em cada execução, organizados conforme descrito na próxima seção. O diretório \texttt{workspace/} contém o repositório do Juice Shop e as quatro \textit{worktrees}. Ele não faz parte do controle de versões do projeto, pois é preparado a partir da versão fixada do Juice Shop. Por fim, o arquivo \texttt{executar.py} inicia a execução pelo terminal, o arquivo \texttt{painel.py} inicia a interface web, e os arquivos \texttt{Dockerfile} e \texttt{compose.yaml} definem, respectivamente, a construção da imagem e a forma como o contêiner é executado.
+
+\section{Fluxo de execução e armazenamento dos resultados}
+\label{sec:impl-fluxo}
+
+Esta seção descreve o caminho percorrido por uma tentativa de correção, desde a reserva de uma \textit{worktree} até o registro do resultado, e os arquivos gravados em cada etapa.
+
+\textbf{Reserva da \textit{worktree}.} As quatro \textit{worktrees} formam um conjunto de cópias disponíveis. Quando um caso começa a ser processado, ele recebe uma \textit{worktree} livre, que fica reservada até o fim da tentativa e não pode ser utilizada por outro caso nesse intervalo. Antes de ser entregue, a \textit{worktree} é restaurada para a versão fixada do Juice Shop: os arquivos alterados voltam ao conteúdo original e os arquivos criados são removidos, preservando apenas as dependências instaladas. O \textit{pipeline} também impede que duas execuções diferentes utilizem o mesmo conjunto de \textit{worktrees} ao mesmo tempo. Com isso, cada tentativa parte sempre do código original, mesmo que a tentativa anterior naquela cópia tenha sido interrompida por um erro.
+
+\textbf{Montagem do \textit{prompt} e chamada ao modelo.} O \textit{prompt} é montado conforme a estratégia, a partir do código lido na \textit{worktree}, e gravado em arquivo. Em seguida, é enviado ao modelo, e a resposta recebida também é gravada, junto com as informações da chamada descritas na Seção~\ref{sec:impl-modelos}.
+
+\textbf{Aplicação da correção.} Antes de alterar qualquer arquivo, o \textit{pipeline} confere cada edição proposta. O arquivo indicado precisa existir dentro da \textit{worktree}. Em seguida, o trecho original de cada edição é procurado no arquivo. Esse trecho funciona como uma âncora, isto é, uma referência que indica o local exato da alteração. Quando a âncora aparece exatamente uma vez no arquivo, ela é substituída pelo trecho corrigido. Quando não aparece ou aparece mais de uma vez, a tentativa é registrada como não aplicada, pois não é possível saber com segurança onde a alteração deveria ser feita. Essa exigência é uma limitação do \textit{pipeline}, pois uma correção adequada pode deixar de ser avaliada apenas porque o modelo copiou o trecho original de forma imprecisa. Na população principal das campanhas finais, isso ocorreu em 20 das 685 tentativas: 15 do GPT-4.1 mini, em sete casos, quatro do GPT-5.6 Luna, em três casos, e uma do GPT-6 Luna.
+
+Durante o desenvolvimento, observou-se que, em alguns casos, os modelos copiavam o trecho original com uma quantidade diferente de espaços no início das linhas, o que impedia a correspondência exata. Para os arquivos JavaScript e TypeScript, foi implementado um tratamento para essa situação. Se a âncora, com duas ou mais linhas, não é encontrada exatamente, o \textit{pipeline} procura no arquivo um bloco com o mesmo conteúdo, linha por linha, que difira apenas por um recuo uniforme, ou seja, a mesma quantidade de espaços a mais ou a menos em todas as linhas. Nomes, aspas, operadores e qualquer outro conteúdo precisam ser idênticos. Se existir exatamente um bloco nessas condições, a substituição é feita nesse bloco, e o trecho corrigido recebe o mesmo ajuste de recuo para ficar alinhado ao código ao redor. Antes de aceitar a correspondência, o \textit{pipeline} também confirma, por meio do compilador do TypeScript instalado no próprio Juice Shop, que o bloco encontrado e o trecho enviado pelo modelo possuem os mesmos elementos de código. O compilador monta a estrutura sintática de cada trecho e separa os seus elementos básicos, como nomes, operadores e sinais de pontuação, que precisam aparecer na mesma ordem nos dois trechos. Se nenhum bloco ou mais de um bloco atender a essas condições, a tentativa continua registrada como não aplicada.
+
+As edições de uma mesma resposta são todas conferidas antes que qualquer arquivo seja gravado. Se uma delas falhar, nenhuma alteração é feita. Dessa forma, a \textit{worktree} nunca fica com uma correção aplicada pela metade. Quando a aplicação é concluída, são gravados o arquivo corrigido e o \textit{patch}, que é o registro das diferenças entre o código original e o código alterado.
+
+\textbf{Validação funcional.} Com a correção aplicada, são executados a compilação e os grupos de testes ligados aos arquivos alterados, conforme a Seção~\ref{sec:impl-testes}. Os testes adicionais desses grupos são copiados para a \textit{worktree} apenas durante a execução. As compilações e os testes de interface de casos diferentes podem ser executados ao mesmo tempo. Os grupos de testes de API, por outro lado, foram executados um de cada vez, porque alguns desses testes utilizam recursos de rede do computador que não podem ser compartilhados por duas execuções simultâneas. O resultado de cada grupo, com os testes executados, as falhas e o tempo, é gravado em arquivo e define o valor de F.
+
+\textbf{Nova análise estática.} Em seguida, o Semgrep analisa novamente o projeto na \textit{worktree}, com o mesmo perfil de regras da análise inicial. O relatório resultante é comparado ao relatório inicial para definir R e M. A comparação precisa reconhecer um mesmo alerta mesmo quando a correção desloca as linhas do arquivo. Para isso, o comparador procura primeiro alertas da mesma regra, no mesmo arquivo e na mesma posição. Quando a posição muda, compara o código ao redor de cada alerta para identificar a correspondência. Se ainda assim não for possível relacionar os alertas, considera a quantidade de alertas da mesma regra no mesmo arquivo: se a quantidade não diminuiu, o alerta original é considerado presente, e se aumentou, considera-se que um alerta novo apareceu. As situações em que nenhuma dessas verificações permite uma conclusão segura são registradas como indeterminadas e não são contadas como correções aceitas. O relatório da nova análise e o resultado da comparação são gravados em arquivo.
+
+\textbf{Registro e restauração.} Por fim, o resultado da tentativa é acrescentado ao arquivo consolidado da execução, que reúne em uma linha por tentativa o caso, a estratégia, o modelo, os valores de R, F e M, a classificação final, os tempos, os \textit{tokens}, o custo e os caminhos de todos os arquivos produzidos. A \textit{worktree} é então restaurada e devolvida ao conjunto de cópias disponíveis. Se a correção atendeu à regra de parada, o caso é encerrado. Caso contrário, o mesmo caso é submetido à próxima estratégia.
+
+Os arquivos de cada tentativa são nomeados com o identificador descrito na Seção~\ref{sec:met-dados} e ilustrado na Figura~\ref{fig:nomenclatura_artefatos}. Durante as campanhas, quando a regra do Semgrep não informava uma categoria do OWASP, o campo correspondente desse identificador recebia o valor \texttt{SEMOWASP}, substituído na versão final dos artefatos, conforme a Seção~\ref{sec:met-dados}. O identificador da execução indica o tipo de execução, a data e a hora de início e um código aleatório que diferencia execuções iniciadas no mesmo momento. Os arquivos de uma execução ficam reunidos em uma pasta própria, com a seguinte estrutura:
+
+{\footnotesize
+\begin{verbatim}
+outputs/campanha_docker/<EXECUCAO>/
+  contrato_execucao.json
+  sast_antes/
+  prompts/
+  respostas_llm/
+  patches/
+  codigos_corrigidos/
+  testes/
+  sast_depois/
+  comparacoes/
+  resultados_consolidados/
+\end{verbatim}
+}
+
+O arquivo \texttt{contrato\_execucao.json} registra as condições da execução, como os modelos e parâmetros utilizados, a versão do Juice Shop, as estratégias, a lista de casos e os \textit{hashes} do catálogo, do perfil de regras, da base de conhecimento, dos testes e do próprio código do \textit{pipeline}. As pastas \texttt{sast\_antes/} e \texttt{sast\_depois/} guardam os relatórios do Semgrep antes e depois das correções. As pastas \texttt{prompts/} e \texttt{respostas\_llm/} guardam o conteúdo enviado e recebido em cada tentativa. As pastas \texttt{patches/} e \texttt{codigos\_corrigidos/} guardam as alterações aplicadas, \texttt{testes/} guarda os resultados da validação funcional e \texttt{comparacoes/} guarda o resultado da comparação dos alertas. A pasta \texttt{resultados\_consolidados/} contém o arquivo consolidado com uma linha por tentativa. A versão final dos artefatos foi reunida na pasta \texttt{outputs/resultados\_finais/}, que contém uma cópia dessa estrutura para cada campanha e os mapas de correspondência citados na Seção~\ref{sec:met-dados}. As métricas calculadas a partir desses registros são gravadas em uma pasta separada, descrita na Seção~\ref{sec:impl-metricas}.
+
+No caso utilizado como exemplo, as estratégias P1 e P2 produziram correções que foram aplicadas e não quebraram os testes, mas o Semgrep continuou apontando o alerta na mesma linha. Por isso, o caso foi submetido à estratégia P3. A correção proposta pelo GPT-4.1 mini nessa estratégia foi aplicada por correspondência exata da âncora e gerou o \textit{patch} a seguir.
+
+{\footnotesize
+\begin{verbatim}
+     if (!file.includes('/')) {
+-      res.sendFile(path.resolve('encryptionkeys/', file))
++      res.sendFile(file, { root: path.resolve('encryptionkeys/') })
+     } else {
+\end{verbatim}
+}
+
+O código alterado foi compilado e aprovado nos testes do grupo de entrega de arquivos. Na nova análise, o alerta original deixou de ser apontado e nenhum alerta novo apareceu. Com R, F e M iguais a 1, a correção atendeu à regra de parada e o caso foi encerrado, sem a execução da estratégia P4. Os arquivos dessa tentativa receberam o identificador \texttt{AMP95adf572d3c6677f\_\allowbreak A06\_\allowbreak PATHTRAV\_\allowbreak P3\_\allowbreak AMP\_\allowbreak REAL\_\allowbreak 20261106T151004Z\_\allowbreak f49ac0d2}, que segue a estrutura apresentada na Figura~\ref{fig:nomenclatura_artefatos}.
+
+\section{Métricas de avaliação}
+\label{sec:impl-metricas}
+
+As métricas utilizadas seguem a definição apresentada na Seção~\ref{sec:met-metricas}. Nesta etapa, elas foram calculadas a partir dos registros gerados pelo \textit{pipeline}, para classificar cada tentativa de correção e consolidar o desempenho das estratégias de \textit{prompt} e dos modelos.
+
+O cálculo das métricas foi implementado em uma rotina separada, que lê o arquivo consolidado e os arquivos de cada tentativa e gera as métricas em formato JSON e CSV. Essa rotina permite que as métricas possam ser recalculadas a qualquer momento a partir dos registros da execução. As métricas são geradas de forma geral e agrupadas por estratégia de \textit{prompt}, por caso, por CWE, por categoria do OWASP Top 10, por severidade, por regra do Semgrep e por documento da base de conhecimento, o que permite responder às perguntas de pesquisa sobre estratégias, modelos e tipos de vulnerabilidade.
+
+A RRIS foi calculada por uma rotina própria, pois depende da aplicação conjunta das correções. Para cada modelo, essa rotina reserva uma \textit{worktree} restaurada, executa o Semgrep sobre o projeto original, confere cada \textit{patch} com o \textit{hash} registrado na tentativa e aplica, em sequência, os \textit{patches} do primeiro aceite de cada caso na análise principal, na ordem em que as tentativas começaram. Quando um \textit{patch} não pode ser aplicado sobre os anteriores, porque altera linhas já modificadas por outra correção, ele é registrado como conflito e deixado de fora. Em seguida, o projeto com as correções reunidas é analisado novamente pelo Semgrep e submetido aos testes.
+
+\section{Execução do \textit{pipeline}}
+\label{sec:impl-execucao}
+
+A execução do \textit{pipeline} é iniciada por um arquivo de configuração, que define a lista de casos, as estratégias de \textit{prompt}, o modelo, a quantidade de \textit{worktrees} utilizadas e o modo de execução. Com o ambiente Docker preparado, a execução de um modelo é iniciada pelo terminal com um comando como o apresentado a seguir.
+
+{\footnotesize
+\begin{verbatim}
+docker compose run --rm tcc .venv/bin/python executar.py \
+  --config config/execucao_docker_78.yaml --modelo gpt-4.1-mini --modo real
+\end{verbatim}
+}
+
+Foram implementados três modos de execução. O modo de verificação inicial, chamado de \textit{preflight}, confere as entradas, como o catálogo, o perfil de regras, a base de conhecimento, o \textit{baseline} dos testes e as \textit{worktrees}, repete a análise inicial do Semgrep para confirmar que ela reproduz o catálogo e monta os \textit{prompts}, sem chamar os modelos. O modo de simulação percorre todo o fluxo com respostas simuladas, sem custo com a API, e foi utilizado para testar o \textit{pipeline} durante o desenvolvimento. O modo real executa o fluxo completo com chamadas aos modelos de linguagem e foi o utilizado nas campanhas finais. As três campanhas finais, uma para cada modelo, foram concluídas em 6 de novembro de 2026. Os resultados de cada modo são gravados em pastas separadas, o que impede que dados de verificação ou de simulação sejam confundidos com os das campanhas finais.
+
+No início da execução, o contrato de execução é gravado com as condições descritas na Seção~\ref{sec:impl-fluxo}. Ele também permite retomar uma execução interrompida, por exemplo por uma queda de energia. Ao ser iniciada novamente com o mesmo identificador, a execução confere se as condições atuais são iguais às registradas no contrato. Se forem, reaproveita as tentativas já registradas e continua a partir do ponto em que parou. Se não forem, a retomada é recusada.
+
+Além do terminal, foi desenvolvido um painel web para acompanhar as execuções. O painel é uma página aberta no navegador do próprio computador, acessível apenas localmente. Nele, é possível escolher o modelo e o modo de execução, iniciar e interromper uma execução e acompanhar o seu andamento. São exibidas todas as informações relevantes do processamento. O painel utiliza o mesmo arquivo de configuração e os mesmos comandos da execução pelo terminal, de forma que os dois caminhos produzem resultados equivalentes. Quando uma interrupção é solicitada, o painel aguarda a conclusão das tentativas em andamento antes de encerrar a execução, evitando que uma correção fique aplicada pela metade ou que uma tentativa seja registrada de forma incompleta. \textbf{[PENDENTE: inserir uma ou duas capturas de tela do painel, mostrando a seleção do modelo e o acompanhamento de uma execução.]}

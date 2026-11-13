@@ -324,3 +324,16 @@ SHA-256 do capítulo após a revisão:
 Registro completo em `capitulo-4-notas.md`, seção de mesmo nome. Neste capítulo, a 3.11 deixou o procedimento da RRIS
 para a 4.5 e a 3.1 passou a citar os testes antes da nova análise estática. SHA-256:
 `98d97bd5e45367709102f8cbe6515bf1fbab1b5d73b4e1c47fb3674d1740125c`.
+
+## Versão LaTeX para o Overleaf — 13/11/2026
+
+`overleaf/oficial/metodologia.tex` foi escrito a partir de `manuscrito/03-metodologia.md`
+(SHA-256 `98d97bd5e45367709102f8cbe6515bf1fbab1b5d73b4e1c47fb3674d1740125c`), no padrão de `overleaf/exemplo/metodologia.tex`.
+Conferência automática: 122 parágrafos e itens de lista, 36 linhas de tabela e 8 legendas idênticos ao Markdown.
+Termos em inglês em itálico. Nomes próprios de produtos, organizações e padrões (Semgrep, Docker, OWASP Top 10,
+Common Weakness Enumeration, Application Security Verification Standard) ficaram sem itálico, como no exemplo.
+Citações: `juice_shop` e `openai_gpt41mini` do `overleaf/lib.bib`. As duas páginas da documentação do Semgrep ganharam
+as chaves `semgrep_write_rules` e `semgrep_taint_analysis`, em `overleaf/oficial/referencias-novas.bib`, para copiar
+para o `lib.bib`. Figuras copiadas para `overleaf/oficial/figuras/` (`plano.png`, `pipeline.png`, `nomenclatura.png`,
+a partir de `figura-1.png` a `figura-3.png`). Remissões aos Capítulos 4 e 5 escritas por extenso até esses capítulos
+irem para o Overleaf. Os comentários de evidência do Markdown não foram levados ao `.tex`.

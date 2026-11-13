@@ -1,0 +1,11 @@
+flowchart LR
+    A[Análise SAST inicial] --> B[Catálogo de casos]
+    B --> D[Montagem do prompt]
+    C[Base de conhecimento do RAG] --> D
+    D --> E[Modelo de linguagem]
+    E --> F[Aplicação da correção em cópia isolada]
+    F --> H[Testes automatizados: F]
+    H --> G[Reanálise SAST: R e M]
+    G --> I[Registro da tentativa]
+    I --> J[Consolidação das métricas]
+    I -. regra de parada não atendida: próxima estratégia .-> D

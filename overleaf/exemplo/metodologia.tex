@@ -1,0 +1,431 @@
+\chapter[Metodologia]{Metodologia}
+
+Este capítulo apresenta os procedimentos metodológicos propostos para avaliar a eficácia de um \textit{pipeline} automatizado de correção de vulnerabilidades em código-fonte com o apoio de Modelos de Linguagem de Grande Escala, ferramentas de Análise Estática de Segurança e estratégias de contextualização.
+
+A pesquisa será conduzida sobre o OWASP Juice Shop, uma aplicação web \textit{open source} deliberadamente vulnerável e utilizada como referência em treinamentos, demonstrações de segurança e avaliação de ferramentas de segurança. Serão consideradas as vulnerabilidades de segurança efetivamente identificadas por uma ferramenta SAST no projeto selecionado. Essa decisão aproxima o experimento de um cenário prático de desenvolvimento, no qual possui regras de negócio, a arquitetura do sistema precisa ser compreendida e as correções devem respeitar as dependências, os testes e o funcionamento existente da aplicação.
+
+A escolha por este projeto permite avaliar o \textit{pipeline} em uma aplicação de grande porte, composta por múltiplos módulos, dependências e suíte de testes, proporcionando um cenário mais representativo do que exemplos sintéticos ou casos isolados.
+
+
+\section{Plano Metodológico}
+
+Esta pesquisa é um estudo empírico de natureza aplicada, com abordagem predominantemente quantitativa. Em relação aos objetivos, tem caráter exploratório e avaliativo, pois busca investigar a eficácia de diferentes estratégias de \textit{prompt} na correção automatizada de vulnerabilidades de segurança. Em relação aos procedimentos, a pesquisa será conduzida como um estudo experimental sobre uma aplicação de referência, na qual um \textit{pipeline} automatizado será executado repetidas vezes para avaliar o desempenho das estratégias propostas, com base em métricas definidas previamente.
+
+O estudo será conduzido a partir da implementação e avaliação de um \textit{pipeline} automatizado de correção de vulnerabilidades. Esse \textit{pipeline} receberá como entrada um projeto com vulnerabilidades identificadas por uma ferramenta SAST, coletará informações sobre as \textit{issues} encontradas, enriquecerá o contexto fornecido ao modelo de linguagem, solicitará uma correção à LLM, aplicará a modificação gerada e, em seguida, executará novamente a análise estática e os testes automatizados.
+
+O fluxo metodológico geral será composto pelas seguintes etapas:
+
+\begin{enumerate}
+\item Preparação do ambiente de execução do projeto;
+\item \textit{Pipeline}
+\item Consolidação dos resultados em um conjunto estruturado de dados;
+\item Análise comparativa dos resultados obtidos.
+\end{enumerate}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[
+        width=0.95\textwidth,
+        height=0.55\textheight,
+        keepaspectratio
+    ]{figuras/plano.png}
+
+    \caption{Visão geral do fluxo metodológico adotado na pesquisa.}
+    \label{fig:plano}
+
+    \vspace{0.2cm}
+    \begin{minipage}{0.95\textwidth}
+\footnotesize
+\textbf{Legenda:} A etapa \textit{Pipeline automatizado de correção} está detalhada na Figura~\ref{fig:pipeline}.
+\end{minipage}
+\end{figure}
+
+
+A metodologia parte da premissa de que uma correção de vulnerabilidade não deve ser considerada bem-sucedida apenas porque a ferramenta SAST deixou de apontar uma issue. Uma alteração pode remover o alerta sem corrigir a causa real da falha, ou pode eliminar a vulnerabilidade comprometendo a funcionalidade esperada do sistema. Por esse motivo, a avaliação combinará três critérios principais: o desaparecimento da issue na reanálise estática, a aprovação dos testes automatizados após a aplicação da correção e a não introdução de novas issues de segurança.
+
+Assim, uma correção será considerada bem-sucedida apenas quando atender simultaneamente aos critérios de segurança, funcionalidade e não regressão de segurança.
+
+\section{Contexto de aplicação do experimento}
+
+O experimento será conduzido sobre o OWASP Juice Shop, uma aplicação web \textit{open source} deliberadamente vulnerável e mantida no ecossistema da OWASP. A escolha do OWASP Juice Shop como objeto de estudo foi motivada por quatro fatores principais: sua disponibilidade como projeto \textit{open source}, sua adoção pela comunidade de segurança, sua implementação em tecnologias amplamente utilizadas no desenvolvimento web moderno e sua concentração de vulnerabilidades documentadas e associadas ao OWASP Top 10 \cite{juice_shop}.
+
+
+
+A prova de conceito inicial utilizou códigos vulneráveis pequenos e isolados para validar o funcionamento inicial do \textit{pipeline}. No TCC 2, essa abordagem será ampliada para um projeto   mais completo, contendo múltiplos arquivos, estrutura modular, testes automatizados e dependências externas. Essa ampliação permitirá avaliar se o \textit{pipeline} continua funcional em um cenário mais próximo de um projeto real.
+
+Para a correção do código vulnerável será utilizado o modelo \texttt{gpt-4.1-mini}. A escolha do modelo \texttt{gpt-4.1-mini} foi definida a partir de critérios de viabilidade experimental, custo de execução e adequação ao fluxo automatizado proposto. Como o \textit{pipeline} realiza múltiplas chamadas à API para diferentes vulnerabilidades e estratégias de \textit{prompt}, o consumo de tokens representa um fator relevante para a condução do estudo. Nesse sentido, a utilização de um modelo menor da família GPT-4.1 permite reduzir o custo das execuções, mantendo recursos importantes para o experimento, como ampla janela de contexto, suporte a saídas estruturadas e capacidade de seguir instruções em tarefas envolvendo código \cite{openai_gpt41mini}. Além disso, a implementação do \textit{pipeline} será parametrizada, permitindo substituir o modelo por versões anteriores ou posteriores em execuções futuras, o que facilita testes comparativos sem alterar a lógica central do experimento.
+
+Além disso, a escolha por um modelo da OpenAI se justifica pela representatividade da família GPT no cenário atual de uso de LLMs. Como o objetivo do trabalho é avaliar um pipeline de reparo automático apoiado por um modelo comercial de uso amplo, optou-se por utilizar uma tecnologia já consolidada entre usuários, desenvolvedores e organizações, em vez de um modelo experimental ou de adoção restrita. Essa escolha aumenta a relevância prática do estudo, pois permite analisar o comportamento de um modelo pertencente à família de LLMs mais difundida no uso cotidiano e profissional. A popularidade do ChatGPT é evidenciada por dados de mercado que o colocam como o site mais acessado na categoria de ferramentas e chatbots de IA, além de relatórios que indicam grande volume de uso semanal e forte presença em ambientes profissionais. No contexto específico de desenvolvimento de software, a pesquisa \textit{Stack Overflow Developer Survey 2025} também aponta o ChatGPT como uma das ferramentas de IA mais utilizadas por desenvolvedores, sendo citado por 81,7\% dos respondentes que utilizam agentes e assistentes de IA. \cite{similarweb_ai_chatbots_2026,stackoverflow_survey_ai_2025}.
+
+
+
+\section{Objeto de estudo: OWASP Juice Shop}
+
+O OWASP Juice Shop é implementado principalmente em JavaScript e TypeScript, utilizando Node.js, Express e Angular. Por esse motivo, a metodologia considerará ferramentas, regras SAST, testes e estratégias de correção compatíveis com essas linguagens.
+
+Na versão utilizada nesta pesquisa (v20.1.1), o OWASP Juice Shop reúne 113 desafios distribuídos em 16 categorias de vulnerabilidades, abrangendo problemas como exposição de dados sensíveis, injeção, quebra de controle de acesso, validação imprópria de entrada e \textit{Cross-Site Scripting} (XSS). Essas categorias são derivadas de padrões amplamente reconhecidos pela comunidade, incluindo o OWASP Top 10, o OWASP ASVS, o OWASP API Security Top 10 e a Common Weakness Enumeration (CWE), tornando a aplicação uma base adequada para pesquisas em segurança de software.
+
+Além dos desafios de exploração, o Juice Shop disponibiliza 33 Coding Challenges, nos quais o usuário localiza o trecho vulnerável do código e identifica a alternativa de correção mais adequada. Embora, nesta pesquisa, as correções sejam geradas automaticamente por um pipeline baseado em LLM, a existência desses desafios evidencia que a aplicação foi projetada para apoiar estudos sobre identificação e remediação de vulnerabilidades, oferecendo um ambiente reprodutível e amplamente documentado para avaliação da abordagem proposta.
+
+\section{Seleção das vulnerabilidades de segurança}
+
+A seleção das vulnerabilidades ocorrerá a partir dos alertas produzidos pela ferramenta SAST durante a análise inicial do OWASP Juice Shop. Como a aplicação é deliberadamente vulnerável, espera-se que parte dos alertas esteja relacionada a falhas conhecidas ou compatíveis com categorias do OWASP Top 10. Dessa forma, o conjunto de vulnerabilidades analisado será composto pelos alertas efetivamente identificados pela ferramenta SAST durante a execução inicial do \textit{pipeline}.
+
+Após a execução inicial da ferramenta SAST, as vulnerabilidades detectadas serão submetidas ao \textit{pipeline} de correção. Para cada \textit{issue} identificada, serão aplicadas as diferentes estratégias de \textit{prompt} propostas neste trabalho, permitindo avaliar o desempenho da LLM na remediação de diferentes tipos de vulnerabilidades presentes na aplicação.
+
+Embora o OWASP Juice Shop contemple vulnerabilidades associadas ao OWASP Top 10, o experimento não partirá da seleção manual de categorias específicas. As tentativas de correção serão realizadas sobre todos os alertas produzidos pela ferramenta SAST. Sempre que a ferramenta fornecer mapeamentos para CWE, OWASP ou outras regras de segurança, essas informações serão registradas e utilizadas posteriormente na análise dos resultados.
+
+As vulnerabilidades identificadas serão documentadas em um arquivo de metadados contendo:
+
+\begin{enumerate}
+\item identificador da \textit{issue};
+\item ferramenta SAST responsável pela detecção;
+\item regra acionada;
+\item severidade;
+\item arquivo e linha afetados;
+\item mensagem da ferramenta;
+\item CWE ou categoria OWASP associada, quando disponível;
+\item trecho de código relacionado;
+\item estratégia de validação utilizada após a correção.
+\end{enumerate}
+
+
+\section{Ferramenta de análise estática}
+
+A análise estática será utilizada para identificar vulnerabilidades antes e depois da aplicação das correções. A ferramenta SAST será responsável por produzir os diagnósticos iniciais que servirão como entrada para o \textit{pipeline}, além de permitir a verificação posterior do desaparecimento das \textit{issues}.
+
+Na prova de conceito, verificou-se a necessidade de avaliar a adequação da ferramenta SAST ao contexto Python e aos tipos de vulnerabilidade analisados. Por isso, no TCC 2, a escolha da ferramenta considerará a capacidade real de detectar as vulnerabilidades. Será utilizada a ferramenta Semgrep como ferramenta SAST principal, por oferecer suporte a JavaScript e TypeScript, além de permitir a exportação dos resultados em formato JSON para integração com o \textit{pipeline}.
+
+Para cada execução da análise estática, serão coletados os seguintes dados:
+
+\begin{enumerate}
+    \item Identificador da issue;
+    \item Ferramenta utilizada;
+    \item Regra acionada;
+    \item Severidade;
+    \item Arquivo e linha afetados;
+    \item Mensagem da ferramenta;
+    \item Categoria CWE ou OWASP, quando disponível;
+    \item Trecho de código relacionado;
+    \item Data e identificador da execução.
+\end{enumerate}
+
+A análise estática inicial será executada antes da chamada à LLM. Em seguida, após a aplicação da correção gerada, a ferramenta será executada novamente para verificar se a \textit{issue} original deixou de ser detectada e se novas \textit{issues} foram introduzidas.
+
+\section{Estratégias de prompt}
+
+O experimento avaliará diferentes estratégias de \textit{prompt} para verificar como a formulação da instrução influencia a qualidade das correções geradas. A comparação entre \textit{prompts} é essencial para observar se estratégias mais estruturadas, com contexto adicional e raciocínio guiado, produzem correções melhores do que instruções simples. Serão avaliadas, inicialmente, quatro estratégias.
+
+A primeira será o\textbf{ \textit{prompt} simples}, no qual o modelo recebe o trecho de código do OWASP Juice Shop associado ao alerta SAST e uma instrução direta para identificar e corrigir a vulnerabilidade.
+
+A segunda será o \textbf{\textit{prompt} com raciocínio guiado}, inspirado na ideia de \textit{Chain-of-Thought} discutida no referencial teórico. Neste trabalho, essa estratégia não será utilizada como forma de acessar ou validar o raciocínio interno do modelo, mas como uma maneira de estruturar a tarefa em etapas explícitas. Assim, o modelo será orientado a identificar a vulnerabilidade, explicar sua causa, descrever o impacto, propor uma correção, justificar a alteração e indicar possíveis cuidados adicionais.
+
+A terceira será o \textbf{\textit{prompt} com RAG simplificado}, no qual o modelo recebe, além do código e do alerta SAST, um documento de contexto recuperado automaticamente a partir da categoria da vulnerabilidade identificada.
+
+A quarta será o \textbf{\textit{prompt} com RAG simplificado e raciocínio guiado}, combinando o contexto técnico recuperado com uma estrutura de resposta em etapas.
+
+Para permitir integração automática com o pipeline, as respostas da LLM serão solicitadas em formato estruturado JSON. O formato esperado deverá conter campos:
+
+\begin{enumerate}
+    \item Vulnerabilidade identificada;
+    \item Causa da vulnerabilidade;
+    \item Estratégia de correção;
+    \item Código corrigido ou \textit{patch};
+    \item Justificativa técnica;
+    \item Observações sobre possíveis limitações da correção.
+\end{enumerate}
+
+A padronização da saída é necessária para que o \textit{pipeline} consiga extrair automaticamente o código corrigido, aplicar a alteração e registrar os dados da execução.
+
+
+
+
+\section{Estratégia de RAG simplificado}
+
+Neste trabalho, o RAG será implementado de forma simplificada, por meio da recuperação automática de documentos de contexto associados à categoria da vulnerabilidade identificada pela ferramenta SAST. Diferentemente de arquiteturas RAG completas baseadas em \textit{embeddings}, bancos vetoriais e mecanismos de ranqueamento semântico, a abordagem proposta utilizará uma base documental controlada e indexada por categorias de vulnerabilidade.
+
+Essa decisão metodológica foi adotada por questões de viabilidade e alinhamento com o escopo do trabalho. O objetivo da pesquisa não é desenvolver uma arquitetura de RAG sofisticada, mas avaliar se a inclusão de contexto técnico adicional no \textit{prompt} contribui para melhorar a qualidade das correções geradas pela LLM. Assim, a recuperação será baseada em um mapeamento direto entre o tipo de vulnerabilidade identificado e o documento de apoio correspondente.
+
+A base de conhecimento será composta por arquivos em formato \textit{Markdown}, organizados em uma pasta específica do projeto. Cada arquivo conterá informações técnicas sobre uma categoria de vulnerabilidade, incluindo descrição da falha, classificação OWASP, CWE relacionada, formas comuns de exploração, recomendações de mitigação e exemplos de código vulnerável e corrigido.
+
+A estrutura inicial da base poderá seguir o seguinte formato, podendo ser ajustada:
+
+\begin{verbatim}
+contextos_rag/
+  injection.md
+  broken_access_control.md
+  cryptographic_failures.md
+  authentication_failures.md
+  security_misconfiguration.md
+  cross_site_scripting.md
+  vulnerable_components.md
+\end{verbatim}
+
+Cada documento de contexto poderá conter os seguintes elementos:
+
+\begin{enumerate}
+    \item Nome da vulnerabilidade;
+    \item Categoria OWASP relacionada;
+    \item CWE associada, quando aplicável;
+    \item Descrição da vulnerabilidade;
+    \item Causa comum da falha;
+    \item Impacto de segurança;
+    \item Recomendações de correção;
+    \item Cuidados específicos em JavaScript, TypeScript, Node.js, Express ou Angular, quando aplicável;
+    \item Exemplo de código vulnerável;
+    \item Exemplo de código corrigido.
+\end{enumerate}
+
+Durante a execução do \textit{pipeline}, a ferramenta SAST identificará uma \textit{issue} de segurança. Em seguida, o \textit{pipeline} fará a associação dessa \textit{issue} com uma categoria conhecida de vulnerabilidade. A partir dessa associação, será selecionado automaticamente o documento de contexto correspondente.
+
+Por exemplo, caso a \textit{issue} esteja relacionada a \textit{SQL Injection}, o \textit{pipeline} recuperará o arquivo \texttt{sql\_injection.md}. Esse conteúdo será então incorporado ao prompt enviado à LLM, juntamente com o código vulnerável e o alerta produzido pela ferramenta SAST.
+
+O fluxo do RAG simplificado será composto pelas seguintes etapas:
+
+\begin{enumerate}
+    \item Identificação da \textit{issue} pela ferramenta SAST;
+    \item Classificação da \textit{issue} em uma categoria de vulnerabilidade;
+    \item Seleção automática do arquivo de contexto correspondente;
+    \item Leitura do conteúdo do arquivo Markdown;
+    \item Inclusão do contexto recuperado no prompt;
+    \item Envio do prompt enriquecido para a LLM;
+    \item Geração da correção.
+\end{enumerate}
+
+Essa estratégia permite comparar a correção gerada sem contexto adicional com a correção gerada a partir de um \textit{prompt} enriquecido. Dessa forma, será possível avaliar se a presença de um contexto técnico direcionado melhora a capacidade da LLM de identificar a causa da vulnerabilidade, propor uma correção adequada e preservar a funcionalidade original do sistema.
+
+Embora essa abordagem não implemente todos os elementos de uma arquitetura RAG completa, ela mantém o princípio central da técnica: recuperar conhecimento externo relevante antes da geração da resposta. Por isso, neste trabalho, a estratégia será denominada RAG simplificado ou contextualização baseada em recuperação por categoria.
+
+\section{Pipeline}
+
+O \textit{pipeline} será implementado por meio de scripts responsáveis por orquestrar todas as etapas do experimento. A execução automatizada terá como objetivo reduzir intervenção manual, padronizar a coleta de dados e permitir a repetição dos experimentos.
+
+O fluxo do pipeline será composto pelas seguintes etapas:
+
+\begin{enumerate}
+    \item Executar a análise SAST inicial no projeto;
+    \item Filtrar vulnerabilidades de segurança relevantes para o experimento;
+    \item Coletar o trecho de código associado à vulnerabilidades;
+    \item Classificar a vulnerabilidades de acordo com a categoria de vulnerabilidade;
+    \item Recuperar o contexto correspondente, quando a estratégia testada utilizar RAG simplificado;
+    \item Montar o prompt de acordo com a estratégia experimental selecionada;
+    \item Enviar a requisição à API da LLM;
+    \item Receber e validar a resposta estruturada;
+    \item Aplicar a correção proposta em uma cópia isolada do projeto;
+    \item Executar novamente a análise SAST;
+    \item Executar a suíte de testes automatizados;
+    \item Registrar os resultados da tentativa de correção;
+    \item Restaurar o estado do projeto para a próxima execução.
+\end{enumerate}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[
+        width=0.95\textwidth,
+        height=0.55\textheight,
+        keepaspectratio
+    ]{figuras/pipeline.png}
+
+    \caption{%Fluxo do pipeline experimental com tentativas progressivas de correção por diferentes estratégias de prompt.
+    Fluxo de correção de uma única vulnerabilidade, executado em paralelo para diferentes vulnerabilidades e com tentativas progressivas por estratégias de prompt.}
+    \label{fig:pipeline}
+
+    \vspace{0.2cm}
+    \begin{minipage}{0.95\textwidth}
+        \footnotesize
+        \textbf{Legenda:} P1 = prompt simples; P2 = prompt com raciocínio guiado; P3 = prompt com RAG simplificado; P4 = prompt com RAG simplificado combinado ao raciocínio guiado.
+    \end{minipage}
+\end{figure}
+
+A Figura~\ref{fig:pipeline} representa o processamento de uma única vulnerabilidade por instância do pipeline. Após a análise SAST inicial identificar as vulnerabilidades elegíveis no projeto, uma instância independente desse fluxo é criada para cada uma delas. Essas instâncias são executadas em paralelo sobre cópias isoladas do projeto, evitando que as alterações realizadas durante a correção de uma vulnerabilidade interfiram nas demais.
+
+Em cada instância, o pipeline seleciona uma estratégia de prompt, seguindo a ordem P1, P2, P3 e P4. Para cada tentativa, o prompt é montado, enviado à LLM e a correção gerada é aplicada ao código. Após essa etapa, são executados os testes automatizados e uma nova análise SAST. A correção é considerada válida apenas quando a vulnerabilidade deixa de ser detectada, os testes continuam passando e nenhuma nova issue de segurança é introduzida. Caso esses critérios não sejam atendidos, o pipeline avança para a próxima estratégia de prompt; se todas as estratégias forem esgotadas, a tentativa é registrada como falha.
+
+
+%A Figura~\ref{fig:pipeline} apresenta o fluxo do pipeline experimental proposto. Inicialmente, o projeto é submetido à análise SAST para identificação da vulnerabilidade alvo. Em seguida, o pipeline seleciona uma estratégia de prompt, seguindo a ordem P1, P2, P3 e P4. Para cada tentativa, o prompt é montado, enviado à LLM e a correção gerada é aplicada ao código. Após essa etapa, são executados os testes automatizados e uma nova análise SAST. A correção é considerada válida apenas quando a vulnerabilidade deixa de ser detectada, os testes continuam passando e nenhuma nova issue de segurança é introduzida. Caso esses critérios não sejam atendidos, o pipeline avança para a próxima estratégia de prompt; se todas as estratégias forem esgotadas, a tentativa é registrada como falha.
+
+
+%Para reduzir o tempo total de execução, as chamadas à API da LLM poderão ser paralelizadas. A paralelização será aplicada de forma controlada, respeitando limites de taxa da API utilizada e evitando que múltiplas correções concorrentes modifiquem simultaneamente os mesmos arquivos. Para isso, cada tentativa de correção será executada em uma cópia isolada do projeto ou em uma branch temporária.
+
+%A paralelização será utilizada principalmente quando diferentes combinações de vulnerabilidade e estratégia de prompt forem independentes entre si. Nos casos em que uma correção dependa de alterações anteriores no mesmo arquivo ou na mesma funcionalidade, a execução será mantida sequencial para evitar conflitos.
+
+Para reduzir o tempo total de execução, as chamadas à API da LLM associadas a vulnerabilidades distintas poderão ser realizadas em paralelo. Essa paralelização será aplicada de forma controlada, respeitando os limites de taxa da API e garantindo que cada instância opere em uma cópia isolada do projeto ou em um ambiente temporário independente. Dentro de uma mesma instância, entretanto, as estratégias de prompt permanecerão sequenciais, pois a próxima estratégia somente será utilizada quando a anterior não produzir uma correção válida.
+
+\section{Métricas de avaliação}
+
+As métricas foram definidas para avaliar as tentativas de correção sob três perspectivas: remoção do alerta de segurança, preservação funcional e não introdução de novas vulnerabilidades. Como o estudo será conduzido sobre uma aplicação deliberadamente vulnerável, haverá referências conhecidas sobre parte das falhas existentes. Entretanto, a avaliação do \textit{pipeline} será baseada nos alertas efetivamente identificados pela ferramenta SAST, na reanálise após a correção, nos testes automatizados e, quando necessário, na inspeção manual.
+
+Para cada tentativa de correção submetida ao \textit{pipeline}, serão definidas três variáveis binárias:
+
+\begin{itemize}
+    \item $R_j$: resultado da reanálise estática. Assume valor 1 se a vulnerabilidade original deixou de ser detectada após a correção, e 0 caso contrário.
+    \item $F_j$: resultado dos testes automatizados. Assume valor 1 se os testes do projeto passaram após a correção, e 0 caso contrário.
+    \item $M_j$: introdução de novas vulnerabilidades. Assume valor 1 se nenhuma nova \textit{issue} de segurança foi introduzida após a correção, e 0 caso contrário.
+\end{itemize}
+
+A métrica principal será a Taxa de Remediação Validada (TRV), calculada da seguinte forma:
+
+\[
+\text{TRV} = \frac{\sum_{j=1}^{m} (R_j \times F_j \times M_j)}{m}
+\]
+
+Nessa fórmula, $m$ representa o número total de tentativas de correção realizadas no projeto. O uso da multiplicação garante que uma tentativa só seja considerada uma remediação validada quando os três critérios forem satisfeitos simultaneamente: a vulnerabilidade original deixou de ser detectada, os testes continuaram passando e nenhuma nova vulnerabilidade de segurança foi introduzida.
+
+Também serão calculadas métricas complementares. A Taxa de Remoção de \textit{Issues} (TRI) indicará a proporção de tentativas em que a \textit{issue} original deixou de ser detectada:
+
+\[
+\text{TRI} = \frac{\sum_{j=1}^{m} R_j}{m}
+\]
+
+A Taxa de Preservação Funcional (TPF) indicará a proporção de tentativas em que os testes automatizados passaram após a correção:
+
+\[
+\text{TPF} = \frac{\sum_{j=1}^{m} F_j}{m}
+\]
+
+A Taxa de Não Introdução de Novas \textit{Issues} (TNINI) indicará a proporção de tentativas em que nenhuma nova \textit{issue} de segurança foi introduzida:
+
+\[
+\text{TNINI} = \frac{\sum_{j=1}^{m} M_j}{m}
+\]
+
+A Taxa de Falha Funcional (TFF) indicará a proporção de tentativas em que a correção comprometeu os testes automatizados:
+
+\[
+\text{TFF} = 1 - \text{TPF}
+\]
+
+Além dessas métricas por tentativa, será calculada a Redução Relativa de \textit{Issues} de Segurança (RRIS), considerando apenas as correções aceitas como válidas:
+
+\[
+\text{RRIS} = \frac{I_{\text{antes}} - I_{\text{depois}}}{I_{\text{antes}}}
+\]
+
+Nessa fórmula, $I_{\text{antes}}$ representa o número de \textit{issues} de segurança detectadas antes da aplicação das correções aceitas, enquanto $I_{\text{depois}}$ representa o número de \textit{issues} de segurança detectadas após essas correções. Essa métrica indica a redução percentual de alertas de segurança no projeto.
+
+A RRIS será interpretada com cautela, pois a redução de \textit{issues} na ferramenta SAST não garante, isoladamente, que todas as vulnerabilidades foram corretamente corrigidas. Por esse motivo, ela será analisada em conjunto com a execução dos testes automatizados e, quando necessário, com inspeção manual de uma amostra das correções geradas.
+
+Essas métricas permitirão comparar o desempenho das diferentes estratégias de \textit{prompt} no projeto. Dessa forma, será possível observar se prompts com raciocínio guiado, prompts com RAG simplificado e prompts com RAG simplificado combinado ao raciocínio guiado apresentam maior taxa de remediação validada em comparação com prompts simples.
+
+\section{Armazenamento e organização dos dados}
+
+Todos os resultados serão armazenados em uma estrutura padronizada de diretórios e arquivos. Cada execução do pipeline produzirá um registro contendo os dados da vulnerabilidade, o prompt utilizado, a resposta da LLM, o código corrigido, os resultados da reanálise SAST e os resultados dos testes automatizados.
+
+A estrutura de armazenamento seguirá o modelo:
+
+\begin{verbatim}
+outputs/
+  sast_antes/
+  sast_depois/
+  prompts/
+  respostas_llm/
+  codigos_corrigidos/
+  testes/
+  metricas/
+  resultados_consolidados/
+\end{verbatim}
+
+Cada tentativa de correção receberá um identificador único, utilizado para nomear os artefatos gerados durante a execução do \textit{pipeline}. Esse identificador foi definido de forma padronizada para facilitar a rastreabilidade dos resultados, permitindo identificar, a partir do próprio nome do arquivo, o caso analisado, a categoria do OWASP Top 10, o tipo de vulnerabilidade, a estratégia de \textit{prompt}, o número da execução e o tipo de artefato produzido.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.50\textwidth]{figuras/nomenclatura.png}
+\caption{Estrutura do identificador utilizado na nomenclatura dos artefatos gerados pelo \textit{pipeline}.}
+\label{fig:nomenclatura_artefatos}
+\end{figure}
+
+
+Esse identificador permitirá rastrear cada resultado desde o alerta inicial até a correção final. Também permitirá comparar tentativas diferentes para a mesma vulnerabilidade, realizadas com estratégias de \textit{prompt} distintas.
+
+Os resultados consolidados serão armazenados em formato CSV, contendo os campos:
+
+\begin{enumerate}
+    \item identificador da execução;
+    \item projeto analisado;
+    \item vulnerabilidade;
+    \item categoria OWASP;
+    \item CWE;
+    \item ferramenta SAST;
+    \item estratégia de prompt;
+    \item uso de RAG simplificado;
+    \item modelo utilizado;
+    \item \textit{issue} detectada antes da correção;
+    \item \textit{issue} detectada depois da correção;
+    \item resultado dos testes;
+    \item novas \textit{issues} introduzidas;
+    \item tempo de execução;
+    \item classificação final da tentativa.
+\end{enumerate}
+
+Essa organização garante rastreabilidade e facilita a posterior geração de tabelas, gráficos e análises comparativas.
+
+\section{Análise dos dados}
+
+A análise dos dados será realizada a partir da comparação entre as estratégias de prompt e os tipos de vulnerabilidade. Inicialmente, será calculada a Taxa de Remediação Validada para cada estratégia de \textit{prompt} utilizada.
+
+A análise buscará responder às perguntas de pesquisa definidas no Capítulo 1, observando principalmente:
+
+\begin{enumerate}
+    \item Se o \textit{pipeline} consegue corrigir vulnerabilidades reais identificadas por SAST sem quebrar os testes;
+    \item Se prompts com raciocínio guiado apresentam melhor desempenho do que prompts simples;
+    \item Se o uso de RAG simplificado melhora a taxa de remediação validada;
+    \item Se a combinação entre RAG simplificado e raciocínio guiado apresenta melhor desempenho que as estratégias isoladas;
+    \item Quais tipos de vulnerabilidades ou regras SAST apresentam maior dificuldade de correção;
+    \item Quais limitações práticas surgem ao aplicar o \textit{pipeline} em um projeto \textit{open source}.
+\end{enumerate}
+
+\section{Limitações do estudo}
+
+Apesar do cuidado metodológico, este estudo apresenta limitações. A primeira delas diz respeito à ferramenta SAST. Ferramentas de análise estática podem gerar falsos positivos e falsos negativos. Nesta pesquisa, não será realizada uma etapa prévia para identificar ou eliminar possíveis falsos positivos. Assim, todas as \textit{issues} detectadas pela ferramenta serão submetidas ao \textit{pipeline} de correção. Consequentemente, o desaparecimento de uma \textit{issue} após a execução do \textit{pipeline} não garante, de forma absoluta, que uma vulnerabilidade real tenha sido corrigida, pois o alerta original pode não corresponder a uma falha efetiva. Por esse motivo, os resultados serão analisados em conjunto com a reanálise SAST, a execução dos testes automatizados e, quando necessário, por meio de inspeção manual.
+
+A segunda limitação está relacionada ao comportamento não determinístico das LLMs. Mesmo utilizando o mesmo prompt, o modelo pode gerar respostas diferentes dependendo dos parâmetros da chamada, da versão do modelo e das condições da API. Para reduzir essa variabilidade, os parâmetros de execução serão registrados e, sempre que possível, mantidos constantes.
+
+A terceira limitação está relacionada ao próprio RAG simplificado. Como a recuperação será feita por categoria de vulnerabilidade, e não por similaridade semântica em uma base vetorial, o método pode recuperar documentos menos específicos em alguns casos. Entretanto, essa escolha é adequada ao escopo do trabalho, pois permite avaliar de forma controlada o efeito do contexto técnico adicional sem transformar a implementação do RAG no foco principal da pesquisa.Ma
+
+A quarta limitação refere-se à utilização de uma única aplicação como objeto de estudo. Embora o OWASP Juice Shop seja uma aplicação amplamente utilizada em pesquisas e treinamentos de segurança, os resultados obtidos refletem o comportamento do \textit{pipeline} nesse contexto específico. Projetos desenvolvidos com outras linguagens, arquiteturas, frameworks ou práticas de desenvolvimento podem apresentar características distintas, influenciando tanto a detecção das \textit{issues} quanto a qualidade das correções geradas pela LLM. Dessa forma, os resultados deste trabalho não devem ser generalizados para todos os projetos de software, mas interpretados como uma avaliação da abordagem proposta em um cenário representativo.
+
+\section{Declaração de Uso de Inteligência Artificial}
+
+Durante a elaboração deste trabalho, foram utilizadas ferramentas de inteligência artificial generativa como apoio em etapas do processo de escrita e organização do conteúdo. Essas ferramentas auxiliaram, principalmente, na revisão de trechos do texto, na melhoria da clareza de determinadas explicações, na estruturação de ideias, na elaboração de exemplos de código e na organização de diagramas e tabelas.
+
+O uso dessas ferramentas não substituiu o trabalho dos autores. As decisões sobre o tema, a metodologia, os experimentos, as interpretações e a versão final do texto foram realizadas pelos autores. Todo conteúdo gerado com auxílio de inteligência artificial foi revisado, ajustado e validado antes de ser incorporado ao trabalho.
+
+Dessa forma, a inteligência artificial foi utilizada apenas como ferramenta de apoio, enquanto a responsabilidade pelo conteúdo final, pelas escolhas metodológicas e pelas conclusões apresentadas são de responsabilidade integral dos autores.
+
+\section{Cronograma}
+
+As principais atividades previstas para o desenvolvimento do TCC 2 são apresentadas na Tabela~\ref{tab:cronograma}. O cronograma contempla desde a preparação do ambiente experimental utilizando o OWASP Juice Shop até a análise dos resultados e a redação final do trabalho.
+
+\begin{table}[H]
+\centering
+\caption{Cronograma previsto para o desenvolvimento do TCC 2}
+\label{tab:cronograma}
+\renewcommand{\arraystretch}{1.35}
+\begin{tabularx}{\textwidth}{|>{\raggedright\arraybackslash}X|>{\centering\arraybackslash}p{0.30\textwidth}|}
+\hline
+\textbf{Atividade} & \textbf{Período previsto} \\
+\hline
+Preparação do ambiente experimental com o OWASP Juice Shop & 25 a 31 de agosto de 2026 \\
+\hline
+Estudo do código-fonte e identificação das vulnerabilidades elegíveis & 01 a 07 de setembro de 2026 \\
+\hline
+Execução inicial do SAST e catalogação das \textit{issues} & 08 a 14 de setembro de 2026 \\
+\hline
+Implementação e ajustes do \textit{pipeline} automatizado & 15 a 21 de setembro de 2026 \\
+\hline
+Implementação do RAG simplificado & 22 a 28 de setembro de 2026 \\
+\hline
+Paralelização das chamadas à API da LLM & 29 de setembro a 05 de outubro de 2026 \\
+\hline
+Definição e refinamento das estratégias de \textit{prompt} & 06 a 12 de outubro de 2026 \\
+\hline
+Execução do \textit{pipeline} sobre as vulnerabilidades selecionadas & 13 a 26 de outubro de 2026 \\
+\hline
+Coleta e consolidação das métricas experimentais & 27 de outubro a 02 de novembro de 2026 \\
+\hline
+Análise dos resultados e discussão dos achados & 03 a 09 de novembro de 2026 \\
+\hline
+Escrita, revisão e preparação da versão para entrega à orientadora & 10 a 13 de novembro de 2026 \\
+\hline
+\end{tabularx}
+\end{table}

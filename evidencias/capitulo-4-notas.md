@@ -362,3 +362,21 @@ as chamadas foram serializadas (`cliente_openai.py`, linha 29, trava única) e o
 
 SHA-256 após a revisão: capítulo 3 `98d97bd5e45367709102f8cbe6515bf1fbab1b5d73b4e1c47fb3674d1740125c`, capítulo 4
 `b6fb92c3dd71c7c2f040c649345417c7a6ba2fc9ba1f6a8e7b4f10c575981515`.
+
+## Versão LaTeX para o Overleaf — 13/11/2026
+
+`overleaf/oficial/implementacao.tex` foi escrito a partir de `manuscrito/04-implementacao.md`
+(SHA-256 `b6fb92c3dd71c7c2f040c649345417c7a6ba2fc9ba1f6a8e7b4f10c575981515`), no mesmo padrão do Capítulo 3.
+Conferência automática: 78 parágrafos, 7 blocos de código e 2 legendas idênticos ao Markdown.
+
+- Blocos de código em `verbatim` com `\footnotesize`. No JSON da 4.2.6, os valores de `trecho_original` e
+  `trecho_corrigido` foram quebrados depois de cada `\n` para caber na largura da página. Os caracteres são os mesmos.
+- Figuras 4 e 5 eram diagramas Mermaid, sem PNG. Os códigos foram salvos em `overleaf/oficial/figuras/etapas-pipeline.mmd`
+  e `worktrees.mmd`. O `.tex` usa `\IfFileExists`: enquanto `etapas-pipeline.png` e `worktrees.png` não existirem, aparece
+  um quadro no lugar da figura, sem erro de compilação.
+- Citação: `(OPENAI, 2026)` virou `\cite{openai_gpt41mini}`.
+- O identificador longo do exemplo usa `\allowbreak` depois de cada sublinhado, para poder quebrar a linha.
+- Remissões ao Capítulo 3 usam `\ref` com os rótulos de `metodologia.tex`. O `metodologia.tex` passou a usar `\ref` para
+  o Capítulo 4 (`cap:implementacao`, `sec:impl-fluxo`, `sec:impl-metricas`, `sec:impl-execucao`). Só o Capítulo 5 segue
+  por extenso nos dois arquivos.
+- A marcação `[PENDENTE]` das capturas do painel foi mantida em negrito, visível no PDF.
