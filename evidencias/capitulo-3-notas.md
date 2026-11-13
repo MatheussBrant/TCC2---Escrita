@@ -318,3 +318,9 @@ existe no do GPT-4.1 mini.
 
 SHA-256 do capítulo após a revisão:
 `1e55131314c05a8e3e6190b395ffdf995a73826ca34e138235f635c7c447c6f3`.
+
+## Revisão de redundâncias com o Capítulo 4 — 13/11/2026
+
+Registro completo em `capitulo-4-notas.md`, seção de mesmo nome. Neste capítulo, a 3.11 deixou o procedimento da RRIS
+para a 4.5 e a 3.1 passou a citar os testes antes da nova análise estática. SHA-256:
+`98d97bd5e45367709102f8cbe6515bf1fbab1b5d73b4e1c47fb3674d1740125c`.

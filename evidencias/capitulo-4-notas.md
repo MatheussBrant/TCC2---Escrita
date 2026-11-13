@@ -324,3 +324,41 @@ que já estavam no Capítulo 4 ou que pertencem à implementação. Neste capít
   recusa da retomada quando as condições mudam (`src/pipeline/orquestracao/preflight.py`, linha 252).
 
 SHA-256 do texto após estes ajustes: `8a3244dd3218653c98888c6deded264e830f2a99d72e92285b2e6c8b1d6188b7`.
+
+## Revisão de redundâncias e contradições entre os Capítulos 3 e 4 — 13/11/2026
+
+Pedido do Caio: deixar em um só capítulo os trechos grandes repetidos e apontar contradições. Regra usada: o que o
+modelo recebe e como o resultado é medido fica no Capítulo 3. Como o _pipeline_ faz isso fica no Capítulo 4. Frases
+curtas de remissão foram mantidas.
+
+**Trechos que ficaram só em um capítulo:**
+
+| Assunto | Ficou em | Retirado de | O que sobrou no outro |
+|---|---|---|---|
+| Base comum do _prompt_, restrições e os seis campos do JSON | 3.7 | 4.2.4 | Só o que é de implementação: papel, janela de código, leitura na _worktree_, exigência de âncora única, motivo da lista de edições e gravação do _prompt_ |
+| Sete elementos dos documentos do RAG | 3.8 (lista) | 4.2.5 | Remissão à Seção 3.8 |
+| Sequência do fluxo (bloco de texto da 4.2.7) | 3.9 (13 etapas e Figura 2) | 4.2.7 | Parágrafo com paralelismo, consolidação e RRIS |
+| _Baseline_ e falhas persistentes | 3.10 | 4.2.3 | Origem do _baseline_ (574 testes) e motivo da reexecução |
+| Motivo do conjunto D e uso na regra de parada | 3.9, 3.10 e Tabela 4 | 4.2.3 | Exemplo do teste, lista mantida e cálculo das três interpretações na mesma validação (`F_sem_separacao`, `F_marcador`, `F_criterio` em cada registro) |
+| Procedimento da RRIS (integridade, ordem, conflitos) | 4.5 | 3.11 | Definição da métrica, fórmula e remissão à 4.5. A conferência do _hash_ dos _patches_ passou para a 4.5 (`avaliacao_conjunta_rris.py`, linha 39) |
+| Versão final dos nomes e mapas de correspondência | 3.12 | 4.4 (duas frases) | `SEMOWASP` e pasta `outputs/resultados_finais/`, com remissão à 3.12 |
+
+**Contradições corrigidas:**
+
+- Figura 4: mostrava testes e reanálise SAST como ramos paralelos. Passou a mostrar testes e depois SAST, como a Figura 2,
+  a Seção 3.9 e o código.
+- Seção 3.1: dizia "executou novamente a análise estática e os testes". Passou a "executou os testes automatizados e,
+  em seguida, uma nova análise estática".
+- Seção 4.2.1: dizia que o Juice Shop vinha "do seu repositório". A Tabela 1 indica o _fork_, e o `Dockerfile` clona
+  `caiolamego/juice-shop-tcc`. O texto passou a citar o _fork_ da Tabela 1.
+
+**Conferido sem contradição:** o comparador (`comparacao.py`, linhas 197 a 201) deixa R indeterminado quando só a
+contagem cai, como dizem a 3.10 e a 4.4. Os 78 casos estão em 46 arquivos distintos, como diz a 4.2.3. O perfil exclui
+`.github/`, `.npmrc` e `data/static/codefixes/`, coerente com as exclusões da 3.5.
+
+**Contradição apontada e não corrigida:** a Tabela 5 (cronograma) traz "Paralelização das chamadas à API da LLM", mas
+as chamadas foram serializadas (`cliente_openai.py`, linha 29, trava única) e o paralelismo foi dos casos, como diz a
+4.2.6. O Caio vai ajustar o cronograma.
+
+SHA-256 após a revisão: capítulo 3 `98d97bd5e45367709102f8cbe6515bf1fbab1b5d73b4e1c47fb3674d1740125c`, capítulo 4
+`b6fb92c3dd71c7c2f040c649345417c7a6ba2fc9ba1f6a8e7b4f10c575981515`.
