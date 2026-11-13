@@ -85,10 +85,9 @@ This work evaluated an automated pipeline integrating Large Language Models (LLM
 
 - Capítulo 3 — Tabela 1 — Condições de referência do experimento
 - Capítulo 3 — Tabela 2 — Constituição do catálogo ampliado
-- Capítulo 3 — Tabela 3 — Parâmetros de geração registrados nas campanhas finais
-- Capítulo 3 — Tabela 4 — Informações fornecidas em cada estratégia
-- Capítulo 3 — Tabela 5 — Tratamento das falhas nos testes para calcular F
-- Capítulo 3 — Tabela 6 — Cronograma previsto para o desenvolvimento da pesquisa
+- Capítulo 3 — Tabela 3 — Informações fornecidas em cada estratégia
+- Capítulo 3 — Tabela 4 — Tratamento das falhas nos testes para calcular F
+- Capítulo 3 — Tabela 5 — Cronograma previsto para o desenvolvimento da pesquisa
 - Capítulo 4 — Tabela 1 — Tecnologias e responsabilidades na solução
 - Capítulo 4 — Tabela 2 — Organização principal do repositório
 - Capítulo 4 — Tabela 3 — Informações preservadas por execução

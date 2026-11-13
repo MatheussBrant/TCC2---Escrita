@@ -307,3 +307,20 @@ SHA-256 do texto após esta revisão: `24c3cfb051da2941779d79b21bee4efef2e0071b2
 **Decisões do Caio (12/11/2026):** a divergência da Seção 3.9 foi corrigida no Capítulo 3 (registro em
 `capitulo-3-notas.md`). O link do repositório fica apontando para a `main`. O itálico será tratado na passagem para o
 Overleaf. Os cortes feitos no Notion, inclusive as definições de _hash_ e _commit_, foram intencionais.
+
+## Ajustes decorrentes da revisão do Capítulo 3 — 13/11/2026
+
+A revisão do Caio no Capítulo 3 (registro completo em `capitulo-3-notas.md`, seção de 13/11/2026) retirou trechos
+que já estavam no Capítulo 4 ou que pertencem à implementação. Neste capítulo:
+
+- Remissões de tabela renumeradas: a interpretação sem separação passou a citar a Tabela 4, e as combinações de
+  _prompt_ a Tabela 3 (a antiga Tabela 3 do Capítulo 3, de parâmetros de geração, saiu).
+- 4.2.5: a base passou a ser descrita como "14 documentos escritos em português".
+- 4.2.6: recebeu o esforço de raciocínio (desativado nos Luna, não enviado no GPT-4.1 mini) e o reaproveitamento de
+  respostas e de validação desligado, os dois conferidos nos contratos das campanhas finais.
+- 4.4: o `SEMOWASP` e a frase da nomenclatura passaram a remeter ao Capítulo 5, onde está a classificação complementar.
+  A explicação de `A06` e `PATHTRAV` no exemplo foi trocada por remissão à Figura 3, que fica como a explicação única.
+- 4.6: o _preflight_ deixou de remeter à Seção 3.9. Entraram a data de conclusão das três campanhas (6/11/2026) e a
+  recusa da retomada quando as condições mudam (`src/pipeline/orquestracao/preflight.py`, linha 252).
+
+SHA-256 do texto após estes ajustes: `8a3244dd3218653c98888c6deded264e830f2a99d72e92285b2e6c8b1d6188b7`.

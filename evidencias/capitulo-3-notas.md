@@ -246,3 +246,75 @@ do laço dos grupos (experimento em `2e8f9a9`). A Figura 2 já mostrava essa ord
 parágrafo passou a dizer que a reanálise veio depois das verificações de compilação e dos testes, como na figura.
 Nenhuma outra parte do capítulo foi alterada. SHA-256 do capítulo após a correção:
 `cc8753e396122cb8f957b67a43dc65567cfc9fae16c1dc42f0e621d141288b3b`.
+
+## Revisão do Caio no Notion — 13/11/2026
+
+**Fonte:** página "Cap 3 - Revisado" do Notion (`416a7d2d-0315-8042-85b3-eb3fa37d0ce6`), com 40 comentários do Caio
+feitos entre 12/11/2026 23:20 e 13/11/2026 15:40 UTC. O Notion não foi alterado. O texto da página era igual ao
+`manuscrito/03-metodologia.md` do commit `103b292` (diferenças só de formatação de tabelas e fórmulas), então as
+mudanças foram aplicadas direto no `.md`. Capítulo 4 de referência: `manuscrito/04-implementacao.md` no mesmo commit.
+
+**Comentários e o que foi feito:**
+
+| Seção | Comentário | O que foi feito |
+|---|---|---|
+| 3.3 | Retirar "Esse recurso aproxima..." | Frase retirada |
+| 3.3 | Retirar "A existência dos desafios de código..." | Frase retirada |
+| 3.3 | Retirar o parágrafo do fork | Parágrafo retirado. O fork continua na Tabela 1 |
+| 3.4 | Retirar o parágrafo "A correspondência com uma regra..." | Parágrafo retirado |
+| 3.4 | Tirar "Foram excluídos caminhos... aos modelos" | Duas frases retiradas. As exclusões continuam na 3.5 |
+| 3.5 | Retirar o exemplo do HTML confiável no Angular | Frase retirada |
+| 3.5 | Retirar os ";" no meio de parágrafos | Aplicado ao capítulo inteiro (ver abaixo) |
+| 3.5 | Retirar "Portanto, os 78 casos representam..." | Frase retirada |
+| 3.5 | Resumir os dois parágrafos de escopo em um | Fundidos em um parágrafo de seis frases, com os mesmos três tipos de arquivo e a mesma ressalva |
+| 3.5 | Tirar "Assim, o rótulo não foi deduzido..." | Frase retirada |
+| 3.5 | Tirar o parágrafo dos dois inconclusivos | Parágrafo retirado |
+| 3.5 | Retirar o parágrafo da revisão dos 21 falsos positivos | Parágrafo retirado. A revisão continua no Capítulo 5 (linha 13) |
+| 3.5 | Retirar "Entre as justificativas..." e "Nas campanhas arquivadas..." | Os dois parágrafos retirados (o comentário cobria ambos) |
+| 3.6 | Retirar a frase sobre geração intermediária | Frase retirada |
+| 3.6 | ";" em "dados de treinamento" | Trocado por ponto |
+| 3.6 | Parâmetros e Tabela 3: retirar se já estiverem no Capítulo 4 | Retirados. Temperatura e limite de 4.096 já estavam na 4.2.6. O esforço de raciocínio não estava e foi levado para a 4.2.6. Tabelas renumeradas (4→3, 5→4, 6→5) no Capítulo 3, nas remissões do Capítulo 4 e na lista de tabelas |
+| 3.6 | ";" em "dependeu dos resultados de cada caso" | Trocado por ponto |
+| 3.6 | Parágrafo das chamadas: R, F e M sem explicação e já no Capítulo 4 | Retirado. Repetição e limite de envios já estavam na 4.2.6. O reaproveitamento desligado não estava e foi levado para a 4.2.6 |
+| 3.7 | Janela de 250/60 linhas: já está no Capítulo 4 | Frase retirada. A frase seguinte passou a remeter ao Capítulo 4 |
+| 3.7 | ";" em "acrescentados em conjunto" | Trocado por ponto |
+| 3.7 | Tabela 4: se houver uma igual no Capítulo 4, tirar de lá | O Capítulo 4 não tem tabela equivalente, só remete a ela. Tabela mantida na 3.7, agora Tabela 3 |
+| 3.8 | Versão 2.1 e temas da base: deixar só no Capítulo 4 | Frases retiradas. A 4.2.5 já tinha 14 documentos, temas e documento genérico. Acrescentado "escritos em português". A versão 2.1 continua na Tabela 1 |
+| 3.8 | Retirar "; os metadados permaneceram..." | Trecho retirado |
+| 3.8 | Prioridade CWE, categoria e genérico é implementação | Parágrafo retirado (está na 4.2.5). A etapa 3 da lista do RAG passou a remeter ao Capítulo 4 |
+| 3.8 | Retirar o exemplo da CWE-89 | Parágrafo retirado |
+| 3.8 | "Nos 78 casos... contingência": já está no Capítulo 4 | Frase retirada (está na 4.2.5) |
+| 3.9 | Tirar "gerenciadas por Git worktrees" | Trecho retirado |
+| 3.9 | Critério F citado antes de ser explicado | Acrescentado "detalhado na Seção 3.10" |
+| 3.9 | Preflight: deixar só no Capítulo 4 se já estiver lá | Parágrafo retirado. A 4.6 já descrevia o _preflight_ e deixou de remeter à 3.9. A recusa da retomada com contrato diferente não estava e foi levada para a 4.6 (`preflight.py`, linha 252) |
+| 3.9 | Parágrafo das campanhas não é metodologia | Parágrafo retirado. A data de conclusão foi levada para a 4.6 (último registro de cada campanha em 06/11/2026, às 12:57, 15:09 e 17:20 UTC) |
+| 3.10 | Seleção dos grupos de testes: retirar se já estiver no Capítulo 4 | Parágrafo retirado (está na 4.2.3). A ressalva de cobertura continua na 3.13 |
+| 3.10 | Testes acrescentados na preparação é implementação | Frase retirada (os 16 arquivos estão na 4.2.3). A frase seguinte ganhou "Durante a preparação" |
+| 3.12 | ";" em "diretório da tentativa" | Trocado por ponto |
+| 3.12 | Exemplo da Figura 3: manter aqui, o Capítulo 4 repete | Mantido. Na 4.4, a explicação de `A06` e `PATHTRAV` foi trocada por remissão à Figura 3 |
+| 3.12 | Retirar "Respostas reutilizadas..." | Frase retirada |
+| 3.12 | ";" em "análises complementares" | Trocado por ponto |
+| 3.12 | Classificação complementar é implementação | Parágrafo retirado. O método (41 por CWE, 8 contextuais) já está no Capítulo 5 (linha 190). As remissões da 3.12 e da 4.4 passaram a apontar para o Capítulo 5 |
+| 3.12 | Sem inspeção manual: "acho que pode retirar, melhor confirmar" | Parágrafo retirado. A ausência de inspeção manual (confirmada em 10/11, ver seção acima) virou uma frase da 3.13 |
+| 3.13 | Acrescentar as limitações citadas no Capítulo 4 | Novo parágrafo: aceite só por verificação automática e exigência de âncora única, com 20 de 685 tentativas (15 do GPT-4.1 mini) e remissão à 4.4 |
+| 3.15 | Cronograma já ajustado pelo Caio, datas depois | Tabela não alterada. Só a numeração (Tabela 5) e a frase final, que remetia ao parágrafo retirado da 3.9 e agora remete à 4.6 |
+
+**Pontos e vírgulas:** além dos marcados, foram trocados os da legenda da Figura 2, da frase que apresenta R, F e M na
+3.10, das células da Tabela 4 (antiga 5) e de três frases da 3.11. Ficaram só os ";" no fim dos itens das listas
+numeradas.
+
+**Ajuste derivado:** o termo "contratos" da 3.12 perdeu a definição que estava no parágrafo do _preflight_. Ganhou a
+explicação "que registram as configurações de cada campanha".
+
+**Conferências no experimento (`2e8f9a9`):** nos três contratos em
+`outputs/resultados_finais/OWASP_20261111_V2/*/campanha/contrato_execucao.json`, `cache_llm` e `cache_validacao` estão
+desligados, `temperature` 0 e `max_completion_tokens` 4096. `reasoning_effort: none` aparece nos dois Luna e não
+existe no do GPT-4.1 mini.
+
+**Comentários de evidência retirados junto com o texto** (preservados aqui):
+
+- Depois da antiga Tabela 3: `Evidência dos perfis de geração: tcc2-llm-sast-juiceshop@062a203516fd7f55ce86d9c19dc0f23f6e92ed61; src/pipeline/etapas/e05_geracao_llm/modelos.py; docs/historico/features/10-comparacao-modelos-openai/ENTREGA.md, seção Perfis de geração e custo; README.md da mesma feature, seções 4–5. As finalidades de controle descritas não representam demonstração de optimalidade dos valores ou de equivalência entre modelos.`
+- Depois da classificação complementar: `Evidência: experimento@062a203516fd7f55ce86d9c19dc0f23f6e92ed61; outputs/catalogos/ampliado_v1/catalogo_issues.json; evidencias/classificacao-owasp-complementar-2026-11-11/{manifesto-conferencia.json,decisoes-contextuais.json,revisao-contextual.json}; OWASP/Top10@3a31f35346c3f4e90f350395124382fa53af2afe, 2025/docs/en; Q3.`
+
+SHA-256 do capítulo após a revisão:
+`1e55131314c05a8e3e6190b395ffdf995a73826ca34e138235f635c7c447c6f3`.

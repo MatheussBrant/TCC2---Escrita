@@ -63,9 +63,7 @@ Foi utilizada a versão 20.1.1 do projeto, implementada principalmente em JavaSc
 
 Na versão utilizada nesta pesquisa, o OWASP Juice Shop reúne 113 desafios distribuídos em 16 categorias, abrangendo problemas como exposição de dados sensíveis, injeção, quebra de controle de acesso, validação imprópria de entrada e Cross-Site Scripting (XSS). Os desafios contemplam tipos de risco e fraquezas relacionados a referências de segurança como o OWASP Top 10, o OWASP Application Security Verification Standard (ASVS), o OWASP API Security Top 10 e a Common Weakness Enumeration (CWE). Essa diversidade permite examinar diferentes mecanismos de falha dentro de uma mesma aplicação, mantendo relações entre funcionalidades, dependências e regras de negócio (OWASP Foundation, 2026a).
 
-Além dos desafios de exploração, a versão analisada disponibiliza 33 Coding Challenges, ou desafios de código, nos quais o usuário localiza o trecho vulnerável e identifica uma alternativa de correção. Esse recurso aproxima o uso didático da aplicação das tarefas de identificação e remediação de falhas no código-fonte. Nesta pesquisa, as propostas de correção foram geradas pelos modelos de linguagem, sem utilizar as alternativas desses exercícios como respostas fornecidas ao pipeline. A existência dos desafios de código contribuiu para caracterizar o Juice Shop como um objeto de estudo voltado também à compreensão e à correção de vulnerabilidades.
-
-A versão analisada foi obtida do fork [caiolamego/juice-shop-tcc](https://github.com/caiolamego/juice-shop-tcc), uma cópia do repositório original mantida separadamente. Todas as tentativas partiram da mesma base de código, sob as condições de referência resumidas na Tabela 1. Os desafios pedagógicos apresentados nesta seção caracterizam a aplicação, enquanto o conjunto submetido ao experimento foi determinado pelos alertas produzidos pelo detector no escopo definido. Assim, a quantidade de desafios disponíveis não corresponde ao número de casos selecionados para as campanhas, cuja constituição é descrita na Seção 3.5.
+Além dos desafios de exploração, a versão analisada disponibiliza 33 Coding Challenges, ou desafios de código, nos quais o usuário localiza o trecho vulnerável e identifica uma alternativa de correção. Nesta pesquisa, as propostas de correção foram geradas pelos modelos de linguagem, sem utilizar as alternativas desses exercícios como respostas fornecidas ao pipeline.
 
 <!-- Evidência da caracterização: OWASP Foundation, página oficial do Juice Shop e guia de Coding Challenges; experimento@062a203516fd7f55ce86d9c19dc0f23f6e92ed61; alvo@f915bddd82790d0f3018902d36ae9b4241a5f51f: data/static/challenges.yml (113 entradas, 16 categorias), data/static/codefixes/*.info.yml (33 arquivos) e lib/codingChallenges.ts. Conferência em evidencias/juice-shop-objeto-estudo-2026-11-11.json. -->
 
@@ -79,23 +77,19 @@ A detecção combinou regras disponibilizadas pelo Semgrep e regras locais elabo
 
 As regras utilizadas incluíram a busca por padrões de código e o acompanhamento do fluxo de dados. Na busca por padrões, a ferramenta procura construções descritas pela regra, como uma consulta com expressão dinâmica. No acompanhamento de fluxo, denominado taint analysis, a regra define origens de entrada e operações de interesse, permitindo sinalizar quando dados dessas origens alcançam essas operações. Uma regra local, por exemplo, relacionou valores recebidos no corpo ou nos parâmetros da requisição à atualização de documentos selecionados por identificador. Esse mecanismo auxilia a localizar operações que exigem verificação de autorização no contexto da rota ([documentação de análise de fluxo do Semgrep](https://docs.semgrep.dev/writing-rules/data-flow/taint-mode/overview)).
 
-A correspondência com uma regra foi tratada como indicação de um possível problema. A interpretação de cada ocorrência dependeu do contexto, pois uma verificação anterior, uma conversão de tipo ou uma restrição de acesso poderia impedir a condição de insegurança sugerida pelo padrão. Por isso, os alertas receberam os rótulos de triagem apresentados na Seção 3.5. A aplicação de uma regra e a confirmação de uma vulnerabilidade foram consideradas etapas distintas.
-
-Para as campanhas finais, o conjunto de regras e as exclusões foram reunidos em um perfil fixado e identificado por verificações de integridade. Essa medida limitou variações do detector entre as execuções. Foram excluídos caminhos relacionados a dependências, arquivos gerados e outros elementos fora do escopo definido. Os arquivos de soluções pedagógicas do próprio Juice Shop também ficaram fora do escopo operacional, para não serem fornecidos como soluções aos modelos.
+Para as campanhas finais, o conjunto de regras e as exclusões foram reunidos em um perfil fixado e identificado por verificações de integridade. Essa medida limitou variações do detector entre as execuções.
 
 <!-- Evidência das regras: contratos das campanhas finais, perfil_sha256 a9ad1f21b6e4ce3f51dd58e2ff5c4797c90d9bc87384887d17eda8ab6f6844c2; config/perfis/ampliado_piloto_v1/{perfil.json,regras_remotas.yaml,regras_locais.yaml}; regra tcc.mongodb.security.unscoped-document-write. Contagens e relação 52/78 em evidencias/regras-e-casos-2026-11-11.json. -->
 
 ### 3.5 Seleção das vulnerabilidades de segurança
 
-Neste estudo, um caso corresponde a uma ocorrência de alerta selecionada para receber propostas de correção. Cada caso foi definido pela regra que originou o alerta, pelo arquivo e pela localização do trecho na versão analisada, recebendo um identificador próprio no catálogo. Uma mesma regra pode originar vários casos ao encontrar o padrão em locais diferentes. Por exemplo, a regra de uso de HTML tratado como confiável no Angular identificou duas ocorrências em posições distintas do mesmo arquivo de administração; cada ocorrência foi mantida como um caso separado.
+Neste estudo, um caso corresponde a uma ocorrência de alerta selecionada para receber propostas de correção. Cada caso foi definido pela regra que originou o alerta, pelo arquivo e pela localização do trecho na versão analisada, recebendo um identificador próprio no catálogo. Uma mesma regra pode originar vários casos ao encontrar o padrão em locais diferentes.
 
-O catálogo é o conjunto organizado desses registros. Cada caso pôde receber tentativas com diferentes modelos e estratégias de prompt; uma tentativa corresponde à geração e à avaliação de uma proposta de correção para aquele caso. Portanto, os 78 casos representam 78 ocorrências selecionadas, e o número de tentativas depende do percurso de cada uma pelas estratégias. A existência de um caso no catálogo também não significa que a vulnerabilidade tenha sido confirmada, pois os alertas foram mantidos com seus respectivos rótulos de triagem.
+O catálogo é o conjunto organizado desses registros. Cada caso pôde receber tentativas com diferentes modelos e estratégias de prompt. Uma tentativa corresponde à geração e à avaliação de uma proposta de correção para aquele caso. A existência de um caso no catálogo também não significa que a vulnerabilidade tenha sido confirmada, pois os alertas foram mantidos com seus respectivos rótulos de triagem.
 
 O scan combinado arquivado produziu 124 alertas, dos quais 46 foram classificados como fora do escopo. Os 78 restantes constituíram o catálogo ampliado utilizado nas campanhas finais. A seleção partiu das regras e das condições de análise apresentadas na Seção 3.4. Alertas distintos no mesmo arquivo permaneceram separados conforme sua localização, sem a deduplicação por regra e arquivo utilizada em uma etapa anterior do projeto.
 
-Os critérios de escopo delimitaram a avaliação às implementações das funcionalidades da aplicação e às alterações que poderiam ser examinadas pela análise estática e pelos testes do Juice Shop. Os alertas excluídos incidiam sobre exemplos dos desafios de código, arquivos de automação do repositório e configurações do gerenciador de pacotes npm. Os exemplos dos Coding Challenges, localizados em `data/static/codefixes/`, apresentam alternativas de implementação para os exercícios pedagógicos. Sua exclusão manteve o conjunto de correção concentrado no código das funcionalidades e evitou incorporar essas alternativas como soluções fornecidas aos modelos.
-
-Os arquivos de automação do GitHub, em `.github/workflows/`, e os arquivos de configuração `.npmrc` tratam de aspectos de integração contínua, execução de tarefas e gerenciamento de dependências. Esses aspectos ficaram fora do recorte de correção das funcionalidades, e suas propriedades de segurança não eram avaliadas pela suíte de testes da aplicação. Portanto, a classificação como fora do escopo expressou uma decisão sobre os tipos de arquivo e de problema abrangidos pelo experimento, sem determinar se cada alerta correspondia a uma falha real ou a um falso positivo. A Tabela 2 apresenta a distribuição das exclusões.
+Os critérios de escopo limitaram a avaliação ao código das funcionalidades da aplicação, que podia ser examinado pela análise estática e pelos testes do Juice Shop. Foram excluídos os alertas nos exemplos dos Coding Challenges, localizados em `data/static/codefixes/`, nos arquivos de automação do GitHub, em `.github/workflows/`, e nos arquivos de configuração do npm, `.npmrc`. Os exemplos dos Coding Challenges contêm alternativas de correção dos exercícios pedagógicos, e sua exclusão evitou fornecê-las aos modelos como soluções. Os outros dois tipos de arquivo tratam de integração contínua e gerenciamento de dependências, aspectos cuja segurança não era avaliada pela suíte de testes da aplicação. A exclusão expressou uma decisão sobre o recorte do experimento, sem determinar se cada alerta correspondia a uma falha real ou a um falso positivo. A Tabela 2 apresenta a distribuição das exclusões.
 
 <!-- Evidência das exclusões: outputs/catalogos/ampliado_v1/exclusoes.json (46 registros: 31 em data/static/codefixes/, 13 em .github/workflows/, dois em .npmrc e frontend/.npmrc); scripts/auditoria/classificar_scan_combinado.py; docs/protocolo_experimental.md, seção de exclusão de caminhos. Conferência em evidencias/exclusoes-escopo-2026-11-11.json. -->
 
@@ -120,19 +114,11 @@ Para cada caso, foram registrados identificador, regra, arquivo e localização,
 
 Os rótulos confirmados e inconclusivos tiveram origem nos registros de triagem versionados durante a preparação do experimento. Cada registro associou uma ocorrência a uma classificação e a uma justificativa sobre o contexto do código. Nos casos confirmados, as justificativas relacionaram o alerta a condições de insegurança identificadas, como dados da requisição utilizados em consultas sem parametrização ou informações expostas por rotas públicas. Quando pertinente, também foram registrados vínculos com os desafios da aplicação. Essa confirmação se refere à conclusão da triagem, não à aprovação de uma correção nem à demonstração por testes de exploração em todos os casos.
 
-Na consolidação do catálogo, o código reutilizou as classificações quando houve correspondência entre regra, arquivo e intervalo do alerta na revisão fixada. Divergências puderam ser tratadas por uma revisão explícita, preservada com sua justificativa. Assim, o rótulo não foi deduzido apenas da correspondência com uma regra do Semgrep: o processo incorporou as decisões documentadas da triagem e verificou sua associação às ocorrências analisadas.
-
-Os dois casos inconclusivos permaneceram sem evidência suficiente para confirmar ou descartar a falha indicada. Em um deles, o alerta incidiu sobre uma consulta intermediária na verificação de estoque, sem demonstrar o caminho completo de alteração da cesta. No outro, uma rota servia arquivos de quarentena, mas os registros não demonstravam acesso fora do diretório ou impacto associado a um arquivo específico. Essa classificação preservou a incerteza, em vez de tratar a ausência de confirmação como falso positivo.
-
-Os 21 casos apontados pela LLM como falsos positivos foram revisados pelos dois autores, que examinaram o código, o contexto de cada alerta e a regra correspondente do Semgrep. A revisão confirmou os rótulos ao considerar que os trechos não atendiam às condições de insegurança indicadas pelas regras nos contextos analisados. Essa avaliação distinguiu a identificação de um padrão potencialmente inseguro da existência da falha apontada no uso específico do código.
-
-Entre as justificativas registradas estavam tokens sintéticos utilizados em testes unitários e o uso de eval no CAPTCHA para calcular uma expressão formada por números aleatórios e operadores definidos internamente, sem entrada controlada pelo usuário. Nesses casos, o padrão identificado pela regra não foi considerado suficiente para caracterizar a vulnerabilidade indicada. A confirmação manual referiu-se aos 21 falsos positivos; não representou uma declaração de ausência de outras falhas na aplicação.
-
-Nas campanhas arquivadas, os rótulos de triagem não foram utilizados para retirar casos do conjunto de 78. A confirmação dos rótulos e a definição do recorte utilizado para calcular as métricas são procedimentos distintos.
+Na consolidação do catálogo, o código reutilizou as classificações quando houve correspondência entre regra, arquivo e intervalo do alerta na revisão fixada. Divergências puderam ser tratadas por uma revisão explícita, preservada com sua justificativa.
 
 ### 3.6 Modelos de linguagem e condições de geração
 
-O experimento incluiu os modelos GPT-4.1 mini, GPT-5.6 Luna e GPT-6 Luna. A seleção combinou uma referência já utilizada no projeto com duas famílias mais recentes, escolhidas por sua proposta de uso econômico. O GPT-5.6 Luna foi incluído como geração intermediária, enquanto o GPT-6 Luna acrescentou a geração mais recente do trio. Essa composição permitiu investigar se a adoção de modelos mais recentes oferecia vantagens na correção dos casos avaliados e no custo de obtenção de uma correção aceita, sem presumir superioridade pela geração ou pelo preço.
+O experimento incluiu os modelos GPT-4.1 mini, GPT-5.6 Luna e GPT-6 Luna. A seleção combinou uma referência já utilizada no projeto com duas famílias mais recentes, escolhidas por sua proposta de uso econômico. Essa composição permitiu investigar se a adoção de modelos mais recentes oferecia vantagens na correção dos casos avaliados e no custo de obtenção de uma correção aceita, sem presumir superioridade pela geração ou pelo preço.
 
 A escolha inicial do GPT-4.1 mini considerou a viabilidade experimental, o custo das chamadas e a adequação ao fluxo automatizado. Como a avaliação envolveu diferentes casos e estratégias de prompt, foi necessário considerar o consumo acumulado de tokens durante as gerações. A opção por uma versão menor da família GPT-4.1 procurou conciliar esse requisito com os recursos necessários para receber o contexto do código e produzir propostas de alteração. Sua utilização nas execuções exploratórias também forneceu registros de custo, consumo e resultados, permitindo mantê-lo como referência na comparação realizada sob as condições comuns das campanhas finais.
 
@@ -140,29 +126,11 @@ A adequação técnica também envolveu a forma de interação com o pipeline. S
 
 A utilização de modelos de um mesmo provedor também respondeu a uma condição operacional do estudo. Durante a preparação, foram encontradas dificuldades de acesso ao servidor de inferência do Qwen no Colab, por meio do ngrok, e de retorno das requisições. Por esse motivo, os autores optaram por utilizar a API da OpenAI nos três tratamentos, reduzindo diferenças de infraestrutura de hospedagem entre eles. Essa decisão decorreu das condições de execução encontradas, sem constituir uma avaliação da qualidade das correções que o Qwen poderia produzir em uma infraestrutura funcional.
 
-A comparação examinou diferenças de eficácia, custo e tempo dos três modelos no mesmo pipeline. A seleção não pressupôs equivalência de arquitetura, tamanho ou dados de treinamento; cada modelo e sua configuração foram avaliados em conjunto, sem isolar o efeito causal da geração à qual pertenciam.
+A comparação examinou diferenças de eficácia, custo e tempo dos três modelos no mesmo pipeline. A seleção não pressupôs equivalência de arquitetura, tamanho ou dados de treinamento. Cada modelo e sua configuração foram avaliados em conjunto, sem isolar o efeito causal da geração à qual pertenciam.
 
 <!-- Evidência da justificativa de seleção: tcc2-llm-sast-juiceshop@062a203516fd7f55ce86d9c19dc0f23f6e92ed61; docs/historico/features/10-comparacao-modelos-openai/README.md, seções 1–3; decisão de 02/11/2026. -->
 
-Os parâmetros de geração estão apresentados na Tabela 3. A temperatura controla a variação das respostas e foi fixada em zero para favorecer a consistência. O limite de completamento define a quantidade máxima de tokens gerados por chamada; foram adotados 4.096 tokens nos três modelos para manter um teto comum de saída e controlar o consumo. Esse valor correspondeu a uma configuração compartilhada do experimento, sem ser apresentado como o limite ótimo para produzir as correções.
-
-O esforço de raciocínio configura uma etapa interna de processamento que pode afetar o tempo e o consumo de tokens. Nos Luna, foi desativado (none), pois o estudo não incluiu uma condição adicional com esse recurso ativado. No GPT-4.1 mini, o parâmetro não foi enviado porque o modelo é descrito pela [documentação oficial](https://developers.openai.com/api/docs/models/gpt-4.1-mini) como operando sem uma etapa separada de raciocínio (OPENAI, 2026). Sua omissão decorreu dessa diferença de funcionamento, e não da aplicação de um valor de esforço equivalente ao dos Luna. Esse controle é distinto das instruções de raciocínio guiado presentes nos prompts, que organizaram a tarefa solicitada aos três modelos.
-
-**Tabela 3 — Parâmetros de geração registrados nas campanhas finais**
-
-| Modelo solicitado | Temperatura | Limite de tokens de completamento | Esforço de raciocínio |
-|---|---:|---:|---|
-| GPT-4.1 mini | 0 | 4.096 | Não enviado (sem etapa configurável) |
-| GPT-5.6 Luna | 0 | 4.096 | Desativado (none) |
-| GPT-6 Luna | 0 | 4.096 | Desativado (none) |
-
-Fonte: contratos de execução de cada campanha.
-
-<!-- Evidência dos perfis de geração: tcc2-llm-sast-juiceshop@062a203516fd7f55ce86d9c19dc0f23f6e92ed61; src/pipeline/etapas/e05_geracao_llm/modelos.py; docs/historico/features/10-comparacao-modelos-openai/ENTREGA.md, seção Perfis de geração e custo; README.md da mesma feature, seções 4–5. As finalidades de controle descritas não representam demonstração de optimalidade dos valores ou de equivalência entre modelos. -->
-
-Cada modelo foi executado em uma campanha própria sobre os mesmos 78 casos, com as estratégias P1 a P4 e o mesmo perfil de análise estática, base documental e baseline funcional. Essa organização permitiu comparar as respostas sob condições de avaliação compartilhadas. Entretanto, o caminho percorrido pelas estratégias dependeu dos resultados de cada caso; portanto, os modelos não produziram necessariamente o mesmo número de tentativas. A comparação considerou essa diferença, além das particularidades dos parâmetros de geração.
-
-As chamadas foram submetidas a limites configuráveis de quantidade e consumo, com registro de tokens, custo informado e erros de comunicação. Nas campanhas finais, a reutilização de respostas armazenadas e de evidências de validação permaneceu desativada. Falhas de transporte foram registradas separadamente das tentativas com resposta disponível. Quando houve nova tentativa de comunicação, esse evento não foi tratado como uma réplica independente do experimento nem convertido automaticamente em resultado negativo de R, F ou M.
+Cada modelo foi executado em uma campanha própria sobre os mesmos 78 casos, com as estratégias P1 a P4 e o mesmo perfil de análise estática, base documental e baseline funcional. Essa organização permitiu comparar as respostas sob condições de avaliação compartilhadas. Entretanto, o caminho percorrido pelas estratégias dependeu dos resultados de cada caso. Portanto, os modelos não produziram necessariamente o mesmo número de tentativas. A comparação considerou essa diferença, além das particularidades dos parâmetros de geração.
 
 ### 3.7 Estratégias de prompt
 
@@ -176,7 +144,7 @@ A terceira foi o **prompt com RAG simplificado (P3)**, no qual o modelo recebeu,
 
 A quarta foi o **prompt com RAG simplificado e raciocínio guiado (P4)**, combinando o contexto técnico recuperado e o diagnóstico SAST com uma estrutura de análise em etapas. Essa estratégia reuniu os elementos de contextualização de P3 e o roteiro de raciocínio guiado de P2.
 
-Em todas as estratégias, foram mantidos a definição de papel, a tarefa de correção, as restrições de alteração e o formato esperado de resposta. Para arquivos de até 250 linhas, foi fornecido o conteúdo completo; nos demais, foi selecionada uma janela com até 60 linhas de contexto de cada lado do intervalo do alerta. A mesma política de seleção de código foi aplicada às quatro estratégias. As instruções também orientaram a preservar o comportamento existente, evitar refatorações e renomeações, manter mensagens e assinaturas e não modificar os testes. Essas restrições buscaram limitar a alteração ao problema analisado, mantendo a avaliação posterior por SAST e testes.
+Em todas as estratégias, foram mantidos a definição de papel, a tarefa de correção, as restrições de alteração e o formato esperado de resposta. A seleção do código enviado seguiu a mesma regra nas quatro estratégias, conforme descrito no Capítulo 4. As instruções também orientaram a preservar o comportamento existente, evitar refatorações e renomeações, manter mensagens e assinaturas e não modificar os testes. Essas restrições buscaram limitar a alteração ao problema analisado, mantendo a avaliação posterior por SAST e testes.
 
 Para permitir a integração automática com o pipeline, as respostas dos modelos foram solicitadas em formato estruturado JSON. O formato adotado conteve os seguintes campos:
 
@@ -189,9 +157,9 @@ Para permitir a integração automática com o pipeline, as respostas dos modelo
 
 Cada edição informou o arquivo a ser alterado, o trecho original e o trecho que deveria substituí-lo. A padronização da saída permitiu ao pipeline extrair as alterações propostas, verificar se podiam ser aplicadas e registrar os dados da tentativa. Respostas com formato inválido ou edições que não podiam ser utilizadas foram identificadas antes de serem tratadas como correções aplicadas.
 
-A Tabela 4 resume as informações fornecidas em cada estratégia. Em P3 e P4, o diagnóstico SAST e o documento recuperado foram acrescentados em conjunto; por isso, as diferenças observadas em relação a P1 e P2 não permitem atribuir um eventual ganho exclusivamente ao RAG.
+A Tabela 3 resume as informações fornecidas em cada estratégia. Em P3 e P4, o diagnóstico SAST e o documento recuperado foram acrescentados em conjunto. Por isso, as diferenças observadas em relação a P1 e P2 não permitem atribuir um eventual ganho exclusivamente ao RAG.
 
-**Tabela 4 — Informações fornecidas em cada estratégia**
+**Tabela 3 — Informações fornecidas em cada estratégia**
 
 | Elemento | P1 | P2 | P3 | P4 |
 |---|:---:|:---:|:---:|:---:|
@@ -210,7 +178,7 @@ Neste trabalho, o RAG foi implementado de forma simplificada, por meio da recupe
 
 Essa decisão metodológica foi adotada por questões de viabilidade e alinhamento com o escopo do trabalho. O objetivo foi avaliar a correção automatizada com diferentes formas de instrução e de contexto técnico fornecido aos modelos, mantendo o mecanismo de recuperação simples e identificável. Assim, a recuperação foi baseada na associação direta entre as informações registradas no caso e o documento correspondente.
 
-A base de conhecimento foi composta por arquivos em formato Markdown, organizados no diretório `knowledge_base/` do projeto. Nas campanhas finais, foi utilizada a versão 2.1, com 14 documentos em português e exemplos genéricos em JavaScript e TypeScript. Os documentos contemplaram temas como injeção, controle de acesso, criptografia, autenticação, XSS, validação de entrada, integridade, concorrência, travessia de diretórios, redirecionamento aberto e SSRF, além de um documento genérico. A base foi ampliada durante a preparação para distinguir mecanismos que anteriormente recebiam orientações mais gerais.
+A base de conhecimento foi composta por arquivos em formato Markdown, organizados no diretório `knowledge_base/` do projeto. A base foi ampliada durante a preparação para distinguir mecanismos que anteriormente recebiam orientações mais gerais.
 
 Cada documento de contexto foi organizado nos seguintes elementos:
 
@@ -222,23 +190,19 @@ Cada documento de contexto foi organizado nos seguintes elementos:
 6. Exemplo genérico de código vulnerável e corrigido;
 7. Limitações e verificação da correção.
 
-Além do corpo técnico, os arquivos mantiveram informações de categoria, versão e fontes consultadas. Os exemplos foram genéricos, sem incorporar soluções do Juice Shop ou patches gerados em tentativas anteriores. Somente o corpo do documento selecionado foi enviado no prompt; os metadados permaneceram disponíveis para identificar e conferir a origem do contexto utilizado.
-
-Durante a execução do pipeline, a seleção priorizou a primeira CWE do caso que possuísse correspondência no índice da base. Quando nenhuma CWE era reconhecida, o procedimento considerava a categoria de contexto registrada no catálogo. Se essa categoria também não estivesse disponível no índice, era selecionado o documento genérico. Essas categorias serviram à recuperação de orientações técnicas; a associação de um alerta a um documento não foi considerada uma confirmação da vulnerabilidade.
-
-Por exemplo, para um caso com CWE-89, relacionada a SQL Injection, o índice associou a ocorrência à categoria de contexto `injection` e selecionou o arquivo `injection.md`. O corpo desse documento foi incorporado ao prompt juntamente com o código analisado e o diagnóstico SAST. Nas estratégias P3 e P4, esse procedimento acrescentou orientações de mitigação e preservação funcional para apoiar a geração da proposta de correção.
+Além do corpo técnico, os arquivos mantiveram informações de categoria, versão e fontes consultadas. Os exemplos foram genéricos, sem incorporar soluções do Juice Shop ou patches gerados em tentativas anteriores. Somente o corpo do documento selecionado foi enviado no prompt.
 
 O fluxo do RAG simplificado foi composto pelas seguintes etapas:
 
 1. Identificação do alerta pela ferramenta SAST;
 2. Leitura das CWEs e da categoria de contexto registradas no caso;
-3. Seleção automática do documento conforme a prioridade de recuperação;
+3. Seleção automática do documento conforme a prioridade de recuperação descrita no Capítulo 4;
 4. Leitura do arquivo Markdown e verificação de sua integridade;
 5. Inclusão do corpo do documento no prompt, junto ao código e ao diagnóstico SAST;
 6. Envio do prompt enriquecido ao modelo de linguagem;
 7. Geração da proposta de correção.
 
-O índice e os documentos foram identificados por versão e verificações de integridade, permitindo relacionar o contexto fornecido às condições de cada campanha. O documento selecionado e o motivo da recuperação também foram registrados por tentativa. Nos 78 casos do catálogo final, havia correspondência pelo CWE; os caminhos alternativos por categoria ou documento genérico permaneceram implementados como contingência.
+O índice e os documentos foram identificados por versão e verificações de integridade, permitindo relacionar o contexto fornecido às condições de cada campanha. O documento selecionado e o motivo da recuperação também foram registrados por tentativa.
 
 Essa estratégia permitiu comparar condições com e sem documentação recuperada. Entretanto, como P3 e P4 também acrescentaram o diagnóstico SAST, as diferenças observadas não permitem isolar um efeito exclusivo do RAG. O contexto adicional foi tratado como apoio à geração, mantendo a avaliação das propostas pela reanálise estática e pelos testes automatizados.
 
@@ -270,23 +234,19 @@ A análise de referência e a conferência dos casos integraram a preparação d
 
 ![Fluxo geral do pipeline de correção, com cópias isoladas e estratégias progressivas P1–P4](../TCC1___Caio_Lamego_e_Matheus_Brant-11_assets/figura-2.png)
 
-**Figura 2 — Fluxo de correção de um caso, com tentativas progressivas por estratégia de prompt.** Casos distintos podem ser executados em paralelo. P1 corresponde ao prompt simples; P2, ao prompt com raciocínio guiado; P3, ao prompt com RAG simplificado; e P4, à combinação de RAG simplificado e raciocínio guiado. O aceite estrito corresponde à regra operacional de parada.
+**Figura 2 — Fluxo de correção de um caso, com tentativas progressivas por estratégia de prompt.** Casos distintos podem ser executados em paralelo. P1 corresponde ao prompt simples, P2 ao prompt com raciocínio guiado, P3 ao prompt com RAG simplificado e P4 à combinação de RAG simplificado e raciocínio guiado. O aceite estrito corresponde à regra operacional de parada.
 
 Fonte: elaboração dos autores.
 
 A figura apresenta a visão geral do processo. Na implementação utilizada no experimento, a reanálise SAST foi executada depois das verificações de compilação e dos testes automatizados, como representado na figura e na ordem descrita nas etapas 10 e 11. A aprovação funcional indicada na decisão de continuidade correspondeu ao critério estrito da regra de parada, distinguido da classificação principal dos resultados nos parágrafos seguintes.
 
-A Figura 2 representa o processamento de um caso por vez em cada cópia de trabalho. As tentativas utilizaram cópias de trabalho separadas do projeto, gerenciadas por Git worktrees. Cada cópia foi restaurada antes e depois de seu uso, mantendo o ponto de partida fixado para a tentativa seguinte. Assim, uma correção individual não foi aplicada sobre alterações acumuladas de outros casos. O funcionamento desse isolamento e a aplicação das edições são detalhados no Capítulo 4.
+A Figura 2 representa o processamento de um caso por vez em cada cópia de trabalho. As tentativas utilizaram cópias de trabalho separadas do projeto. Cada cópia foi restaurada antes e depois de seu uso, mantendo o ponto de partida fixado para a tentativa seguinte. Assim, uma correção individual não foi aplicada sobre alterações acumuladas de outros casos. O funcionamento desse isolamento e a aplicação das edições são detalhados no Capítulo 4.
 
-As estratégias foram executadas na ordem P1, P2, P3 e P4. Para decidir quando encerrar as tentativas de um caso, o pipeline exigiu a remoção do alerta original, a ausência de novos alertas e a aprovação da preservação funcional, representada pelo critério F. Esse critério avaliou se a alteração introduziu falhas nos testes selecionados, em comparação com a execução de referência. Na regra de parada, qualquer falha nova confirmada por reexecução impedia a aprovação funcional e levava à próxima estratégia, até o limite de P4. Essa avaliação foi denominada sem separação.
+As estratégias foram executadas na ordem P1, P2, P3 e P4. Para decidir quando encerrar as tentativas de um caso, o pipeline exigiu a remoção do alerta original, a ausência de novos alertas e a aprovação da preservação funcional, representada pelo critério F, detalhado na Seção 3.10. Esse critério avaliou se a alteração introduziu falhas nos testes selecionados, em comparação com a execução de referência. Na regra de parada, qualquer falha nova confirmada por reexecução impedia a aprovação funcional e levava à próxima estratégia, até o limite de P4. Essa avaliação foi denominada sem separação.
 
 Na análise principal dos resultados, F recebeu um tratamento diferente. Como o Juice Shop contém vulnerabilidades intencionais, alguns testes dependem de comportamentos inseguros, como a exploração de uma falha para concluir um desafio. Esses testes foram reunidos no conjunto D, conforme os critérios apresentados na Seção 3.10. A falha de um teste desse conjunto após uma correção não foi considerada, por si só, perda de funcionalidade legítima. Por isso, uma tentativa pôde ser aceita na análise principal e, ainda assim, ter sido seguida por outra estratégia durante a execução. Na consolidação dos resultados, a análise principal de cada caso foi encerrada no primeiro aceite segundo esse critério, mantendo os registros posteriores separados.
 
 Respostas com formato inválido, edições que não encontravam o trecho original e alterações fora do escopo permitido foram registradas como tentativas não aplicadas. Falhas operacionais e interrupções receberam registros próprios. Esses estados foram diferenciados de uma correção aplicada e reprovada pela avaliação. Quando não havia evidência suficiente para medir um critério, o resultado permaneceu indeterminado, em vez de receber automaticamente o valor de falha.
-
-Antes das tentativas, foi realizado o preflight, uma verificação automática das condições necessárias para iniciar a execução do experimento. Essa etapa conferiu a versão do projeto analisado, os casos selecionados, as regras de análise estática, os prompts e a referência dos testes funcionais, além de verificar se os alertas esperados eram reproduzidos. Essas condições foram registradas em um contrato de execução, isto é, um registro das configurações e dos arquivos utilizados como referência para aquela execução. Assim, o pipeline pôde identificar incompatibilidades antes de solicitar correções aos modelos e impedir a retomada de uma execução com condições diferentes das originalmente registradas.
-
-As campanhas finais foram configuradas para até quatro casos em paralelo, mantendo sequenciais as estratégias de um mesmo caso. A retomada utilizou os registros existentes para identificar o trabalho já realizado e preservar os artefatos. O recorte principal foi composto por três campanhas concluídas em 6 de novembro de 2026, uma com GPT-4.1 mini, uma com GPT-5.6 Luna e uma com GPT-6 Luna. Cada campanha avaliou os mesmos 78 casos, mantendo a versão do projeto, as regras de análise estática, as estratégias de prompt e as condições de validação, com os parâmetros de geração definidos para cada modelo. Preflights, simulações, pilotos e campanhas descartadas permaneceram identificados como etapas de preparação, sem serem reunidos às tentativas finais para estimar a eficácia.
 
 <!-- Evidência: seção 3.8 do texto original como referência da apresentação em 13 etapas; src/pipeline/orquestracao/{campanha.py,preflight.py} e etapas e04_prompt, e06_aplicacao, e07_validacao e e08_registro. A preparação da campanha foi distinguida do ciclo por tentativa; testes selecionados e regra de parada refletem o experimento executado. -->
 
@@ -294,7 +254,7 @@ As campanhas finais foram configuradas para até quatro casos em paralelo, mante
 
 A validação das correções teve como finalidade verificar se as alterações propostas pelos modelos atenderam às condições de segurança e funcionamento definidas para o experimento. Uma proposta aplicada ao código poderia retirar o alerta original, comprometer uma funcionalidade ou introduzir novos problemas detectáveis. Por esse motivo, sua avaliação combinou a reanálise estática com a execução de testes automatizados, considerando os resultados em relação ao código original.
 
-Para organizar essa avaliação, foram definidos três critérios: R, correspondente à remoção do alerta original; F, à preservação funcional; e M, à ausência de novos alertas de segurança. Esses critérios representaram condições verificadas em cada tentativa aplicada e fundamentaram a classificação das correções e o cálculo das métricas. O aceite exigiu o atendimento simultâneo aos três critérios, segundo a interpretação de F adotada em cada análise. As verificações utilizadas para avaliar cada um são descritas a seguir.
+Para organizar essa avaliação, foram definidos três critérios. O critério R corresponde à remoção do alerta original, F à preservação funcional e M à ausência de novos alertas de segurança. Esses critérios representaram condições verificadas em cada tentativa aplicada e fundamentaram a classificação das correções e o cálculo das métricas. O aceite exigiu o atendimento simultâneo aos três critérios, segundo a interpretação de F adotada em cada análise. As verificações utilizadas para avaliar cada um são descritas a seguir.
 
 O critério R representou a remoção do alerta original. Para verificá-lo, foram comparadas as ocorrências identificadas antes e depois da alteração. Como uma edição pode deslocar o código sem eliminar o problema, a comparação considerou a correspondência entre trechos e seu contexto. Quando essa correspondência não era suficiente, o comparador também utilizou a contagem da mesma regra no mesmo arquivo. A redução de contagem, isoladamente, não foi tomada como prova de remoção de uma ocorrência específica sem correspondência.
 
@@ -302,23 +262,21 @@ O critério M representou a ausência de novos alertas na reanálise do projeto 
 
 O critério F representa a preservação funcional, isto é, a manutenção do comportamento esperado das funcionalidades avaliadas após a alteração do código. Sua avaliação utilizou uma execução de referência dos testes, denominada baseline. Essa referência foi produzida sobre o código original, no ambiente correspondente à campanha, e registrou os testes executados e as falhas já existentes. A comparação permitiu examinar as falhas novas após a correção sem atribuir à proposta do modelo um problema que já ocorria antes. O baseline também foi utilizado para conferir se a execução posterior fornecia evidência comparável.
 
-Em cada tentativa, foram selecionados os grupos de testes relacionados aos arquivos efetivamente alterados, incluindo as verificações de compilação correspondentes. Essa seleção utilizou um mapeamento explícito entre arquivos e grupos, em vez de executar toda a suíte em cada avaliação. Quando a alteração alcançava arquivos sem cobertura suficiente ou impedia a execução comparável dos testes, não era atribuída aprovação funcional sem evidência. Portanto, a aprovação em F indica que as verificações selecionadas não identificaram novos problemas no funcionamento avaliado. Ela não assegura que outras funcionalidades, fora desses testes, continuaram funcionando corretamente.
-
-Durante a preparação, foram acrescentados testes para ampliar a avaliação de comportamentos que não estavam suficientemente cobertos. Também foram utilizados controles com alterações deliberadas para verificar se os testes identificavam problemas no comportamento esperado. Esses controles apoiaram a avaliação da capacidade dos testes de identificar problemas em situações específicas. As versões do mapa, dos testes adicionais e da referência funcional foram vinculadas às condições das campanhas.
+Durante a preparação, foram utilizados controles com alterações deliberadas para verificar se os testes identificavam problemas no comportamento esperado. Esses controles apoiaram a avaliação da capacidade dos testes de identificar problemas em situações específicas. As versões do mapa, dos testes adicionais e da referência funcional foram vinculadas às condições das campanhas.
 
 A natureza deliberadamente vulnerável do Juice Shop exigiu distinguir testes funcionais de testes que dependiam da manutenção da falha. Foi denominado conjunto D o grupo cujas asserções exigiam, por exemplo, a resolução de um desafio por ataque, uma resposta insegura ou a utilização do mecanismo apontado pelo alerta. Testes de comportamento legítimo permaneceram como proteção funcional, com verificações adicionais quando necessário.
 
 Na análise principal, F assume valor 1 quando as verificações necessárias são concluídas com evidência suficiente e não apontam novos problemas de compilação ou falhas persistentes nos testes de comportamento legítimo. Assume valor 0 quando a avaliação identifica uma reprovação funcional, como uma nova falha persistente nesses testes ou um erro de compilação. Quando não há evidência suficiente para concluir a avaliação, F permanece indeterminado. Falhas novas nos grupos de testes levaram à reexecução: as que reapareceram nas duas rodadas foram consideradas persistentes, enquanto as ocorrências isoladas foram registradas como intermitentes.
 
-Foram registradas três formas de calcular F, que diferem no tratamento dos testes dependentes das vulnerabilidades intencionais, conforme a Tabela 5. A interpretação por critérios foi adotada na análise principal: falhas dos testes classificados no conjunto D não reprovaram, por si só, a preservação funcional. As interpretações sem separação e por marcador permitiram verificar quanto os resultados mudavam com esse tratamento, utilizando o mesmo conjunto de tentativas.
+Foram registradas três formas de calcular F, que diferem no tratamento dos testes dependentes das vulnerabilidades intencionais, conforme a Tabela 4. A interpretação por critérios foi adotada na análise principal: falhas dos testes classificados no conjunto D não reprovaram, por si só, a preservação funcional. As interpretações sem separação e por marcador permitiram verificar quanto os resultados mudavam com esse tratamento, utilizando o mesmo conjunto de tentativas.
 
-**Tabela 5 — Tratamento das falhas nos testes para calcular F**
+**Tabela 4 — Tratamento das falhas nos testes para calcular F**
 
 | Interpretação de F | Tratamento das falhas novas |
 |---|---|
 | Sem separação | Toda falha nova persistente em um teste reprova F, inclusive nos testes do conjunto D. Essa interpretação foi usada na regra de parada. |
-| Por marcador | Falhas nos testes que afirmam explicitamente a resolução de um desafio não reprovam F por si só; as demais falhas novas persistentes reprovam. |
-| Por critérios | Falhas nos testes classificados no conjunto D pelos critérios documentados não reprovam F por si só; falhas novas persistentes nos demais testes reprovam. Essa foi a interpretação principal. |
+| Por marcador | Falhas nos testes que afirmam explicitamente a resolução de um desafio não reprovam F por si só. As demais falhas novas persistentes reprovam. |
+| Por critérios | Falhas nos testes classificados no conjunto D pelos critérios documentados não reprovam F por si só. Falhas novas persistentes nos demais testes reprovam. Essa foi a interpretação principal. |
 
 Fonte: critérios do conjunto D e política de validação do experimento.
 
@@ -338,7 +296,7 @@ $$
 \mathrm{TRV}=\frac{\sum_{j\in J_V}(R_j\times F_j\times M_j)}{m}
 $$
 
-O produto vale 1 apenas quando os três critérios são satisfeitos. O denominador $m$ inclui todas as tentativas da população analisada, inclusive as não aplicadas e as indeterminadas. Essas tentativas não entram no numerador, pois não demonstraram remediação validada; isso não transforma suas medições ausentes em resultados negativos. Quando todas as tentativas são aplicadas e têm os três critérios medidos, a soma equivale a $\sum_{j=1}^{m}(R_j\times F_j\times M_j)$.
+O produto vale 1 apenas quando os três critérios são satisfeitos. O denominador $m$ inclui todas as tentativas da população analisada, inclusive as não aplicadas e as indeterminadas. Essas tentativas não entram no numerador, pois não demonstraram remediação validada. Isso não transforma suas medições ausentes em resultados negativos. Quando todas as tentativas são aplicadas e têm os três critérios medidos, a soma equivale a $\sum_{j=1}^{m}(R_j\times F_j\times M_j)$.
 
 As métricas complementares examinaram cada critério separadamente. Seus denominadores consideraram apenas as tentativas com a respectiva medição disponível. Foram definidos $J_R$, $J_F$ e $J_M$ como os conjuntos de índices com R, F e M medidos, respectivamente, e $n_R$, $n_F$ e $n_M$ como suas quantidades de tentativas. Por exemplo, $n_F=|J_F|$ representa o número de tentativas em que F recebeu valor 0 ou 1. Esses denominadores podem diferir entre si e ser menores que $m$.
 
@@ -374,17 +332,17 @@ Para a análise principal, a cadeia de cada caso foi delimitada pelo primeiro ac
 
 A comparação entre modelos considerou ainda tokens de entrada e saída, custo conhecido das chamadas, tempo de geração e duração da campanha. Foram distinguidos o tempo de resposta do modelo, o tempo gasto nas verificações e o tempo total decorrido. Como parte do trabalho ocorreu em paralelo, a soma das durações individuais não foi utilizada como equivalente ao tempo total da campanha. Os custos foram interpretados conforme os valores e as condições registrados, sem incluir despesas de infraestrutura que não tivessem sido medidas.
 
-A Redução Relativa de Issues de Segurança (RRIS) foi utilizada para examinar a variação dos alertas após a aplicação conjunta das correções selecionadas. Para cada modelo, foram selecionados os primeiros aceites por caso na definição principal, verificada a integridade dos patches e tentada sua aplicação em sequência. Incompatibilidades foram registradas, e os alertas antes e depois foram obtidos com scans globais comparáveis. O conjunto também recebeu avaliação funcional. A redução estática foi mantida distinta da aprovação funcional conjunta; o procedimento não permite obter a RRIS pela soma dos aceites individuais.
+A Redução Relativa de Issues de Segurança (RRIS) foi utilizada para examinar a variação dos alertas após a aplicação conjunta das correções selecionadas. Para cada modelo, foram selecionados os primeiros aceites por caso na definição principal, verificada a integridade dos patches e tentada sua aplicação em sequência. Incompatibilidades foram registradas, e os alertas antes e depois foram obtidos com scans globais comparáveis. O conjunto também recebeu avaliação funcional. A redução estática foi mantida distinta da aprovação funcional conjunta. O procedimento não permite obter a RRIS pela soma dos aceites individuais.
 
 $$
 \mathrm{RRIS}=\frac{I_{\text{antes}}-I_{\text{depois}}}{I_{\text{antes}}}
 $$
 
-Em que $I_{\text{antes}}$ e $I_{\text{depois}}$ representam as contagens de alertas nos scans comparáveis do projeto antes e depois da aplicação conjunta. O cálculo requer $I_{\text{antes}}>0$; para apresentar a redução em porcentagem, o resultado é multiplicado por 100.
+Em que $I_{\text{antes}}$ e $I_{\text{depois}}$ representam as contagens de alertas nos scans comparáveis do projeto antes e depois da aplicação conjunta. O cálculo requer $I_{\text{antes}}>0$. Para apresentar a redução em porcentagem, o resultado é multiplicado por 100.
 
 ### 3.12 Armazenamento, organização e análise dos dados
 
-Os dados foram organizados para permitir o acompanhamento de cada caso desde o alerta inicial até sua avaliação. Prompts, respostas, edições aplicadas, código corrigido, análises estáticas e testes foram associados ao identificador da tentativa. Os contratos, os registros das sessões e as verificações de integridade permitiram relacionar esses arquivos às condições de execução. A estrutura dos diretórios e dos componentes responsáveis pelo registro é apresentada no Capítulo 4.
+Os dados foram organizados para permitir o acompanhamento de cada caso desde o alerta inicial até sua avaliação. Prompts, respostas, edições aplicadas, código corrigido, análises estáticas e testes foram associados ao identificador da tentativa. Os contratos de execução, que registram as configurações de cada campanha, os registros das sessões e as verificações de integridade permitiram relacionar esses arquivos às condições de execução. A estrutura dos diretórios e dos componentes responsáveis pelo registro é apresentada no Capítulo 4.
 
 Cada tentativa de correção recebeu um identificador único, utilizado para nomear os artefatos e relacioná-los aos registros do experimento. A composição desse identificador reuniu o caso analisado, a categoria OWASP, a sigla do tipo de vulnerabilidade, a estratégia de prompt e a execução correspondente, separados por sublinhados. A identificação do artefato foi complementada pelo diretório, pelo sufixo ou pela extensão do arquivo. A Figura 3 ilustra os componentes dessa nomenclatura com um exemplo abreviado.
 
@@ -394,27 +352,23 @@ Cada tentativa de correção recebeu um identificador único, utilizado para nom
 
 Fonte: elaboração dos autores.
 
-No exemplo da figura, `V01` identifica o caso, `A05` a categoria OWASP, `SQLI` o tipo de vulnerabilidade, `P1` a estratégia de prompt, `E01` a execução e `codigo` o artefato. Nos resultados do experimento, os casos receberam identificadores iniciados por `AMP`, e as execuções foram identificadas pelo código da campanha. Os códigos corrigidos mantiveram seus nomes e caminhos relativos dentro de um diretório da tentativa; prompts, respostas, patches e relatórios foram associados ao mesmo identificador em seus respectivos diretórios.
+No exemplo da figura, `V01` identifica o caso, `A05` a categoria OWASP, `SQLI` o tipo de vulnerabilidade, `P1` a estratégia de prompt, `E01` a execução e `codigo` o artefato. Nos resultados do experimento, os casos receberam identificadores iniciados por `AMP`, e as execuções foram identificadas pelo código da campanha. Os códigos corrigidos mantiveram seus nomes e caminhos relativos dentro de um diretório da tentativa. Prompts, respostas, patches e relatórios foram associados ao mesmo identificador em seus respectivos diretórios.
 
-Essa organização permitiu acompanhar cada tentativa desde o alerta inicial até a avaliação da proposta e comparar estratégias diferentes para o mesmo caso. Na versão final dos artefatos, os nomes incorporaram as categorias OWASP da classificação complementar descrita a seguir. Os identificadores e caminhos anteriores foram preservados em mapas de correspondência, permitindo rastrear a padronização sem modificar o conteúdo experimental dos arquivos.
+Essa organização permitiu acompanhar cada tentativa desde o alerta inicial até a avaliação da proposta e comparar estratégias diferentes para o mesmo caso. Na versão final dos artefatos, os nomes incorporaram as categorias OWASP de uma classificação complementar, realizada após as campanhas e apresentada no Capítulo 5. Os identificadores e caminhos anteriores foram preservados em mapas de correspondência, permitindo rastrear a padronização sem modificar o conteúdo experimental dos arquivos.
 
 <!-- Evidência da nomenclatura: scripts/relatorios/padronizar_artefatos_finais.py; outputs/resultados_finais/OWASP_20261111_V2/{mapa_artefatos.csv,mapa_tentativas.csv,conferencia.json}; identificadores dos registros e dos arquivos em campanha/. A Figura 3 ilustra o esquema de campos, não reproduz literalmente os identificadores mais extensos das campanhas finais. -->
 
-A população principal foi formada pelas tentativas reais das estratégias previstas, delimitadas conforme o primeiro aceite registrado por caso. Simulações, diagnósticos adicionais, pilotos e registros posteriores ao aceite foram mantidos em categorias separadas. Essa delimitação permitiu conferir o número de casos solicitados, os casos que receberam tentativas e as medições disponíveis. Respostas reutilizadas em etapas históricas também não foram interpretadas como novas gerações independentes.
+A população principal foi formada pelas tentativas reais das estratégias previstas, delimitadas conforme o primeiro aceite registrado por caso. Simulações, diagnósticos adicionais, pilotos e registros posteriores ao aceite foram mantidos em categorias separadas. Essa delimitação permitiu conferir o número de casos solicitados, os casos que receberam tentativas e as medições disponíveis.
 
-A análise das estratégias e dos tipos de problema foi organizada por modelo, regra, CWE e categoria OWASP, quando disponíveis. Foram considerados os tamanhos dos grupos e os dados ausentes, evitando interpretar pequenas quantidades como diferenças gerais de desempenho. As classificações da triagem foram preservadas como informação descritiva e para análises complementares; eventual restrição a um grupo deverá ser identificada com seu próprio denominador. Esses recortes apoiam as respostas às perguntas Q1 a Q4.
-
-Após as campanhas, foi realizada uma classificação complementar dos 49 casos sem associação OWASP registrada, preservando as categorias dos outros 29 casos. Para 41 ocorrências, utilizou-se a correspondência explícita entre o CWE registrado e as listas do OWASP Top 10:2025. Oito ocorrências receberam associação contextual, fundamentada no código da revisão utilizada e nas justificativas da triagem arquivada: quatro alertas de consultas NoSQL e quatro de validação com CWE genérico. Nestes últimos, o agrupamento considerou a restrição de negócio, o controle de propriedade ou o estabelecimento de credenciais envolvidos, em vez de atribuir automaticamente todos à categoria de injeção. Essa análise documental, realizada com apoio automatizado, complementou o agrupamento dos resultados; não alterou as entradas das campanhas, os rótulos de falso positivo e inconclusivo ou os critérios de aceite. A classificação representa o tipo de fraqueza sinalizado e não constitui nova comprovação de explorabilidade. A distribuição original e a complementar são apresentadas separadamente no Capítulo 5.
-
-<!-- Evidência: experimento@062a203516fd7f55ce86d9c19dc0f23f6e92ed61; outputs/catalogos/ampliado_v1/catalogo_issues.json; evidencias/classificacao-owasp-complementar-2026-11-11/{manifesto-conferencia.json,decisoes-contextuais.json,revisao-contextual.json}; OWASP/Top10@3a31f35346c3f4e90f350395124382fa53af2afe, 2025/docs/en; Q3. -->
+A análise das estratégias e dos tipos de problema foi organizada por modelo, regra, CWE e categoria OWASP, quando disponíveis. Foram considerados os tamanhos dos grupos e os dados ausentes, evitando interpretar pequenas quantidades como diferenças gerais de desempenho. As classificações da triagem foram preservadas como informação descritiva e para análises complementares. Eventual restrição a um grupo deverá ser identificada com seu próprio denominador. Esses recortes apoiam as respostas às perguntas Q1 a Q4.
 
 Para responder à Q5, a comparação entre os três modelos foi organizada a partir dos mesmos casos solicitados e dos critérios de avaliação compartilhados. Foram consideradas a proporção de casos aceitos, a TRV, a preservação funcional, os novos alertas, o custo conhecido e os tempos registrados. As diferenças foram interpretadas nas condições observadas, reconhecendo os parâmetros específicos de cada modelo e as trajetórias distintas pelas estratégias. Essa comparação não foi definida como uma classificação universal de superioridade dos modelos.
-
-A avaliação das correções foi baseada nas verificações automatizadas e nas métricas definidas, sem inspeção manual dos patches pelos autores. Para explicar os resultados, o Capítulo 5 apresenta exemplos de acompanhamento de pedidos e de cálculo do CAPTCHA, selecionados pela disponibilidade dos artefatos e pelos resultados contrastantes. A análise documental desses exemplos, realizada com apoio automatizado, relacionou as alterações de código aos registros de análise estática e de testes. Essa leitura apoiou a discussão, sem acrescentar uma etapa de validação humana ao aceite das correções.
 
 ### 3.13 Limitações do estudo
 
 A utilização de uma única aplicação deliberadamente vulnerável limita a generalização dos resultados para outros projetos. A avaliação também depende do alcance das regras SAST, da cobertura dos testes selecionados e das classificações arquivadas dos alertas. A remoção de um alerta e a aprovação dos testes representam evidências sob condições definidas, mas não demonstram ausência de falhas em toda a aplicação. As limitações de cada mecanismo foram consideradas na interpretação dos resultados.
+
+O aceite das correções foi decidido somente pelas verificações automatizadas, sem inspeção manual dos patches pelos autores. Além disso, o pipeline só aplicou uma edição quando o trecho original indicado pelo modelo foi localizado de forma única no arquivo. Quando isso não ocorreu, a tentativa foi registrada como não aplicada, mesmo que a correção proposta pudesse ser adequada. Na população principal, essa situação ocorreu em 20 das 685 tentativas, 15 delas do GPT-4.1 mini, conforme detalhado na Seção 4.4.
 
 A sequência das estratégias, a variabilidade das respostas e as diferenças de parâmetros entre modelos também restringem as comparações. O RAG simplificado pode recuperar orientações menos específicas para certos casos. O recorte principal contém uma campanha final por modelo, sem sustentar estimativas de estabilidade por réplicas independentes. A distribuição do ambiente Docker apoia a repetição do procedimento, mas não assegura respostas idênticas das LLMs ou tempos iguais em equipamentos diferentes.
 
@@ -426,9 +380,9 @@ As ferramentas Codex e Claude Code foram utilizadas como apoio à escrita de có
 
 ### 3.15 Cronograma
 
-O planejamento da pesquisa distribuiu as atividades entre a preparação do ambiente, a execução do experimento, a análise dos dados e a redação do trabalho. A Tabela 6 apresenta os períodos previstos nesse planejamento. Esses períodos representam a programação das atividades, e não um registro das datas efetivas de conclusão; as datas das campanhas analisadas foram identificadas na Seção 3.9.
+O planejamento da pesquisa distribuiu as atividades entre a preparação do ambiente, a execução do experimento, a análise dos dados e a redação do trabalho. A Tabela 5 apresenta os períodos previstos nesse planejamento. Esses períodos representam a programação das atividades, e não um registro das datas efetivas de conclusão. As datas das campanhas analisadas são informadas na Seção 4.6.
 
-**Tabela 6 — Cronograma previsto para o desenvolvimento da pesquisa**
+**Tabela 5 — Cronograma previsto para o desenvolvimento da pesquisa**
 
 |**Atividade**|**Período previsto**|
 |---|---|
