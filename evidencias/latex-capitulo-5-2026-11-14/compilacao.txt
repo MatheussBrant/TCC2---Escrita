@@ -1,0 +1,122 @@
+note: Running TeX ...
+warning: Trying to include PDF file with version (1.7), which is newer than current output PDF setting (1.5).
+warning: fixos/fichaCatalografica:13: Underfull \hbox (badness 10000) in paragraph at lines 12--13
+warning: fixos/fichaCatalografica:15: Underfull \hbox (badness 10000) in paragraph at lines 14--15
+warning: fixos/fichaCatalografica:19: Overfull \hbox (16.44858pt too wide) in paragraph at lines 16--19
+warning: fixos/fichaCatalografica:19: Underfull \hbox (badness 10000) in paragraph at lines 16--19
+warning: fixos/fichaCatalografica:27: Underfull \hbox (badness 10000) in paragraph at lines 20--27
+warning: fixos/fichaCatalografica:29: Underfull \hbox (badness 10000) in paragraph at lines 28--29
+warning: editaveis/aspectosgerais:57: Missing character: There is no ��� ("201C) in font ec-lmr12!
+warning: could not represent character "“" (0x201c) in font "ec-lmr12"
+warning:   you may need to load the `fontspec` package and use (e.g.) \setmainfont to
+warning:   choose a different font that covers the unrepresentable character(s)
+warning: editaveis/aspectosgerais:57: Missing character: There is no ��� ("201D) in font ec-lmr12!
+warning: could not represent character "”" (0x201d) in font "ec-lmr12"
+warning: editaveis/aspectosgerais:72: Overfull \hbox (9.14247pt too wide) in paragraph at lines 71--72
+warning: editaveis/consideracoes:127: Overfull \hbox (46.54759pt too wide) in paragraph at lines 126--127
+warning: editaveis/elementosdotexto:95: Overfull \hbox (71.13441pt too wide) in paragraph at lines 94--95
+warning: editaveis/elementosdotexto:195: Overfull \hbox (28.43018pt too wide) in paragraph at lines 194--195
+warning: editaveis/elementosdotexto:277: Overfull \hbox (45.46628pt too wide) in paragraph at lines 276--277
+warning: editaveis/elementosdotexto:290: Overfull \hbox (1.02904pt too wide) in paragraph at lines 289--290
+note: Running BibTeX on tcc.aux ...
+note: Rerunning TeX because bibtex was run ...
+warning: Trying to include PDF file with version (1.7), which is newer than current output PDF setting (1.5).
+warning: fixos/fichaCatalografica:13: Underfull \hbox (badness 10000) in paragraph at lines 12--13
+warning: fixos/fichaCatalografica:15: Underfull \hbox (badness 10000) in paragraph at lines 14--15
+warning: fixos/fichaCatalografica:19: Overfull \hbox (16.44858pt too wide) in paragraph at lines 16--19
+warning: fixos/fichaCatalografica:19: Underfull \hbox (badness 10000) in paragraph at lines 16--19
+warning: fixos/fichaCatalografica:27: Underfull \hbox (badness 10000) in paragraph at lines 20--27
+warning: fixos/fichaCatalografica:29: Underfull \hbox (badness 10000) in paragraph at lines 28--29
+warning: editaveis/aspectosgerais:57: Missing character: There is no ��� ("201C) in font ec-lmr12!
+warning: could not represent character "“" (0x201c) in font "ec-lmr12"
+warning:   you may need to load the `fontspec` package and use (e.g.) \setmainfont to
+warning:   choose a different font that covers the unrepresentable character(s)
+warning: editaveis/aspectosgerais:57: Missing character: There is no ��� ("201D) in font ec-lmr12!
+warning: could not represent character "”" (0x201d) in font "ec-lmr12"
+warning: editaveis/aspectosgerais:72: Overfull \hbox (9.14247pt too wide) in paragraph at lines 71--72
+warning: editaveis/consideracoes:127: Overfull \hbox (46.54759pt too wide) in paragraph at lines 126--127
+warning: editaveis/elementosdotexto:95: Overfull \hbox (71.13441pt too wide) in paragraph at lines 94--95
+warning: editaveis/elementosdotexto:195: Overfull \hbox (28.43018pt too wide) in paragraph at lines 194--195
+warning: editaveis/elementosdotexto:277: Overfull \hbox (45.46628pt too wide) in paragraph at lines 276--277
+warning: editaveis/elementosdotexto:290: Overfull \hbox (1.02904pt too wide) in paragraph at lines 289--290
+note: Rerunning TeX because "tcc.lot" changed ...
+warning: Trying to include PDF file with version (1.7), which is newer than current output PDF setting (1.5).
+warning: fixos/fichaCatalografica:13: Underfull \hbox (badness 10000) in paragraph at lines 12--13
+warning: fixos/fichaCatalografica:15: Underfull \hbox (badness 10000) in paragraph at lines 14--15
+warning: fixos/fichaCatalografica:19: Overfull \hbox (16.44858pt too wide) in paragraph at lines 16--19
+warning: fixos/fichaCatalografica:19: Underfull \hbox (badness 10000) in paragraph at lines 16--19
+warning: fixos/fichaCatalografica:27: Underfull \hbox (badness 10000) in paragraph at lines 20--27
+warning: fixos/fichaCatalografica:29: Underfull \hbox (badness 10000) in paragraph at lines 28--29
+warning: editaveis/aspectosgerais:57: 
+Missing character: There is no ��� ("201C) in font ec-lmr12!
+warning: could not represent character "“" (0x201c) in font "ec-lmr12"
+warning:   you may need to load the `fontspec` package and use (e.g.) \setmainfont to
+warning:   choose a different font that covers the unrepresentable character(s)
+warning: editaveis/aspectosgerais:57: Missing character: There is no ��� ("201D) in font ec-lmr12!
+warning: could not represent character "”" (0x201d) in font "ec-lmr12"
+warning: editaveis/aspectosgerais:72: Overfull \hbox (9.14247pt too wide) in paragraph at lines 71--72
+warning: editaveis/consideracoes:127: Overfull \hbox (46.54759pt too wide) in paragraph at lines 126--127
+warning: editaveis/elementosdotexto:95: Overfull \hbox (71.13441pt too wide) in paragraph at lines 94--95
+warning: editaveis/elementosdotexto:195: Overfull \hbox (28.43018pt too wide) in paragraph at lines 194--195
+warning: editaveis/elementosdotexto:277: Overfull \hbox (45.46628pt too wide) in paragraph at lines 276--277
+warning: editaveis/elementosdotexto:290: Overfull \hbox (1.02904pt too wide) in paragraph at lines 289--290
+note: Rerunning TeX because "tcc.lot" changed ...
+warning: Trying to include PDF file with version (1.7), which is newer than current output PDF setting (1.5).
+warning: fixos/fichaCatalografica:13: Underfull \hbox (badness 10000) in paragraph at lines 12--13
+warning: fixos/fichaCatalografica:15: Underfull \hbox (badness 10000) in paragraph at lines 14--15
+warning: fixos/fichaCatalografica:19: Overfull \hbox (16.44858pt too wide) in paragraph at lines 16--19
+warning: fixos/fichaCatalografica:19: Underfull \hbox (badness 10000) in paragraph at lines 16--19
+warning: fixos/fichaCatalografica:27: Underfull \hbox (badness 10000) in paragraph at lines 20--27
+warning: fixos/fichaCatalografica:29: Underfull \hbox (badness 10000) in paragraph at lines 28--29
+warning: editaveis/aspectosgerais:57: 
+Missing character: There is no ��� ("201C) in font ec-lmr12!
+warning: could not represent character "“" (0x201c) in font "ec-lmr12"
+warning:   you may need to load the `fontspec` package and use (e.g.) \setmainfont to
+warning:   choose a different font that covers the unrepresentable character(s)
+warning: editaveis/aspectosgerais:57: Missing character: There is no ��� ("201D) in font ec-lmr12!
+warning: could not represent character "”" (0x201d) in font "ec-lmr12"
+warning: editaveis/aspectosgerais:72: Overfull \hbox (9.14247pt too wide) in paragraph at lines 71--72
+warning: editaveis/consideracoes:127: Overfull \hbox (46.54759pt too wide) in paragraph at lines 126--127
+warning: editaveis/elementosdotexto:95: Overfull \hbox (71.13441pt too wide) in paragraph at lines 94--95
+warning: editaveis/elementosdotexto:195: Overfull \hbox (28.43018pt too wide) in paragraph at lines 194--195
+warning: editaveis/elementosdotexto:277: Overfull \hbox (45.46628pt too wide) in paragraph at lines 276--277
+warning: editaveis/elementosdotexto:290: Overfull \hbox (1.02904pt too wide) in paragraph at lines 289--290
+warning: warnings were issued by the TeX engine; use --print and/or --keep-logs for details.
+note: Running xdvipdfmx ...
+warning: Trying to include PDF file with version (1.7), which is newer than current output PDF setting (1.5).
+warning: Object @page.1 already defined.
+warning: Object @figure.3.1 already defined.
+warning: Object @table.3.1 already defined.
+warning: Object @table.3.2 already defined.
+warning: Object @table.3.3 already defined.
+warning: Object @figure.3.2 already defined.
+warning: Object @table.3.4 already defined.
+warning: Object @figure.3.3 already defined.
+warning: Object @table.3.5 already defined.
+warning: Object @figure.4.4 already defined.
+warning: Object @figure.4.5 already defined.
+warning: Object @table.5.6 already defined.
+warning: Object @table.5.7 already defined.
+warning: Object @table.5.8 already defined.
+warning: Object @table.5.9 already defined.
+warning: Object @table.5.10 already defined.
+warning: Object @figure.5.6 already defined.
+warning: Object @table.5.11 already defined.
+warning: Object @table.5.12 already defined.
+warning: Object @table.5.13 already defined.
+warning: Object @table.5.14 already defined.
+warning: Object @table.5.15 already defined.
+warning: Object @table.5.16 already defined.
+warning: Object @table.5.17 already defined.
+warning: Object @table.5.18 already defined.
+warning: Object @table.5.19 already defined.
+note: Writing `/tmp/tcc-latex-final/tcc.lof` (916 B)
+note: Writing `/tmp/tcc-latex-final/tcc.pdf` (2.696887969970703 MiB)
+note: Writing `/tmp/tcc-latex-final/tcc.brf` (5.3310546875 KiB)
+note: Writing `/tmp/tcc-latex-final/tcc.toc` (7.158203125 KiB)
+note: Writing `/tmp/tcc-latex-final/tcc.lot` (2.2685546875 KiB)
+note: Writing `/tmp/tcc-latex-final/tcc.bbl` (12.6982421875 KiB)
+note: Writing `/tmp/tcc-latex-final/tcc.blg` (545 B)
+note: Not writing `tcc.idx`: it would be empty.
+note: Writing `/tmp/tcc-latex-final/tcc.log` (32.4521484375 KiB)
+note: Writing `/tmp/tcc-latex-final/tcc.aux` (43.525390625 KiB)

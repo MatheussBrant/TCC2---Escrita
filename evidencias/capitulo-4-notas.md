@@ -380,3 +380,25 @@ Conferência automática: 78 parágrafos, 7 blocos de código e 2 legendas idên
   o Capítulo 4 (`cap:implementacao`, `sec:impl-fluxo`, `sec:impl-metricas`, `sec:impl-execucao`). Só o Capítulo 5 segue
   por extenso nos dois arquivos.
 - A marcação `[PENDENTE]` das capturas do painel foi mantida em negrito, visível no PDF.
+
+
+## Capturas reais do painel no LaTeX — 14/11/2026
+
+O autor forneceu três PNGs e solicitou sua inclusão nessa ordem:
+`painel.png` (visão geral), `escolha-llm.png` (seletor do modelo) e
+`execucao.png` (tentativas registradas). As três imagens foram inspecionadas
+e inseridas ao final da Seção 4.6 de
+`../../TCC2___Caio_Lamego_e_Matheus_Brant/editaveis/elementosdotexto.tex`.
+Retirada a marcação de pendência desse arquivo.
+
+Incluídas legendas acima das figuras, fontes abaixo e remissões por labels
+únicos. A imagem do seletor foi dimensionada em 42% da largura; as outras
+usam a largura do texto, com limite de altura e preservação da proporção.
+A descrição distingue o modelo da próxima execução do modelo do histórico e
+identifica a terceira captura como consulta de campanha concluída.
+
+O Markdown de implementação e a cópia anterior em `overleaf/oficial/` não foram
+reescritos nesta tarefa, cujo destino solicitado foi o LaTeX do modelo.
+A versão anterior e os hashes estão em `capturas-painel-2026-11-14/`.
+Conferidos os três arquivos PNG, a ordem, a unicidade dos labels e o
+fechamento dos ambientes; `git diff --check` sem erros. Nenhum PDF foi gerado.

@@ -1,0 +1,21 @@
+{
+  "data": "2026-11-14",
+  "arquivo": "TCC2___Caio_Lamego_e_Matheus_Brant/editaveis/elementosdotexto.tex",
+  "ordem_imagens": [
+    "painel.png",
+    "escolha-llm.png",
+    "execucao.png"
+  ],
+  "imagens_sha256": {
+    "painel.png": "11911dcb3971b022e4f7d92d070a65b1b456a1413d2957d4aa8b4186324d04a2",
+    "escolha-llm.png": "04899afbd86b24163f6ee99196f66555be44b0530472857f09e9e4e990fd378e",
+    "execucao.png": "24c133dc819bdfcd95e1e60b33827dc400ddc104375f37cff1e146444bdc332b"
+  },
+  "latex_sha256": "0b359485bf54966d0eef17537c991f7bd76c40c2774bb25d614014d4a3950b6b",
+  "labels": [
+    "fig:impl-painel-geral",
+    "fig:impl-painel-modelo",
+    "fig:impl-painel-tentativas"
+  ],
+  "verificacao": "Imagens inspecionadas visualmente; ordem, arquivos, labels e fechamento dos ambientes conferidos. Sem geração de PDF."
+}

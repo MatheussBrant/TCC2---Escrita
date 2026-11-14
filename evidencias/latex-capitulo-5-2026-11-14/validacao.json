@@ -1,0 +1,33 @@
+{
+  "data": "2026-11-14",
+  "compilador": "Tectonic 0.17.0",
+  "classe": "abntex2",
+  "compilacao": "concluida",
+  "paginas_fisicas_capitulo": [
+    70,
+    89
+  ],
+  "numero_paginas_capitulo": 20,
+  "tabelas_no_documento": {
+    "tab:res-populacao": "6",
+    "tab:res-aceites": "7",
+    "tab:res-criterios": "8",
+    "tab:res-sensibilidade-f": "9",
+    "tab:res-estrategias": "10",
+    "tab:res-ganho-sequencia": "11",
+    "tab:res-sobreposicao": "12",
+    "tab:res-custos": "13",
+    "tab:res-tempos": "14",
+    "tab:res-tipos": "15",
+    "tab:res-owasp": "16",
+    "tab:res-owasp-confirmados": "17",
+    "tab:res-exemplos": "18",
+    "tab:res-rris": "19"
+  },
+  "avisos_no_capitulo_5": [],
+  "avisos_preexistentes": "Permanecem avisos de largura em outros capítulos e na ficha, aspas Unicode no capítulo 2 e âncoras duplicadas do template.",
+  "fonte_sha256": "f1e8c8c19e737048a1a1718c7cebd8d45934d4f3de3f5e1605346189685e744d",
+  "tex_sha256": "433b8411a316457d45822cde7516103d83d4a17b9fb85e8edfb5ae75849dd94f",
+  "previa_pdf": "TCC2___Caio_Lamego_e_Matheus_Brant/capitulo-5.pdf",
+  "pdf_sha256": "c80f767e61f9739d9b617893a04be0c8d322815e91e80bda4e16e918a99030c3"
+}

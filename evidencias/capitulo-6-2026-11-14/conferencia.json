@@ -1,0 +1,33 @@
+{
+  "data": "2026-11-14",
+  "fonte": "manuscrito/06-consideracoes-finais.md",
+  "fonte_sha256": "cea898ddee56632350a0efdfe4c6c46db4bba1e56c6ed2a8ab3f97ddbceb4816",
+  "destino": "editaveis/elementosdopostexto.tex",
+  "destino_sha256": "1cac77f253c1f1cbd394befd73787bfe58bb9f15c4ea19be92c8fea1c0d587fc",
+  "paragrafos": [
+    {
+      "markdown": "Este trabalho implementou e avaliou um pipeline que integra LLMs, Semgrep e testes automatizados para apoiar a correção de alertas de segurança no OWASP Juice Shop. O aceite exigiu a remoção do alerta original, a preservação funcional na interpretação por critérios e a ausência de novos alertas. A principal contribuição foi reunir geração, aplicação e avaliação das propostas em um processo com registros que permitem conferir seus resultados.",
+      "latex": "Este trabalho implementou e avaliou um \\textit{pipeline} que integra LLMs, Semgrep e testes automatizados para apoiar a correção de alertas de segurança no OWASP Juice Shop. O aceite exigiu a remoção do alerta original, a preservação funcional na interpretação por critérios e a ausência de novos alertas. A principal contribuição foi reunir geração, aplicação e avaliação das propostas em um processo com registros que permitem conferir seus resultados."
+    },
+    {
+      "markdown": "Nas campanhas sobre os 78 alertas, o GPT-5.6 Luna apresentou mais casos aceitos, com 51/78, seguido pelo GPT-6 Luna, com 49/78, e pelo GPT-4.1 mini, com 38/78. O catálogo incluiu 55 casos confirmados, além de falsos positivos e inconclusivos; entre os confirmados, o GPT-5.6 Luna também liderou, com 39/55. Assim, esse modelo foi favorecido quando a prioridade era maximizar os aceites. O GPT-6 Luna apresentou menor custo calculado de geração e menor duração de campanha, enquanto o GPT-4.1 mini gerou respostas individuais mais rapidamente.",
+      "latex": "Nas campanhas sobre os 78 alertas, o GPT-5.6 Luna apresentou mais casos aceitos, com 51/78, seguido pelo GPT-6 Luna, com 49/78, e pelo GPT-4.1 mini, com 38/78. O catálogo incluiu 55 casos confirmados, além de falsos positivos e inconclusivos; entre os confirmados, o GPT-5.6 Luna também liderou, com 39/55. Assim, esse modelo foi favorecido quando a prioridade era maximizar os aceites. O GPT-6 Luna apresentou menor custo calculado de geração e menor duração de campanha, enquanto o GPT-4.1 mini gerou respostas individuais mais rapidamente."
+    },
+    {
+      "markdown": "Todas as etapas da sequência P1–P4 acrescentaram aceites nos três modelos. P3, que reuniu diagnóstico SAST e documentação recuperada, apresentou a maior contribuição adicional após P1. O desempenho também variou por categoria OWASP: entre os confirmados, A05 se destacou entre os grupos com mais de um caso, com 15/16 aceites em cada Luna, enquanto A08 permaneceu sem aceite. Os resultados indicam que a escolha das estratégias e dos modelos deve considerar o objetivo da avaliação e o tipo de problema analisado.",
+      "latex": "Todas as etapas da sequência P1--P4 acrescentaram aceites nos três modelos. P3, que reuniu diagnóstico SAST e documentação recuperada, apresentou a maior contribuição adicional após P1. O desempenho também variou por categoria OWASP: entre os confirmados, A05 se destacou entre os grupos com mais de um caso, com 15/16 aceites em cada Luna, enquanto A08 permaneceu sem aceite. Os resultados indicam que a escolha das estratégias e dos modelos deve considerar o objetivo da avaliação e o tipo de problema analisado."
+    },
+    {
+      "markdown": "A aplicação conjunta dos patches reduziu o total de alertas, mas nenhum dos três conjuntos recebeu aprovação funcional. As alterações haviam sido aprovadas separadamente sobre o código original; após serem reunidas, o projeto apresentou falhas nos testes. Portanto, o estudo demonstrou a viabilidade de obter propostas aceitas individualmente, enquanto a preservação do funcionamento após sua integração permaneceu como uma frente de aprimoramento.",
+      "latex": "A aplicação conjunta dos \\textit{patches} reduziu o total de alertas, mas nenhum dos três conjuntos recebeu aprovação funcional. As alterações haviam sido aprovadas separadamente sobre o código original; após serem reunidas, o projeto apresentou falhas nos testes. Portanto, o estudo demonstrou a viabilidade de obter propostas aceitas individualmente, enquanto a preservação do funcionamento após sua integração permaneceu como uma frente de aprimoramento."
+    },
+    {
+      "markdown": "Como trabalhos futuros, propõe-se testar o projeto após a inclusão de cada patch e gerar novas propostas sobre o código já modificado. Também se recomenda repetir as campanhas em outras aplicações, avaliar todas as estratégias sobre os mesmos casos e ampliar as verificações de segurança. Essas iniciativas permitiriam aprofundar as comparações e avançar na integração das correções produzidas pelo pipeline.",
+      "latex": "Como trabalhos futuros, propõe-se testar o projeto após a inclusão de cada \\textit{patch} e gerar novas propostas sobre o código já modificado. Também se recomenda repetir as campanhas em outras aplicações, avaliar todas as estratégias sobre os mesmos casos e ampliar as verificações de segurança. Essas iniciativas permitiriam aprofundar as comparações e avançar na integração das correções produzidas pelo \\textit{pipeline}."
+    }
+  ],
+  "capitulos": 1,
+  "secoes": 0,
+  "numeros": "Razões e percentuais presentes no capítulo 5; conferência por modelo nas notas.",
+  "pdf_gerado": false
+}

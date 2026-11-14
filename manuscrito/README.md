@@ -14,8 +14,8 @@ a entregas acadêmicas anteriores. As orientações estão nos
 | [02-referencial-teorico.md](02-referencial-teorico.md) | Fundamentação e trabalhos relacionados; revisão bibliográfica integral pendente |
 | [03-metodologia.md](03-metodologia.md) | Desenho e procedimentos do experimento; rascunho completo, revisado pelos autores no Notion em 13/11/2026 (trechos de implementação passaram ao capítulo 4) |
 | [04-implementacao.md](04-implementacao.md) | Implementação do pipeline, na estrutura do antigo capítulo de prova de conceito; reescrito em 11/11/2026, revisado pelos autores no Notion e alinhado ao capítulo 3 em 12/11/2026; falta inserir as capturas de tela do painel |
-| [05-resultados-discussao.md](05-resultados-discussao.md) | Resultados, discussão e respostas a Q1–Q5; reestruturado em 13/11/2026 para explicar cada métrica e sua conclusão; escolhas de modelo por critério e categoria, classificação OWASP final e recortes de 78 alertas e 55 confirmados conferidos |
-| Capítulo 6 — Conclusão e trabalhos futuros | Ainda não redigido |
+| [05-resultados-discussao.md](05-resultados-discussao.md) | Resultados, discussão e respostas a Q1–Q5; texto revisado, com métricas e conclusões explícitas, escolhas por modelo/categoria e recortes de 78 alertas e 55 confirmados; versão LaTeX integrada ao projeto institucional e compilada em 14/11/2026 |
+| [06-consideracoes-finais.md](06-consideracoes-finais.md) | Considerações finais em cinco parágrafos, sem subseções; versão concisa de 14/11/2026, com resultados, contribuições e trabalhos futuros, convertida para `editaveis/elementosdopostexto.tex` no modelo LaTeX |
 | [referencias.md](referencias.md) | Referências bibliográficas; integração e revisão pendentes |
 
 Os planos dos [capítulos 3](../docs/plano-paragrafos-capitulo-3.md),

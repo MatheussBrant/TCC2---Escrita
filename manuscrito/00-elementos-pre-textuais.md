@@ -194,7 +194,7 @@ This work evaluated an automated pipeline integrating Large Language Models (LLM
   - 5.8 Respostas às perguntas de pesquisa
   - 5.9 Discussão com a literatura e implicações
   - 5.10 Alcance dos resultados e possibilidades de continuidade
-- 6 Conclusão e trabalhos futuros [PENDENTE: redigir]
+- 6 Considerações finais
 - Referências
 
 [PENDENTE: inserir a paginação após a diagramação final.]

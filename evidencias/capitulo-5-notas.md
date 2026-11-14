@@ -676,3 +676,65 @@ Preservada a síntese dos resultados e nenhum valor empírico foi alterado.
 Conferência editorial do título no sumário e `git diff --check` sem erros.
 Não houve execução experimental, nova consulta bibliográfica ou alteração
 dos capítulos 3 e 4.
+
+## Versão LaTeX no projeto institucional — 14/11/2026
+
+O capítulo revisado foi integrado ao arquivo
+`../../TCC2___Caio_Lamego_e_Matheus_Brant/editaveis/resultado-discussoes.tex`,
+que antes continha apenas o título e um texto provisório. Utilizado o template
+abnTeX2 já configurado no projeto, sem reescrever os resultados ou acrescentar
+as fontes GitHub que o autor adiou.
+
+Foram convertidas 14 tabelas, uma figura, dois excertos de código, dez seções,
+seis subseções e os cinco pares pergunta/resposta. Títulos e fontes dos elementos
+foram preservados, com numeração e remissões automáticas. A figura foi copiada
+em PDF vetorial. Os textos das citações foram ligados às entradas existentes de
+Khan e Sriram. O Markdown permaneceu inalterado nesta conversão.
+
+O documento completo compilou com Tectonic 0.17.0. Valores das tabelas, parágrafos,
+excertos, labels e citações foram conferidos automaticamente; as páginas de
+métricas, OWASP, RRIS e estratégias foram inspecionadas visualmente. Nenhum aviso
+de conteúdo fora das margens ou referência/citação indefinida no capítulo 5.
+
+Foram feitos pequenos ajustes de integração: pacote `listings`, remissões dos
+capítulos 3 e 4 ao capítulo 5, desambiguação da segunda chave bibliográfica
+`owasp_top10_2025_intro` e capa PDF além da EPS para permitir a compilação neste
+motor. Campos bibliográficos e capa original preservados. A cópia completa
+`tcc.pdf` e a prévia de 20 páginas `capitulo-5.pdf` estão na pasta do projeto LaTeX.
+
+Hashes, arquivos anteriores, conversor, conferência e logs estão em
+[latex-capitulo-5-2026-11-14/LEITURA.md](latex-capitulo-5-2026-11-14/LEITURA.md).
+Permanecem os avisos preexistentes de outros capítulos e do template registrados
+no relatório. Não foi realizada revisão geral do conteúdo desses capítulos ou
+certificação integral de conformidade ABNT do documento completo.
+
+## Ajuste da entrega para inclusão manual no Overleaf — 14/11/2026
+
+O autor esclareceu que deseja somente os arquivos necessários ao capítulo 5,
+sem PDF compilado. Retirados da pasta do modelo os PDFs `tcc.pdf` e
+`capitulo-5.pdf`, bem como a cópia PDF da capa, que havia sido criada para o
+compilador local. Esses arquivos auxiliares foram movidos para `/tmp`.
+Restaurados os arquivos bibliográficos, a customização da capa e as remissões
+dos capítulos 3 e 4 ao estado anterior, após conferir que continham somente as
+alterações desta tarefa. Mantidos o capítulo convertido, sua figura PDF e o
+pacote `listings` em `tcc.tex`, necessário aos excertos de código.
+
+A entrega manual exige dois arquivos: `editaveis/resultado-discussoes.tex` e
+`figuras/resultados-aceites-por-estrategia.pdf`, mais a linha de carregamento de
+`listings` no preâmbulo do Overleaf. O input do capítulo já existia no modelo.
+Instruções em `latex-capitulo-5-2026-11-14/COMO-COLOCAR-NO-OVERLEAF.md`.
+A compilação e os relatórios anteriores permanecem como registro histórico da
+verificação realizada, não como arquivos exigidos para a entrega.
+
+
+## Figura em PNG para o Overleaf — 14/11/2026
+
+Por solicitação do autor, a entrega da figura passou a usar
+`figuras/resultados-aceites-por-estrategia.png`, copiada do PNG já existente
+no manuscrito. Atualizados o includegraphics do capítulo, o conversor, o
+verificador e as instruções de envio. A cópia PDF da figura foi retirada da
+pasta do modelo e movida para `/tmp`. Manifesto de conversão atualizado com
+os hashes do TeX e da figura PNG. Não houve alteração do conteúdo da figura,
+do texto ou das métricas, nem geração de PDF compilado nesta alteração.
+Os registros anteriores de compilação referem-se à versão que utilizava PDF
+como figura; a entrega atual utiliza PNG.
