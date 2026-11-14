@@ -1,6 +1,6 @@
 ## 5 Resultados e discussão
 
-Este capítulo apresenta e discute os resultados das campanhas finais do pipeline no OWASP Juice Shop. A análise considera a geração de propostas, sua aplicação e a avaliação dos critérios de remoção do alerta, preservação funcional e ausência de novos alertas. A expressão correção válida é utilizada conforme a definição operacional do Capítulo 3, sem equivaler a uma demonstração de segurança de toda a aplicação.
+Este capítulo apresenta e discute os resultados das campanhas finais do pipeline no OWASP Juice Shop. A análise considera a geração de propostas, sua aplicação e a avaliação dos critérios de remoção do alerta, preservação funcional e ausência de novos alertas. A expressão correção válida corresponde ao aceite definido nas Seções 3.10 e 3.11: uma proposta aplicada ao código com R=F=M=1, segundo a interpretação principal de F. Esse aceite se refere às verificações realizadas sobre a alteração, sem demonstrar a segurança de toda a aplicação.
 
 Inicialmente, são caracterizados os casos e as campanhas. Em seguida, são apresentados os resultados gerais, as diferenças entre estratégias e modelos e os recortes por tipo de alerta. A discussão é complementada por exemplos reais, pela avaliação conjunta dos patches e pelas respostas às perguntas de pesquisa. Os limites das evidências são considerados ao longo da interpretação.
 
@@ -8,11 +8,15 @@ Inicialmente, são caracterizados os casos e as campanhas. Em seguida, são apre
 
 Foram consideradas três campanhas reais concluídas em 6 de novembro de 2026, uma por modelo: GPT-4.1 mini, GPT-5.6 Luna e GPT-6 Luna. Elas compartilharam a revisão do Juice Shop, o catálogo, o perfil SAST, a base de contexto, o baseline e a política de validação descritos anteriormente. Todas utilizaram quatro worktrees e a sequência P1–P4. Pilotos, simulações e diagnósticos adicionais não foram reunidos com esses resultados. Os contratos e os registros de sessão permitiram conferir essas condições e a conclusão das execuções.
 
-O catálogo reuniu 78 ocorrências elegíveis, obtidas a partir de 124 alertas, com 46 exclusões na preparação. Os casos foram distribuídos em 11 rótulos de tipo de alerta. O maior grupo específico foi o de XSS, com 12 casos, seguido por IDOR, com oito, e travessia de diretórios, com sete. Outros 32 receberam o rótulo residual do catálogo, que reúne situações distintas e não constitui uma categoria homogênea. A distribuição completa é apresentada na Seção 5.5. O mapeamento OWASP estava disponível originalmente para 29 casos; os demais 49 receberam classificação complementar após as campanhas, conforme o procedimento descrito no Capítulo 3. As duas distribuições são distinguidas na Seção 5.5.
+O catálogo reuniu 78 ocorrências elegíveis a partir de 124 alertas. Foram excluídos 31 alertas em exemplos dos Coding Challenges, 13 em arquivos de automação do GitHub e dois em configurações do npm, totalizando 46 exclusões. Conforme a Seção 3.5, os exemplos continham alternativas de correção dos exercícios pedagógicos, enquanto os arquivos de automação e configuração tratavam de aspectos não avaliados pelos testes da aplicação. O recorte concentrou a avaliação no código das funcionalidades do Juice Shop.
 
-A classificação arquivada da triagem identificou 55 casos como confirmados, 21 como falsos positivos e dois como inconclusivos. Os 21 falsos positivos foram revisados e confirmados pelos dois autores, mediante exame do código, do contexto dos alertas e das regras do Semgrep. Os demais rótulos mantiveram as classificações e justificativas da triagem versionada, cuja origem e procedimento de consolidação são descritos na Seção 3.5. As campanhas foram executadas sobre os 78 casos, incluindo os três grupos; portanto, seus totais não podem ser apresentados como correção de 78 vulnerabilidades demonstradas. Para explicitar o efeito desse recorte, também foram examinados separadamente os aceites dos 55 casos rotulados como confirmados, mantendo a limitação de sua origem documental.
+Na classificação OWASP Top 10:2025 utilizada na análise final, os 78 casos foram distribuídos em sete categorias: A01, com 26 casos; A05, com 22; A06, com 12; A07, com sete; A04, com cinco; e A02 e A08, com três cada. Essa classificação preservou as 29 associações originais e complementou os 49 casos sem categoria após as campanhas, sem alterar as tentativas ou seus resultados. A Seção 5.5 apresenta os aceites por categoria OWASP e, separadamente, pelos tipos de alerta do catálogo.
 
-Todos os casos receberam tentativas nas três campanhas. A Tabela 1 distingue os registros produzidos da população principal, delimitada pelo primeiro aceite registrado por caso. Os registros posteriores foram separados porque a parada operacional utilizou a interpretação funcional sem separação do conjunto D, enquanto a classificação principal adotou F por critérios. Essa diferença não foi corrigida por reconstrução de uma execução hipotética: as análises seguintes respeitaram a população e as definições documentadas na metodologia.
+A classificação arquivada da triagem identificou 55 casos como confirmados, 21 como falsos positivos e dois como inconclusivos. Os 21 falsos positivos foram revisados e confirmados pelos dois autores, mediante exame do código, do contexto dos alertas e das regras do Semgrep. As classificações dos 55 casos confirmados e dos dois inconclusivos foram mantidas conforme os registros de triagem e suas justificativas, cuja origem e consolidação são descritas na Seção 3.5. As campanhas abrangeram os três grupos, totalizando 78 casos. Os resultados gerais descrevem, assim, o processamento desse catálogo de alertas. Para examinar também o desempenho no grupo classificado como confirmado na triagem, a Seção 5.2 apresenta seus aceites separadamente, com denominador de 55 casos.
+
+Todos os casos receberam tentativas nas três campanhas. A Tabela 1 distingue o total de registros produzidos das tentativas incluídas na análise principal. Conforme a Seção 3.9, a execução avançava para a estratégia seguinte quando havia uma nova falha persistente em qualquer teste, inclusive naqueles que dependiam da manutenção de uma vulnerabilidade intencional. Na análise principal, as falhas desses testes, reunidos no conjunto D, não reprovaram F por si só. Por exemplo, uma proposta que impedisse um ataque poderia fazer falhar o teste que esperava sua exploração e levar o pipeline a tentar outra estratégia, embora já atendesse aos critérios de aceite da análise principal.
+
+Por essa razão, a população principal incluiu as tentativas até o primeiro aceite por critérios de cada caso ou até P4, quando não houve aceite. As tentativas executadas depois desse primeiro aceite foram identificadas como pós-aceite e ficaram separadas no cálculo das taxas principais. Todos esses registros foram preservados; a separação apenas delimitou quais tentativas entraram em cada análise.
 
 **Tabela 1 — Registros das campanhas finais e população de análise**
 
@@ -27,7 +31,7 @@ Fonte: registros e consolidados das campanhas de 06/11/2026. Todos os 78 casos r
 
 ### 5.2 Resultados gerais do pipeline
 
-O pipeline produziu pelo menos uma tentativa aceita para parte dos casos em todos os modelos, conforme a Tabela 2. O GPT-5.6 Luna apresentou o maior número de casos aceitos, seguido pelo GPT-6 Luna e pelo GPT-4.1 mini. Essa proporção difere da TRV por tentativa, pois um caso pode demandar várias propostas antes de obter aceite. No recorte separado dos casos rotulados como confirmados, os aceites foram 32/55 (58,18%), 39/55 (70,91%) e 36/55 (65,45%), respectivamente. Esse recorte preservou a ordem observada, sem transformar o rótulo arquivado em validação independente.
+O pipeline produziu pelo menos uma tentativa aceita para parte dos casos em todos os modelos, conforme a Tabela 2. O GPT-5.6 Luna apresentou o maior número de casos aceitos, seguido pelo GPT-6 Luna e pelo GPT-4.1 mini. Essa proporção difere da TRV por tentativa, pois um caso pode demandar várias propostas antes de obter aceite. No recorte separado dos casos rotulados como confirmados, o GPT-4.1 mini obteve 32/55 aceites (58,18%), o GPT-5.6 Luna 39/55 (70,91%) e o GPT-6 Luna 36/55 (65,45%). A ordem dos modelos nesse grupo foi a mesma observada no catálogo completo; o termo confirmado mantém o significado da triagem descrita na Seção 3.5.
 
 **Tabela 2 — Aceites por caso e por tentativa**
 
@@ -53,19 +57,21 @@ A avaliação dos critérios isolados mostrou que remover o alerta e preservar o
 Fonte: população principal, F por critérios. TRI, TPF, TFF e TNINI consideram somente as medições disponíveis para cada critério. As ausências podem se sobrepor e não representam falhas medidas.
 
 
-Parte das propostas não chegou à avaliação completa. No GPT-4.1 mini, 17 tentativas não foram aplicadas; no GPT-5.6 Luna, foram sete; e, no GPT-6 Luna, 16. Entre os motivos documentados estiveram ausência de edições, trechos de referência não encontrados, correspondências ambíguas e resposta inválida. Após a aplicação, também houve avaliações estáticas indeterminadas: três, zero e duas, respectivamente. As ausências de R, F ou M foram mantidas como tal, sem convertê-las em falhas observadas. Elas reduzem o conjunto medido das métricas complementares e permanecem no denominador da TRV.
+Parte das propostas não chegou à avaliação completa. No GPT-4.1 mini, 17 tentativas não foram aplicadas; no GPT-5.6 Luna, foram sete; e, no GPT-6 Luna, 16. Entre os motivos documentados estiveram ausência de edições, trechos de referência não encontrados, correspondências ambíguas e resposta inválida. Após a aplicação, também houve avaliações estáticas indeterminadas: três, zero e duas, respectivamente. As ausências de R, F ou M foram mantidas como tal, sem convertê-las em falhas observadas. Nas métricas complementares, cada tentativa entra no denominador apenas quando o critério correspondente foi medido. Na TRV, todas as tentativas da população principal entram no denominador, inclusive as não aplicadas ou com resultados indeterminados; somente as aplicadas com R=F=M=1 entram no numerador, conforme a Seção 3.11.
 
-Os resultados foram sensíveis ao tratamento dos testes associados à manutenção das vulnerabilidades. A Tabela 4 mostra que a definição por critérios apresentou mais aceites do que as alternativas mais restritas; os valores agregados por marcador coincidiram com os sem separação. No GPT-6 Luna, por exemplo, o numerador da TRV passou de 23 para 49 sobre as mesmas 221 tentativas. Isso evidencia a importância da classificação dos testes para o significado da métrica. O aumento não demonstra, por si só, que toda separação foi adequada nem que os patches passaram em todos os testes existentes.
+Os resultados variaram conforme o tratamento dos testes que dependiam das vulnerabilidades intencionais. Como definido na Seção 3.10, a interpretação por critérios considera o conteúdo das asserções para identificar os testes do conjunto D, incluindo os que exigem uma resposta insegura ou o mecanismo apontado pelo alerta. Suas falhas não reprovam F por si só; falhas novas persistentes nos testes de comportamento legítimo continuam reprovando. A alternativa por marcador faz essa separação apenas nos testes que afirmam explicitamente a resolução de um desafio, enquanto a interpretação sem separação considera também essas falhas na reprovação funcional.
+
+A Tabela 4 compara as três interpretações sobre as mesmas tentativas da população principal. As alternativas sem separação e por marcador produziram o mesmo total de aceites em cada modelo. Com a interpretação por critérios, os totais aumentaram para 38, 51 e 49. No GPT-6 Luna, por exemplo, a TRV passou de 23/221 (10,41%) para 49/221 (22,17%). A diferença mostra o efeito de distinguir falhas nos testes dependentes da vulnerabilidade de regressões no comportamento legítimo, mantendo as exigências de remoção do alerta e ausência de novos alertas.
 
 **Tabela 4 — Sensibilidade da TRV à definição de F**
 
-| Modelo | Sem separação | Por marcador | Por critérios |
+| Modelo | F sem separação | F por marcador | F por critérios (principal) |
 |---|---|---|---|
 | GPT-4.1 mini | 17/241 (7,05%) | 17/241 (7,05%) | 38/241 (15,77%) |
 | GPT-5.6 Luna | 22/223 (9,87%) | 22/223 (9,87%) | 51/223 (22,87%) |
 | GPT-6 Luna | 23/221 (10,41%) | 23/221 (10,41%) | 49/221 (22,17%) |
 
-Fonte: mesma população principal em todas as colunas. As alternativas de F não reconstituem uma campanha hipotética com outra regra de parada.
+Fonte: registros das campanhas finais; tentativas aceitas/total de tentativas da população principal (%). Para cada modelo, o denominador e as tentativas são os mesmos nas três colunas; varia somente a interpretação de F. Trata-se da reavaliação dos registros existentes, sem simular quais estratégias seriam executadas sob outra regra de parada.
 
 
 ### 5.3 Comparação das estratégias de prompt
@@ -91,9 +97,9 @@ As estratégias posteriores contribuíram com casos que não haviam recebido ace
 
 Fonte: elaboração a partir dos registros conferidos. Dados e script de geração preservados nas notas de evidência.
 
-A interpretação do conteúdo dos prompts exige considerar o que mudou entre as condições. P2 acrescentou o roteiro de resposta, enquanto P3 acrescentou o diagnóstico SAST e a documentação recuperada; P4 reuniu esses componentes. Os registros mostram que as etapas com contexto produziram aceites adicionais, mas não permitem atribuir esse ganho exclusivamente ao RAG. Também não foi observado o raciocínio interno dos modelos: o roteiro foi uma instrução de organização da resposta, cuja utilidade foi examinada pelos artefatos produzidos.
+A interpretação do conteúdo dos prompts exige considerar o que mudou entre as condições. P2 acrescentou o roteiro de resposta, enquanto P3 acrescentou o diagnóstico SAST e a documentação recuperada; P4 reuniu esses componentes. Os registros mostram que as etapas com contexto produziram aceites adicionais, mas não permitem atribuir esse ganho exclusivamente ao RAG.
 
-A sequência introduziu uma seleção que limita conclusões sobre a melhor estratégia. Os casos resolvidos inicialmente deixaram de participar das etapas seguintes na população principal, e os casos restantes podiam apresentar dificuldades distintas entre os modelos. Por isso, a menor taxa de P2 ou P4 não demonstra que essas estratégias seriam inferiores se aplicadas isoladamente aos mesmos 78 casos. O resultado sustentado é que a sequência obteve aceites adicionais, com contribuições diferentes entre as etapas e os modelos.
+A sequência P1–P4 ampliou o número de casos aceitos nos três modelos, com destaque para a contribuição de P3 entre os casos remanescentes. Como cada etapa posterior recebeu os casos ainda sem aceite na análise principal, suas taxas expressam a capacidade de obter aceites adicionais ao longo desse percurso. A comparação entre as etapas deve considerar esses denominadores: avaliar cada estratégia isoladamente sobre os mesmos 78 casos exigiria outro desenho experimental.
 
 ### 5.4 Comparação entre modelos de linguagem
 
@@ -170,26 +176,9 @@ Fonte: catálogo e primeiros aceites na definição por critérios. Células apr
 
 O agrupamento por regra refinou essa descrição. Na regra relacionada ao uso de HTML tratado como confiável no Angular, os três modelos obtiveram oito aceites em nove casos. Já na regra de consulta sem delimitação pelo identificador da requisição, os aceites foram um, três e dois, em quatro casos, na ordem dos modelos das tabelas. Nenhum modelo obteve aceite nos quatro casos rotulados como credenciais fixas. Esses contrastes indicam dificuldades distintas no conjunto observado, mas não permitem atribuí-las automaticamente à complexidade de uma vulnerabilidade. Uma explicação de causa exige examinar a proposta, a aplicação e os testes, como nos exemplos da seção seguinte.
 
-A comparação por OWASP foi limitada pela disponibilidade do mapeamento. A Tabela 10 conserva os códigos registrados no catálogo e mantém os 49 casos sem categoria em linha própria. Nessa linha ficaram 30, 38 e 35 casos aceitos, respectivamente. Entre as categorias identificadas, os grupos variaram de um a oito casos, com ausência de aceite em A07 e A08 nos três modelos. Esses resultados mostram variação descritiva entre categorias, mas a cobertura incompleta e os grupos reduzidos impedem estabelecer uma classificação de desempenho para todo o OWASP Top 10.
+A Tabela 10 apresenta os aceites segundo a classificação OWASP Top 10:2025 dos 78 casos. A classificação foi concluída após as campanhas, preservando as 29 associações originais e complementando os 49 casos sem categoria. Entre os complementares, 41 foram associados pelas listas oficiais de CWEs e oito por análise contextual do alerta e do código. Quatro decisões contextuais envolveram consultas NoSQL com CWE-943, e as outras quatro envolveram CWE-20, para os quais o contexto permitiu uma associação mais específica. Esse agrupamento manteve os rótulos de triagem e os resultados das verificações.
 
-**Tabela 10 — Casos aceitos segundo a categoria OWASP registrada**
-
-| Categoria OWASP 2025 | GPT-4.1 mini | GPT-5.6 Luna | GPT-6 Luna |
-|---|---|---|---|
-| A01 | 1/6 | 4/6 | 3/6 |
-| A02 | 0/2 | 1/2 | 0/2 |
-| A04 | 0/3 | 2/3 | 3/3 |
-| A05 | 3/8 | 4/8 | 5/8 |
-| A06 | 4/5 | 2/5 | 3/5 |
-| A07 | 0/4 | 0/4 | 0/4 |
-| A08 | 0/1 | 0/1 | 0/1 |
-| Sem categoria registrada | 30/49 | 38/49 | 35/49 |
-
-Fonte: campo OWASP do catálogo, sem atribuição posterior de categorias; casos aceitos/total da categoria, F por critérios. As linhas são uma partição dos 78 casos.
-
-A classificação complementar dos 49 casos permitiu agrupar os 78 casos, mantendo as 29 associações originais. A Tabela 10a apresenta esse recorte posterior às campanhas. Entre os casos acrescentados, 41 foram associados pela lista oficial de CWEs e oito por análise contextual. Quatro destes últimos usavam CWE-943, ausente da lista de A05 consultada, mas descreviam consultas NoSQL; os outros quatro usavam CWE-20, cuja associação genérica a A05 não expressava o problema específico de cada caso. Foram preservados os rótulos da triagem e a definição por critérios de F. Assim, a tabela inclui alertas classificados como falsos positivos e inconclusivos, sem convertê-los em vulnerabilidades confirmadas.
-
-**Tabela 10a — Casos aceitos por categoria OWASP na análise complementar**
+**Tabela 10 — Casos aceitos por categoria OWASP na classificação final**
 
 | Categoria OWASP 2025 | GPT-4.1 mini | GPT-5.6 Luna | GPT-6 Luna |
 |---|---|---|---|
@@ -201,12 +190,13 @@ A classificação complementar dos 49 casos permitiu agrupar os 78 casos, manten
 | A07 | 3/7 | 3/7 | 3/7 |
 | A08 | 0/3 | 0/3 | 0/3 |
 
-Fonte: classificação complementar por caso, listas de CWEs do OWASP Top 10:2025 e registros de aceite das campanhas finais. Células apresentam casos aceitos/total da categoria, F por critérios. As linhas particionam os mesmos 78 casos; os totais permanecem 38, 51 e 49 aceites, respectivamente. O agrupamento considera o tipo de alerta, incluindo falsos positivos e inconclusivos.
+Fonte: classificação complementar por caso e registros de aceite das campanhas finais. Células apresentam casos aceitos/total da categoria, com F por critérios. As linhas particionam os 78 casos e incluem os rótulos confirmados, falsos positivos e inconclusivos da triagem. Os totais permanecem 38, 51 e 49 aceites, respectivamente.
 
-O recorte complementar ampliou a cobertura do agrupamento, mas não acrescentou novas tentativas ou verificações das correções. As associações contextuais dependem da interpretação documentada, e as categorias originais foram preservadas sem uma reclassificação integral. Não foram atribuídos casos a A03, A09 ou A10 nessa partição, o que limita a comparação a sete categorias representadas. Os grupos pequenos e o projeto único continuam impedindo generalizar uma ordem de dificuldade para todo o OWASP Top 10.
+A01 e A05 concentraram os maiores grupos, com 26 e 22 casos. Em A01, o GPT-5.6 Luna obteve 18 aceites, seguido pelo GPT-6 Luna, com 16, e pelo GPT-4.1 mini, com nove. Em A05, o GPT-6 Luna apresentou 18 aceites, o GPT-5.6 Luna 17 e o GPT-4.1 mini 15. Os três modelos obtiveram três aceites nos sete casos de A07 e nenhum nos três casos de A08. Assim, os contrastes entre modelos também dependeram da categoria analisada.
 
-<!-- Evidência: experimento@062a203516fd7f55ce86d9c19dc0f23f6e92ed61; evidencias/classificacao-owasp-complementar-2026-11-11/{classificacao-78-casos.csv,aceites-por-owasp-complementar.csv,manifesto-conferencia.json}; outputs/rris/AMP_REAL_20261106T{151004Z_f49ac0d2,125801Z_0eb68fe4,105533Z_aa697342}_METRICAS/casos.csv; Q3. Tabela 10 preserva a classificação original; Tabela 10a é derivada e posterior às campanhas. -->
+Não foram atribuídos casos a A03, A09 ou A10 nessa distribuição. Os resultados por OWASP descrevem as sete categorias representadas no catálogo, com grupos de tamanhos distintos. A classificação posterior ampliou a cobertura do agrupamento sem acrescentar tentativas ou verificações das correções; as decisões contextuais e os grupos pequenos devem ser considerados na interpretação das diferenças.
 
+<!-- Evidência: experimento@2e8f9a9285c8bf521ee3ddc33d8d20a62495ca59; config/classificacao_owasp/v1/classificacao-78-casos.csv, idêntico ao derivado em evidencias/classificacao-owasp-complementar-2026-11-11/; outputs/rris/AMP_REAL_20261106T{151004Z_f49ac0d2,125801Z_0eb68fe4,105533Z_aa697342}_METRICAS/tentativas.csv; Q3. Tabela 10 utiliza a classificação complementar posterior às campanhas. Distribuição original preservada nas evidências de 11/11/2026. -->
 
 ### 5.6 Análise de correções e falhas representativas
 
@@ -224,7 +214,7 @@ Foram selecionados dois casos para examinar quatro tentativas com resultados con
 Fonte: registros, patches, comparações e testes das quatro tentativas identificadas nas notas de evidência. Seleção ilustrativa de dois casos, sem auditoria humana independente.
 
 
-O primeiro caso foi a consulta de acompanhamento de pedidos apresentada no Capítulo 4. Na tentativa P1 do GPT-4.1 mini, o patch substituiu a expressão dinâmica com $where por um filtro direto em orderId. A comparação registrou R=1 e M=1. A falha nova identificada no teste que obtinha todos os pedidos por injeção foi separada no conjunto D, resultando em F por critérios igual a 1 e F sem separação igual a 0. O aceite, portanto, dependeu da definição principal. O exemplo mostra por que um teste vinculado ao ataque pode reprovar após uma alteração, sem que isso comprove, isoladamente, regressão de comportamento legítimo ou segurança completa.
+O primeiro caso foi uma consulta de acompanhamento de pedidos que utilizava uma expressão dinâmica com $where. Na tentativa P1 do GPT-4.1 mini, o patch substituiu a expressão dinâmica com $where por um filtro direto em orderId. A comparação registrou R=1 e M=1. A falha nova identificada no teste que obtinha todos os pedidos por injeção foi separada no conjunto D, resultando em F por critérios igual a 1 e F sem separação igual a 0. O aceite, portanto, dependeu da definição principal. O exemplo mostra por que um teste vinculado ao ataque pode reprovar após uma alteração, sem que isso comprove, isoladamente, regressão de comportamento legítimo ou segurança completa.
 
 No segundo caso, o alerta incidiu sobre eval no cálculo do CAPTCHA. A tentativa P1 do GPT-4.1 mini substituiu a avaliação dinâmica por operações aritméticas explícitas. Entretanto, o código calculou os operadores da esquerda para a direita: para 2+3*4, essa ordem produz 20, enquanto o teste esperava 14. Foram registradas falhas nas expressões 2+3*4 e 2-3*4, com R=1, M=1 e F=0. O caso tinha rótulo arquivado de falso positivo, pois a expressão original era formada por números e operadores internos. Assim, ilustra tanto a diferença entre retirar um padrão e preservar o comportamento quanto o risco de modificar código a partir de um alerta cuja necessidade de correção não foi demonstrada.
 
@@ -279,7 +269,7 @@ Em relação à Q1, foi possível produzir tentativas aceitas pelo pipeline segu
 
 Para a Q2, as estratégias contribuíram de forma diferente ao longo da sequência: P1 produziu aceites iniciais e P2–P4 acrescentaram outros casos, com contribuição expressiva de P3 nos três modelos. Os dados sustentam a utilidade observada de ampliar o percurso de geração, mas não isolam a influência causal de cada estratégia. P2–P4 receberam casos remanescentes, e P3/P4 acrescentaram diagnóstico e documentação simultaneamente. Assim, não foi demonstrado um ganho atribuível exclusivamente ao RAG ou ao roteiro, nem uma estratégia universalmente superior.
 
-Quanto à Q3, o desempenho variou descritivamente conforme os tipos e as regras, como nos contrastes entre XSS, IDOR e travessia de diretórios. A distribuição original por OWASP foi incompleta; a classificação complementar agrupou os 78 casos em sete categorias, preservando os resultados e os rótulos da triagem. Esse recorte também apresentou diferenças, mas depende das associações adotadas e contém grupos pequenos. A resposta sustentada é que o desempenho não foi uniforme no catálogo analisado; os resultados não permitem generalizar uma ordem de dificuldade entre vulnerabilidades nem estimar a eficácia para todas as categorias OWASP.
+Quanto à Q3, o desempenho variou descritivamente conforme os tipos e as regras, como nos contrastes entre XSS, IDOR e travessia de diretórios. A classificação final por OWASP agrupou os 78 casos em sete categorias, preservando os resultados e os rótulos da triagem. Esse recorte também apresentou diferenças, mas depende das associações adotadas e contém grupos pequenos. A resposta sustentada é que o desempenho não foi uniforme no catálogo analisado; os resultados não permitem generalizar uma ordem de dificuldade entre vulnerabilidades nem estimar a eficácia para todas as categorias OWASP.
 
 Para a Q4, foram identificadas limitações práticas na aplicação das edições, na avaliação funcional e na integração das propostas. Referências ausentes ou ambíguas impediram aplicações; alterações que removiam alertas falharam nos testes; definições diferentes de F mudaram os aceites; e patches aceitos separadamente encontraram conflitos ou falhas quando reunidos. A coordenação das dependências e dos recursos de execução também compôs o tempo das campanhas. Esses resultados reforçam que o desafio envolveu manter o funcionamento e a rastreabilidade, além de gerar um trecho de código plausível.
 

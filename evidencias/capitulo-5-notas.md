@@ -376,3 +376,50 @@ As tabelas, métricas e populações foram preservadas.
 ## Resolução da pendência de inspeção dos patches — 10/11/2026
 
 O autor informou que não houve inspeção manual dos patches: a avaliação utilizou as métricas e verificações automatizadas. Resolvida a pendência sobre esse procedimento (PE03 / PE5-03), com alinhamento das Seções 3.10 e 5.6. Os exemplos permanecem como análise documental com apoio automatizado, sem revisão humana das correções. A revisão humana dos falsos positivos é uma atividade distinta e não foi alterada. Ver [declaração, casos e limites](analise-patches-2026-11-10.md).
+
+## Revisão dos 11 pontos solicitados pelo autor — 13/11/2026
+
+Foram consultados os capítulos 3 e 4 atuais para revisar o capítulo 5. Os capítulos
+3 e 4 não foram alterados nesta tarefa. A definição operacional do aceite já está
+nas Seções 3.10 e 3.11; a origem da triagem está em 3.5, e a distinção entre regra
+de parada e análise principal está em 3.9–3.11. A abertura do capítulo 5 agora
+explicita o sentido de correção válida e remete a essas seções.
+
+O HEAD experimental consultado foi `2e8f9a9285c8bf521ee3ddc33d8d20a62495ca59`,
+posterior ao SHA original destas notas. A evolução inclui a classificação OWASP
+versionada em `config/classificacao_owasp/v1/`, sua integração à consolidação e os
+artefatos finais em `outputs/resultados_finais/OWASP_20261111_V2/`. A tabela de
+classificação atual é idêntica, byte a byte, ao derivado de 11/11/2026 preservado
+na escrita. Os registros originais em `outputs/rris/` continuam sustentando os
+totais apresentados; não houve execução de campanha, SAST ou testes do alvo.
+
+| Ponto | Encaminhamento e conferência |
+|---|---|
+| 1 | Definição de correção válida explicitada como proposta aplicada com R=F=M=1 na interpretação principal, conforme 3.10–3.11. |
+| 2 | Explicadas as 46 exclusões: 31 Coding Challenges, 13 arquivos do GitHub e dois arquivos npm, conferidos em `outputs/catalogos/ampliado_v1/exclusoes.json`. Justificativas alinhadas a 3.5. |
+| 3 | Distribuição inicial e Tabela 10 passaram a usar a classificação OWASP final dos 78 casos: A01=26, A02=3, A04=5, A05=22, A06=12, A07=7 e A08=3. A antiga Tabela 10a tornou-se a Tabela 10; a distribuição incompleta original continua preservada nas evidências históricas. Resposta à Q3 alinhada. |
+| 4 | Remissão à triagem mantida em 3.5, que já era o número correto no arquivo atual, e redação adaptada à nova metodologia. |
+| 5 | Recontados 55 confirmados, 21 falsos positivos e dois inconclusivos. Aceites nos confirmados: 32/55, 39/55 e 36/55, na ordem mini, Luna 5.6 e Luna 6. Nomes explicitados para evitar ambiguidade de “respectivamente”. |
+| 6 | Separação dos registros pós-aceite explicada com exemplo de teste que espera exploração; população principal encerrada no primeiro aceite por critérios, mantendo os casos sem aceite até P4. |
+| 7 | Esclarecido que a ausência de um critério exclui a tentativa apenas do denominador complementar correspondente; todas as tentativas principais permanecem no denominador da TRV. |
+| 8 | Retomadas as definições de F por critérios, por marcador e sem separação antes da Tabela 4, com remissão a 3.10. Não se atribuiu revisão humana adicional dos testes. |
+| 9 | Nove células da Tabela 4 recontadas nos CSVs de tentativas. Valores originais corretos, preservados; cabeçalho e fonte esclarecem que variam as interpretações de F sobre a mesma população. |
+| 10 | Retirada a frase sobre a não observação do raciocínio interno dos modelos. |
+| 11 | Parágrafo reformulado para destacar os aceites adicionais da sequência e a contribuição de P3. Preservado o significado dos denominadores condicionais de P2–P4. |
+
+Também foi retirada a remissão do exemplo de acompanhamento de pedidos ao
+Capítulo 4, pois esse capítulo agora usa o caso de travessia de diretórios como
+exemplo. A evidência do caso de pedidos no capítulo 5 foi preservada.
+
+Conferência reproduzível, sem modificar o experimento:
+
+```sh
+python3 evidencias/revisao-capitulo-5-2026-11-13/conferir.py
+```
+
+O script confere exclusões, triagem, populações, aceites nos confirmados, TRV nas
+três definições de F e aceites OWASP. O resultado e os hashes das fontes lidas
+ficam em [conferencia.json](revisao-capitulo-5-2026-11-13/conferencia.json).
+Todos os valores conferiram. As pendências acadêmicas gerais registradas acima
+permanecem fora do escopo destes ajustes; não surgiu lacuna numérica nos pontos
+solicitados. O índice foi atualizado para registrar a revisão.

@@ -1,0 +1,132 @@
+{
+  "data": "2026-11-13",
+  "experimento_head": "2e8f9a9285c8bf521ee3ddc33d8d20a62495ca59",
+  "triagem": {
+    "falso_positivo": 21,
+    "confirmado": 55,
+    "inconclusivo": 2
+  },
+  "exclusoes": {
+    "GitHub": 13,
+    "npm": 2,
+    "Coding Challenges": 31
+  },
+  "distribuicao_owasp": {
+    "A04": 5,
+    "A07": 7,
+    "A05": 22,
+    "A08": 3,
+    "A02": 3,
+    "A01": 26,
+    "A06": 12
+  },
+  "modelos": {
+    "GPT-4.1 mini": {
+      "registros": 283,
+      "principal": 241,
+      "pos_aceite": 42,
+      "aceites_confirmados": 32,
+      "confirmados": 55,
+      "sensibilidade_F": {
+        "sem_separacao": {
+          "aceites": 17,
+          "tentativas": 241,
+          "percentual": "7,05"
+        },
+        "marcador": {
+          "aceites": 17,
+          "tentativas": 241,
+          "percentual": "7,05"
+        },
+        "criterio": {
+          "aceites": 38,
+          "tentativas": 241,
+          "percentual": "15,77"
+        }
+      },
+      "aceites_owasp": {
+        "A01": 9,
+        "A02": 1,
+        "A04": 2,
+        "A05": 15,
+        "A06": 8,
+        "A07": 3,
+        "A08": 0
+      }
+    },
+    "GPT-5.6 Luna": {
+      "registros": 277,
+      "principal": 223,
+      "pos_aceite": 54,
+      "aceites_confirmados": 39,
+      "confirmados": 55,
+      "sensibilidade_F": {
+        "sem_separacao": {
+          "aceites": 22,
+          "tentativas": 223,
+          "percentual": "9,87"
+        },
+        "marcador": {
+          "aceites": 22,
+          "tentativas": 223,
+          "percentual": "9,87"
+        },
+        "criterio": {
+          "aceites": 51,
+          "tentativas": 223,
+          "percentual": "22,87"
+        }
+      },
+      "aceites_owasp": {
+        "A01": 18,
+        "A02": 2,
+        "A04": 4,
+        "A05": 17,
+        "A06": 7,
+        "A07": 3,
+        "A08": 0
+      }
+    },
+    "GPT-6 Luna": {
+      "registros": 274,
+      "principal": 221,
+      "pos_aceite": 53,
+      "aceites_confirmados": 36,
+      "confirmados": 55,
+      "sensibilidade_F": {
+        "sem_separacao": {
+          "aceites": 23,
+          "tentativas": 221,
+          "percentual": "10,41"
+        },
+        "marcador": {
+          "aceites": 23,
+          "tentativas": 221,
+          "percentual": "10,41"
+        },
+        "criterio": {
+          "aceites": 49,
+          "tentativas": 221,
+          "percentual": "22,17"
+        }
+      },
+      "aceites_owasp": {
+        "A01": 16,
+        "A02": 1,
+        "A04": 4,
+        "A05": 18,
+        "A06": 7,
+        "A07": 3,
+        "A08": 0
+      }
+    }
+  },
+  "fontes_sha256": {
+    "outputs/catalogos/ampliado_v1/catalogo_issues.json": "08672899e712fbeef2070f01c58b5867e080e74f716ddc7d8fd10c6d58344aee",
+    "outputs/catalogos/ampliado_v1/exclusoes.json": "fabae58fc87ab09978d483962a913db7ce928d1ebe80f54feaf9ab02a309b6c9",
+    "config/classificacao_owasp/v1/classificacao-78-casos.csv": "2a6d8904b51d2265b71ce2c7ed9577045a7e6410fd7d6137b0daeca4143e1080",
+    "outputs/rris/AMP_REAL_20261106T151004Z_f49ac0d2_METRICAS/tentativas.csv": "879b3620f6a2aa350be8051a45f9006196025746bcb6d86cced62af26626853e",
+    "outputs/rris/AMP_REAL_20261106T125801Z_0eb68fe4_METRICAS/tentativas.csv": "0afedf0bd20fb1caa1edf9ab6cec2b902594e46995a5006223256b09563d58f5",
+    "outputs/rris/AMP_REAL_20261106T105533Z_aa697342_METRICAS/tentativas.csv": "46e28e47553e30560f3c1cd6177ffea8931ceb43cf9f7fa58848f6721404c362"
+  }
+}
