@@ -52,6 +52,36 @@
         "A06": 8,
         "A07": 3,
         "A08": 0
+      },
+      "owasp_confirmados": {
+        "A01": {
+          "aceites": 7,
+          "casos": 18
+        },
+        "A02": {
+          "aceites": 1,
+          "casos": 1
+        },
+        "A04": {
+          "aceites": 1,
+          "casos": 1
+        },
+        "A05": {
+          "aceites": 13,
+          "casos": 16
+        },
+        "A06": {
+          "aceites": 7,
+          "casos": 10
+        },
+        "A07": {
+          "aceites": 3,
+          "casos": 7
+        },
+        "A08": {
+          "aceites": 0,
+          "casos": 2
+        }
       }
     },
     "GPT-5.6 Luna": {
@@ -85,6 +115,36 @@
         "A06": 7,
         "A07": 3,
         "A08": 0
+      },
+      "owasp_confirmados": {
+        "A01": {
+          "aceites": 12,
+          "casos": 18
+        },
+        "A02": {
+          "aceites": 1,
+          "casos": 1
+        },
+        "A04": {
+          "aceites": 1,
+          "casos": 1
+        },
+        "A05": {
+          "aceites": 15,
+          "casos": 16
+        },
+        "A06": {
+          "aceites": 7,
+          "casos": 10
+        },
+        "A07": {
+          "aceites": 3,
+          "casos": 7
+        },
+        "A08": {
+          "aceites": 0,
+          "casos": 2
+        }
       }
     },
     "GPT-6 Luna": {
@@ -118,6 +178,36 @@
         "A06": 7,
         "A07": 3,
         "A08": 0
+      },
+      "owasp_confirmados": {
+        "A01": {
+          "aceites": 11,
+          "casos": 18
+        },
+        "A02": {
+          "aceites": 1,
+          "casos": 1
+        },
+        "A04": {
+          "aceites": 0,
+          "casos": 1
+        },
+        "A05": {
+          "aceites": 15,
+          "casos": 16
+        },
+        "A06": {
+          "aceites": 6,
+          "casos": 10
+        },
+        "A07": {
+          "aceites": 3,
+          "casos": 7
+        },
+        "A08": {
+          "aceites": 0,
+          "casos": 2
+        }
       }
     }
   },

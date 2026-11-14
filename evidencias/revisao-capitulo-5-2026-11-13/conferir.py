@@ -71,13 +71,22 @@ for model, run, total, principal, accepted, confirmed, strict in runs:
     assert len(accepted_ids) == accepted
     confirmed_ids = {c['caso_id'] for c in catalog if c['classificacao_auditoria'] == 'confirmado'}
     assert len(accepted_ids & confirmed_ids) == confirmed
+    confirmed_totals = Counter(by_id[c]['owasp_2025_analise'] for c in confirmed_ids)
+    confirmed_accepted = Counter(by_id[c]['owasp_2025_analise'] for c in accepted_ids & confirmed_ids)
+    confirmed_table = chapter.split('**Tabela 10a —', 1)[1].split('Fonte:', 1)[0]
+    model_column = [r[0] for r in runs].index(model) + 2
+    for category, denominator in confirmed_totals.items():
+        line = next(line for line in confirmed_table.splitlines() if line.startswith(f'| {category} —'))
+        assert line.split('|')[model_column].strip() == f'{confirmed_accepted[category]}/{denominator}'
     by_category = Counter(by_id[c]['owasp_2025_analise'] for c in accepted_ids)
     for category, denominator in owasp.items():
         table_row = next(line for line in chapter.splitlines() if line.startswith(f'| {category} |'))
         assert f'{by_category[category]}/{denominator}' in table_row
     summary['modelos'][model] = {'registros': total, 'principal': principal, 'pos_aceite': total - principal,
         'aceites_confirmados': confirmed, 'confirmados': 55, 'sensibilidade_F': sensitivity,
-        'aceites_owasp': {c: by_category[c] for c in sorted(owasp)}}
+        'aceites_owasp': {c: by_category[c] for c in sorted(owasp)},
+        'owasp_confirmados': {c: {'aceites': confirmed_accepted[c], 'casos': confirmed_totals[c]}
+                             for c in sorted(confirmed_totals)}}
 summary['fontes_sha256'] = hashes
 (HERE / 'conferencia.json').write_text(json.dumps(summary, indent=2, ensure_ascii=False) + '\n')
 print(json.dumps({k: v for k, v in summary.items() if k != 'fontes_sha256'}, indent=2, ensure_ascii=False))

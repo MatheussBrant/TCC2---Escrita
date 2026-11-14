@@ -14,7 +14,7 @@ a entregas acadêmicas anteriores. As orientações estão nos
 | [02-referencial-teorico.md](02-referencial-teorico.md) | Fundamentação e trabalhos relacionados; revisão bibliográfica integral pendente |
 | [03-metodologia.md](03-metodologia.md) | Desenho e procedimentos do experimento; rascunho completo, revisado pelos autores no Notion em 13/11/2026 (trechos de implementação passaram ao capítulo 4) |
 | [04-implementacao.md](04-implementacao.md) | Implementação do pipeline, na estrutura do antigo capítulo de prova de conceito; reescrito em 11/11/2026, revisado pelos autores no Notion e alinhado ao capítulo 3 em 12/11/2026; falta inserir as capturas de tela do painel |
-| [05-resultados-discussao.md](05-resultados-discussao.md) | Resultados, discussão e respostas a Q1–Q5; rascunho completo, com os 11 ajustes solicitados em 13/11/2026, classificação OWASP final e conferência dos números |
+| [05-resultados-discussao.md](05-resultados-discussao.md) | Resultados, discussão e respostas a Q1–Q5; revisado em 13/11/2026, com classificação OWASP final, conferência dos números e escolhas de modelo por critério e categoria, distinguindo o catálogo completo do recorte confirmado |
 | Capítulo 6 — Conclusão e trabalhos futuros | Ainda não redigido |
 | [referencias.md](referencias.md) | Referências bibliográficas; integração e revisão pendentes |
 

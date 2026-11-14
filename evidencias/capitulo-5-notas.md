@@ -423,3 +423,57 @@ ficam em [conferencia.json](revisao-capitulo-5-2026-11-13/conferencia.json).
 Todos os valores conferiram. As pendências acadêmicas gerais registradas acima
 permanecem fora do escopo destes ajustes; não surgiu lacuna numérica nos pontos
 solicitados. O índice foi atualizado para registrar a revisão.
+
+## Complemento de 13/11/2026 — respostas explícitas à Q3 e à Q5
+
+O autor pediu indicações concretas de categorias e modelos, pois as respostas
+anteriores apresentavam os resultados sem concluir a escolha conforme cada
+critério. As Seções 5.4, 5.5 e 5.8 agora explicitam essas indicações:
+
+- Maior número de aceites e maior TRV: GPT-5.6 Luna; menor custo calculado de
+  geração e menor duração observada de campanha: GPT-6 Luna; menor latência
+  média individual de geração: GPT-4.1 mini. Valores preservados das Tabelas 2,
+  7 e 8, sem consulta a tarifas atuais ou extrapolação para outros projetos.
+- Maior proporção por categoria no catálogo completo: GPT-5.6 Luna em A01 e A02,
+  GPT-6 Luna em A05, GPT-4.1 mini em A06, empate dos Luna em A04 e dos três em
+  A07; nenhum aceite em A08.
+- Acrescentada uma análise derivada dos 55 confirmados por categoria, pois as
+  escolhas sobre os 78 alertas incluem falsos positivos e inconclusivos. A nova
+  Tabela 10a apresenta esse recorte, distinto da antiga tabela de classificação
+  complementar que tinha o mesmo número antes da revisão desta data.
+
+| Categoria | Confirmados | mini aceitos | Luna 5.6 aceitos | Luna 6 aceitos |
+|---|---:|---:|---:|---:|
+| A01 | 18 | 7 | 12 | 11 |
+| A02 | 1 | 1 | 1 | 1 |
+| A04 | 1 | 1 | 1 | 0 |
+| A05 | 16 | 13 | 15 | 15 |
+| A06 | 10 | 7 | 7 | 6 |
+| A07 | 7 | 3 | 3 | 3 |
+| A08 | 2 | 0 | 0 | 0 |
+| Total | 55 | 32 | 39 | 36 |
+
+Fonte: junção por `caso_id` do catálogo original, da classificação OWASP
+versionada e dos aceites na população principal dos três CSVs de tentativas de
+`outputs/rris/<EXEC>_METRICAS/`. SHA experimental consultado inalterado:
+`2e8f9a9285c8bf521ee3ddc33d8d20a62495ca59`.
+
+No recorte confirmado, A01 continua favorecendo o GPT-5.6 Luna, A05 passa a
+empate dos Luna e A06 a empate entre mini e Luna 5.6. A02 e A04 têm apenas um
+caso confirmado cada e não sustentam preferência consistente. A05 apresenta a
+maior proporção de aceites entre as categorias com mais de um confirmado nos
+três modelos. A07 permanece empatada e A08 sem aceite.
+
+A sugestão de desempate por custo usa somente o custo global das campanhas:
+não foi realizada comparação econômica específica por categoria nem campanha
+que combinasse modelos por categoria. A duração da campanha também não foi
+atribuída exclusivamente ao modelo. Esses limites permanecem explícitos junto
+às indicações. As respostas à Q3 e à Q5 distinguem escolha nas condições
+observadas de superioridade universal e mantêm o resultado negativo da
+aprovação funcional integrada.
+
+O script `revisao-capitulo-5-2026-11-13/conferir.py` foi ampliado e executado:
+conferiu cada célula do novo recorte com a coluna do modelo na Tabela 10a,
+reconciliou os totais e atualizou `conferencia.json`, incluindo os numeradores e
+denominadores por categoria entre os confirmados. `git diff --check` sem erros.
+Nenhum experimento foi executado e os capítulos 3 e 4 permaneceram intactos.
