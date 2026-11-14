@@ -477,3 +477,202 @@ conferiu cada célula do novo recorte com a coluna do modelo na Tabela 10a,
 reconciliou os totais e atualizou `conferencia.json`, incluindo os numeradores e
 denominadores por categoria entre os confirmados. `git diff --check` sem erros.
 Nenhum experimento foi executado e os capítulos 3 e 4 permaneceram intactos.
+
+## Revisão de clareza e interpretação das métricas — 13/11/2026
+
+O autor solicitou maior objetividade, explicação do significado de cada métrica
+nos resultados e conclusão explícita para cada indicador. O capítulo foi
+reorganizado, preservando o método e os valores das campanhas. A versão anterior
+à reestruturação está em
+`revisao-capitulo-5-2026-11-13/capitulo-5-antes-revisao-clareza.md`.
+
+Alterações na apresentação:
+
+- Abertura e Seção 5.1 resumem as condições, distinguem o catálogo de 78 alertas
+  dos 55 confirmados e explicam os registros pós-aceite sem antecipar todas as
+  métricas.
+- Seção 5.2.1 distingue aceites por caso de TRV por tentativa. A Tabela 2 reúne
+  os dois recortes por caso em colunas separadas e identifica que a TRV usa as
+  tentativas sobre o catálogo completo. O exemplo 51/78 versus 51/223 esclarece
+  os denominadores.
+- Seção 5.2.2 apresenta, para TRI, TPF, TFF e TNINI, o que é contado, o sentido
+  favorável do indicador, o resultado e a conclusão. TRI semelhante entre os
+  modelos; TPF e TFF favoráveis ao GPT-6 Luna; TNINI alta nos três, com maior
+  valor no GPT-5.6 Luna. Os critérios isolados não foram equiparados ao aceite.
+- Seção 5.2.3 explica as alternativas de F antes da tabela e explicita que a
+  interpretação funcional altera os totais e a liderança da TRV. A definição
+  principal por critérios foi preservada.
+- Seção 5.3 explica a leitura de uma célula da tabela de estratégias e conclui
+  pela contribuição adicional de P3 na sequência, sem atribuição causal isolada.
+- Seção 5.4 separa eficácia/aplicação, custo e tempo. Cada indicador tem uma
+  interpretação: aplicabilidade, custo total, custo por caso, latência média,
+  mediana e duração da campanha. As respectivas conclusões estão junto dos dados.
+- Seção 5.5 acrescenta a coluna de maior proporção na Tabela 10 e simplifica a
+  explicação dos recortes completo e confirmado. Retirada a sugestão de usar
+  custo global como desempate por categoria, para manter a conclusão vinculada
+  ao que foi medido nesse recorte.
+- Seção 5.7 explica o cálculo da RRIS com exemplo e conclui separadamente sobre
+  redução estática e aprovação funcional conjunta. A maior RRIS foi do
+  GPT-5.6 Luna, mas nenhum conjunto integrado passou nos testes.
+- Seções 5.8 e 5.10 retomam respostas e conclusões de forma direta, reduzindo a
+  repetição de valores já apresentados e mantendo as escolhas por categoria e
+  por objetivo. As ameaças à validade permanecem em 5.10.
+
+Conferências:
+
+1. Reexecutado `revisao-capitulo-5-2026-11-13/conferir.py`, ampliado para calcular
+   TRI, TPF, TFF, TNINI, medições ausentes e propostas aplicadas a partir dos
+   CSVs de tentativas. Cada razão e porcentagem da Tabela 3 confere com a linha
+   do respectivo modelo. O JSON inclui esses resultados.
+2. Preservados os valores numéricos das Tabelas 1, 3–12, incluindo 10a; a nova
+   coluna textual da Tabela 10 apenas indica os líderes. A Tabela 2 ganhou os
+   32/55, 39/55 e 36/55 já conferidos, sem alterar as demais métricas.
+3. Excertos de código preservados integralmente e numeração das tabelas conferida.
+4. `git diff --check` sem erros.
+
+A consulta continua vinculada ao experimento no HEAD
+`2e8f9a9285c8bf521ee3ddc33d8d20a62495ca59`; nenhuma campanha, LLM, SAST ou suíte
+do alvo foi executada. Os capítulos 3 e 4 não foram alterados. Não surgiu
+pendência numérica nos indicadores revisados; permanecem os limites experimentais
+já declarados no capítulo.
+
+
+## Premissa da sequência de prompts — 14/11/2026
+
+A pedido do autor, a Seção 5.3 passou a explicitar a suposição já descrita na
+Seção 3.13: estratégias com mais orientações ou contexto poderiam corrigir os
+casos aceitos por uma estratégia anterior. Essa premissa foi identificada como
+justificativa do desenho e da parada, sem apresentá-la como resultado verificado.
+A conclusão distingue o aumento acumulado de aceites nos três modelos da
+afirmação não demonstrada de melhoria em todos os casos ou preservação de todos
+os aceites anteriores. P2 e P3 acrescentam componentes diferentes, e não foram
+descritos como uma escala de superioridade garantida.
+
+Conferência: leitura comparada das Seções 3.13 e 5.3; valores, tabelas e critérios
+preservados. Nenhuma nova análise empírica ou execução experimental.
+
+
+## Aumento relativo dos aceites após P1 — 14/11/2026
+
+Incluída a Tabela 5a na Seção 5.3, após a Figura 1 e antes da conclusão da
+seção, conforme solicitação do autor. A Tabela 5 original foi preservada.
+O novo indicador calcula (aceitos ao final de P1–P4 − aceitos em P1) / aceitos
+em P1 × 100, sobre a população principal dos 78 alertas com F por critérios.
+Ele expressa crescimento acumulado em relação a P1, sem representar a taxa de
+sucesso sobre os 78 casos ou efeito causal isolado dos prompts.
+
+| Modelo | P1 | Final | Adicionais | Aumento |
+|---|---:|---:|---:|---:|
+| GPT-4.1 mini | 16 | 38 | 22 | 137,50% |
+| GPT-5.6 Luna | 18 | 51 | 33 | 183,33% |
+| GPT-6 Luna | 21 | 49 | 28 | 133,33% |
+
+Fonte aritmética: `capitulo-5-apoio/estrategias.csv`, SHA-256
+`1d0488ae15ec51ef62fa5b9bf8d0c438353e946e7360db64b4d4c62dd4c38c22`.
+Numeradores derivados da soma dos primeiros aceites de P1–P4, cuja fonte
+experimental e execuções estão identificadas nas seções anteriores. HEAD
+experimental conferido e inalterado: `2e8f9a9285c8bf521ee3ddc33d8d20a62495ca59`.
+Valores e arredondamentos recalculados por leitura do CSV; `git diff --check`
+sem erros. Nenhum experimento foi executado e nenhuma métrica existente foi
+modificada.
+
+
+## Clareza da sobreposição de casos aceitos — 14/11/2026
+
+A Seção 5.4.1 passou a definir sobreposição como aceite de propostas para a
+mesma ocorrência de alerta por dois ou mais modelos, independentemente de os
+patches serem iguais. A introdução da Tabela 6 distingue essa informação dos
+totais por modelo da Tabela 2.
+
+A Tabela 6 foi renomeada para “Casos aceitos em comum e exclusivos de cada
+modelo” e agora separa os modelos com e sem aceite em cada grupo. Os oito
+grupos e seus valores foram preservados. O parágrafo seguinte explica que
+cada caso aparece em uma única linha e exemplifica a reconstrução dos 51
+aceites do GPT-5.6 Luna: 32 + 4 + 11 + 4. A conclusão distingue cobertura
+compartilhada/exclusiva de integração dos patches.
+
+Conferência por leitura de `capitulo-5-apoio/casos-modelos.csv`: oito combinações
+recalculadas por ID de caso e modelo, total de 78 casos, união de 58 aceites e
+totais individuais de 38, 51 e 49. Todos os valores coincidem com o manuscrito.
+`git diff --check` sem erros. Nenhum experimento ou métrica foi alterado.
+
+
+## Significado da aprovação funcional conjunta — 14/11/2026
+
+A pedido do autor, a Seção 5.7 passou a explicar, antes da Tabela 12, que a
+aprovação funcional se refere ao código com os patches efetivamente aplicados
+em conjunto. O texto define o resultado “Sim” conforme compilação, testes
+aplicáveis, baseline e interpretação por critérios da Seção 3.10. Explicita
+que a aprovação funcional não exige eliminar os 78 alertas e distingue essa
+avaliação da redução estática medida pela RRIS.
+
+O cabeçalho da última coluna passou a “Aprovação funcional do conjunto”.
+O parágrafo dos resultados esclarece que “Não” significa reprovação da
+composição, apesar do aceite individual dos patches selecionados. Todos os
+valores e os resultados funcionais arquivados foram preservados; a alteração
+é explicativa, sem nova análise ou execução experimental.
+Conferência editorial: remissão à definição de F em 3.10 e `git diff --check`
+sem erros.
+
+
+## Simplificação da explicação do resultado funcional — 14/11/2026
+
+Na Seção 5.7, substituída a frase sobre reprovação da composição por três
+frases diretas: os patches passaram individualmente sobre o código original;
+a aplicação conjunta apresentou falhas nos testes; por isso, o conjunto
+recebeu “Não” nos três modelos. Mantida a referência à interpretação por
+critérios, sem alteração dos resultados ou atribuição de causa às falhas.
+`git diff --check` sem erros.
+
+
+## Enunciados das perguntas junto das respostas — 14/11/2026
+
+A Seção 5.8 passou a repetir o enunciado completo de Q1–Q5 antes da respectiva
+resposta, destacado em negrito. Os cinco enunciados foram extraídos diretamente
+da Seção 1.2 da introdução e conferidos por igualdade de texto. Retiradas as
+aberturas “Para a Qn” das respostas, mantendo seu conteúdo e todos os resultados.
+A introdução e a formulação das perguntas de pesquisa não foram alteradas.
+Conferidos os cinco pares pergunta/resposta e `git diff --check` sem erros.
+
+
+## Síntese positiva das contribuições por estratégia — 14/11/2026
+
+Por solicitação do autor, a conclusão de 5.3 e a resposta à Q2 passaram a
+destacar que todas as etapas acrescentaram aceites nos três modelos. Retirada
+desses trechos a ressalva sobre superioridade isolada e ganho exclusivo do
+RAG. Mantida a descrição de P3 como combinação de diagnóstico SAST e
+documentação, sem atribuir causalidade exclusiva a um componente.
+
+A capacidade das estratégias posteriores de corrigir os casos aceitos antes
+continua explicitamente descrita como premissa do desenho, conforme a abertura
+de 5.3 e a Seção 3.13, sem transformá-la em medição. “Aumento em todas as etapas”
+refere-se ao número acumulado de casos aceitos, não a uma taxa crescente de
+sucesso nem a melhoria comprovada em cada caso individual.
+
+Conferência de `capitulo-5-apoio/estrategias.csv`: as 12 combinações de modelo
+e estratégia têm numeradores positivos. Valores de aceites, aumentos relativos
+e tabelas preservados. `git diff --check` sem erros.
+
+
+## Alcance e continuidade da pesquisa — 14/11/2026
+
+A pedido do autor, a Seção 5.10 foi reformulada para apresentar possibilidades
+de continuidade da pesquisa em lugar de concentrar a discussão no enquadramento
+como ameaças à validade. Novo título: “Alcance dos resultados e possibilidades
+de continuidade”, também atualizado no sumário de
+`manuscrito/00-elementos-pre-textuais.md`.
+
+As condições e restrições que afetam a interpretação foram preservadas e
+ligadas às propostas correspondentes: aplicação e campanha únicas → repetição
+e outros projetos; sequência com casos remanescentes → aplicação independente
+de P1–P4 a todos os casos; diagnóstico e documentação simultâneos → condições
+separadas; alcance estático, triagem, D e dois exemplos → revisão independente,
+exploração e amostra ampliada; conflitos e reprovação conjunta → testes
+incrementais, ordens de integração e geração sobre código modificado.
+
+As propostas são identificadas como possibilidades futuras, sem afirmar que
+foram implementadas ou que necessariamente resolveriam as dificuldades.
+Preservada a síntese dos resultados e nenhum valor empírico foi alterado.
+Conferência editorial do título no sumário e `git diff --check` sem erros.
+Não houve execução experimental, nova consulta bibliográfica ou alteração
+dos capítulos 3 e 4.

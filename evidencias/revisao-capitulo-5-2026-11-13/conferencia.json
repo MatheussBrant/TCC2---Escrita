@@ -44,6 +44,35 @@
           "percentual": "15,77"
         }
       },
+      "metricas_por_criterio": {
+        "TRI": {
+          "numerador": 85,
+          "denominador": 221,
+          "percentual": "38,46"
+        },
+        "TPF": {
+          "numerador": 145,
+          "denominador": 218,
+          "percentual": "66,51"
+        },
+        "TFF": {
+          "numerador": 73,
+          "denominador": 218,
+          "percentual": "33,49"
+        },
+        "TNINI": {
+          "numerador": 214,
+          "denominador": 221,
+          "percentual": "96,83"
+        }
+      },
+      "sem_medicao": {
+        "R": 20,
+        "M": 20,
+        "F_criterio": 23
+      },
+      "propostas_aplicadas": 224,
+      "propostas_nao_aplicadas": 17,
       "aceites_owasp": {
         "A01": 9,
         "A02": 1,
@@ -107,6 +136,35 @@
           "percentual": "22,87"
         }
       },
+      "metricas_por_criterio": {
+        "TRI": {
+          "numerador": 82,
+          "denominador": 216,
+          "percentual": "37,96"
+        },
+        "TPF": {
+          "numerador": 154,
+          "denominador": 212,
+          "percentual": "72,64"
+        },
+        "TFF": {
+          "numerador": 58,
+          "denominador": 212,
+          "percentual": "27,36"
+        },
+        "TNINI": {
+          "numerador": 212,
+          "denominador": 216,
+          "percentual": "98,15"
+        }
+      },
+      "sem_medicao": {
+        "R": 7,
+        "M": 7,
+        "F_criterio": 11
+      },
+      "propostas_aplicadas": 216,
+      "propostas_nao_aplicadas": 7,
       "aceites_owasp": {
         "A01": 18,
         "A02": 2,
@@ -170,6 +228,35 @@
           "percentual": "22,17"
         }
       },
+      "metricas_por_criterio": {
+        "TRI": {
+          "numerador": 77,
+          "denominador": 203,
+          "percentual": "37,93"
+        },
+        "TPF": {
+          "numerador": 154,
+          "denominador": 199,
+          "percentual": "77,39"
+        },
+        "TFF": {
+          "numerador": 45,
+          "denominador": 199,
+          "percentual": "22,61"
+        },
+        "TNINI": {
+          "numerador": 198,
+          "denominador": 203,
+          "percentual": "97,54"
+        }
+      },
+      "sem_medicao": {
+        "R": 18,
+        "M": 18,
+        "F_criterio": 22
+      },
+      "propostas_aplicadas": 205,
+      "propostas_nao_aplicadas": 16,
       "aceites_owasp": {
         "A01": 16,
         "A02": 1,

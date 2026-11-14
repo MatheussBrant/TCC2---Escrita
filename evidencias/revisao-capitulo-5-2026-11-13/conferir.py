@@ -57,6 +57,23 @@ for model, run, total, principal, accepted, confirmed, strict in runs:
     main = [r for r in attempts if r['pos_aceite'] == 'false']
     assert len(main) == principal
     assert len({r['caso_id'] for r in main}) == 78
+    criteria_metrics = {}
+    criteria_table = chapter.split('**Tabela 3 —', 1)[1].split('Fonte:', 1)[0]
+    model_row = next(line for line in criteria_table.splitlines() if line.startswith(f'| {model} |'))
+    for name, field, value in [('TRI', 'R', '1'), ('TPF', 'F_criterio', '1'),
+                               ('TFF', 'F_criterio', '0'), ('TNINI', 'M', '1')]:
+        numerator = sum(r[field] == value for r in main)
+        denominator = sum(r[field] in ('0', '1') for r in main)
+        percentage = f'{numerator / denominator * 100:.2f}'.replace('.', ',')
+        assert f'{numerator}/{denominator} ({percentage}%)' in model_row
+        criteria_metrics[name] = {'numerador': numerator, 'denominador': denominator,
+                                  'percentual': percentage}
+    missing = {field: sum(r[field] not in ('0', '1') for r in main)
+               for field in ('R', 'M', 'F_criterio')}
+    assert missing['R'] == missing['M']
+    assert f"| {missing['R']}; {missing['F_criterio']} |" in model_row
+    applied = sum(r['status_aplicacao'] == 'aplicado' for r in main)
+    assert criteria_metrics['TPF']['numerador'] + criteria_metrics['TFF']['numerador'] == criteria_metrics['TPF']['denominador']
     sensitivity = {}
     accepted_ids = set()
     for definition, expected in [('sem_separacao', strict), ('marcador', strict), ('criterio', accepted)]:
@@ -84,6 +101,8 @@ for model, run, total, principal, accepted, confirmed, strict in runs:
         assert f'{by_category[category]}/{denominator}' in table_row
     summary['modelos'][model] = {'registros': total, 'principal': principal, 'pos_aceite': total - principal,
         'aceites_confirmados': confirmed, 'confirmados': 55, 'sensibilidade_F': sensitivity,
+        'metricas_por_criterio': criteria_metrics, 'sem_medicao': missing,
+        'propostas_aplicadas': applied, 'propostas_nao_aplicadas': principal - applied,
         'aceites_owasp': {c: by_category[c] for c in sorted(owasp)},
         'owasp_confirmados': {c: {'aceites': confirmed_accepted[c], 'casos': confirmed_totals[c]}
                              for c in sorted(confirmed_totals)}}

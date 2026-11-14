@@ -193,7 +193,7 @@ This work evaluated an automated pipeline integrating Large Language Models (LLM
   - 5.7 Redução conjunta de alertas e RRIS
   - 5.8 Respostas às perguntas de pesquisa
   - 5.9 Discussão com a literatura e implicações
-  - 5.10 Ameaças à validade e síntese do capítulo
+  - 5.10 Alcance dos resultados e possibilidades de continuidade
 - 6 Conclusão e trabalhos futuros [PENDENTE: redigir]
 - Referências
 
