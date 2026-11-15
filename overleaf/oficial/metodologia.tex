@@ -3,8 +3,7 @@
 
 Este capítulo apresenta os procedimentos metodológicos utilizados para avaliar um \textit{pipeline} automatizado de correção de vulnerabilidades em código-fonte, integrando Modelos de Linguagem de Grande Escala (LLMs), Análise Estática de Segurança (SAST) e testes automatizados. A avaliação considerou a remoção dos alertas, a preservação do comportamento verificado pelos testes e a ausência de novos alertas de segurança, além de examinar diferentes estratégias de \textit{prompt} e modelos de linguagem.
 
-% Remissões ao Capítulo 5 escritas por extenso: trocar por \ref quando o capítulo estiver no Overleaf.
-O experimento foi conduzido no OWASP Juice Shop, a partir dos alertas identificados pela ferramenta SAST. As seções seguintes descrevem o objeto de estudo, a constituição dos casos, as condições de geração, o procedimento de execução e os critérios de avaliação e análise dos dados. O detalhamento da implementação é apresentado no Capítulo~\ref{cap:implementacao}, enquanto os resultados e sua interpretação são desenvolvidos no Capítulo 5.
+O experimento foi conduzido no OWASP Juice Shop, a partir dos alertas identificados pela ferramenta SAST. As seções seguintes descrevem o objeto de estudo, a constituição dos casos, as condições de geração, o procedimento de execução e os critérios de avaliação e análise dos dados. O detalhamento da implementação é apresentado no Capítulo~\ref{cap:implementacao}, enquanto os resultados e sua interpretação são desenvolvidos no Capítulo~\ref{cap:resultados}.
 
 \section{Plano Metodológico}
 \label{sec:met-plano}
@@ -470,7 +469,7 @@ Cada tentativa de correção recebeu um identificador único, utilizado para nom
 
 No exemplo da figura, \texttt{V01} identifica o caso, \texttt{A05} a categoria OWASP, \texttt{SQLI} o tipo de vulnerabilidade, \texttt{P1} a estratégia de \textit{prompt}, \texttt{E01} a execução e \texttt{codigo} o artefato. Nos resultados do experimento, os casos receberam identificadores iniciados por \texttt{AMP}, e as execuções foram identificadas pelo código da campanha. Os códigos corrigidos mantiveram seus nomes e caminhos relativos dentro de um diretório da tentativa. \textit{Prompts}, respostas, \textit{patches} e relatórios foram associados ao mesmo identificador em seus respectivos diretórios.
 
-Essa organização permitiu acompanhar cada tentativa desde o alerta inicial até a avaliação da proposta e comparar estratégias diferentes para o mesmo caso. Na versão final dos artefatos, os nomes incorporaram as categorias OWASP de uma classificação complementar, realizada após as campanhas e apresentada no Capítulo 5. Os identificadores e caminhos anteriores foram preservados em mapas de correspondência, permitindo rastrear a padronização sem modificar o conteúdo experimental dos arquivos.
+Essa organização permitiu acompanhar cada tentativa desde o alerta inicial até a avaliação da proposta e comparar estratégias diferentes para o mesmo caso. Na versão final dos artefatos, os nomes incorporaram as categorias OWASP de uma classificação complementar, realizada após as campanhas e apresentada no Capítulo~\ref{cap:resultados}. Os identificadores e caminhos anteriores foram preservados em mapas de correspondência, permitindo rastrear a padronização sem modificar o conteúdo experimental dos arquivos.
 
 A população principal foi formada pelas tentativas reais das estratégias previstas, delimitadas conforme o primeiro aceite registrado por caso. Simulações, diagnósticos adicionais, pilotos e registros posteriores ao aceite foram mantidos em categorias separadas. Essa delimitação permitiu conferir o número de casos solicitados, os casos que receberam tentativas e as medições disponíveis.
 
