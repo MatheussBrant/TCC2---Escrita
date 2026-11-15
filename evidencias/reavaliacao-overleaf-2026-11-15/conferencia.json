@@ -1,0 +1,206 @@
+{
+  "data": "2026-11-15",
+  "fonte_principal": "TCC2___Caio_Lamego_e_Matheus_Brant(1)",
+  "escopo": "Exportação local indicada pelo autor; revisão de fontes LaTeX e imagens, sem compilação ou acesso ao Overleaf remoto.",
+  "inputs_ausentes": [],
+  "referencias_sem_label_explicito": {
+    "LastPage": [
+      "fixos/fichaCatalografica.tex"
+    ]
+  },
+  "nota_LastPage": "Gerado pelo pacote lastpage carregado; não é achado de referência quebrada.",
+  "labels_duplicados": {},
+  "citacoes_sem_chave": {},
+  "chaves_bibliograficas_duplicadas": {
+    "owasp_top10_2025_intro": [
+      198,
+      545
+    ],
+    "stackoverflow_survey_ai_2025": [
+      497,
+      725
+    ],
+    "openai_gpt5": [
+      505,
+      693
+    ],
+    "openai_introducing_gpt5_2025": [
+      513,
+      701
+    ],
+    "owasp_api_bola_2023": [
+      601,
+      749
+    ]
+  },
+  "figuras": {
+    "figuras/plano.png": true,
+    "figuras/pipeline.png": true,
+    "figuras/nomenclatura.png": true,
+    "figuras/etapas-pipeline.png": true,
+    "figuras/worktrees.png": true,
+    "figuras/painel.png": true,
+    "figuras/escolha-llm.png": true,
+    "figuras/execucao.png": true,
+    "figuras/resultados-aceites-por-estrategia.png": true,
+    "figuras/capa.eps": true
+  },
+  "experimento_head": "2e8f9a9285c8bf521ee3ddc33d8d20a62495ca59",
+  "campanhas": [
+    {
+      "modelo": "GPT-4.1 mini",
+      "execucao": "AMP_REAL_20261106T151004Z_f49ac0d2",
+      "total_registrado": 283,
+      "populacao_principal": 241,
+      "aceites": 38,
+      "aceites_confirmados": 32,
+      "aceites_por_estrategia": {
+        "P3": 15,
+        "P2": 4,
+        "P1": 16,
+        "P4": 3
+      },
+      "linha_tabela_aceites_conferida": "GPT-4.1 mini & 38/78 (48,72\\%) & 32/55 (58,18\\%) & 38/241 (15,77\\%) \\\\",
+      "RRIS": {
+        "I_antes": 78,
+        "I_depois": 40,
+        "valor": 0.487179,
+        "conjunto_funcionalmente_validado": false
+      }
+    },
+    {
+      "modelo": "GPT-5.6 Luna",
+      "execucao": "AMP_REAL_20261106T125801Z_0eb68fe4",
+      "total_registrado": 277,
+      "populacao_principal": 223,
+      "aceites": 51,
+      "aceites_confirmados": 39,
+      "aceites_por_estrategia": {
+        "P1": 18,
+        "P4": 3,
+        "P2": 5,
+        "P3": 25
+      },
+      "linha_tabela_aceites_conferida": "GPT-5.6 Luna & 51/78 (65,38\\%) & 39/55 (70,91\\%) & 51/223 (22,87\\%) \\\\",
+      "RRIS": {
+        "I_antes": 78,
+        "I_depois": 23,
+        "valor": 0.705128,
+        "conjunto_funcionalmente_validado": false
+      }
+    },
+    {
+      "modelo": "GPT-6 Luna",
+      "execucao": "AMP_REAL_20261106T105533Z_aa697342",
+      "total_registrado": 274,
+      "populacao_principal": 221,
+      "aceites": 49,
+      "aceites_confirmados": 36,
+      "aceites_por_estrategia": {
+        "P4": 5,
+        "P1": 21,
+        "P3": 18,
+        "P2": 5
+      },
+      "linha_tabela_aceites_conferida": "GPT-6 Luna & 49/78 (62,82\\%) & 36/55 (65,45\\%) & 49/221 (22,17\\%) \\\\",
+      "RRIS": {
+        "I_antes": 78,
+        "I_depois": 31,
+        "valor": 0.602564,
+        "conjunto_funcionalmente_validado": false
+      }
+    }
+  ],
+  "caso_keyServer": {
+    "arquivo": "routes/keyServer.ts",
+    "arquivo_sha256": "b47736841886e865dbe07f6db3596b5e1e64435051c3362a18a21bac2412c712",
+    "assinatura_ocorrencia": "95adf572d3c6677f6a1846f010b8b8a1d2045ed82a94a93ab2c2d8fead51fdbe",
+    "caso_id": "AMP95adf572d3c6677f",
+    "categoria_rag": "broken_access_control",
+    "categoria_sast": "security",
+    "check_id": "javascript.express.security.audit.express-res-sendfile.express-res-sendfile",
+    "check_id_original": "javascript.express.security.audit.express-res-sendfile.express-res-sendfile",
+    "classificacao_auditoria": "confirmado",
+    "coluna_fim": 57,
+    "coluna_inicio": 20,
+    "commit_alvo": "f915bddd82790d0f3018902d36ae9b4241a5f51f",
+    "cwe": [
+      "CWE-73: External Control of File Name or Path"
+    ],
+    "cwe_ids": [
+      "CWE-73"
+    ],
+    "desafios": [],
+    "elegivel": true,
+    "justificativa_auditoria": "Rota publica serve arquivos de encryptionkeys por nome e server.ts ainda expoe listagem desse diretorio; e exposicao de chaves, nao prova de path traversal.",
+    "linha_fim": 14,
+    "linha_inicio": 14,
+    "linhas_arquivo": 20,
+    "mensagem": "The application processes user-input, this is passed to res.sendFile which can allow an attacker to arbitrarily read files on the system through path traversal. It is recommended to perform input validation in addition to canonicalizing the path. This allows you to validate the path against the intended directory it should be accessing.",
+    "modo_contexto": "arquivo_completo",
+    "motivo_exclusao": null,
+    "offset_fim": 447,
+    "offset_inicio": 410,
+    "origem": {
+      "indice_resultado_scan": 89,
+      "numero_alerta": 90
+    },
+    "owasp_2025": "A06",
+    "owasp_original": [
+      "A04:2021 - Insecure Design",
+      "A06:2025 - Insecure Design"
+    ],
+    "referencias_historicas": [
+      "24d90cb5353fb168",
+      "d4e5b3e8f0ad40b2"
+    ],
+    "severidade": "WARNING",
+    "sigla_vuln": "PATHTRAV",
+    "trecho": "    const file = params.file\n\n    if (!file.includes('/')) {\n      res.sendFile(path.resolve('encryptionkeys/', file))\n    } else {\n      res.status(403)\n      next(new Error('File names cannot contain forward slashes!'))\n",
+    "trecho_linha_fim": 17,
+    "trecho_linha_inicio": 11
+  },
+  "fontes_sha256": {
+    "TCC2___Caio_Lamego_e_Matheus_Brant(1)/tcc.tex": "3000399d8abdbf5e7ff734a2f29b64829a41777da46ef9c08626d94a24955efa",
+    "TCC2___Caio_Lamego_e_Matheus_Brant(1)/fixos/pacotes.tex": "92fe43ca061e8c0fc33792b8f65e774dbff491a8615d9e3ccf6f9a793c70f964",
+    "TCC2___Caio_Lamego_e_Matheus_Brant(1)/fixos/comandos.tex": "b3a5a10fe91153a994c13d6ce5c0b522073a00966e08a105935058542d4fc24f",
+    "TCC2___Caio_Lamego_e_Matheus_Brant(1)/editaveis/informacoes.tex": "be45beff393f9fddec6588b11b1ab58d5993e3ccd2ccf8249fd2dfbd78e39a1e",
+    "TCC2___Caio_Lamego_e_Matheus_Brant(1)/fixos/informacoes.tex": "a4f5bd9ffa845b26e769ba5e507bcae5ec6b9b646e75ba764475b58239c65426",
+    "TCC2___Caio_Lamego_e_Matheus_Brant(1)/fixos/setup.tex": "210ab588152a63a69c194155450877fd3320b725242e66ec258077b46e460c81",
+    "TCC2___Caio_Lamego_e_Matheus_Brant(1)/fixos/fichaCatalografica.tex": "d7e7c3c2395400fef1068fc197d8d08786a88cffd9c6d7671d2eeb8292230592",
+    "TCC2___Caio_Lamego_e_Matheus_Brant(1)/fixos/folhaDeAprovacao.tex": "5ee4867915330f4e5952c7404fde16b5fd52d64d9d9cf7395ede1f24f61a0802",
+    "TCC2___Caio_Lamego_e_Matheus_Brant(1)/editaveis/resumo.tex": "20224085a5deca4bca5a1d9ca055c8528e41714650f2998492645ad43eea8637",
+    "TCC2___Caio_Lamego_e_Matheus_Brant(1)/editaveis/abstract.tex": "51ec662b151ede884ccbe01d1b86c9c7c775df92728b266b21332a1b0c632973",
+    "TCC2___Caio_Lamego_e_Matheus_Brant(1)/fixos/listasAutomaticas.tex": "ee1003fc151663c77a3acd0c51bd2ca8fd71a6f2fefa6183df5ecd7ade4be9b3",
+    "TCC2___Caio_Lamego_e_Matheus_Brant(1)/editaveis/abreviaturas.tex": "1faa1355bf0274af7e0fd69673c130b159fb4cfa7e0131d6a645779515fe8928",
+    "TCC2___Caio_Lamego_e_Matheus_Brant(1)/editaveis/simbolos.tex": "ad39caf5d87e3b2fcc033ad31d3d7da552ee961a7b576daf51a5c985ddb6ed65",
+    "TCC2___Caio_Lamego_e_Matheus_Brant(1)/fixos/indiceAutomatico.tex": "df6097497dfdcea503982d0ea262c61a811a30c6ac466b641d7284b9212a0951",
+    "TCC2___Caio_Lamego_e_Matheus_Brant(1)/editaveis/introducao.tex": "9613773bde2afa9415ac77ed6c0b02f00ce2f8de9cd2825b5a02fb477c69b3c3",
+    "TCC2___Caio_Lamego_e_Matheus_Brant(1)/editaveis/aspectosgerais.tex": "35294a6f5e21c891e09182f763a0802c3bab047230708004aae6c84cbb5c2c11",
+    "TCC2___Caio_Lamego_e_Matheus_Brant(1)/editaveis/consideracoes.tex": "b9b3851f8b31fde03e2199dc05abc12306b8d2a5a175f4456e0347da3b961c58",
+    "TCC2___Caio_Lamego_e_Matheus_Brant(1)/editaveis/elementosdotexto.tex": "10aaf4d399fe4d6fbbbc7aeca7f187c2c32be818f34f1bd8b4fb8fa46f6bfd5d",
+    "TCC2___Caio_Lamego_e_Matheus_Brant(1)/editaveis/resultado-discussoes.tex": "c67c22b2342ce1d6d3051d1e4a667c1ea3288f8c0d1f9fd344a6bef0652e1457",
+    "TCC2___Caio_Lamego_e_Matheus_Brant(1)/editaveis/elementosdopostexto.tex": "69d2474a3ebcc749d257855b49b761826a20a879860806c9ae2ad215100fd718",
+    "TCC2___Caio_Lamego_e_Matheus_Brant(1)/fixos/customizacoes.sty": "a30e29047178eeab1e8f16559948c312f3f52f801efe7ab367e74d09aba934ce",
+    "TCC2___Caio_Lamego_e_Matheus_Brant(1)/bibliografia.bib": "5229c2291d26e9f551f5f40ab9f6d52ecd2278106b2b4818ce71a0543f6e05d7",
+    "TCC2___Caio_Lamego_e_Matheus_Brant(1)/figuras/plano.png": "488ff28d3052599f2e778cf98460fa256544da2ea3894ec2d5220f248be01aa7",
+    "TCC2___Caio_Lamego_e_Matheus_Brant(1)/figuras/pipeline.png": "dbc59771708bf519bb6cf7a59687525df7a3336a2827f4505dec66327071882f",
+    "TCC2___Caio_Lamego_e_Matheus_Brant(1)/figuras/nomenclatura.png": "7868a32bfbcfffe1a8788d72b3ee383c4512123ba82e614a9ca74945207d5989",
+    "TCC2___Caio_Lamego_e_Matheus_Brant(1)/figuras/etapas-pipeline.png": "fd6f6c4c5d950fe991e709db6174dfc739b947ab2aa8ea267eff0c3d9d0d8b13",
+    "TCC2___Caio_Lamego_e_Matheus_Brant(1)/figuras/worktrees.png": "278157db9dddb29932ef7dc31af526aadb89ba69e42114bac7b2c6aed5564ed3",
+    "TCC2___Caio_Lamego_e_Matheus_Brant(1)/figuras/painel.png": "11911dcb3971b022e4f7d92d070a65b1b456a1413d2957d4aa8b4186324d04a2",
+    "TCC2___Caio_Lamego_e_Matheus_Brant(1)/figuras/escolha-llm.png": "04899afbd86b24163f6ee99196f66555be44b0530472857f09e9e4e990fd378e",
+    "TCC2___Caio_Lamego_e_Matheus_Brant(1)/figuras/execucao.png": "24c133dc819bdfcd95e1e60b33827dc400ddc104375f37cff1e146444bdc332b",
+    "TCC2___Caio_Lamego_e_Matheus_Brant(1)/figuras/resultados-aceites-por-estrategia.png": "f906287c48a3dfb20f3959121c81e44361958405fcdfea9d4cfbb16c489c99bb",
+    "TCC2___Caio_Lamego_e_Matheus_Brant(1)/figuras/capa.eps": "1a8c9000f3a4622803325d858cda72a9678745dc6c4e937b3e9d131461495173",
+    "tcc2-llm-sast-juiceshop/outputs/rris/AMP_REAL_20261106T151004Z_f49ac0d2_METRICAS/tentativas.csv": "879b3620f6a2aa350be8051a45f9006196025746bcb6d86cced62af26626853e",
+    "tcc2-llm-sast-juiceshop/outputs/rris/AMP_REAL_20261106T151004Z_f49ac0d2_METRICAS/metricas.json": "59daecde7c53229846123040512102ddd9acde63f0ccb86fd2c230cf74acb488",
+    "tcc2-llm-sast-juiceshop/outputs/rris/AMP_REAL_20261106T125801Z_0eb68fe4_METRICAS/tentativas.csv": "0afedf0bd20fb1caa1edf9ab6cec2b902594e46995a5006223256b09563d58f5",
+    "tcc2-llm-sast-juiceshop/outputs/rris/AMP_REAL_20261106T125801Z_0eb68fe4_METRICAS/metricas.json": "cf73c14d5651c7f0a9db09169b53f5bfdfc2689ffeea7dadf31876337af8defc",
+    "tcc2-llm-sast-juiceshop/outputs/rris/AMP_REAL_20261106T105533Z_aa697342_METRICAS/tentativas.csv": "46e28e47553e30560f3c1cd6177ffea8931ceb43cf9f7fa58848f6721404c362",
+    "tcc2-llm-sast-juiceshop/outputs/rris/AMP_REAL_20261106T105533Z_aa697342_METRICAS/metricas.json": "792e8df0cf4f7b929e31f1b709b741b2fd56c528f32d0da6022cc4e877c439f6",
+    "tcc2-llm-sast-juiceshop/outputs/catalogos/ampliado_v1/catalogo_issues.json": "08672899e712fbeef2070f01c58b5867e080e74f716ddc7d8fd10c6d58344aee",
+    "tcc2-llm-sast-juiceshop/docs/criterios_conjunto_d.md": "fbfcfdaefc1c29cf68fbd7dc935ca7cd0396d3ab7332c0ac887da2db298acd6c",
+    "tcc2-llm-sast-juiceshop/docs/caderno_de_laboratorio.md": "05ab415bec9c9a4cc1c26c5523225770aca92c5880c768a04bc330ed7a5c9f66"
+  }
+}

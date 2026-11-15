@@ -1,0 +1,445 @@
+{
+  "data": "2026-11-15",
+  "experimento_head": "2e8f9a9285c8bf521ee3ddc33d8d20a62495ca59",
+  "escopo": "Leitura e recálculo de registros arquivados; sem nova execução experimental.",
+  "triagem": {
+    "falso_positivo": 21,
+    "confirmado": 55,
+    "inconclusivo": 2
+  },
+  "caso_keyServer": {
+    "arquivo": "routes/keyServer.ts",
+    "arquivo_sha256": "b47736841886e865dbe07f6db3596b5e1e64435051c3362a18a21bac2412c712",
+    "assinatura_ocorrencia": "95adf572d3c6677f6a1846f010b8b8a1d2045ed82a94a93ab2c2d8fead51fdbe",
+    "caso_id": "AMP95adf572d3c6677f",
+    "categoria_rag": "broken_access_control",
+    "categoria_sast": "security",
+    "check_id": "javascript.express.security.audit.express-res-sendfile.express-res-sendfile",
+    "check_id_original": "javascript.express.security.audit.express-res-sendfile.express-res-sendfile",
+    "classificacao_auditoria": "confirmado",
+    "coluna_fim": 57,
+    "coluna_inicio": 20,
+    "commit_alvo": "f915bddd82790d0f3018902d36ae9b4241a5f51f",
+    "cwe": [
+      "CWE-73: External Control of File Name or Path"
+    ],
+    "cwe_ids": [
+      "CWE-73"
+    ],
+    "desafios": [],
+    "elegivel": true,
+    "justificativa_auditoria": "Rota publica serve arquivos de encryptionkeys por nome e server.ts ainda expoe listagem desse diretorio; e exposicao de chaves, nao prova de path traversal.",
+    "linha_fim": 14,
+    "linha_inicio": 14,
+    "linhas_arquivo": 20,
+    "mensagem": "The application processes user-input, this is passed to res.sendFile which can allow an attacker to arbitrarily read files on the system through path traversal. It is recommended to perform input validation in addition to canonicalizing the path. This allows you to validate the path against the intended directory it should be accessing.",
+    "modo_contexto": "arquivo_completo",
+    "motivo_exclusao": null,
+    "offset_fim": 447,
+    "offset_inicio": 410,
+    "origem": {
+      "indice_resultado_scan": 89,
+      "numero_alerta": 90
+    },
+    "owasp_2025": "A06",
+    "owasp_original": [
+      "A04:2021 - Insecure Design",
+      "A06:2025 - Insecure Design"
+    ],
+    "referencias_historicas": [
+      "24d90cb5353fb168",
+      "d4e5b3e8f0ad40b2"
+    ],
+    "severidade": "WARNING",
+    "sigla_vuln": "PATHTRAV",
+    "trecho": "    const file = params.file\n\n    if (!file.includes('/')) {\n      res.sendFile(path.resolve('encryptionkeys/', file))\n    } else {\n      res.status(403)\n      next(new Error('File names cannot contain forward slashes!'))\n",
+    "trecho_linha_fim": 17,
+    "trecho_linha_inicio": 11
+  },
+  "campanhas": [
+    {
+      "execucao": "AMP_REAL_20261106T105533Z_aa697342",
+      "registros": 274,
+      "populacao_principal": 221,
+      "casos": 78,
+      "aceites": 49,
+      "aceites_confirmados": 36,
+      "aceites_por_estrategia": {
+        "P4": 5,
+        "P1": 21,
+        "P3": 18,
+        "P2": 5
+      },
+      "sensibilidade_F": {
+        "sem_separacao": 23,
+        "marcador": 23,
+        "criterio": 49
+      },
+      "criterios": {
+        "R": {
+          "aprovacoes": 77,
+          "medidos": 203
+        },
+        "F_criterio": {
+          "aprovacoes": 154,
+          "medidos": 199
+        },
+        "M": {
+          "aprovacoes": 198,
+          "medidos": 203
+        }
+      },
+      "RRIS": {
+        "I_antes": 78,
+        "I_depois": 31,
+        "valor": 0.602564,
+        "conjunto_funcionalmente_validado": false,
+        "patches_aplicados": 40,
+        "conflitos": 9
+      },
+      "custos_tempos": {
+        "chamadas_novas_registradas": 274,
+        "custo_usd": {
+          "ausentes": 0,
+          "completude": "completa",
+          "total_conhecido": 0.1388
+        },
+        "duracoes_sessoes": [
+          {
+            "abortada": null,
+            "duracao_s": 7280.6,
+            "fim": "2026-11-06T12:57:49+00:00",
+            "inicio": "2026-11-06T10:56:29+00:00",
+            "interrompida_por_orcamento": false
+          }
+        ],
+        "envios_consumo_incerto_respostas": 0,
+        "envios_transporte_respostas": 274,
+        "erros_sessoes": 0,
+        "latencia_llm_cache_registrada": {
+          "ausentes": 0,
+          "completude": "completa",
+          "total_conhecido": 0.0
+        },
+        "latencia_llm_chamadas": {
+          "ausentes": 0,
+          "completude": "completa",
+          "total_conhecido": 1653.761
+        },
+        "limite": "Chamadas sem registro não têm custo/tokens inferidos; durações acumuladas não são tempo de parede.",
+        "simuladas": 0,
+        "tempos_acumulados": {
+          "duracao_sast_s": {
+            "ausentes": 17,
+            "completude": "parcial",
+            "total_conhecido": 11855.445
+          },
+          "duracao_validacao_s": {
+            "ausentes": 17,
+            "completude": "parcial",
+            "total_conhecido": 13045.895498
+          }
+        },
+        "tokens_cache": {
+          "tokens_entrada": {
+            "ausentes": 0,
+            "completude": "completa",
+            "total_conhecido": 0.0
+          },
+          "tokens_saida": {
+            "ausentes": 0,
+            "completude": "completa",
+            "total_conhecido": 0.0
+          }
+        },
+        "tokens_chamadas": {
+          "tokens_entrada": {
+            "ausentes": 0,
+            "completude": "completa",
+            "total_conhecido": 563266.0
+          },
+          "tokens_saida": {
+            "ausentes": 0,
+            "completude": "completa",
+            "total_conhecido": 153481.0
+          }
+        },
+        "usos_cache": 0,
+        "validacao_reutilizada": {
+          "funcional": {
+            "medicoes_executadas": 257,
+            "reusos": 0,
+            "tempo_original_reutilizado_s": 0.0
+          },
+          "sast": {
+            "medicoes_executadas": 257,
+            "reusos": 0,
+            "tempo_original_reutilizado_s": 0.0
+          }
+        }
+      }
+    },
+    {
+      "execucao": "AMP_REAL_20261106T125801Z_0eb68fe4",
+      "registros": 277,
+      "populacao_principal": 223,
+      "casos": 78,
+      "aceites": 51,
+      "aceites_confirmados": 39,
+      "aceites_por_estrategia": {
+        "P1": 18,
+        "P4": 3,
+        "P2": 5,
+        "P3": 25
+      },
+      "sensibilidade_F": {
+        "sem_separacao": 22,
+        "marcador": 22,
+        "criterio": 51
+      },
+      "criterios": {
+        "R": {
+          "aprovacoes": 82,
+          "medidos": 216
+        },
+        "F_criterio": {
+          "aprovacoes": 154,
+          "medidos": 212
+        },
+        "M": {
+          "aprovacoes": 212,
+          "medidos": 216
+        }
+      },
+      "RRIS": {
+        "I_antes": 78,
+        "I_depois": 23,
+        "valor": 0.705128,
+        "conjunto_funcionalmente_validado": false,
+        "patches_aplicados": 43,
+        "conflitos": 8
+      },
+      "custos_tempos": {
+        "chamadas_novas_registradas": 277,
+        "custo_usd": {
+          "ausentes": 0,
+          "completude": "completa",
+          "total_conhecido": 0.314826
+        },
+        "duracoes_sessoes": [
+          {
+            "abortada": null,
+            "duracao_s": 7846.3,
+            "fim": "2026-11-06T15:09:52+00:00",
+            "inicio": "2026-11-06T12:59:05+00:00",
+            "interrompida_por_orcamento": false
+          }
+        ],
+        "envios_consumo_incerto_respostas": 0,
+        "envios_transporte_respostas": 277,
+        "erros_sessoes": 0,
+        "latencia_llm_cache_registrada": {
+          "ausentes": 0,
+          "completude": "completa",
+          "total_conhecido": 0.0
+        },
+        "latencia_llm_chamadas": {
+          "ausentes": 0,
+          "completude": "completa",
+          "total_conhecido": 1916.652
+        },
+        "limite": "Chamadas sem registro não têm custo/tokens inferidos; durações acumuladas não são tempo de parede.",
+        "simuladas": 0,
+        "tempos_acumulados": {
+          "duracao_sast_s": {
+            "ausentes": 9,
+            "completude": "parcial",
+            "total_conhecido": 12645.127
+          },
+          "duracao_validacao_s": {
+            "ausentes": 9,
+            "completude": "parcial",
+            "total_conhecido": 13971.725596
+          }
+        },
+        "tokens_cache": {
+          "tokens_entrada": {
+            "ausentes": 0,
+            "completude": "completa",
+            "total_conhecido": 0.0
+          },
+          "tokens_saida": {
+            "ausentes": 0,
+            "completude": "completa",
+            "total_conhecido": 0.0
+          }
+        },
+        "tokens_chamadas": {
+          "tokens_entrada": {
+            "ausentes": 0,
+            "completude": "completa",
+            "total_conhecido": 574447.0
+          },
+          "tokens_saida": {
+            "ausentes": 0,
+            "completude": "completa",
+            "total_conhecido": 156186.0
+          }
+        },
+        "usos_cache": 0,
+        "validacao_reutilizada": {
+          "funcional": {
+            "medicoes_executadas": 268,
+            "reusos": 0,
+            "tempo_original_reutilizado_s": 0.0
+          },
+          "sast": {
+            "medicoes_executadas": 268,
+            "reusos": 0,
+            "tempo_original_reutilizado_s": 0.0
+          }
+        }
+      }
+    },
+    {
+      "execucao": "AMP_REAL_20261106T151004Z_f49ac0d2",
+      "registros": 283,
+      "populacao_principal": 241,
+      "casos": 78,
+      "aceites": 38,
+      "aceites_confirmados": 32,
+      "aceites_por_estrategia": {
+        "P3": 15,
+        "P2": 4,
+        "P1": 16,
+        "P4": 3
+      },
+      "sensibilidade_F": {
+        "sem_separacao": 17,
+        "marcador": 17,
+        "criterio": 38
+      },
+      "criterios": {
+        "R": {
+          "aprovacoes": 85,
+          "medidos": 221
+        },
+        "F_criterio": {
+          "aprovacoes": 145,
+          "medidos": 218
+        },
+        "M": {
+          "aprovacoes": 214,
+          "medidos": 221
+        }
+      },
+      "RRIS": {
+        "I_antes": 78,
+        "I_depois": 40,
+        "valor": 0.487179,
+        "conjunto_funcionalmente_validado": false,
+        "patches_aplicados": 34,
+        "conflitos": 4
+      },
+      "custos_tempos": {
+        "chamadas_novas_registradas": 283,
+        "custo_usd": {
+          "ausentes": 0,
+          "completude": "completa",
+          "total_conhecido": 0.433169
+        },
+        "duracoes_sessoes": [
+          {
+            "abortada": null,
+            "duracao_s": 7754.3,
+            "fim": "2026-11-06T17:20:26+00:00",
+            "inicio": "2026-11-06T15:11:11+00:00",
+            "interrompida_por_orcamento": false
+          }
+        ],
+        "envios_consumo_incerto_respostas": 0,
+        "envios_transporte_respostas": 283,
+        "erros_sessoes": 0,
+        "latencia_llm_cache_registrada": {
+          "ausentes": 0,
+          "completude": "completa",
+          "total_conhecido": 0.0
+        },
+        "latencia_llm_chamadas": {
+          "ausentes": 0,
+          "completude": "completa",
+          "total_conhecido": 1655.9
+        },
+        "limite": "Chamadas sem registro não têm custo/tokens inferidos; durações acumuladas não são tempo de parede.",
+        "simuladas": 0,
+        "tempos_acumulados": {
+          "duracao_sast_s": {
+            "ausentes": 17,
+            "completude": "parcial",
+            "total_conhecido": 13215.573
+          },
+          "duracao_validacao_s": {
+            "ausentes": 17,
+            "completude": "parcial",
+            "total_conhecido": 13365.934063
+          }
+        },
+        "tokens_cache": {
+          "tokens_entrada": {
+            "ausentes": 0,
+            "completude": "completa",
+            "total_conhecido": 0.0
+          },
+          "tokens_saida": {
+            "ausentes": 0,
+            "completude": "completa",
+            "total_conhecido": 0.0
+          }
+        },
+        "tokens_chamadas": {
+          "tokens_entrada": {
+            "ausentes": 0,
+            "completude": "completa",
+            "total_conhecido": 587207.0
+          },
+          "tokens_saida": {
+            "ausentes": 0,
+            "completude": "completa",
+            "total_conhecido": 155015.0
+          }
+        },
+        "usos_cache": 0,
+        "validacao_reutilizada": {
+          "funcional": {
+            "medicoes_executadas": 266,
+            "reusos": 0,
+            "tempo_original_reutilizado_s": 0.0
+          },
+          "sast": {
+            "medicoes_executadas": 266,
+            "reusos": 0,
+            "tempo_original_reutilizado_s": 0.0
+          }
+        }
+      }
+    }
+  ],
+  "fontes_sha256": {
+    "tcc2-llm-sast-juiceshop/outputs/catalogos/ampliado_v1/catalogo_issues.json": "08672899e712fbeef2070f01c58b5867e080e74f716ddc7d8fd10c6d58344aee",
+    "tcc2-llm-sast-juiceshop/outputs/rris/AMP_REAL_20261106T105533Z_aa697342_METRICAS/tentativas.csv": "46e28e47553e30560f3c1cd6177ffea8931ceb43cf9f7fa58848f6721404c362",
+    "tcc2-llm-sast-juiceshop/outputs/rris/AMP_REAL_20261106T105533Z_aa697342_METRICAS/metricas.json": "792e8df0cf4f7b929e31f1b709b741b2fd56c528f32d0da6022cc4e877c439f6",
+    "tcc2-llm-sast-juiceshop/outputs/rris/AMP_REAL_20261106T125801Z_0eb68fe4_METRICAS/tentativas.csv": "0afedf0bd20fb1caa1edf9ab6cec2b902594e46995a5006223256b09563d58f5",
+    "tcc2-llm-sast-juiceshop/outputs/rris/AMP_REAL_20261106T125801Z_0eb68fe4_METRICAS/metricas.json": "cf73c14d5651c7f0a9db09169b53f5bfdfc2689ffeea7dadf31876337af8defc",
+    "tcc2-llm-sast-juiceshop/outputs/rris/AMP_REAL_20261106T151004Z_f49ac0d2_METRICAS/tentativas.csv": "879b3620f6a2aa350be8051a45f9006196025746bcb6d86cced62af26626853e",
+    "tcc2-llm-sast-juiceshop/outputs/rris/AMP_REAL_20261106T151004Z_f49ac0d2_METRICAS/metricas.json": "59daecde7c53229846123040512102ddd9acde63f0ccb86fd2c230cf74acb488",
+    "TCC2---Escrita/manuscrito/01-introducao.md": "237edadea91cad78ca507a9b0276f105b37972d358240a3f94e743db3d345e58",
+    "TCC2---Escrita/manuscrito/02-referencial-teorico.md": "89ec77e59a97ff89234a4ca9cf057c3a290ed570254d850a9352024483923f8a",
+    "TCC2---Escrita/manuscrito/03-metodologia.md": "98d97bd5e45367709102f8cbe6515bf1fbab1b5d73b4e1c47fb3674d1740125c",
+    "TCC2---Escrita/manuscrito/04-implementacao.md": "b6fb92c3dd71c7c2f040c649345417c7a6ba2fc9ba1f6a8e7b4f10c575981515",
+    "TCC2---Escrita/manuscrito/05-resultados-discussao.md": "f1e8c8c19e737048a1a1718c7cebd8d45934d4f3de3f5e1605346189685e744d",
+    "TCC2---Escrita/manuscrito/06-consideracoes-finais.md": "cea898ddee56632350a0efdfe4c6c46db4bba1e56c6ed2a8ab3f97ddbceb4816",
+    "tcc2-llm-sast-juiceshop/docs/criterios_conjunto_d.md": "fbfcfdaefc1c29cf68fbd7dc935ca7cd0396d3ab7332c0ac887da2db298acd6c",
+    "tcc2-llm-sast-juiceshop/docs/caderno_de_laboratorio.md": "05ab415bec9c9a4cc1c26c5523225770aca92c5880c768a04bc330ed7a5c9f66",
+    "tcc2-llm-sast-juiceshop/src/pipeline/etapas/e04_prompt/montagem.py": "55e61ddb6e1215b01f7f39f5ec3bb732cbbaafaf0a68c9a99d56cddb86e2f746"
+  }
+}
