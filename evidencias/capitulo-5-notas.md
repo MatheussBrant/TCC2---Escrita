@@ -738,3 +738,76 @@ os hashes do TeX e da figura PNG. Não houve alteração do conteúdo da figura,
 do texto ou das métricas, nem geração de PDF compilado nesta alteração.
 Os registros anteriores de compilação referem-se à versão que utilizava PDF
 como figura; a entrega atual utiliza PNG.
+
+## Revisão do Caio: redundâncias, incoerências e ponto e vírgula — 14/11/2026
+
+Texto de partida: `manuscrito/05-resultados-discussao.md` com SHA-256
+`f1e8c8c19e737048a1a1718c7cebd8d45934d4f3de3f5e1605346189685e744d` (commit `5d7e331`), cópia em
+`evidencias/revisao-capitulo-5-2026-11-14/capitulo-5-antes-revisao-caio.md`. Sem revisão no Notion desta vez.
+O texto passou de 7.602 para 6.935 palavras. Nenhum valor numérico mudou: todo número do texto novo existe no antigo,
+exceto remissões a seções e tabelas. As somas e porcentagens de todas as tabelas foram recalculadas e conferem.
+
+**Repetições retiradas:**
+
+- Lista das condições comuns das campanhas (5.1): trocada por remissão ao Capítulo 3.
+- Detalhe das 46 exclusões (31, 13 e 2) na 5.1: fica na Seção 3.5 e na Tabela 2 do Capítulo 3.
+- Classificação OWASP descrita na 5.1 e de novo na 5.5: ficou só na 5.5, que recebeu a ressalva "sem modificar as
+  tentativas ou seus resultados".
+- Explicação do conjunto D e das três interpretações de F (5.1, 5.2.3 e 5.7): reduzida a remissões à Seção 3.10 e à
+  Tabela 4 do Capítulo 3.
+- Premissa da sequência de estratégias (repetida na 5.3, em Q2 e na 5.10): ficou no início da 5.3 e na proposta de
+  trabalho futuro da 5.10. Em Q2, virou uma frase dizendo que a resposta descreve o acréscimo na sequência, e não uma
+  comparação direta entre estratégias.
+- Números de P2–P4 (22, 33 e 28) no parágrafo antes da Figura 1: ficam na Tabela 5a, na explicação dela e em Q2.
+- Recapitulações de "quem lidera" na 5.2.1 e na 5.4.1, frase final da 5.2.1 sobre o que cada indicador responde,
+  explicação de leitura da Tabela 6 e da TFF (que é o complemento da TPF).
+- Regra dos denominadores ausentes (5.2.2): trocada por remissão à Seção 3.11.
+- Q3: a repetição literal do parágrafo da Tabela 10 virou remissão à tabela.
+- Último parágrafo da 5.10: era um resumo dos resultados idêntico aos parágrafos 2 a 4 do Capítulo 6. Retirado.
+- Links soltos do arXiv no fim do primeiro parágrafo da 5.9: as citações já identificam os trabalhos.
+
+**Incoerências corrigidas:**
+
+- "Roteiro de resposta" (5.3) passou a "roteiro de raciocínio guiado", como no Capítulo 3.
+- "P3 forneceu também o diagnóstico..." dava a entender que P3 incluía o roteiro de P2, o que a Tabela 3 do Capítulo 3
+  nega. Passou a "P3 acrescentou à instrução direta o diagnóstico SAST e a documentação recuperada".
+- 5.2.3: "Por isso, os resultados principais utilizam F por critérios" sugeria que a interpretação foi escolhida depois
+  de ver os resultados. Passou a dizer que a sensibilidade mostra por que a interpretação precisa estar explícita e que
+  a escolhida é a definida na Seção 3.10.
+- Conflitos da RRIS (5.7): "arquivos já modificados" passou a "linhas já modificadas", como na Seção 4.5.
+- "O GPT-5.6 Luna ... não aceitou todos os casos": o modelo não aceita, o pipeline aceita. Passou a "não obteve aceite".
+- `$where`, `orderId`, `eval` e `calculate` passaram a código. O par de `$` sem marcação virava fórmula no Markdown.
+- Tabela 7: tokens com separador de milhar (587.207), como "1.074" e "4.096" nos outros capítulos.
+- Tabela 9: "Scripting entre sites" passou a _Cross-Site Scripting_, como no Capítulo 3. A primeira menção a
+  travessia de diretórios ganhou "(_path traversal_)", termo do Capítulo 4.
+- Tabela 3: a coluna "Sem medição de R/M; de F" foi dividida em duas colunas.
+
+**Rastros de IA:** os 46 ";" do texto foram trocados por ponto ou vírgula (sobra um dentro de um comentário de
+evidência, que não aparece no texto). As seis frases "A conclusão é que..." e parte dos "o resultado favoreceu" foram
+reescritas de forma direta.
+
+**Pontos apontados ao Caio e não alterados:**
+
+- 5.10 diz que os critérios do conjunto D "evoluíram durante a preparação, inclusive após uma execução exploratória
+  descartada". Essa informação foi retirada do Capítulo 3 em uma revisão anterior. Decidir se fica só aqui.
+- O Capítulo 6 ainda tem dois ";".
+- A versão LaTeX do Matheus no projeto institucional partiu do texto anterior a esta revisão.
+
+SHA-256 após a revisão: `c025d9b82752481d326324e411ceecbad474f6a8b2a86c04963f9af85eba461e`.
+
+## Versão LaTeX para o Overleaf (padrão de overleaf/oficial) — 14/11/2026
+
+`overleaf/oficial/resultados.tex` foi gerado do texto revisado com
+`evidencias/revisao-capitulo-5-2026-11-14/converter_para_overleaf.py`, no mesmo padrão dos Capítulos 3 e 4
+(tabelas em `tabularx` com `\hline`, fonte abaixo em letra pequena, `verbatim` para código). Conferência automática:
+90 parágrafos, 78 linhas de tabela, 14 fontes de tabela e 2 trechos de código idênticos ao Markdown.
+
+- Rótulos iguais aos usados pelo Matheus: `cap:resultados` e `tab:res-populacao` a `tab:res-rris`. As Tabelas 5a e
+  10a recebem números sequenciais no LaTeX.
+- Citações: `\citeonline{khan_code_2025}` e `\citeonline{sriram_improving_2026}`, já no `lib.bib`.
+- Figura: `overleaf/oficial/figuras/resultados-aceites-por-estrategia.png`, cópia de
+  `manuscrito/assets/capitulo-5/aceites-por-estrategia.png`.
+- O segundo trecho do CAPTCHA tem linhas de até 105 caracteres e usa `\scriptsize`.
+- `metodologia.tex` e `implementacao.tex` passaram a usar `\ref{cap:resultados}` no lugar de "Capítulo 5".
+
+SHA-256 do `.tex`: `07f0315436f69408367155cba5f3af511b8a6066bf34e1e1051d59d02256beaa`.
