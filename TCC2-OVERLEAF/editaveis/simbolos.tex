@@ -1,9 +1,21 @@
 \begin{simbolos}
   \item[$\sum$] Operador de somatório
-  \item[$R_j$] Resultado da remoção da \textit{issue} real $j$ após a correção
-  \item[$F_j$] Resultado da preservação funcional da correção aplicada à \textit{issue} real $j$
-  \item[$M_j$] Indicador de não introdução de novas \textit{issues} após a correção da \textit{issue} real $j$
-  \item[$m$] Número total de tentativas de correção realizadas no projeto real
-  \item[$I_{\text{antes}}$] Número de \textit{issues} de segurança detectadas antes da aplicação das correções aceitas
-  \item[$I_{\text{depois}}$] Número de \textit{issues} de segurança detectadas após a aplicação das correções aceitas
+  \item[$j$] Índice de uma tentativa de geração e avaliação de uma proposta de correção
+  \item[$R_j$] Indicador de remoção do alerta original na tentativa $j$, quando há medição conclusiva
+  \item[$F_j$] Indicador de aprovação funcional da tentativa $j$, na interpretação de F adotada e quando há medição conclusiva
+  \item[$M_j$] Indicador de ausência de novos alertas na tentativa $j$, quando há medição conclusiva
+  \item[$m$] Número total de tentativas da população analisada, incluindo as não aplicadas e as indeterminadas
+  \item[$J_V$] Conjunto dos índices das tentativas aplicadas com R, F e M medidos
+  \item[$J_R$] Conjunto dos índices das tentativas com R medido
+  \item[$J_F$] Conjunto dos índices das tentativas com F medido
+  \item[$J_M$] Conjunto dos índices das tentativas com M medido
+  \item[$n_R$] Número de tentativas com R medido, correspondente a $|J_R|$
+  \item[$n_F$] Número de tentativas com F medido, correspondente a $|J_F|$
+  \item[$n_M$] Número de tentativas com M medido, correspondente a $|J_M|$
+  \item[$|J|$] Cardinalidade de um conjunto $J$, isto é, sua quantidade de elementos
+  \item[$D$] Conjunto de testes cujas asserções dependem das vulnerabilidades intencionais, conforme os critérios documentados
+  \item[$c_{\text{aceitos}}$] Número de casos distintos com pelo menos uma tentativa aceita
+  \item[$c_{\text{solicitados}}$] Número total de casos solicitados na campanha
+  \item[$I_{\text{antes}}$] Número de alertas no scan global comparável anterior à aplicação conjunta dos \textit{patches} selecionados
+  \item[$I_{\text{depois}}$] Número de alertas no scan global comparável posterior à aplicação conjunta dos \textit{patches} selecionados
 \end{simbolos}
