@@ -1,0 +1,34 @@
+{
+  "data": "2026-11-15",
+  "projeto": "/home/matheus-brant/Desktop/TCC/TCC2---Escrita/TCC2-OVERLEAF",
+  "experimento_sha": "2e8f9a9285c8bf521ee3ddc33d8d20a62495ca59",
+  "arquivos": {
+    "editaveis/introducao.tex": {
+      "antes_sha256": "9613773bde2afa9415ac77ed6c0b02f00ce2f8de9cd2825b5a02fb477c69b3c3",
+      "depois_sha256": "b77bd18d94e8217d1103a434942184ff60bb6bfd4de9373ab3a8f18d5b72e5bd"
+    },
+    "editaveis/resumo.tex": {
+      "antes_sha256": "20224085a5deca4bca5a1d9ca055c8528e41714650f2998492645ad43eea8637",
+      "depois_sha256": "b579d571c01ee8a2e22ef17520509e8b4ea65330e59d80065d5439a1d5e22832"
+    },
+    "editaveis/abstract.tex": {
+      "antes_sha256": "51ec662b151ede884ccbe01d1b86c9c7c775df92728b266b21332a1b0c632973",
+      "depois_sha256": "588048785a12696b03c996b90d98c7cf7227bdd2c9d9ebe04fcd7826c044a963"
+    },
+    "editaveis/simbolos.tex": {
+      "antes_sha256": "ad39caf5d87e3b2fcc033ad31d3d7da552ee961a7b576daf51a5c985ddb6ed65",
+      "depois_sha256": "91ce04eb51e8ff0514c1225461927b79894896ed794b7934482e5f0f029804f9"
+    },
+    "bibliografia.bib": {
+      "antes_sha256": "5229c2291d26e9f551f5f40ab9f6d52ecd2278106b2b4818ce71a0543f6e05d7",
+      "depois_sha256": "245fa677b70ac614e066830b17a3ee2c157e2fd08c403b0c82dd5e38e9274fb6"
+    }
+  },
+  "chaves_consolidadas": [
+    "owasp_top10_2025_intro",
+    "openai_gpt5",
+    "openai_introducing_gpt5_2025",
+    "stackoverflow_survey_ai_2025",
+    "owasp_api_bola_2023"
+  ]
+}

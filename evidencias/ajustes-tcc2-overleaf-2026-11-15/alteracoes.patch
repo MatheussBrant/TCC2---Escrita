@@ -1,0 +1,176 @@
+--- antes/editaveis/introducao.tex
++++ depois/editaveis/introducao.tex
+@@ -34,6 +34,7 @@
+  \item Q2: Como diferentes estratégias de prompt, incluindo prompt simples, raciocínio guiado e enriquecimento de contexto por RAG simplificado, influenciam a taxa de correções válidas geradas pelo modelo de linguagem?
+ \item Q3: O desempenho do \textit{pipeline} varia de acordo com o tipo de vulnerabilidade ou categoria associada ao OWASP Top 10?
+  \item Q4: Quais limitações práticas surgem ao aplicar um \textit{pipeline} automatizado de correção de vulnerabilidades em uma base de código real, com dependências, arquitetura própria e suíte de testes existente?
++ \item Q5: Como diferentes modelos de linguagem se comparam na geração de correções válidas pelo \textit{pipeline}, considerando eficácia, custo e tempo de execução?
+ \end{itemize}
+ 
+ \section{Objetivos}
+@@ -52,34 +53,21 @@
+ 
+ \item Analisar os resultados obtidos no projeto, considerando a taxa de remediação validada, os tipos de \textit{issues} detectadas, as falhas de correção e as limitações práticas do \textit{pipeline}.
+ 
++\item Comparar diferentes modelos de linguagem na geração de correções válidas pelo \textit{pipeline}, considerando a eficácia, o custo e o tempo de execução nas condições avaliadas.
++
+ \end{itemize}
+ 
+ 
+ \section{Metodologia}
+-Este trabalho propõe uma investigação empírica e experimental sobre a eficácia de um fluxo iterativo que integra Modelos de Linguagem de Grande Escala (LLMs) e ferramentas de Análise Estática de Segurança (SAST) na correção automatizada de vulnerabilidades. A pesquisa parte da ideia de que, embora LLMs possam auxiliar na identificação e no reparo de falhas, seu desempenho tende a melhorar quando elas recebem contexto adicional e operam em conjunto com ferramentas externas de apoio.
++Este trabalho realizou uma investigação empírica sobre a eficácia de um \textit{pipeline} que integra Modelos de Linguagem de Grande Escala (LLMs), Análise Estática de Segurança (SAST) e testes automatizados para apoiar a correção de alertas de segurança em código-fonte. A avaliação examinou diferentes estratégias de \textit{prompt} e modelos de linguagem, considerando a remoção dos alertas, a preservação funcional e a ausência de novos alertas nas condições definidas para o estudo.
+ 
+-No TCC 1, essa proposta é inicialmente validada por meio de uma prova de conceito em ambiente controlado, composta por casos vulneráveis representativos, testes automatizados e execução integrada do \textit{pipeline}. Essa etapa tem como finalidade verificar a viabilidade técnica do fluxo proposto antes de sua aplicação em uma base de código real. No TCC 2, pretende-se evoluir essa abordagem para um projeto público, considerando as vulnerabilidades efetivamente identificadas pela ferramenta SAST selecionada.
++O experimento foi conduzido no OWASP Juice Shop, uma aplicação web de código aberto e deliberadamente vulnerável. A análise estática com Semgrep forneceu os alertas utilizados para constituir um catálogo de 78 casos. O projeto foi executado em ambiente preparado com Docker, mantendo uma revisão fixada do código e as condições de avaliação registradas nas campanhas.
+ 
++Foram avaliados os modelos GPT-4.1 mini, GPT-5.6 Luna e GPT-6 Luna sobre os mesmos casos. Para cada caso, as estratégias seguiram a ordem P1, P2, P3 e P4: instrução direta, raciocínio guiado, diagnóstico SAST com documentação recuperada por RAG simplificado e combinação do diagnóstico e da documentação com o raciocínio guiado. Como as estratégias posteriores receberam os casos que não atenderam à regra de parada, as diferenças foram interpretadas considerando essa seleção.
+ 
+-Inicialmente, será selecionado um projeto público que possa ser instalado e executado em ambiente local, possua estrutura modular e apresente \textit{issues} de segurança detectáveis por uma ferramenta SAST compatível com a linguagem. As vulnerabilidades analisadas serão determinadas a partir dos alertas emitidos pela ferramenta SAST sobre o código-fonte do projeto, respeitando critérios de elegibilidade relacionados à possibilidade de reprodução, correção e validação automatizada.
++As propostas foram aplicadas em cópias de trabalho isoladas e avaliadas por reanálise estática e testes relacionados aos arquivos modificados. Na análise principal, o aceite exigiu a remoção do alerta original, a aprovação funcional na interpretação por critérios e a ausência de novos alertas, conforme as definições do Capítulo~\ref{cap:metodologia}. Essa interpretação distinguiu testes de comportamento legítimo daqueles que dependiam das vulnerabilidades intencionais da aplicação. A aplicação conjunta dos \textit{patches} selecionados também foi examinada, permitindo avaliar sua integração no projeto.
+ 
+-Em seguida, os alertas gerados pela análise estática serão utilizados como entrada para o \textit{pipeline}. Para cada \textit{issue}, serão aplicadas diferentes estratégias de \textit{prompt}, incluindo instrução simples, raciocínio guiado, RAG simplificado e a combinação entre RAG simplificado e raciocínio guiado. O objetivo é verificar se o aumento de contexto e estruturação da tarefa melhora a qualidade das correções propostas pela LLM.
+-
+-Após a geração das correções, as modificações serão aplicadas em cópias isoladas do projeto e avaliadas por meio de nova execução da ferramenta SAST e da suíte de testes automatizados disponível. Uma correção será considerada válida apenas quando a \textit{issue} original deixar de ser detectada, os testes continuarem passando e nenhuma nova \textit{issue} de segurança for introduzida. Os resultados serão consolidados em arquivos estruturados para permitir a comparação entre estratégias de \textit{prompt}, tipos de \textit{issues} detectadas e limitações observadas durante a aplicação em um projeto.
+-
+-Dessa forma, a metodologia pretende medir quantitativamente o desempenho da arquitetura proposta, como também compreender em quais condições a combinação entre análise estática, contexto adicional e raciocínio orientado por LLMs se mostra mais eficaz para apoiar tarefas de segurança de software.
++\textit{Prompts}, respostas, \textit{patches}, análises e testes foram registrados em arquivos estruturados. Esses dados sustentaram a comparação entre estratégias, modelos e tipos de alerta, incluindo custos calculados e tempos observados. As medições ausentes foram identificadas na análise, e o aceite foi interpretado como atendimento às verificações adotadas, sem constituir comprovação de segurança completa.
+ 
+ \section{Organização do Trabalho}
+-% Este trabalho está organizado em seis capítulos, sendo eles:
+-% \begin{itemize}
+-%  \item Introdução;
+-%  \item Referencial teórico;
+-%  \item Metodologia;
+-%  \item Prova de Conceito
+-%  \item Considerações Finais
+-%  \item Declaração do uso de Inteligência Artificial
+-% \end{itemize}
+-
+-O restante deste trabalho está organizado da seguinte forma: o Capítulo 2 apresenta o referencial teórico que fundamenta a pesquisa; o Capítulo 3 descreve a metodologia proposta para a continuidade do estudo, incluindo o planejamento da coleta e análise dos dados no TCC 2; o Capítulo 4 apresenta a prova de conceito desenvolvida no TCC 1, destacando sua estrutura, execução, métricas e resultados obtidos; por fim, o Capítulo 5 apresenta as considerações finais desta etapa do trabalho.
+-
+-
++O restante deste trabalho está organizado da seguinte forma: o Capítulo 2 apresenta o referencial teórico e os trabalhos relacionados; o Capítulo~\ref{cap:metodologia} descreve a metodologia e os critérios de avaliação; o Capítulo~\ref{cap:implementacao} apresenta o desenvolvimento e a implementação do \textit{pipeline}; o Capítulo~\ref{cap:resultados} expõe os resultados, sua discussão e as respostas às perguntas de pesquisa; e o Capítulo~\ref{cap:consideracoes-finais} reúne as considerações finais e as propostas de trabalhos futuros.
+
+--- antes/editaveis/resumo.tex
++++ depois/editaveis/resumo.tex
+@@ -1,5 +1,5 @@
+ \begin{resumo}
+-Modelos de Linguagem de Grande Escala (LLMs) têm sido cada vez mais utilizados no desenvolvimento de software, inclusive em tarefas de geração, explicação e correção de código. No entanto, seu uso em segurança ainda exige cautela, pois correções geradas automaticamente podem ser incompletas, inseguras ou comprometer o funcionamento original da aplicação. Este trabalho investiga a integração entre LLMs, ferramentas de Análise Estática de Segurança (SAST), testes automatizados e estratégias de contextualização para apoiar a correção de \textit{issues} de segurança em código-fonte. A metodologia proposta prevê a aplicação de um \textit{pipeline} automatizado em um projeto \textit{open source}, utilizando as vulnerabilidades efetivamente detectadas pela ferramenta SAST. Como etapa inicial, foi desenvolvida uma prova de conceito para validar o fluxo de identificação, geração de correções, reanálise estática, execução de testes e consolidação de métricas. O trabalho estabelece, assim, as bases técnicas e metodológicas para avaliar a eficácia do \textit{pipeline} no TCC 2.
++A correção de vulnerabilidades com Modelos de Linguagem de Grande Escala (LLMs) exige avaliar tanto os alertas de segurança quanto o funcionamento da aplicação após as alterações. Este trabalho implementou e avaliou um \textit{pipeline} que integra LLMs, análise estática com Semgrep e testes automatizados para apoiar a correção de alertas no OWASP Juice Shop. Foram realizadas três campanhas, uma por modelo, com GPT-4.1 mini, GPT-5.6 Luna e GPT-6 Luna sobre os mesmos 78 casos. As tentativas seguiram quatro estratégias sequenciais de \textit{prompt}, combinando instrução direta, raciocínio guiado e diagnóstico SAST com documentação recuperada por RAG simplificado. Na análise principal, o aceite exigiu remoção do alerta original, aprovação funcional na interpretação por critérios e ausência de novos alertas. Essa interpretação separou os testes de comportamento legítimo daqueles dependentes das vulnerabilidades intencionais da aplicação. O GPT-5.6 Luna apresentou o maior número de casos aceitos, com 51/78, seguido pelo GPT-6 Luna, com 49/78, e pelo GPT-4.1 mini, com 38/78. Entre os 55 casos classificados como confirmados na triagem, os totais foram 39, 36 e 32, respectivamente. Todas as estratégias acrescentaram aceites ao longo da sequência. O GPT-6 Luna apresentou o menor custo calculado de geração e a menor duração de campanha, enquanto o GPT-4.1 mini teve a menor latência média de geração. A aplicação conjunta dos \textit{patches} reduziu os alertas, mas nenhum dos três conjuntos recebeu aprovação funcional. Os resultados demonstram a viabilidade de gerar e avaliar propostas aceitas individualmente nas condições estudadas, com a integração das alterações permanecendo como uma dificuldade. O aceite expressa o atendimento às verificações adotadas, sem comprovar segurança completa.
+ 
+ \textbf{Palavras-chave}: modelos de linguagem de grande escala; análise estática de segurança; correção de vulnerabilidades; engenharia de prompt; RAG; \textit{pipeline}.
+ \end{resumo}
+
+--- antes/editaveis/abstract.tex
++++ depois/editaveis/abstract.tex
+@@ -1,6 +1,6 @@
+ \begin{resumo}[Abstract]
+ \begin{otherlanguage*}{english}
+-Large Language Models (LLMs) have been increasingly used in software development, including tasks such as code generation, explanation, and correction. However, their use in software security still requires caution, since automatically generated fixes may be incomplete, insecure, or may compromise the original behavior of the application. This work investigates the integration of LLMs, Static Application Security Testing (SAST) tools, automated tests, and contextualization strategies to support the correction of security issues in source code. The proposed methodology applies an automated pipeline to an open source project, using the vulnerabilities effectively detected by the SAST tool. As an initial step, a proof of concept was developed to validate the workflow for issue identification, fix generation, static reanalysis, test execution, and metric consolidation. Thus, this work establishes the technical and methodological foundations to evaluate the effectiveness of the pipeline in TCC 2.
++Repairing vulnerabilities with Large Language Models (LLMs) requires assessing both security alerts and application behavior after code changes. This study implemented and evaluated a pipeline integrating LLMs, static analysis with Semgrep, and automated tests to support the correction of alerts in OWASP Juice Shop. Three campaigns were conducted, one per model, using GPT-4.1 mini, GPT-5.6 Luna, and GPT-6 Luna on the same 78 cases. Attempts followed four sequential prompting strategies combining direct instructions, guided reasoning, and SAST diagnostics with documentation retrieved through simplified RAG. In the main analysis, acceptance required removal of the original alert, functional approval under the criteria-based interpretation, and no new alerts. This interpretation separated tests of legitimate behavior from those dependent on the application's intentional vulnerabilities. GPT-5.6 Luna achieved the highest number of accepted cases, with 51/78, followed by GPT-6 Luna with 49/78 and GPT-4.1 mini with 38/78. Among the 55 cases classified as confirmed during triage, the totals were 39, 36, and 32, respectively. All strategies added accepted cases along the sequence. GPT-6 Luna had the lowest calculated generation cost and shortest campaign duration, while GPT-4.1 mini had the lowest mean generation latency. Applying the patches together reduced alerts, but none of the three combined versions received functional approval. The results demonstrate the feasibility of generating and evaluating individually accepted proposals under the studied conditions, while integrating the changes remains a challenge. Acceptance indicates compliance with the adopted checks and does not establish complete security.
+ 
+ \textbf{Keywords}: large language models; static application security testing; vulnerability repair; prompt engineering; RAG; pipeline.
+ \end{otherlanguage*}
+
+--- antes/editaveis/simbolos.tex
++++ depois/editaveis/simbolos.tex
+@@ -1,9 +1,21 @@
+ \begin{simbolos}
+   \item[$\sum$] Operador de somatório
+-  \item[$R_j$] Resultado da remoção da \textit{issue} real $j$ após a correção
+-  \item[$F_j$] Resultado da preservação funcional da correção aplicada à \textit{issue} real $j$
+-  \item[$M_j$] Indicador de não introdução de novas \textit{issues} após a correção da \textit{issue} real $j$
+-  \item[$m$] Número total de tentativas de correção realizadas no projeto real
+-  \item[$I_{\text{antes}}$] Número de \textit{issues} de segurança detectadas antes da aplicação das correções aceitas
+-  \item[$I_{\text{depois}}$] Número de \textit{issues} de segurança detectadas após a aplicação das correções aceitas
+-\end{simbolos}+  \item[$j$] Índice de uma tentativa de geração e avaliação de uma proposta de correção
++  \item[$R_j$] Indicador de remoção do alerta original na tentativa $j$, quando há medição conclusiva
++  \item[$F_j$] Indicador de aprovação funcional da tentativa $j$, na interpretação de F adotada e quando há medição conclusiva
++  \item[$M_j$] Indicador de ausência de novos alertas na tentativa $j$, quando há medição conclusiva
++  \item[$m$] Número total de tentativas da população analisada, incluindo as não aplicadas e as indeterminadas
++  \item[$J_V$] Conjunto dos índices das tentativas aplicadas com R, F e M medidos
++  \item[$J_R$] Conjunto dos índices das tentativas com R medido
++  \item[$J_F$] Conjunto dos índices das tentativas com F medido
++  \item[$J_M$] Conjunto dos índices das tentativas com M medido
++  \item[$n_R$] Número de tentativas com R medido, correspondente a $|J_R|$
++  \item[$n_F$] Número de tentativas com F medido, correspondente a $|J_F|$
++  \item[$n_M$] Número de tentativas com M medido, correspondente a $|J_M|$
++  \item[$|J|$] Cardinalidade de um conjunto $J$, isto é, sua quantidade de elementos
++  \item[$D$] Conjunto de testes cujas asserções dependem das vulnerabilidades intencionais, conforme os critérios documentados
++  \item[$c_{\text{aceitos}}$] Número de casos distintos com pelo menos uma tentativa aceita
++  \item[$c_{\text{solicitados}}$] Número total de casos solicitados na campanha
++  \item[$I_{\text{antes}}$] Número de alertas no scan global comparável anterior à aplicação conjunta dos \textit{patches} selecionados
++  \item[$I_{\text{depois}}$] Número de alertas no scan global comparável posterior à aplicação conjunta dos \textit{patches} selecionados
++\end{simbolos}
+
+--- antes/bibliografia.bib
++++ depois/bibliografia.bib
+@@ -543,14 +543,6 @@
+ note   = {Acesso em: 18 jun. 2026}
+ }
+ 
+-@misc{owasp_top10_2025_intro,
+-author = {{OWASP Foundation}},
+-title  = {Introduction - OWASP Top 10:2025},
+-year   = {2025},
+-url    = {https://owasp.org/Top10/2025/0x00_2025-Introduction/},
+-note   = {Acesso em: 18 jun. 2026}
+-}
+-
+ @misc{owasp_a01_2025,
+ author = {{OWASP Foundation}},
+ title  = {A01:2025 - Broken Access Control},
+@@ -691,22 +683,6 @@
+ note   = {Acesso em: 18 jun. 2026}
+ }
+ 
+-@misc{openai_gpt5,
+-author = {{OpenAI}},
+-title  = {GPT-5},
+-year   = {2025},
+-url    = {https://openai.com/gpt-5/},
+-note   = {Acesso em: 18 jun. 2026}
+-}
+-
+-@misc{openai_introducing_gpt5_2025,
+-author = {{OpenAI}},
+-title  = {Introducing GPT-5},
+-year   = {2025},
+-url    = {https://openai.com/index/introducing-gpt-5/},
+-note   = {Acesso em: 18 jun. 2026}
+-}
+-
+ @misc{python_sqlite3_docs,
+   author = {{Python Software Foundation}},
+   title  = {sqlite3 --- DB-API 2.0 interface for SQLite databases},
+@@ -723,14 +699,6 @@
+   note   = {Acesso em: 18 jun. 2026}
+ }
+ 
+-@misc{stackoverflow_survey_ai_2025,
+-author = {{Stack Overflow}},
+-title  = {2025 Developer Survey: AI},
+-year   = {2025},
+-url    = {https://survey.stackoverflow.co/2025/ai},
+-note   = {Acesso em: 18 jun. 2026}
+-}
+-
+ @misc{portswigger_sql_injection,
+   author       = {{PortSwigger}},
+   title        = {SQL injection},
+@@ -747,14 +715,6 @@
+   note         = {Acesso em: 22 jun. 2026}
+ }
+ 
+-@misc{owasp_api_bola_2023,
+-  author       = {{OWASP Foundation}},
+-  title        = {API1:2023 -- Broken Object Level Authorization},
+-  year         = {2023},
+-  howpublished = {\url{https://owasp.org/API-Security/editions/2023/en/0xa1-broken-object-level-authorization/}},
+-  note         = {Acesso em: 22 jun. 2026}
+-}
+-
+ @misc{mitre_cwe_639,
+   author       = {{MITRE}},
+   title        = {CWE-639: Authorization Bypass Through User-Controlled Key},

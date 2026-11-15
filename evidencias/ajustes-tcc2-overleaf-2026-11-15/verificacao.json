@@ -1,0 +1,12 @@
+{
+  "resultado": "aprovado nas verificações estáticas",
+  "inputs_ativos": 20,
+  "chaves_antes": 73,
+  "chaves_depois": 68,
+  "chaves_duplicadas_depois": 0,
+  "citacoes_ausentes": [],
+  "remissoes_sem_label": [],
+  "Q5_igual_ao_capitulo_5": true,
+  "Q1_Q4_preservadas": true,
+  "compilacao": "Não realizada: nenhum compilador TeX disponível nos comandos locais verificados."
+}
