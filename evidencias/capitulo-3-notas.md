@@ -354,3 +354,14 @@ Em `TCC2-OVERLEAF/editaveis/consideracoes.tex`, reposicionados 3 títulos com se
 Ajustados os trechos indicados pelo autor em capturas do PDF, no arquivo `TCC2-OVERLEAF/editaveis/consideracoes.tex`. Inseridas quebras opcionais com `\allowbreak` nos separadores dos nomes em `\texttt`, preservando os nomes, sem novos pacotes. No capítulo 4, o texto visível do link foi encurtado para “repositório público do projeto no GitHub”, preservando seu endereço. Diff consolidado na seção existente do arquivo.
 
 Verificação dos quatro parágrafos em documento LaTeX isolado, com Latin Modern, fonte 12, largura de texto de 16 cm e espaçamento 1,5: quatro avisos `Overfull \hbox` antes e nenhum depois; ambos compilaram com sucesso. Inspecionada a primeira página gerada. Esse teste não substitui a conferência do PDF completo no Overleaf; `abntex2.cls` permanece ausente no ambiente local.
+
+
+## Ferramentas e propósito dos falsos positivos — 16/11/2026
+
+Em `TCC2-OVERLEAF/editaveis/consideracoes.tex`, completada a tabela existente com Python, biblioteca OpenAI, TypeScript (versões distintas no servidor e frontend), Angular/CLI/compilação, Express, Supertest e Vitest/jsdom. Identificada a imagem Docker e explicitado que as versões do Docker Engine e do Git não foram recuperadas nos registros das campanhas consultados; a versão de Git encontrada na entrega histórica do catálogo não foi atribuída ao contêiner final.
+
+Fonte: experimento no SHA `2e8f9a9285c8bf521ee3ddc33d8d20a62495ca59`, sem mudança desde a revisão anterior. Python 3.11.2 está documentado em `docs/protocolo_experimental.md`, seção “Ambiente único em Docker”, e no caderno de 18/10. Demais versões extraídas de `requirements.lock.txt`, `docker/juice-shop/package-lock.json` e `docker/juice-shop/frontend/package-lock.json`. Os SHA-256 dos três arquivos foram comparados com `docker/referencia.json`; os dois lockfiles npm também correspondem aos hashes do baseline `outputs/cobertura_funcional/IMAGEM_81FE_D3_20261106/baseline/baseline_testes.json`. Imagem: `sha256:81fe6403f07a05ccf7a911211e54ff2ae44c6b12237768b0a84ec1c7167ff5be`.
+
+Acrescentada ao parágrafo da triagem a frase aprovada sobre manter falsos positivos para observar o processamento dos alertas, sem interpretar aceites como correções de vulnerabilidades reais. A frase explicita o alcance já apresentado em `resultado-discussoes.tex`, sem alterar catálogo, resultados ou instruções dos prompts.
+
+A tabela foi compilada isoladamente com fonte Latin Modern 12, largura de 16 cm e espaçamento 1,5: uma página, sem estouros horizontais ou verticais; imagem inspecionada. A compilação integral não foi feita, pois falta `abntex2.cls`. O diff foi atualizado na seção única de `consideracoes.tex` em `ajustes-tcc2-overleaf.md`, preservando o original anterior às correções. Nenhum experimento foi executado.

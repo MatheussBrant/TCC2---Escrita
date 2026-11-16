@@ -68,11 +68,25 @@ Aplicação & OWASP Juice Shop 20.1.1 \\
 \hline
 Repositório utilizado (\textit{fork}) & \href{https://github.com/caiolamego/juice-shop-tcc}{caiolamego/juice-shop-tcc} \\
 \hline
-Plataforma Docker & \texttt{linux/amd64} \\
+Plataforma Docker & \texttt{linux/amd64}; imagem \texttt{81fe6403f07a} \\
 \hline
-Node.js e npm do \textit{baseline} final & 24.14.0 e 11.9.0 \\
+Node.js (execução e testes) e npm & 24.14.0 e 11.9.0 \\
+\hline
+Execução do \textit{pipeline} & Python 3.11.2 \\
+\hline
+Integração com os modelos & OpenAI 3.14.1 (biblioteca Python) \\
 \hline
 Ferramenta SAST & Semgrep 1.177.0 \\
+\hline
+Compilação TypeScript & 6.0.3 no servidor e 5.9.3 no frontend \\
+\hline
+Interface e ferramentas Angular & Angular 21.2.25; CLI e ferramenta de compilação 21.2.27 \\
+\hline
+Servidor web & Express 4.22.3 \\
+\hline
+Requisições nos testes de API & Supertest 7.3.1 \\
+\hline
+Testes da interface & Vitest 4.1.12 e jsdom 29.1.1 \\
 \hline
 Fuso horário dos processos & UTC \\
 \hline
@@ -83,7 +97,7 @@ Base documental & Versão 2.1, com 14 documentos \\
 \vspace{0.2cm}
 \begin{minipage}{\textwidth}
     \footnotesize
-    Fonte: configurações, \textit{baseline} funcional e contratos das campanhas do experimento.
+    Fonte: protocolo, \textit{baseline} funcional, referência da imagem Docker e arquivos de dependências fixadas do experimento. As versões do Docker Engine e do Git não foram recuperadas nos registros das campanhas consultados.
 \end{minipage}
 \end{table}
 
@@ -160,7 +174,7 @@ A identificação dos casos e a preparação dos testes necessários para avalia
 
 Os outros 26 casos também pertenciam ao catálogo, mas ainda exigiam a preparação das condições de avaliação funcional adotadas no experimento. A ampliação do mapeamento entre arquivos e testes e a inclusão de verificações adicionais permitiram executar as campanhas finais sobre os 78 casos. Assim, a passagem de 52 para 78 representou a ampliação do conjunto que podia ser avaliado sob as condições preparadas. Os resultados da campanha anterior foram mantidos separados dos resultados finais, pois as referências e a cobertura da avaliação eram diferentes.
 
-Para cada caso, foram registrados identificador, regra, arquivo e localização, mensagem, severidade, trecho de código e associações a CWE e OWASP quando disponíveis. O catálogo também preservou a triagem de 55 casos classificados como confirmados, 21 como falsos positivos e dois como inconclusivos.
+Para cada caso, foram registrados identificador, regra, arquivo e localização, mensagem, severidade, trecho de código e associações a CWE e OWASP quando disponíveis. O catálogo também preservou a triagem de 55 casos classificados como confirmados, 21 como falsos positivos e dois como inconclusivos. Os falsos positivos foram mantidos para observar o comportamento do \textit{pipeline} diante dos alertas do SAST, sem interpretar seu eventual aceite como correção de uma vulnerabilidade real.
 
 O catálogo incluiu três alertas em arquivos de teste do frontend, relacionados a tokens JWT utilizados como exemplos e classificados como falsos positivos na triagem.
 

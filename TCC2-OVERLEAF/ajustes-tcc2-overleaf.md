@@ -165,29 +165,56 @@ Cada seção mostra a diferença entre o arquivo original, anterior às correç�
 -
 @@ -40,0 +40 @@
 +        Fonte: elaboração própria.\par
-@@ -127 +127 @@
+@@ -71,3 +71,7 @@
+-Plataforma Docker & \texttt{linux/amd64} \\
+-\hline
+-Node.js e npm do \textit{baseline} final & 24.14.0 e 11.9.0 \\
++Plataforma Docker & \texttt{linux/amd64}; imagem \texttt{81fe6403f07a} \\
++\hline
++Node.js (execução e testes) e npm & 24.14.0 e 11.9.0 \\
++\hline
++Execução do \textit{pipeline} & Python 3.11.2 \\
++\hline
++Integração com os modelos & OpenAI 3.14.1 (biblioteca Python) \\
+@@ -75,0 +80,10 @@
++\hline
++Compilação TypeScript & 6.0.3 no servidor e 5.9.3 no frontend \\
++\hline
++Interface e ferramentas Angular & Angular 21.2.25; CLI e ferramenta de compilação 21.2.27 \\
++\hline
++Servidor web & Express 4.22.3 \\
++\hline
++Requisições nos testes de API & Supertest 7.3.1 \\
++\hline
++Testes da interface & Vitest 4.1.12 e jsdom 29.1.1 \\
+@@ -86 +100 @@
+-    Fonte: configurações, \textit{baseline} funcional e contratos das campanhas do experimento.
++    Fonte: protocolo, \textit{baseline} funcional, referência da imagem Docker e arquivos de dependências fixadas do experimento. As versões do Docker Engine e do Git não foram recuperadas nos registros das campanhas consultados.
+@@ -127 +141 @@
 -Os critérios de escopo limitaram a avaliação ao código das funcionalidades da aplicação, que podia ser examinado pela análise estática e pelos testes do Juice Shop. Foram excluídos os alertas nos exemplos dos \textit{Coding Challenges}, localizados em \texttt{data/static/codefixes/}, nos arquivos de automação do GitHub, em \texttt{.github/workflows/}, e nos arquivos de configuração do npm, \texttt{.npmrc}. Os exemplos dos \textit{Coding Challenges} contêm alternativas de correção dos exercícios pedagógicos, e sua exclusão evitou fornecê-las aos modelos como soluções. Os outros dois tipos de arquivo tratam de integração contínua e gerenciamento de dependências, aspectos cuja segurança não era avaliada pela suíte de testes da aplicação. A exclusão expressou uma decisão sobre o recorte do experimento, sem determinar se cada alerta correspondia a uma falha real ou a um falso positivo. A Tabela~\ref{tab:catalogo} apresenta a distribuição das exclusões.
 +Os critérios de escopo limitaram a avaliação ao código das funcionalidades da aplicação, que podia ser examinado pela análise estática e pelos testes do Juice Shop. Foram excluídos os alertas nos exemplos dos \textit{Coding Challenges}, localizados em \texttt{data/\allowbreak static/\allowbreak codefixes/\allowbreak }, nos arquivos de automação do GitHub, em \texttt{.\allowbreak github/\allowbreak workflows/\allowbreak }, e nos arquivos de configuração do npm, \texttt{.\allowbreak npmrc}. Os exemplos dos \textit{Coding Challenges} contêm alternativas de correção dos exercícios pedagógicos, e sua exclusão evitou fornecê-las aos modelos como soluções. Os outros dois tipos de arquivo tratam de integração contínua e gerenciamento de dependências, aspectos cuja segurança não era avaliada pela suíte de testes da aplicação. A exclusão expressou uma decisão sobre o recorte do experimento, sem determinar se cada alerta correspondia a uma falha real ou a um falso positivo. A Tabela~\ref{tab:catalogo} apresenta a distribuição das exclusões.
-@@ -163,0 +164,2 @@
+@@ -163 +177,3 @@
+-Para cada caso, foram registrados identificador, regra, arquivo e localização, mensagem, severidade, trecho de código e associações a CWE e OWASP quando disponíveis. O catálogo também preservou a triagem de 55 casos classificados como confirmados, 21 como falsos positivos e dois como inconclusivos.
++Para cada caso, foram registrados identificador, regra, arquivo e localização, mensagem, severidade, trecho de código e associações a CWE e OWASP quando disponíveis. O catálogo também preservou a triagem de 55 casos classificados como confirmados, 21 como falsos positivos e dois como inconclusivos. Os falsos positivos foram mantidos para observar o comportamento do \textit{pipeline} diante dos alertas do SAST, sem interpretar seu eventual aceite como correção de uma vulnerabilidade real.
 +
 +O catálogo incluiu três alertas em arquivos de teste do frontend, relacionados a tokens JWT utilizados como exemplos e classificados como falsos positivos na triagem.
-@@ -307,0 +310,2 @@
+@@ -307,0 +324,2 @@
 +    \caption{Fluxo de correção de um caso, com tentativas progressivas por estratégia de \textit{prompt}.}
 +    \label{fig:pipeline}
-@@ -314,3 +317,0 @@
+@@ -314,3 +331,0 @@
 -    \caption{Fluxo de correção de um caso, com tentativas progressivas por estratégia de \textit{prompt}.}
 -    \label{fig:pipeline}
 -
-@@ -319,0 +321 @@
+@@ -319,0 +335 @@
 +        Fonte: elaboração própria.\par
-@@ -450,0 +453,2 @@
+@@ -450,0 +467,2 @@
 +    \caption{Estrutura do identificador utilizado na nomenclatura dos artefatos gerados pelo \textit{pipeline}.}
 +    \label{fig:nomenclatura_artefatos}
-@@ -457,3 +460,0 @@
+@@ -457,3 +474,0 @@
 -    \caption{Estrutura do identificador utilizado na nomenclatura dos artefatos gerados pelo \textit{pipeline}.}
 -    \label{fig:nomenclatura_artefatos}
 -
-@@ -462,0 +464 @@
+@@ -462,0 +478 @@
 +        Fonte: elaboração própria.\par
 ```
 
@@ -259,6 +286,6 @@ Cada seção mostra a diferença entre o arquivo original, anterior às correç�
 
 ## Verificação e envio
 
-Conferidas as remissões e a disponibilidade das chaves citadas. As sete substituições do capítulo 2 preservam as citações e a estrutura LaTeX; suas fontes estão nas [notas do capítulo 2](../evidencias/capitulo-2-notas.md). Resumo e abstract refletem a versão escolhida pelo autor. As nove figuras dos capítulos 3–5 foram conferidas no fonte: todas têm título antes da imagem e indicação de fonte. Os quatro parágrafos com caminhos longos foram compilados em um documento de teste: quatro avisos de estouro de margem antes e nenhum após o ajuste. O excerto P2 do CAPTCHA também foi compilado isoladamente, sem estouro horizontal. A compilação integral permanece indisponível por ausência de `abntex2.cls`; a paginação deve ser conferida no Overleaf.
+Conferidas as remissões e a disponibilidade das chaves citadas. As sete substituições do capítulo 2 preservam as citações e a estrutura LaTeX; suas fontes estão nas [notas do capítulo 2](../evidencias/capitulo-2-notas.md). Resumo e abstract refletem a versão escolhida pelo autor. As nove figuras dos capítulos 3–5 foram conferidas no fonte: todas têm título antes da imagem e indicação de fonte. Os quatro parágrafos com caminhos longos foram compilados em um documento de teste: quatro avisos de estouro de margem antes e nenhum após o ajuste. O excerto P2 do CAPTCHA também foi compilado isoladamente, sem estouro horizontal. A tabela de condições foi completada com versões conferidas no protocolo e nos arquivos vinculados à imagem e ao baseline; sua compilação isolada não apresentou estouros de margem. O propósito de manter falsos positivos foi explicitado no parágrafo da triagem. A compilação integral permanece indisponível por ausência de `abntex2.cls`; a paginação deve ser conferida no Overleaf.
 
 Para aplicar as correções no Overleaf, substituir os oito arquivos vinculados acima. As versões originais dos quatro ajustes anteriores estão preservadas em [evidências](../evidencias/ajustes-tcc2-overleaf-2026-11-15/antes/).
