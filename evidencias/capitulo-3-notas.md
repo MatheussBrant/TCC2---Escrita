@@ -365,3 +365,21 @@ Fonte: experimento no SHA `2e8f9a9285c8bf521ee3ddc33d8d20a62495ca59`, sem mudan�
 Acrescentada ao parágrafo da triagem a frase aprovada sobre manter falsos positivos para observar o processamento dos alertas, sem interpretar aceites como correções de vulnerabilidades reais. A frase explicita o alcance já apresentado em `resultado-discussoes.tex`, sem alterar catálogo, resultados ou instruções dos prompts.
 
 A tabela foi compilada isoladamente com fonte Latin Modern 12, largura de 16 cm e espaçamento 1,5: uma página, sem estouros horizontais ou verticais; imagem inspecionada. A compilação integral não foi feita, pois falta `abntex2.cls`. O diff foi atualizado na seção única de `consideracoes.tex` em `ajustes-tcc2-overleaf.md`, preservando o original anterior às correções. Nenhum experimento foi executado.
+
+
+## Figura do modelo de dados — 16/11/2026
+
+Inserida em `TCC2-OVERLEAF/editaveis/consideracoes.tex`, na seção de armazenamento, uma figura compacta com os campos principais de caso (catálogo JSON), campanha (contrato JSON), tentativa (registro JSONL) e referências aos artefatos (arquivos JSON e diff). Arquivos novos: `TCC2-OVERLEAF/figuras/modelo-dados.pdf` e seu fonte TikZ `modelo-dados.tex`, compilado separadamente. O documento principal inclui somente o PDF, sem novos pacotes. Título antes da figura, fonte abaixo e um parágrafo breve explicando os vínculos.
+
+Fonte consultada: experimento no SHA `2e8f9a9285c8bf521ee3ddc33d8d20a62495ca59`, inalterado. Lidos `outputs/catalogos/ampliado_v1/catalogo_issues.json`, contratos e `resultados_consolidados/execucoes.jsonl` das três campanhas finais em `outputs/campanha_docker/`. Conferidos 834 registros: `tentativa_id` único em cada campanha, `execucao` correspondente ao contrato e `caso_id` presente no catálogo e na seleção da campanha. Aberto registro aplicado com referências a prompt, resposta, patch, SAST, comparação e validação; conferida a estrutura dos objetos `artefatos` (tipo → caminho) e `artefatos_sha256` (caminho → hash). Os hashes dos artefatos não foram recalculados nesta tarefa. A figura mostra relações lógicas entre arquivos, sem inventar tabelas SQL ou um esquema completo.
+
+Figura vetorial compilada e inspecionada visualmente. Inserção no tamanho do manuscrito, com título e fonte, compilada isoladamente em uma página, sem avisos de estouro horizontal/vertical ou figura grande demais. A compilação integral continua limitada pela ausência de `abntex2.cls`. Atualizada a seção existente do capítulo no registro de ajustes, preservando o baseline original; incluída uma entrada para a figura nova. Nenhum experimento executado.
+
+
+## Reorganização do modelo de dados e inclusão da consolidação — 16/11/2026
+
+A pedido do autor, reorganizada a mesma figura em três níveis alinhados: caso/campanha, tentativa e artefatos/avaliação conjunta/resultados consolidados. Diferenciados vínculos (setas contínuas) de processamento e agregação (tracejadas). Mantidas as referências reais dos registros, com inclusão de `manifesto.json`, `metricas.json` e `metricas_gerais.csv`. A RRIS é apresentada como derivada dos scans conjuntos, com avaliação funcional separada, sem inferi-la da soma dos aceites.
+
+Fontes adicionais consultadas no mesmo SHA experimental `2e8f9a9285c8bf521ee3ddc33d8d20a62495ca59`: `outputs/rris/AMP_REAL_20261106T151004Z_f49ac0d2/{manifesto.json,validacao_funcional.json}`, `outputs/rris/AMP_REAL_20261106T151004Z_f49ac0d2_METRICAS/metricas.json` e a rotina `src/pipeline/etapas/e09_metricas/publicacao.py`, consultada na conferência anterior. O manifesto contém `execucao`, `patches`, `conflitos`, scans e referência à validação; a publicação produz JSON/CSV por execução.
+
+Atualizados o PDF vetorial, seu fonte, o parágrafo de apresentação e a legenda no capítulo. Figura e inserção com título/fonte compiladas isoladamente; imagem final inspecionada, sem textos fora das caixas, cruzamentos de setas ou estouros de margem. A figura continua sendo uma síntese, não o esquema exaustivo do repositório. O arquivo de ajustes foi atualizado nas mesmas seções, sem acrescentar outra versão da figura ou do capítulo. Compilação integral não realizada por ausência de `abntex2.cls`.

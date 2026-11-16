@@ -460,6 +460,21 @@ Em que $I_{\text{antes}}$ e $I_{\text{depois}}$ representam as contagens de aler
 
 Os dados foram organizados para permitir o acompanhamento de cada caso desde o alerta inicial até sua avaliação. \textit{Prompts}, respostas, edições aplicadas, código corrigido, análises estáticas e testes foram associados ao identificador da tentativa. Os contratos de execução, que registram as configurações de cada campanha, os registros das sessões e as verificações de integridade permitiram relacionar esses arquivos às condições de execução. A estrutura dos diretórios e dos componentes responsáveis pelo registro é apresentada no Capítulo~\ref{cap:implementacao}.
 
+A Figura~\ref{fig:modelo-dados} sintetiza os principais campos e vínculos entre os registros. Cada tentativa referencia um caso e uma campanha e registra os caminhos e \textit{hashes} de seus artefatos. As tentativas alimentam a consolidação das métricas, enquanto os \textit{patches} selecionados passam por avaliação conjunta para obter a RRIS e o resultado funcional da integração.
+
+\begin{figure}[H]
+    \centering
+    \caption{Modelo lógico dos dados e artefatos do experimento.}
+    \label{fig:modelo-dados}
+    \includegraphics[width=\textwidth]{figuras/modelo-dados.pdf}
+    \vspace{0.2cm}
+    \begin{minipage}{\textwidth}
+        \footnotesize
+        Fonte: elaboração própria, a partir dos registros do experimento.\par
+        Setas contínuas indicam vínculos entre registros e arquivos; setas tracejadas indicam seleção, processamento ou consolidação dos dados. A notação 0..N indica nenhum ou vários registros. Os campos apresentados são uma seleção dos dados armazenados.
+    \end{minipage}
+\end{figure}
+
 Cada tentativa de correção recebeu um identificador único, utilizado para nomear os artefatos e relacioná-los aos registros do experimento. A composição desse identificador reuniu o caso analisado, a categoria OWASP, a sigla do tipo de vulnerabilidade, a estratégia de \textit{prompt} e a execução correspondente, separados por sublinhados. A identificação do artefato foi complementada pelo diretório, pelo sufixo ou pela extensão do arquivo. A Figura~\ref{fig:nomenclatura_artefatos} ilustra os componentes dessa nomenclatura com um exemplo abreviado.
 
 \begin{figure}[H]

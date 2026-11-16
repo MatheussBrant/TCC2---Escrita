@@ -207,14 +207,32 @@ Cada seção mostra a diferença entre o arquivo original, anterior às correç�
 -
 @@ -319,0 +335 @@
 +        Fonte: elaboração própria.\par
-@@ -450,0 +467,2 @@
+@@ -447 +463 @@
+-Cada tentativa de correção recebeu um identificador único, utilizado para nomear os artefatos e relacioná-los aos registros do experimento. A composição desse identificador reuniu o caso analisado, a categoria OWASP, a sigla do tipo de vulnerabilidade, a estratégia de \textit{prompt} e a execução correspondente, separados por sublinhados. A identificação do artefato foi complementada pelo diretório, pelo sufixo ou pela extensão do arquivo. A Figura~\ref{fig:nomenclatura_artefatos} ilustra os componentes dessa nomenclatura com um exemplo abreviado.
++A Figura~\ref{fig:modelo-dados} sintetiza os principais campos e vínculos entre os registros. Cada tentativa referencia um caso e uma campanha e registra os caminhos e \textit{hashes} de seus artefatos. As tentativas alimentam a consolidação das métricas, enquanto os \textit{patches} selecionados passam por avaliação conjunta para obter a RRIS e o resultado funcional da integração.
+@@ -450,0 +467,17 @@
++    \caption{Modelo lógico dos dados e artefatos do experimento.}
++    \label{fig:modelo-dados}
++    \includegraphics[width=\textwidth]{figuras/modelo-dados.pdf}
++    \vspace{0.2cm}
++    \begin{minipage}{\textwidth}
++        \footnotesize
++        Fonte: elaboração própria, a partir dos registros do experimento.\par
++        Setas contínuas indicam vínculos entre registros e arquivos; setas tracejadas indicam seleção, processamento ou consolidação dos dados. A notação 0..N indica nenhum ou vários registros. Os campos apresentados são uma seleção dos dados armazenados.
++    \end{minipage}
++\end{figure}
++
++Cada tentativa de correção recebeu um identificador único, utilizado para nomear os artefatos e relacioná-los aos registros do experimento. A composição desse identificador reuniu o caso analisado, a categoria OWASP, a sigla do tipo de vulnerabilidade, a estratégia de \textit{prompt} e a execução correspondente, separados por sublinhados. A identificação do artefato foi complementada pelo diretório, pelo sufixo ou pela extensão do arquivo. A Figura~\ref{fig:nomenclatura_artefatos} ilustra os componentes dessa nomenclatura com um exemplo abreviado.
++
++\begin{figure}[H]
++    \centering
 +    \caption{Estrutura do identificador utilizado na nomenclatura dos artefatos gerados pelo \textit{pipeline}.}
 +    \label{fig:nomenclatura_artefatos}
-@@ -457,3 +474,0 @@
+@@ -457,3 +489,0 @@
 -    \caption{Estrutura do identificador utilizado na nomenclatura dos artefatos gerados pelo \textit{pipeline}.}
 -    \label{fig:nomenclatura_artefatos}
 -
-@@ -462,0 +478 @@
+@@ -462,0 +493 @@
 +        Fonte: elaboração própria.\par
 ```
 
@@ -284,8 +302,12 @@ Cada seção mostra a diferença entre o arquivo original, anterior às correç�
 +{\footnotesize Fonte: trecho do \textit{patch} arquivado, com quebras de linha ajustadas para apresentação. A função auxiliar \texttt{calculate} realiza as operações aritméticas explícitas.\par}
 ```
 
+## [figuras/modelo-dados.pdf](figuras/modelo-dados.pdf)
+
+Figura nova, em PDF vetorial, inserida na seção de armazenamento e organização dos dados. Organizada em três níveis: casos e campanhas; tentativas; artefatos, avaliação conjunta dos patches e resultados consolidados. Apresenta formatos, campos, identificadores, caminhos, hashes e cardinalidades. Setas contínuas representam vínculos; tracejadas representam seleção, processamento ou consolidação. A RRIS utiliza os scans da avaliação conjunta, com resultado funcional separado. Fonte editável: [figuras/modelo-dados.tex](figuras/modelo-dados.tex), compilada separadamente; o documento principal utiliza apenas o PDF. O bloco de inserção, o título, a fonte e a explicação estão no diff de `consideracoes.tex` acima.
+
 ## Verificação e envio
 
-Conferidas as remissões e a disponibilidade das chaves citadas. As sete substituições do capítulo 2 preservam as citações e a estrutura LaTeX; suas fontes estão nas [notas do capítulo 2](../evidencias/capitulo-2-notas.md). Resumo e abstract refletem a versão escolhida pelo autor. As nove figuras dos capítulos 3–5 foram conferidas no fonte: todas têm título antes da imagem e indicação de fonte. Os quatro parágrafos com caminhos longos foram compilados em um documento de teste: quatro avisos de estouro de margem antes e nenhum após o ajuste. O excerto P2 do CAPTCHA também foi compilado isoladamente, sem estouro horizontal. A tabela de condições foi completada com versões conferidas no protocolo e nos arquivos vinculados à imagem e ao baseline; sua compilação isolada não apresentou estouros de margem. O propósito de manter falsos positivos foi explicitado no parágrafo da triagem. A compilação integral permanece indisponível por ausência de `abntex2.cls`; a paginação deve ser conferida no Overleaf.
+Conferidas as remissões e a disponibilidade das chaves citadas. As sete substituições do capítulo 2 preservam as citações e a estrutura LaTeX; suas fontes estão nas [notas do capítulo 2](../evidencias/capitulo-2-notas.md). Resumo e abstract refletem a versão escolhida pelo autor. As dez figuras dos capítulos 3–5 foram conferidas no fonte: todas têm título antes da imagem e indicação de fonte. Os quatro parágrafos com caminhos longos foram compilados em um documento de teste: quatro avisos de estouro de margem antes e nenhum após o ajuste. O excerto P2 do CAPTCHA também foi compilado isoladamente, sem estouro horizontal. A tabela de condições foi completada com versões conferidas no protocolo e nos arquivos vinculados à imagem e ao baseline; sua compilação isolada não apresentou estouros de margem. O propósito de manter falsos positivos foi explicitado no parágrafo da triagem. O modelo de dados foi compilado em PDF vetorial e inspecionado visualmente; sua inserção com título e fonte foi conferida em documento isolado. A compilação integral permanece indisponível por ausência de `abntex2.cls`; a paginação deve ser conferida no Overleaf.
 
-Para aplicar as correções no Overleaf, substituir os oito arquivos vinculados acima. As versões originais dos quatro ajustes anteriores estão preservadas em [evidências](../evidencias/ajustes-tcc2-overleaf-2026-11-15/antes/).
+Para aplicar as correções no Overleaf, substituir os oito arquivos de capítulos e pré-textuais vinculados acima e adicionar `figuras/modelo-dados.pdf`. O fonte `figuras/modelo-dados.tex` é opcional para edição da figura e não deve substituir `tcc.tex` como documento principal. As versões originais dos quatro ajustes anteriores estão preservadas em [evidências](../evidencias/ajustes-tcc2-overleaf-2026-11-15/antes/).
