@@ -342,3 +342,8 @@ irem para o Overleaf. Os comentários de evidência do Markdown não foram levad
 ## Esclarecimento do catálogo no Overleaf — 16/11/2026
 
 Acrescentada somente a frase aprovada pelo autor sobre os três alertas em arquivos de teste do frontend, após a distribuição da triagem em `TCC2-OVERLEAF/editaveis/consideracoes.tex`. Fonte reconferida: `outputs/catalogos/ampliado_v1/catalogo_issues.json` do experimento no SHA `2e8f9a9285c8bf521ee3ddc33d8d20a62495ca59`; casos `AMPdbe817f9e31f0aa0`, `AMP986bde724bde5588` e `AMP755998f61209381a`, todos falsos positivos relacionados a JWTs de exemplo. A classificação e os resultados não foram modificados. O diff consta de uma única seção no registro de ajustes. Original do LaTeX no Git da escrita: `ce870aeeefdf0c1c7c83b88918e171d6e6c7efae`.
+
+
+## Formatação das figuras no Overleaf — 16/11/2026
+
+Em `TCC2-OVERLEAF/editaveis/consideracoes.tex`, reposicionados 3 títulos com seus labels para antes das imagens e acrescentadas 3 indicações de fonte como elaboração própria. Preservados os textos dos títulos, imagens, dimensões, legendas explicativas e resultados. Alteração solicitada pelo autor; diff consolidado na seção existente do arquivo no registro de ajustes. Verificação estática das nove figuras dos capítulos 3–5; sem PDF novo, pois `abntex2.cls` não está instalado no ambiente local.

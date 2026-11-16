@@ -811,3 +811,8 @@ SHA-256 após a revisão: `c025d9b82752481d326324e411ceecbad474f6a8b2a86c04963f9
 - `metodologia.tex` e `implementacao.tex` passaram a usar `\ref{cap:resultados}` no lugar de "Capítulo 5".
 
 SHA-256 do `.tex`: `07f0315436f69408367155cba5f3af511b8a6066bf34e1e1051d59d02256beaa`.
+
+
+## Formatação das figuras no Overleaf — 16/11/2026
+
+Em `TCC2-OVERLEAF/editaveis/resultado-discussoes.tex`, reposicionados 1 títulos com seus labels para antes das imagens. Preservados os textos dos títulos, imagens, dimensões, legendas explicativas e resultados. Alteração solicitada pelo autor; diff consolidado na seção existente do arquivo no registro de ajustes. Verificação estática das nove figuras dos capítulos 3–5; sem PDF novo, pois `abntex2.cls` não está instalado no ambiente local.

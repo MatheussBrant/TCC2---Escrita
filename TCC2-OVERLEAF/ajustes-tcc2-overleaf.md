@@ -156,9 +156,36 @@ Cada seção mostra a diferença entre o arquivo original, anterior às correç�
 ```diff
 --- original/editaveis/consideracoes.tex
 +++ atual/editaveis/consideracoes.tex
+@@ -28,0 +29,2 @@
++    \caption{Visão geral do fluxo metodológico adotado na pesquisa.}
++    \label{fig:plano}
+@@ -35,3 +36,0 @@
+-    \caption{Visão geral do fluxo metodológico adotado na pesquisa.}
+-    \label{fig:plano}
+-
+@@ -40,0 +40 @@
++        Fonte: elaboração própria.\par
 @@ -163,0 +164,2 @@
 +
 +O catálogo incluiu três alertas em arquivos de teste do frontend, relacionados a tokens JWT utilizados como exemplos e classificados como falsos positivos na triagem.
+@@ -307,0 +310,2 @@
++    \caption{Fluxo de correção de um caso, com tentativas progressivas por estratégia de \textit{prompt}.}
++    \label{fig:pipeline}
+@@ -314,3 +317,0 @@
+-    \caption{Fluxo de correção de um caso, com tentativas progressivas por estratégia de \textit{prompt}.}
+-    \label{fig:pipeline}
+-
+@@ -319,0 +321 @@
++        Fonte: elaboração própria.\par
+@@ -450,0 +453,2 @@
++    \caption{Estrutura do identificador utilizado na nomenclatura dos artefatos gerados pelo \textit{pipeline}.}
++    \label{fig:nomenclatura_artefatos}
+@@ -457,3 +460,0 @@
+-    \caption{Estrutura do identificador utilizado na nomenclatura dos artefatos gerados pelo \textit{pipeline}.}
+-    \label{fig:nomenclatura_artefatos}
+-
+@@ -462,0 +464 @@
++        Fonte: elaboração própria.\par
 ```
 
 ## [editaveis/elementosdotexto.tex](editaveis/elementosdotexto.tex)
@@ -166,6 +193,24 @@ Cada seção mostra a diferença entre o arquivo original, anterior às correç�
 ```diff
 --- original/editaveis/elementosdotexto.tex
 +++ atual/editaveis/elementosdotexto.tex
+@@ -20,0 +21,2 @@
++    \caption{Etapas principais do \textit{pipeline} e suas conexões.}
++    \label{fig:impl-etapas}
+@@ -29,3 +30,0 @@
+-    \caption{Etapas principais do \textit{pipeline} e suas conexões.}
+-    \label{fig:impl-etapas}
+-
+@@ -34,0 +34 @@
++        Fonte: elaboração própria.\par
+@@ -60,0 +61,2 @@
++    \caption{Cópias de trabalho do Juice Shop utilizadas pelo \textit{pipeline}.}
++    \label{fig:impl-worktrees}
+@@ -69,3 +70,0 @@
+-    \caption{Cópias de trabalho do Juice Shop utilizadas pelo \textit{pipeline}.}
+-    \label{fig:impl-worktrees}
+-
+@@ -74,0 +74 @@
++        Fonte: elaboração própria.\par
 @@ -95 +95 @@
 -No caso utilizado como exemplo, o Semgrep apontou a linha 14 do arquivo \texttt{routes/keyServer.ts} com a regra \texttt{express-res-sendfile}, do conjunto público, associada à CWE-73. O código não garante que o caminho final permaneça dentro da pasta prevista, o que caracteriza uma vulnerabilidade de \textit{path traversal}, na qual um atacante manipula o caminho para ler arquivos fora do local permitido. O caso recebeu o identificador \texttt{AMP95adf572d3c6677f}. O trecho apontado é apresentado a seguir.
 +No caso utilizado como exemplo, o Semgrep apontou a linha 14 do arquivo \texttt{routes/keyServer.ts} com a regra \texttt{express-res-sendfile}, do conjunto público, associada à CWE-73. A regra sinalizou uma possibilidade de \textit{path traversal}. Entretanto, a triagem classificou o caso como confirmado pela exposição de arquivos de chaves em uma rota pública, sem comprovar a exploração por travessia de diretórios. O caso recebeu o identificador \texttt{AMP95adf572d3c6677f}. O trecho apontado é apresentado a seguir.
@@ -174,8 +219,22 @@ Cada seção mostra a diferença entre o arquivo original, anterior às correç�
 +O código alterado foi compilado e aprovado nos testes do grupo de entrega de arquivos. Na nova análise, o alerta original deixou de ser apontado e nenhum alerta novo apareceu. Com R, F e M iguais a 1, a correção atendeu à regra de parada e o caso foi encerrado, sem a execução da estratégia P4. Esse aceite corresponde às verificações realizadas e não comprova a eliminação da exposição de chaves identificada na triagem. Os arquivos dessa tentativa receberam o identificador \texttt{AMP95adf572d3c6677f\_\allowbreak A06\_\allowbreak PATHTRAV\_\allowbreak P3\_\allowbreak AMP\_\allowbreak REAL\_\allowbreak 20261106T151004Z\_\allowbreak f49ac0d2}, que segue a estrutura apresentada na Figura~\ref{fig:nomenclatura_artefatos}.
 ```
 
+## [editaveis/resultado-discussoes.tex](editaveis/resultado-discussoes.tex)
+
+```diff
+--- original/editaveis/resultado-discussoes.tex
++++ atual/editaveis/resultado-discussoes.tex
+@@ -189,0 +190,2 @@
++    \caption{Distribuição dos casos pelo primeiro aceite e pela ausência de aceite.}
++    \label{fig:res-aceites-estrategia}
+@@ -195,3 +196,0 @@
+-
+-    \caption{Distribuição dos casos pelo primeiro aceite e pela ausência de aceite.}
+-    \label{fig:res-aceites-estrategia}
+```
+
 ## Verificação e envio
 
-Conferidas as remissões e a disponibilidade das chaves citadas. As sete substituições do capítulo 2 preservam as citações e a estrutura LaTeX; suas fontes estão nas [notas do capítulo 2](../evidencias/capitulo-2-notas.md). Resumo e abstract refletem a versão escolhida pelo autor. Não foi realizada compilação local; a paginação deve ser conferida no Overleaf.
+Conferidas as remissões e a disponibilidade das chaves citadas. As sete substituições do capítulo 2 preservam as citações e a estrutura LaTeX; suas fontes estão nas [notas do capítulo 2](../evidencias/capitulo-2-notas.md). Resumo e abstract refletem a versão escolhida pelo autor. As nove figuras dos capítulos 3–5 foram conferidas no fonte: todas têm título antes da imagem e indicação de fonte. A compilação local permanece indisponível por ausência de `abntex2.cls`; a paginação deve ser conferida no Overleaf.
 
-Para aplicar as correções no Overleaf, substituir os sete arquivos vinculados acima. As versões originais dos quatro ajustes anteriores estão preservadas em [evidências](../evidencias/ajustes-tcc2-overleaf-2026-11-15/antes/).
+Para aplicar as correções no Overleaf, substituir os oito arquivos vinculados acima. As versões originais dos quatro ajustes anteriores estão preservadas em [evidências](../evidencias/ajustes-tcc2-overleaf-2026-11-15/antes/).

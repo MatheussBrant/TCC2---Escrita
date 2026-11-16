@@ -407,3 +407,8 @@ fechamento dos ambientes; `git diff --check` sem erros. Nenhum PDF foi gerado.
 ## Interpretação do exemplo keyServer no Overleaf — 16/11/2026
 
 Aplicadas as duas alterações aprovadas pelo autor em `TCC2-OVERLEAF/editaveis/elementosdotexto.tex`: distinguir o alerta de possível path traversal da exposição de chaves registrada na triagem e delimitar o aceite às verificações realizadas. Fonte reconferida: `outputs/catalogos/ampliado_v1/catalogo_issues.json`, caso `AMP95adf572d3c6677f`, campo `justificativa_auditoria`, experimento no SHA `2e8f9a9285c8bf521ee3ddc33d8d20a62495ca59`. Código, resultados e identificadores foram preservados. O diff está em uma única seção do registro de ajustes; original no Git da escrita: `ce870aeeefdf0c1c7c83b88918e171d6e6c7efae`. Conferência textual de estrutura, citações e blocos de código; sem nova compilação.
+
+
+## Formatação das figuras no Overleaf — 16/11/2026
+
+Em `TCC2-OVERLEAF/editaveis/elementosdotexto.tex`, reposicionados 2 títulos com seus labels para antes das imagens e acrescentadas 2 indicações de fonte como elaboração própria. Preservados os textos dos títulos, imagens, dimensões, legendas explicativas e resultados. Alteração solicitada pelo autor; diff consolidado na seção existente do arquivo no registro de ajustes. Verificação estática das nove figuras dos capítulos 3–5; sem PDF novo, pois `abntex2.cls` não está instalado no ambiente local.
