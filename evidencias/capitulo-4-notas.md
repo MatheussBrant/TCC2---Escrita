@@ -402,3 +402,8 @@ reescritos nesta tarefa, cujo destino solicitado foi o LaTeX do modelo.
 A versão anterior e os hashes estão em `capturas-painel-2026-11-14/`.
 Conferidos os três arquivos PNG, a ordem, a unicidade dos labels e o
 fechamento dos ambientes; `git diff --check` sem erros. Nenhum PDF foi gerado.
+
+
+## Interpretação do exemplo keyServer no Overleaf — 16/11/2026
+
+Aplicadas as duas alterações aprovadas pelo autor em `TCC2-OVERLEAF/editaveis/elementosdotexto.tex`: distinguir o alerta de possível path traversal da exposição de chaves registrada na triagem e delimitar o aceite às verificações realizadas. Fonte reconferida: `outputs/catalogos/ampliado_v1/catalogo_issues.json`, caso `AMP95adf572d3c6677f`, campo `justificativa_auditoria`, experimento no SHA `2e8f9a9285c8bf521ee3ddc33d8d20a62495ca59`. Código, resultados e identificadores foram preservados. O diff está em uma única seção do registro de ajustes; original no Git da escrita: `ce870aeeefdf0c1c7c83b88918e171d6e6c7efae`. Conferência textual de estrutura, citações e blocos de código; sem nova compilação.

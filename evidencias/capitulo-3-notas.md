@@ -337,3 +337,8 @@ as chaves `semgrep_write_rules` e `semgrep_taint_analysis`, em `overleaf/oficial
 para o `lib.bib`. Figuras copiadas para `overleaf/oficial/figuras/` (`plano.png`, `pipeline.png`, `nomenclatura.png`,
 a partir de `figura-1.png` a `figura-3.png`). Remissões aos Capítulos 4 e 5 escritas por extenso até esses capítulos
 irem para o Overleaf. Os comentários de evidência do Markdown não foram levados ao `.tex`.
+
+
+## Esclarecimento do catálogo no Overleaf — 16/11/2026
+
+Acrescentada somente a frase aprovada pelo autor sobre os três alertas em arquivos de teste do frontend, após a distribuição da triagem em `TCC2-OVERLEAF/editaveis/consideracoes.tex`. Fonte reconferida: `outputs/catalogos/ampliado_v1/catalogo_issues.json` do experimento no SHA `2e8f9a9285c8bf521ee3ddc33d8d20a62495ca59`; casos `AMPdbe817f9e31f0aa0`, `AMP986bde724bde5588` e `AMP755998f61209381a`, todos falsos positivos relacionados a JWTs de exemplo. A classificação e os resultados não foram modificados. O diff consta de uma única seção no registro de ajustes. Original do LaTeX no Git da escrita: `ce870aeeefdf0c1c7c83b88918e171d6e6c7efae`.

@@ -151,8 +151,31 @@ Cada seção mostra a diferença entre o arquivo original, anterior às correç�
 +\end{simbolos}
 ```
 
+## [editaveis/consideracoes.tex](editaveis/consideracoes.tex)
+
+```diff
+--- original/editaveis/consideracoes.tex
++++ atual/editaveis/consideracoes.tex
+@@ -163,0 +164,2 @@
++
++O catálogo incluiu três alertas em arquivos de teste do frontend, relacionados a tokens JWT utilizados como exemplos e classificados como falsos positivos na triagem.
+```
+
+## [editaveis/elementosdotexto.tex](editaveis/elementosdotexto.tex)
+
+```diff
+--- original/editaveis/elementosdotexto.tex
++++ atual/editaveis/elementosdotexto.tex
+@@ -95 +95 @@
+-No caso utilizado como exemplo, o Semgrep apontou a linha 14 do arquivo \texttt{routes/keyServer.ts} com a regra \texttt{express-res-sendfile}, do conjunto público, associada à CWE-73. O código não garante que o caminho final permaneça dentro da pasta prevista, o que caracteriza uma vulnerabilidade de \textit{path traversal}, na qual um atacante manipula o caminho para ler arquivos fora do local permitido. O caso recebeu o identificador \texttt{AMP95adf572d3c6677f}. O trecho apontado é apresentado a seguir.
++No caso utilizado como exemplo, o Semgrep apontou a linha 14 do arquivo \texttt{routes/keyServer.ts} com a regra \texttt{express-res-sendfile}, do conjunto público, associada à CWE-73. A regra sinalizou uma possibilidade de \textit{path traversal}. Entretanto, a triagem classificou o caso como confirmado pela exposição de arquivos de chaves em uma rota pública, sem comprovar a exploração por travessia de diretórios. O caso recebeu o identificador \texttt{AMP95adf572d3c6677f}. O trecho apontado é apresentado a seguir.
+@@ -290 +290 @@
+-O código alterado foi compilado e aprovado nos testes do grupo de entrega de arquivos. Na nova análise, o alerta original deixou de ser apontado e nenhum alerta novo apareceu. Com R, F e M iguais a 1, a correção atendeu à regra de parada e o caso foi encerrado, sem a execução da estratégia P4. Os arquivos dessa tentativa receberam o identificador \texttt{AMP95adf572d3c6677f\_\allowbreak A06\_\allowbreak PATHTRAV\_\allowbreak P3\_\allowbreak AMP\_\allowbreak REAL\_\allowbreak 20261106T151004Z\_\allowbreak f49ac0d2}, que segue a estrutura apresentada na Figura~\ref{fig:nomenclatura_artefatos}.
++O código alterado foi compilado e aprovado nos testes do grupo de entrega de arquivos. Na nova análise, o alerta original deixou de ser apontado e nenhum alerta novo apareceu. Com R, F e M iguais a 1, a correção atendeu à regra de parada e o caso foi encerrado, sem a execução da estratégia P4. Esse aceite corresponde às verificações realizadas e não comprova a eliminação da exposição de chaves identificada na triagem. Os arquivos dessa tentativa receberam o identificador \texttt{AMP95adf572d3c6677f\_\allowbreak A06\_\allowbreak PATHTRAV\_\allowbreak P3\_\allowbreak AMP\_\allowbreak REAL\_\allowbreak 20261106T151004Z\_\allowbreak f49ac0d2}, que segue a estrutura apresentada na Figura~\ref{fig:nomenclatura_artefatos}.
+```
+
 ## Verificação e envio
 
 Conferidas as remissões e a disponibilidade das chaves citadas. As sete substituições do capítulo 2 preservam as citações e a estrutura LaTeX; suas fontes estão nas [notas do capítulo 2](../evidencias/capitulo-2-notas.md). Resumo e abstract refletem a versão escolhida pelo autor. Não foi realizada compilação local; a paginação deve ser conferida no Overleaf.
 
-Para aplicar as correções no Overleaf, substituir os cinco arquivos vinculados acima. As versões originais dos quatro ajustes anteriores estão preservadas em [evidências](../evidencias/ajustes-tcc2-overleaf-2026-11-15/antes/).
+Para aplicar as correções no Overleaf, substituir os sete arquivos vinculados acima. As versões originais dos quatro ajustes anteriores estão preservadas em [evidências](../evidencias/ajustes-tcc2-overleaf-2026-11-15/antes/).
