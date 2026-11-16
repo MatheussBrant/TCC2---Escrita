@@ -816,3 +816,8 @@ SHA-256 do `.tex`: `07f0315436f69408367155cba5f3af511b8a6066bf34e1e1051d59d02256
 ## Formatação das figuras no Overleaf — 16/11/2026
 
 Em `TCC2-OVERLEAF/editaveis/resultado-discussoes.tex`, reposicionados 1 títulos com seus labels para antes das imagens. Preservados os textos dos títulos, imagens, dimensões, legendas explicativas e resultados. Alteração solicitada pelo autor; diff consolidado na seção existente do arquivo no registro de ajustes. Verificação estática das nove figuras dos capítulos 3–5; sem PDF novo, pois `abntex2.cls` não está instalado no ambiente local.
+
+
+## Quebra de linhas no excerto P2 do CAPTCHA — 16/11/2026
+
+Reformatado somente o excerto da proposta P2 do GPT-6 Luna em `TCC2-OVERLEAF/editaveis/resultado-discussoes.tex`: chamadas de `calculate` distribuídas em linhas menores, mantendo `\scriptsize`, operadores, identificadores e ordem de avaliação. A nota de fonte informa o ajuste de quebras de linha. Conferida igualdade do código ao desconsiderar espaços e quebras; maior linha reduzida de 105 para 58 caracteres. Compilação isolada com Latin Modern, classe de 12 pt, `\scriptsize` e largura de texto de 15 cm concluída sem avisos `Overfull \hbox`. O diff atualiza a seção já existente do arquivo. O PDF integral continua dependendo de conferência no Overleaf.

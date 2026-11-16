@@ -347,3 +347,10 @@ Acrescentada somente a frase aprovada pelo autor sobre os três alertas em arqui
 ## Formatação das figuras no Overleaf — 16/11/2026
 
 Em `TCC2-OVERLEAF/editaveis/consideracoes.tex`, reposicionados 3 títulos com seus labels para antes das imagens e acrescentadas 3 indicações de fonte como elaboração própria. Preservados os textos dos títulos, imagens, dimensões, legendas explicativas e resultados. Alteração solicitada pelo autor; diff consolidado na seção existente do arquivo no registro de ajustes. Verificação estática das nove figuras dos capítulos 3–5; sem PDF novo, pois `abntex2.cls` não está instalado no ambiente local.
+
+
+## Quebras de linha nos caminhos — 16/11/2026
+
+Ajustados os trechos indicados pelo autor em capturas do PDF, no arquivo `TCC2-OVERLEAF/editaveis/consideracoes.tex`. Inseridas quebras opcionais com `\allowbreak` nos separadores dos nomes em `\texttt`, preservando os nomes, sem novos pacotes. No capítulo 4, o texto visível do link foi encurtado para “repositório público do projeto no GitHub”, preservando seu endereço. Diff consolidado na seção existente do arquivo.
+
+Verificação dos quatro parágrafos em documento LaTeX isolado, com Latin Modern, fonte 12, largura de texto de 16 cm e espaçamento 1,5: quatro avisos `Overfull \hbox` antes e nenhum depois; ambos compilaram com sucesso. Inspecionada a primeira página gerada. Esse teste não substitui a conferência do PDF completo no Overleaf; `abntex2.cls` permanece ausente no ambiente local.

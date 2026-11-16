@@ -532,12 +532,19 @@ Para o mesmo alerta do CAPTCHA, a tentativa P1 do GPT-6 Luna também foi rejeita
 {\scriptsize
 \begin{verbatim}
     const answer = (secondOperator === '*'
-      ? calculate(firstTerm, firstOperator, calculate(secondTerm, secondOperator, thirdTerm))
-      : calculate(calculate(firstTerm, firstOperator, secondTerm), secondOperator, thirdTerm)).toString()
+      ? calculate(
+          firstTerm, firstOperator,
+          calculate(secondTerm, secondOperator, thirdTerm)
+        )
+      : calculate(
+          calculate(firstTerm, firstOperator, secondTerm),
+          secondOperator, thirdTerm
+        )
+    ).toString()
 \end{verbatim}
 }
 
-{\footnotesize Fonte: trecho literal do \textit{patch} arquivado. A função auxiliar \texttt{calculate} realiza as operações aritméticas explícitas.\par}
+{\footnotesize Fonte: trecho do \textit{patch} arquivado, com quebras de linha ajustadas para apresentação. A função auxiliar \texttt{calculate} realiza as operações aritméticas explícitas.\par}
 
 \section{Redução conjunta de alertas e RRIS}
 \label{sec:res-rris}

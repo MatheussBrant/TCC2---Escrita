@@ -92,7 +92,7 @@ O \textit{scan} inicial deu origem ao catálogo de casos, que é a lista de aler
 
 O identificador de cada caso é formado pelo prefixo AMP seguido de 16 caracteres calculados a partir do \textit{hash} da regra, do arquivo e da posição do alerta. Dessa forma, dois alertas da mesma regra em linhas diferentes de um mesmo arquivo recebem identificadores distintos, e um mesmo alerta mantém sempre o mesmo identificador.
 
-No caso utilizado como exemplo, o Semgrep apontou a linha 14 do arquivo \texttt{routes/keyServer.ts} com a regra \texttt{express-res-sendfile}, do conjunto público, associada à CWE-73. A regra sinalizou uma possibilidade de \textit{path traversal}. Entretanto, a triagem classificou o caso como confirmado pela exposição de arquivos de chaves em uma rota pública, sem comprovar a exploração por travessia de diretórios. O caso recebeu o identificador \texttt{AMP95adf572d3c6677f}. O trecho apontado é apresentado a seguir.
+No caso utilizado como exemplo, o Semgrep apontou a linha 14 do arquivo \texttt{routes/\allowbreak keyServer.\allowbreak ts} com a regra \texttt{express-res-sendfile}, do conjunto público, associada à CWE-73. A regra sinalizou uma possibilidade de \textit{path traversal}. Entretanto, a triagem classificou o caso como confirmado pela exposição de arquivos de chaves em uma rota pública, sem comprovar a exploração por travessia de diretórios. O caso recebeu o identificador \texttt{AMP95adf572d3c6677f}. O trecho apontado é apresentado a seguir.
 
 {\footnotesize
 \begin{verbatim}
@@ -192,7 +192,7 @@ Com o ambiente, o catálogo, os testes, as estratégias de \textit{prompt}, a ba
 \section{Estrutura do projeto}
 \label{sec:impl-estrutura}
 
-A implementação está disponível em repositório público no GitHub, em \href{https://github.com/caiolamego/tcc2-llm-sast-juiceshop}{caiolamego/tcc2-llm-sast-juiceshop}. A estrutura principal do projeto foi organizada da seguinte forma:
+A implementação está disponível no \href{https://github.com/caiolamego/tcc2-llm-sast-juiceshop}{repositório público do projeto no GitHub}. A estrutura principal do projeto foi organizada da seguinte forma:
 
 {\footnotesize
 \begin{verbatim}
@@ -274,7 +274,7 @@ outputs/campanha_docker/<EXECUCAO>/
 \end{verbatim}
 }
 
-O arquivo \texttt{contrato\_execucao.json} registra as condições da execução, como os modelos e parâmetros utilizados, a versão do Juice Shop, as estratégias, a lista de casos e os \textit{hashes} do catálogo, do perfil de regras, da base de conhecimento, dos testes e do próprio código do \textit{pipeline}. As pastas \texttt{sast\_antes/} e \texttt{sast\_depois/} guardam os relatórios do Semgrep antes e depois das correções. As pastas \texttt{prompts/} e \texttt{respostas\_llm/} guardam o conteúdo enviado e recebido em cada tentativa. As pastas \texttt{patches/} e \texttt{codigos\_corrigidos/} guardam as alterações aplicadas, \texttt{testes/} guarda os resultados da validação funcional e \texttt{comparacoes/} guarda o resultado da comparação dos alertas. A pasta \texttt{resultados\_consolidados/} contém o arquivo consolidado com uma linha por tentativa. A versão final dos artefatos foi reunida na pasta \texttt{outputs/resultados\_finais/}, que contém uma cópia dessa estrutura para cada campanha e os mapas de correspondência citados na Seção~\ref{sec:met-dados}. As métricas calculadas a partir desses registros são gravadas em uma pasta separada, descrita na Seção~\ref{sec:impl-metricas}.
+O arquivo \texttt{contrato\_\allowbreak execucao.\allowbreak json} registra as condições da execução, como os modelos e parâmetros utilizados, a versão do Juice Shop, as estratégias, a lista de casos e os \textit{hashes} do catálogo, do perfil de regras, da base de conhecimento, dos testes e do próprio código do \textit{pipeline}. As pastas \texttt{sast\_\allowbreak antes/\allowbreak } e \texttt{sast\_\allowbreak depois/\allowbreak } guardam os relatórios do Semgrep antes e depois das correções. As pastas \texttt{prompts/\allowbreak } e \texttt{respostas\_\allowbreak llm/\allowbreak } guardam o conteúdo enviado e recebido em cada tentativa. As pastas \texttt{patches/\allowbreak } e \texttt{codigos\_\allowbreak corrigidos/\allowbreak } guardam as alterações aplicadas, \texttt{testes/\allowbreak } guarda os resultados da validação funcional e \texttt{comparacoes/\allowbreak } guarda o resultado da comparação dos alertas. A pasta \texttt{resultados\_\allowbreak consolidados/\allowbreak } contém o arquivo consolidado com uma linha por tentativa. A versão final dos artefatos foi reunida na pasta \texttt{outputs/\allowbreak resultados\_\allowbreak finais/\allowbreak }, que contém uma cópia dessa estrutura para cada campanha e os mapas de correspondência citados na Seção~\ref{sec:met-dados}. As métricas calculadas a partir desses registros são gravadas em uma pasta separada, descrita na Seção~\ref{sec:impl-metricas}.
 
 No caso utilizado como exemplo, as estratégias P1 e P2 produziram correções que foram aplicadas e não quebraram os testes, mas o Semgrep continuou apontando o alerta na mesma linha. Por isso, o caso foi submetido à estratégia P3. A correção proposta pelo GPT-4.1 mini nessa estratégia foi aplicada por correspondência exata da âncora e gerou o \textit{patch} a seguir.
 
